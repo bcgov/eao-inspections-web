@@ -1,11 +1,26 @@
 /* You can add global styles to this file, and also import other style files */
 @import '~bootstrap/dist/css/bootstrap.css';
+@import './scss/_variables';
 
 body {
   font-family: myriad-pro, sans-serif;
 
   .dashboard {
+    background-color: $default-background;
     position: relative;
+    top: -20px;
+    width: calc(100% - 268px);
     left: 268px;
+    padding: 20px;
+
+      &__title {
+      margin-left: 30px;
+      height: 28px;	
+      width: 175px;	
+      color: $font-black;	
+      font-size: 28px;	
+      font-weight: bold;	
+      line-height: 34px;
+    }
   }
 }

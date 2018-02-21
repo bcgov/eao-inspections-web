@@ -11,6 +11,7 @@ import { TeamReportsComponent } from './dashboard/team-reports/team-reports.comp
 import { ProfileComponent } from './dashboard/profile/profile.component';
 import { SettingsComponent } from './dashboard/settings/settings.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { ProfileCardComponent } from './reusables/profile-card/profile-card.component';
 
 
 @NgModule({
@@ -22,7 +23,8 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     TeamReportsComponent,
     ProfileComponent,
     SettingsComponent,
-    DashboardComponent
+    DashboardComponent,
+    ProfileCardComponent
   ],
   imports: [
     BrowserModule,

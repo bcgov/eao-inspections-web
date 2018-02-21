@@ -1,0 +1,69 @@
+@import '../../../scss/_variables';
+@import '../../../scss/_mixins';
+
+.profile__card {
+  background-color: $background-white;
+  height: 221px;
+  width: calc(100% - 55px);
+  @include flex;
+  box-shadow: 0 0 8px 0 rgba(0,0,0,0.2);
+  overflow-wrap: inherit;
+  margin: 30px;
+  padding: 50px;
+
+  &--photo {
+
+    &__img {
+      position: relative;
+      top: 5%;
+      width: 120px;	
+      border-style: none;
+    }
+
+    &__upload {
+      display: block;
+      color: $default-link-color;
+      margin-left: 15px;
+
+      &:hover {
+        cursor: pointer;
+        color: $default-primary-color;
+      }
+    }
+  }
+
+  &__details {
+    flex: 2;
+    margin-left: 80px;
+  }
+
+  &__contact {
+    flex: 2;
+
+    a {
+      color: $default-link-color;
+    }
+
+    &--disclaimer {
+      display: block;
+      margin-top: 20px;
+      color: #8A8A8A;	
+      font-size: 16px; 
+      font-weight: 300;
+    }
+  }
+
+  h4 {
+    color: $font-dark-gray;	
+    font-size: 18px;	
+    font-weight: 600;	
+    text-transform: uppercase;
+  }
+
+  p {
+    color: $font-black;	
+    font-size: 20px;	
+    font-weight: 300;
+    line-height: 24px;
+  }
+}
