@@ -36,7 +36,13 @@
     padding: 0;
     margin: 0;
 
+    a {
+      text-decoration: none;
+    }
+
       &__item {
+        color: $font-gray;
+        text-transform: uppercase;
         padding: 15px;
         width: inherit;
         height: 56px;	
@@ -44,28 +50,15 @@
         border-left: 10px solid $default-primary-color;
         
         &:hover {
+          text-decoration: none;
+          color: $font-white;
           background-color: $default-secondary-color;
           cursor: pointer;
           border-left: 10px solid $default-link-color;
-
-          a {
-            color: $font-white;
-          }
         }
         
-        &__img {
-         padding-left: 20px;
-        }
-        
-        &__link {
-        margin: 15px;
-        color: $font-gray;
-        text-transform: uppercase;
-
-         &:hover {
-          text-decoration: none;
-        }
-        
+      &__img {
+        padding: 0 20px;
       }
     }
   }
@@ -83,8 +76,6 @@
 
     &__content {
       &__name {
-        height: 19px;	
-        width: 104px;	
         color: $font-white;	
         font-size: 18px;	
         line-height: 23px;
