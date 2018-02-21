@@ -1,10 +1,32 @@
 <div class="menu">
-  <div class="menu__img">
+  <div class="menu__header">
+    <img class="menu__header__img" src="../../assets/bc_logo_supported.png" />
   </div>
+  <div class="menu__divider"></div>
   <ul class="menu__list">
-    <li class="menu__list__item"><a class="menu__list__item__link" routerLink="/my-reports">My Reports</a></li>
-    <li class="menu__list__item"><a class="menu__list__item__link" routerLink="/team-reports">Team Reports</a></li>
-    <li class="menu__list__item"><a class="menu__list__item__link" routerLink="/profile">Profile</a></li>
-    <li class="menu__list__item"><a class="menu__list__item__link" routerLink="/settings">Settings</a></li>
+    <li class="menu__list__item">
+      <img class="menu__list__item__img" src="../../assets/report.png" />
+      <a class="menu__list__item__link" routerLink="/my-reports">My Reports</a>
+    </li>
+    <li class="menu__list__item">
+      <img class="menu__list__item__img" src="../../assets/team.png" />
+      <a class="menu__list__item__link" routerLink="/team-reports">Team Reports</a>
+    </li>
+    <li class="menu__list__item">
+      <img class="menu__list__item__img" src="../../assets/profile.png" />
+      <a class="menu__list__item__link" routerLink="/profile">Profile</a>
+    </li>
+    <li class="menu__list__item">
+      <img class="menu__list__item__img" src="../../assets/settings.png" />
+      <a class="menu__list__item__link" routerLink="/settings">Settings</a>
+    </li>
   </ul>
+  <div class="menu__divider menu__divider--last"></div>
+  <div class="menu__profile">
+    <img class="menu__profile__img" src="../../assets/inspector-profile@2x.png" />
+    <div class="menu__profile__content">
+      <p class="menu__profile__content__name">User Name</p>
+      <a class="menu__profile__content__link" routerLink="/settings">Logout</a>
+    </div>
+  </div>
 </div>
