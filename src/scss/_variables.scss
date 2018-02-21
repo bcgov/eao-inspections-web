@@ -1,4 +1,18 @@
 $default-primary-color: #013366;
-$default-link-color:  #5475A7;
+$default-secondary-color:  #5475A7;
+$default-link-color: #869EC1;
+
+$default-background: #F7FAFF;
+$background-white: #FFFFFF;
+
+$font-gray: #B3C2D1;
+$font-dark-gray: #8A8A8A;
+$font-white: #FFFFFF;
+$font-black: #000000;
 
 $default-font-family: "Myriad Pro";
+
+// dashboard content
+$dashboard-content-margin: 30px;
+$dashboard-content-width: calc(100% - 55px);
+$dashboard-content-padding: 50px;

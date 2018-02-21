@@ -1,3 +1,40 @@
-<p>
-  menu works!
-</p>
+<div class="menu">
+  <div class="menu__header">
+    <img class="menu__header__img" src="../../assets/bc_logo_supported.png" />
+  </div>
+  <div class="menu__divider"></div>
+  <ul class="menu__list">
+    <a routerLink="/my-reports">
+      <li class="menu__list__item">
+        <img class="menu__list__item__img" src="../../assets/report.png" />
+        My Reports
+      </li>
+    </a>
+    <a routerLink="/team-reports">
+      <li class="menu__list__item">
+        <img class="menu__list__item__img" src="../../assets/team.png" />
+        Team Reports
+      </li>
+    </a>
+    <a routerLink="/profile">
+      <li class="menu__list__item">
+        <img class="menu__list__item__img" src="../../assets/profile.png" />
+        Profile
+      </li>
+    </a>
+    <a routerLink="/settings">
+      <li class="menu__list__item">
+        <img class="menu__list__item__img" src="../../assets/settings.png" />
+        Settings
+      </li>
+    </a>
+  </ul>
+  <div class="menu__divider menu__divider--last"></div>
+  <div class="menu__profile">
+    <img class="menu__profile__img" src="../../assets/inspector-profile@4x.png" />
+    <div class="menu__profile__content">
+      <p class="menu__profile__content__name">Mittie Benson</p>
+      <a class="menu__profile__content__link" routerLink="/settings">Logout</a>
+    </div>
+  </div>
+</div>

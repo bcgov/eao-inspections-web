@@ -1,27 +1,27 @@
 @import '../../scss/_variables.scss';
 
 .login {
+  text-align: center;
 
   &__header {
       height: 400px;	
       background-color: $default-primary-color;
+
+      &__img {
+        position: relative;
+        top: 50%;
+      }
   }
 
   &__body {
- 
-    
+    background-color: $default-background;
+
     &__form {
       margin: 10px;
-      height: 76px;	
-      width: 320px;
 
       &__label {
-        height: 19px;	
-        width: 42px;	
-        font-family: "Myriad Pro";	
+        display: block;
         font-size: 18px;	
-        line-height: 23px;	
-        text-align: center;
       }
 
       &__input {
@@ -36,9 +36,8 @@
       margin: 10px;
       height: 48px;	
       width: 320px;	
-      color: #FFFFFF;
-      background-color: $default-primary-color;	
-      font-family: "Myriad Pro";	
+      color: $font-white;
+      background-color: $default-primary-color;		
       font-size: 18px;	
       font-weight: bold;	
       line-height: 23px;	
@@ -46,13 +45,8 @@
     }
 
     &__link {
-      height: 16px;	
-      width: 119px;	
-      color: $default-link-color;	
-      font-family: "Myriad Pro";	
+      color: $default-link-color;
       font-size: 16px;	
-      line-height: 19px;	
-      text-align: center;
     }
   }
 }
