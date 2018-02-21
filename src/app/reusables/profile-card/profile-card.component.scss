@@ -4,12 +4,12 @@
 .profile__card {
   background-color: $background-white;
   height: 221px;
-  width: calc(100% - 55px);
+  width: $dashboard-content-width;
   @include flex;
   box-shadow: 0 0 8px 0 rgba(0,0,0,0.2);
   overflow-wrap: inherit;
-  margin: 30px;
-  padding: 50px;
+  margin: $dashboard-content-margin;
+  padding: $dashboard-content-padding;
 
   &--photo {
 

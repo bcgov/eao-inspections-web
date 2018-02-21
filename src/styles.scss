@@ -6,6 +6,8 @@ body {
   font-family: myriad-pro, sans-serif;
 
   .dashboard {
+    min-height: 800px;
+    max-height: 100%;
     background-color: $default-background;
     position: relative;
     top: -20px;
