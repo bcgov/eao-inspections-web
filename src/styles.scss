@@ -1,4 +1,9 @@
 /* You can add global styles to this file, and also import other style files */
+
+// All CSS created using BEM naming conventions and SASS.
+
+// Generic/reusable styling for dashboard - all other CSS in appropiate folders.
+// Variables/Mixins found in ./scss/<filename>
 @import '~bootstrap/dist/css/bootstrap.css';
 @import './scss/_variables';
 
@@ -22,6 +27,39 @@ body {
       font-size: 28px;	
       font-weight: bold;	
       line-height: 34px;
+    }
+
+    &__subtitle {
+      margin-left: 30px;
+      height: 28px;	
+      color: $font-black;	
+      font-size: 20px;	
+      font-weight: bold;	
+      line-height: 34px;
+    }
+
+     &__btn {
+        color: $default-secondary-color;
+        height: 40px;	
+        width: 160px;	
+        border: 1px solid $default-primary-color;	
+        border-radius: 4px;	
+        font-size: 18px;
+        background-color: $background-white;
+
+      &__img {
+        margin-right: 5px;
+      }
+
+      &__btn--dark {
+        color: $default-secondary-color;
+        height: 40px;	
+        width: 160px;	
+        border: 1px solid $default-primary-color;	
+        border-radius: 4px;	
+        font-size: 18px;
+        background-color: $default-primary-color;
+      }
     }
   }
 }

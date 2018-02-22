@@ -8,6 +8,13 @@ import { Component, OnInit } from '@angular/core';
 export class ProfileComponent implements OnInit {
   title = "Profile";
   subTitle = "Administrator";
+  profile = {
+    name: "Mittie Bensen",
+    team: "Team 1",
+    email: "someone@email.com",
+    image: "../../../assets/inspector-profile@4x.png",
+    isAdmin: false,
+  }
 
   constructor() { }
 

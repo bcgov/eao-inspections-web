@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import * as Route from '../../../constants/routes';
+import * as Route from '../../../../constants/routes';
 
 @Component({
   selector: 'team-reports',
@@ -8,7 +8,7 @@ import * as Route from '../../../constants/routes';
 })
 export class TeamReportsComponent implements OnInit {
   title = "Team Reports";
-  link = "team-id";
+  link = "team/id";
 
   constructor() { }
 
