@@ -9,12 +9,14 @@ import { TeamReportsComponent } from './dashboard/team-reports/team-reports.comp
 import { ProfileComponent } from './dashboard/profile/profile.component';
 import { SettingsComponent } from './dashboard/settings/settings.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { ReportListComponent } from './dashboard/team-reports/report-list/report-list.component';
 
 const routes: Routes = [
   { path: '', component: DashboardComponent },
   { path: Route.LOGIN, component:  LoginComponent },
   { path: Route.MY_REPORTS, component: MyReportsComponent },
   { path: Route.TEAM_REPORTS, component: TeamReportsComponent },
+  { path: Route.TEAM_REPORTS + Route.TEAM_ID, component: ReportListComponent}
   { path: Route.PROFILE, component: ProfileComponent },
   { path: Route.SETTINGS, component: SettingsComponent },
 ];

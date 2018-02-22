@@ -1,0 +1,8 @@
+@import "../../../scss/_mixins";
+@import '../../../scss/_variables';
+
+.team-reports {
+  max-width: 100%;
+  width: $dashboard-content-sm-width;
+  @include flex;
+}

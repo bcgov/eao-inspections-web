@@ -12,6 +12,8 @@ import { ProfileComponent } from './dashboard/profile/profile.component';
 import { SettingsComponent } from './dashboard/settings/settings.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ProfileCardComponent } from './reusables/profile-card/profile-card.component';
+import { ReportCardComponent } from './reusables/report-card/report-card.component';
+import { ReportListComponent } from './dashboard/team-reports/report-list/report-list.component';
 
 
 @NgModule({
@@ -24,7 +26,9 @@ import { ProfileCardComponent } from './reusables/profile-card/profile-card.comp
     ProfileComponent,
     SettingsComponent,
     DashboardComponent,
-    ProfileCardComponent
+    ProfileCardComponent,
+    ReportCardComponent,
+    ReportListComponent
   ],
   imports: [
     BrowserModule,

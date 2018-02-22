@@ -1,0 +1,10 @@
+@import '../../../../scss/_mixins';
+
+.reports {
+  @include flex;
+
+  &__img {
+    height: 64px;
+    width: 64px;
+  }
+}

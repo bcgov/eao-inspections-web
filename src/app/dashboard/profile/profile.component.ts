@@ -6,6 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./profile.component.scss']
 })
 export class ProfileComponent implements OnInit {
+  title = "Profile";
+  subTitle = "Administrator";
 
   constructor() { }
 
