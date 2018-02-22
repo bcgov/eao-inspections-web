@@ -3,11 +3,6 @@
 
 .inspection {
 
-  &__header {
-    @include flex;
-    justify-content: space-between;
-  }
-
   &-details {
     margin: $dashboard-content-margin;
     height: 175px;

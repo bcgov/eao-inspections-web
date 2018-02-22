@@ -6,10 +6,10 @@
 // Variables/Mixins found in ./scss/<filename>
 @import '~bootstrap/dist/css/bootstrap.css';
 @import './scss/_variables';
+@import './scss/_mixins';
 
 body {
   font-family: myriad-pro, sans-serif;
-
   .dashboard {
     min-height: 800px;
     max-height: 100%;
@@ -19,6 +19,11 @@ body {
     width: calc(100% - 268px);
     left: 268px;
     padding: 20px;
+
+    &__header {
+      @include flex;
+      justify-content: space-between;
+    }
 
       &__title {
       margin-left: 30px;
@@ -38,8 +43,24 @@ body {
       line-height: 34px;
     }
 
+    &--actions {
+      font-size: 16px;
+      height: 16px;	
+      width: 33px;
+      color: $default-link-color;	
+      border: none;
+      margin-right: 10px;
+      text-transform: uppercase;
+
+      &:hover {
+        cursor: pointer;
+        color: $default-primary-color;
+      }
+    }
+
      &__btn {
         color: $default-secondary-color;
+        margin-right: 10px;
         height: 40px;	
         width: 160px;	
         border: 1px solid $default-primary-color;	

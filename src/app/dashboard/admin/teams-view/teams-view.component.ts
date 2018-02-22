@@ -1,14 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import * as Route from '../../../../constants/routes';
 
 @Component({
-  selector: 'team-reports',
-  templateUrl: './team-reports.component.html',
-  styleUrls: ['./team-reports.component.scss']
+  selector: 'app-teams-view',
+  templateUrl: './teams-view.component.html',
+  styleUrls: ['./teams-view.component.scss']
 })
-export class TeamReportsComponent implements OnInit {
-  title = "Team Reports";
-  link = "team/id";
+export class TeamsViewComponent implements OnInit {
+  title = "Teams";
   teams = [
     {
       id: 1,
@@ -27,6 +25,18 @@ export class TeamReportsComponent implements OnInit {
       name: "Team 3",
       image: "../../assets/inspector-profile@4x.png",
       members: 2
+    }
+    {
+      id: 4,
+      name: "Team 4",
+      image: "../../assets/admin-1@4x.png",
+      members: 19
+    },
+    {
+      id: 4,
+      name: "Team 5",
+      image: "../../assets/inspector-profile@4x.png",
+      members: 106
     }
   ]
 

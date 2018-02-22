@@ -1,0 +1,14 @@
+<div class="dashboard">
+  <div class="dashboard__header">
+    <p class="dashboard__title">{{title}}</p>
+    <div class="dashboard__buttons">
+      <button class="dashboard__btn">Archived Reports</button>
+    </div>
+  </div>
+
+  <div class="team-reports" *ngFor="let team of teams">
+    <a routerLink="{{link}}">
+      <team-card [team]="team"></team-card>
+    </a>
+  </div>
+</div>
