@@ -3,7 +3,7 @@
 
 .profile__card {
   background-color: $background-white;
-  height: 221px;
+  height: fit-content;
   width: $dashboard-content-width;
   @include flex;
   box-shadow: 0 0 8px 0 rgba(0,0,0,0.2);
@@ -11,8 +11,13 @@
   margin: $dashboard-content-margin;
   padding: $dashboard-content-padding;
 
-  &--photo {
+  @include large {
+    height: fit-content;
+    display: block;
+    text-align: center;
+  }
 
+  &--photo {
     &__img {
       position: relative;
       top: 5%;
@@ -25,6 +30,10 @@
       color: $default-link-color;
       margin-left: 15px;
 
+      @include large {
+        margin-left: 0;
+      }
+
       &:hover {
         cursor: pointer;
         color: $default-primary-color;
@@ -35,6 +44,10 @@
   &__details {
     flex: 2;
     margin-left: 80px;
+
+    @include large {
+      margin: 0;
+    }
   }
 
   &__contact {
