@@ -20,7 +20,7 @@ import { TeamReportListComponent } from './team-report-list/team-report-list.com
 const routes: Routes = [
   // unauthenticated routes
   { path: Route.LOGIN, component:  LoginComponent },
-  
+
   // user routes
   { path: '', redirectTo: Route.MY_REPORTS, pathMatch: 'full' },
   { path: Route.MY_REPORTS, component: MyReportsComponent },
@@ -37,7 +37,7 @@ const routes: Routes = [
   // admin routes
   { path: Route.ADMIN_USERS, component: UsersViewComponent },
   { path: Route.ADMIN_TEAMS, component: TeamsViewComponent },
-  { path: Route.ADMIN_TEAMS + Route.MANAGE_TEAM_ID, component: ManageTeamsViewComponent}
+  { path: Route.ADMIN_TEAMS + Route.MANAGE_TEAM_ID, component: ManageTeamsViewComponent },
   { path: Route.ADMIN_REPORTS, component: ReportsViewComponent },
 ];
 
