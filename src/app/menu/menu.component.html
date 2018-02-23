@@ -7,58 +7,74 @@
   <!-- all admin routes below - add ngIf when admin object available -->
   <ng-template>
     <ul class="menu__list">
-      <a routerLink="/admin/user-details">
-        <li class="menu__list__item">
-          <img class="menu__list__item__img" src="../../assets/users.png" /> 
-          Users
-        </li>
-      </a>
-      <a routerLink="/admin/team-details">
-        <li class="menu__list__item">
-          <img class="menu__list__item__img" src="../../assets/team.png" /> 
-          Teams
-        </li>
-      </a>
-      <a routerLink="/admin/report-details">
-        <li class="menu__list__item">
-          <img class="menu__list__item__img" src="../../assets/report.png" /> 
-          Reports
-        </li>
-      </a>
+      <div class="menu__list__item" routerLinkActive="menu__list__item--active">
+        <a routerLink="/admin/user-details">
+          <li>
+            <img class="menu__list__item__img" src="../../assets/users.png" /> 
+            Users
+          </li>
+        </a>
+      </div>
+      <div class="menu__list__item" routerLinkActive="menu__list__item--active">
+        <a routerLink="/admin/team-details">
+          <li>
+            <img class="menu__list__item__img" src="../../assets/team.png" /> 
+            Teams
+          </li>
+        </a>
+      </div>
+      <div class="menu__list__item" routerLinkActive="menu__list__item--active">
+        <a routerLink="/admin/report-details">
+          <li>
+            <img class="menu__list__item__img" src="../../assets/report.png" /> 
+            Reports
+          </li>
+        </a>
+      </div>
     </ul>
   </ng-template>
 
   <ul class="menu__list">
-    <a routerLink="/my-reports" routerLinkActive="menu__list--active">
-      <li class="menu__list__item">
-        <img class="menu__list__item__img" src="../../assets/report.png" />
-        My Reports
-      </li>
-    </a>
-    <a routerLink="/team-reports" routerLinkActive="menu__list__item--active">
-      <li class="menu__list__item">
-        <img class="menu__list__item__img" src="../../assets/team.png" />
-        Team Reports
-      </li>
-    </a>
-    <a routerLink="/search" routerLinkActive="menu__list__item--active">
-      <li class="menu__list__item">
-        <img class="menu__list__item__img" src="../../assets/search.png" /> 
-        Search
-      </li>
-    </a>
-    <a routerLink="/profile" routerLinkActive="menu__list__item--active">
-      <li class="menu__list__item">
-        <img class="menu__list__item__img" src="../../assets/profile.png" />
-        Profile
-      </li>
-    </a>
-    <a routerLink="/settings" routerLinkActive="menu__list__item--active">
-      <li class="menu__list__item">
-        <img class="menu__list__item__img" src="../../assets/settings.png" />
-        Settings
-      </li>
-    </a>
+    <div class="menu__list__item" routerLinkActive="menu__list__item--active">
+      <a routerLink="/my-reports">
+        <li>
+          <img class="menu__list__item__img" src="../../assets/report.png" />
+          My Reports
+        </li>
+      </a>
+    </div>
+    <div class="menu__list__item" routerLinkActive="menu__list__item--active">
+      <a routerLink="/team-reports">
+        <li>
+          <img class="menu__list__item__img" src="../../assets/team.png" />
+          Team Reports
+        </li>
+      </a>
+    </div>
+    <div class="menu__list__item" routerLinkActive="menu__list__item--active">
+      <a routerLink="/search">
+        <li>
+          <img class="menu__list__item__img" src="../../assets/search.png" /> 
+          Search
+        </li>
+      </a>
+    </div>
+    <div class="menu__list__item" routerLinkActive="menu__list__item--active">
+      <a routerLink="/profile">
+        <li>
+          <img class="menu__list__item__img" src="../../assets/profile.png" />
+          Profile
+        </li>
+      </a>
+    </div>
+    <div class="menu__list__item" routerLinkActive="menu__list__item--active">
+      <a routerLink="/settings">
+        <li>
+          <img class="menu__list__item__img" src="../../assets/settings.png" />
+          Settings
+        </li>
+      </a>
+    </div>
   </ul>
   <div class="menu__divider menu__divider--last"></div>
   <div class="menu__profile">

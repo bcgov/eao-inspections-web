@@ -36,25 +36,30 @@
     padding: 0;
     margin: 0;
 
-    a {
-      text-decoration: none;
-    }
-
-      &__item {
-        color: $font-gray;
-        text-transform: uppercase;
-        padding: 15px;
-        width: inherit;
-        height: 56px;	
-        list-style-type: none;
-        border-left: 10px solid $default-primary-color;
-        
-         &--active {
+    
+    &__item {
+      color: $font-gray;
+      text-transform: uppercase;
+      padding: 15px;
+      width: inherit;
+      height: 56px;	
+      list-style-type: none;
+      border-left: 10px solid $default-primary-color;
+      
+        a {
+          color: $font-gray;
           text-decoration: none;
-          color: $font-white;
-          background-color: $default-secondary-color;
-          cursor: pointer;
-          border-left: 10px solid $default-link-color;
+        }
+
+         &--active {
+           text-decoration: none;
+           background-color: $default-secondary-color;
+           cursor: pointer;
+           border-left: 10px solid $default-link-color;
+
+            a {
+              color: $font-white;
+            }
         }
 
         &:hover {
@@ -65,7 +70,6 @@
           border-left: 10px solid $default-link-color;
         }
 
-        
       &__img {
         padding: 0 20px;
       }
@@ -108,11 +112,3 @@
     }
   }
 }
-// .active {
-//   @extend .menu__list__item;
-//           width: 100%;
-//           text-decoration: none;
-//           color: $font-white;
-//           background-color: $default-secondary-color;
-//           border-left: 10px solid $default-link-color;
-// }
