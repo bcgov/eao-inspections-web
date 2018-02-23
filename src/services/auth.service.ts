@@ -6,7 +6,7 @@ import * as Route from '../constants/routes';
 const Parse: any = require('parse');
 
 Parse.initialize(environment.parseId, environment.parseKey);
-Parse.serverURL = 'https://parseapi.back4app.com/';
+Parse.serverURL = environment.parseURL;
 
 @Injectable()
 export class AuthService {
