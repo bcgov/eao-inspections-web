@@ -11,7 +11,7 @@
         <a routerLink="/admin/user-details">
           <li>
             <img class="menu__list__item__img" src="../../assets/users.png" /> 
-            Users
+            <span>Users</span>
           </li>
         </a>
       </div>
@@ -19,7 +19,7 @@
         <a routerLink="/admin/team-details">
           <li>
             <img class="menu__list__item__img" src="../../assets/team.png" /> 
-            Teams
+            <p>Teams</p>
           </li>
         </a>
       </div>
@@ -27,7 +27,7 @@
         <a routerLink="/admin/report-details">
           <li>
             <img class="menu__list__item__img" src="../../assets/report.png" /> 
-            Reports
+            <p>Reports</p>
           </li>
         </a>
       </div>
@@ -38,8 +38,8 @@
     <div class="menu__list__item" routerLinkActive="menu__list__item--active">
       <a routerLink="/my-reports">
         <li>
-          <img class="menu__list__item__img" src="../../assets/report.png" />
-          My Reports
+          <img class="menu__list__item__img" src="../../assets/report.png" data-toggle="tooltip" data-placement="right" title="My Reports"/>
+          <span>My Reports</span>
         </li>
       </a>
     </div>
@@ -47,7 +47,7 @@
       <a routerLink="/team-reports">
         <li>
           <img class="menu__list__item__img" src="../../assets/team.png" />
-          Team Reports
+          <span>Team Reports</span>
         </li>
       </a>
     </div>
@@ -55,7 +55,7 @@
       <a routerLink="/search">
         <li>
           <img class="menu__list__item__img" src="../../assets/search.png" /> 
-          Search
+          <span>Search</span>
         </li>
       </a>
     </div>
@@ -63,7 +63,7 @@
       <a routerLink="/profile">
         <li>
           <img class="menu__list__item__img" src="../../assets/profile.png" />
-          Profile
+          <span>Profile</span>
         </li>
       </a>
     </div>
@@ -71,7 +71,7 @@
       <a routerLink="/settings">
         <li>
           <img class="menu__list__item__img" src="../../assets/settings.png" />
-          Settings
+          <span>Settings</span>
         </li>
       </a>
     </div>

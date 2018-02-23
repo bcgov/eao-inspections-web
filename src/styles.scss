@@ -20,6 +20,11 @@ body {
     left: 268px;
     padding: 20px;
 
+    @include tablet {
+        width: calc(100% - 70px);
+         left: 70px;
+      }
+
     &__header {
       @include flex;
       justify-content: space-between;
