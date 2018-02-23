@@ -7,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ManageTeamsViewComponent implements OnInit {
   title = "Users";
+  link = "/admin/team-details";
   users = [
     {
       name: "Lou Ballard",

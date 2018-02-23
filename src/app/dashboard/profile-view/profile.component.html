@@ -2,6 +2,7 @@
   <h1 class="dashboard__title">{{title}}</h1>
   <profile-card [profile]="profile"></profile-card>
   <h3 class="dashboard__title">{{subTitle}}</h3>
-  <profile-card [profile]="profile"></profile-card>
-  <profile-card [profile]="profile"></profile-card>
+  <div *ngFor="let profile of admin">
+    <profile-card [profile]="profile"></profile-card>
+  </div>
 </div>
