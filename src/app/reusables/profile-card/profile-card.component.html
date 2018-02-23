@@ -1,7 +1,7 @@
 <div class="profile__card">
   <div class="profile__card--photo">
     <img class="profile__card--photo__img" src={{profile.image}} />
-    <span class="profile__card--photo__upload">Upload Photo</span>
+    <span *ngIf="profile.isAdmin === false" class="profile__card--photo__upload">Upload Photo</span>
   </div>
   <div class="profile__card__details">
     <h4>Full Name</h4>
