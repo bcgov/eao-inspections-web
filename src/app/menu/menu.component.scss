@@ -116,7 +116,7 @@
       
         span {
           @include tablet {
-            display: none;
+            visibility: hidden;
           }
 
         }
