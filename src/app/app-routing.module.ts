@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import {Routes, RouterModule, CanActivate} from '@angular/router';
 import * as Route from '../constants/routes';
 
 import { LoginComponent } from './login/login.component';
@@ -16,29 +16,31 @@ import { SearchViewComponent } from './dashboard/search-view/search-view.compone
 import { TeamsViewComponent } from './dashboard/admin/teams-view/teams-view.component';
 import { ManageTeamsViewComponent } from './dashboard/admin/teams-view/manage-teams-view/manage-teams-view.component';
 import { TeamReportListComponent } from './team-report-list/team-report-list.component';
+import {AuthGuardService} from '../services/auth-guard.service';
+import {RoleGuardService} from '../services/role-guard-service';
 
 const routes: Routes = [
   // unauthenticated routes
   { path: Route.LOGIN, component:  LoginComponent },
 
   // user routes
-  { path: '', redirectTo: Route.MY_REPORTS, pathMatch: 'full' },
-  { path: Route.MY_REPORTS, component: MyReportsComponent },
-  { path: Route.MY_REPORTS + Route.INSPECTION_DETAILS, component: InspectionViewComponent },
-  { path: Route.MY_REPORTS + Route.INSPECTION_DETAILS + Route.ELEMENT_ID, component: ElementViewComponent },
-  { path: Route.TEAM_REPORTS, component: TeamReportsComponent },
-  { path: Route.TEAM_REPORTS + Route.TEAM_ID, component: TeamReportListComponent},
-  { path: Route.TEAM_REPORTS + Route.TEAM_ID + Route.INSPECTION_DETAILS, component: InspectionViewComponent},
-  { path: Route.TEAM_REPORTS + Route.TEAM_ID + Route.INSPECTION_DETAILS + Route.ELEMENT_ID, component: ElementViewComponent },
-  { path: Route.PROFILE, component: ProfileComponent },
-  { path: Route.SETTINGS, component: SettingsComponent },
-  { path: Route.SEARCH, component: SearchViewComponent},
+  { path: '', redirectTo: Route.MY_REPORTS, pathMatch: 'full', canActivate: [AuthGuardService] },
+  { path: Route.MY_REPORTS, component: MyReportsComponent, canActivate: [AuthGuardService] },
+  { path: Route.MY_REPORTS + Route.INSPECTION_DETAILS, component: InspectionViewComponent, canActivate: [AuthGuardService] },
+  { path: Route.MY_REPORTS + Route.INSPECTION_DETAILS + Route.ELEMENT_ID, component: ElementViewComponent, canActivate: [AuthGuardService] },
+  { path: Route.TEAM_REPORTS, component: TeamReportsComponent, canActivate: [AuthGuardService] },
+  { path: Route.TEAM_REPORTS + Route.TEAM_ID, component: TeamReportListComponent, canActivate: [AuthGuardService] },
+  { path: Route.TEAM_REPORTS + Route.TEAM_ID + Route.INSPECTION_DETAILS, component: InspectionViewComponent, canActivate: [AuthGuardService] },
+  { path: Route.TEAM_REPORTS + Route.TEAM_ID + Route.INSPECTION_DETAILS + Route.ELEMENT_ID, component: ElementViewComponent, canActivate: [AuthGuardService] },
+  { path: Route.PROFILE, component: ProfileComponent, canActivate: [AuthGuardService] },
+  { path: Route.SETTINGS, component: SettingsComponent, canActivate: [AuthGuardService] },
+  { path: Route.SEARCH, component: SearchViewComponent, canActivate: [AuthGuardService] },
 
   // admin routes
-  { path: Route.ADMIN_USERS, component: UsersViewComponent },
-  { path: Route.ADMIN_TEAMS, component: TeamsViewComponent },
-  { path: Route.ADMIN_TEAMS + Route.MANAGE_TEAM_ID, component: ManageTeamsViewComponent },
-  { path: Route.ADMIN_REPORTS, component: ReportsViewComponent },
+  { path: Route.ADMIN_USERS, component: UsersViewComponent, canActivate: [AuthGuardService, RoleGuardService] },
+  { path: Route.ADMIN_TEAMS, component: TeamsViewComponent, canActivate: [AuthGuardService, RoleGuardService] },
+  { path: Route.ADMIN_TEAMS + Route.MANAGE_TEAM_ID, component: ManageTeamsViewComponent, canActivate: [AuthGuardService, RoleGuardService] },
+  { path: Route.ADMIN_REPORTS, component: ReportsViewComponent, canActivate: [AuthGuardService, RoleGuardService] },
 ];
 
 @NgModule({

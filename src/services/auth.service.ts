@@ -14,22 +14,19 @@ export class AuthService {
   constructor(private router: Router) {}
 
   logIn(username: string, password: string) {
-    Parse.User.logIn(username, password, {
-      success: function(user) {
-        // Do stuff after successful login.
-        console.log(user);
-        return true;
+    Parse.User.logIn(username, password)
+      .then(() => {
+        this.router.navigate([Route.MY_REPORTS]);
       },
-      error: function(user, error) {
-        return error.message;
-      }
-    }).then(this.router.navigate([Route.MY_REPORTS]));
+      (obj, err) => {
+        return err.message;
+      });
   }
 
   logOut() {
-    Parse.User.logOut().then(() => {
-      const currentUser = Parse.User.current();  // this will now be null
-      this.router.navigate([Route.LOGIN]);
+    Parse.User.logOut()
+      .then(() => {
+        this.router.navigate([Route.LOGIN]);
     });
   }
 

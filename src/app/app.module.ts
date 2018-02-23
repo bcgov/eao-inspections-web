@@ -25,6 +25,7 @@ import { ManageTeamsViewComponent } from './dashboard/admin/teams-view/manage-te
 import { TeamReportListComponent } from './team-report-list/team-report-list.component';
 import { AuthService } from '../services/auth.service';
 import { AuthGuardService} from '../services/auth-guard.service';
+import { RoleGuardService } from '../services/role-guard-service';
 
 @NgModule({
   declarations: [
@@ -53,7 +54,7 @@ import { AuthGuardService} from '../services/auth-guard.service';
     AppRoutingModule,
     FormsModule,
   ],
-  providers: [AuthService, AuthGuardService],
+  providers: [AuthService, AuthGuardService, RoleGuardService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
