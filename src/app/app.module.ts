@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 
@@ -22,7 +23,9 @@ import { SearchViewComponent } from './dashboard/search-view/search-view.compone
 import { UserCardComponent } from './reusables/user-card/user-card.component';
 import { ManageTeamsViewComponent } from './dashboard/admin/teams-view/manage-teams-view/manage-teams-view.component';
 import { TeamReportListComponent } from './team-report-list/team-report-list.component';
-
+import { AuthService } from '../services/auth.service';
+import { AuthGuardService} from '../services/auth-guard.service';
+import { RoleGuardService } from '../services/role-guard-service';
 
 @NgModule({
   declarations: [
@@ -49,8 +52,9 @@ import { TeamReportListComponent } from './team-report-list/team-report-list.com
   imports: [
     BrowserModule,
     AppRoutingModule,
+    FormsModule,
   ],
-  providers: [],
+  providers: [AuthService, AuthGuardService, RoleGuardService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

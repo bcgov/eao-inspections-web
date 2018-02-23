@@ -3,19 +3,25 @@
     <img class="login__header__img" src="../../assets/bc_logo_supported.png" />
   </div>
   <div class="login__body">
-    <form>
+    <form (ngSubmit)="onLogin(f)" #f="ngForm">
       <div class="login__body__form">
         <label class="login__body__form__label">Email</label>
-        <input 
-          type="email" 
-          class="login__body__form__input" 
+        <input
+          type="email"
+          class="login__body__form__input"
+          id="email"
+          name="email"
+          ngModel
         >
       </div>
       <div class="login__body__form">
         <label class="login__body__form__label">Password</label>
-        <input 
-          type="password" 
+        <input
+          type="password"
           class="login__body__form__input"
+          id="password"
+          name="password"
+          ngModel
         >
       </div>
       <button type="submit" class="login__body__btn btn">Login</button>
