@@ -1,6 +1,8 @@
 @import '../../scss/_variables.scss';
 
 .login {
+  height: 100vh;
+  background-color: $default-background;
   text-align: center;
 
   &__header {
@@ -14,8 +16,6 @@
   }
 
   &__body {
-    background-color: $default-background;
-
     &__form {
       margin: 10px;
 
