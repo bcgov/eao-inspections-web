@@ -1,0 +1,17 @@
+<div class="dashboard">
+  <div class="dashboard__header">
+    <p class="dashboard__title">{{title}}</p>
+    <div class="dashboard__buttons">
+      <button class="dashboard__btn">
+        <img class="dashboard__header__btn__img" src="../../assets/add-active.png" /> 
+        Create New
+      </button>
+      <button class="dashboard__btn">Archived Teams</button>
+    </div>
+  </div>
+  <div class="team-reports" *ngFor="let team of teams">
+    <a routerLink="manage-team/{{team.id}}">
+      <team-card [team]="team"></team-card>
+    </a>
+  </div>
+</div>

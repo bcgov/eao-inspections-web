@@ -3,26 +3,57 @@
     <img class="menu__header__img" src="../../assets/bc_logo_supported.png" />
   </div>
   <div class="menu__divider"></div>
+
+  <!-- all admin routes below - add ngIf when admin object available -->
+  <ng-template>
+    <ul class="menu__list">
+      <a routerLink="/admin/user-details">
+        <li class="menu__list__item">
+          <img class="menu__list__item__img" src="../../assets/users.png" /> 
+          Users
+        </li>
+      </a>
+      <a routerLink="/admin/team-details">
+        <li class="menu__list__item">
+          <img class="menu__list__item__img" src="../../assets/team.png" /> 
+          Teams
+        </li>
+      </a>
+      <a routerLink="/admin/report-details">
+        <li class="menu__list__item">
+          <img class="menu__list__item__img" src="../../assets/report.png" /> 
+          Reports
+        </li>
+      </a>
+    </ul>
+  </ng-template>
+
   <ul class="menu__list">
-    <a routerLink="/my-reports">
+    <a routerLink="/my-reports" routerLinkActive="menu__list--active">
       <li class="menu__list__item">
         <img class="menu__list__item__img" src="../../assets/report.png" />
         My Reports
       </li>
     </a>
-    <a routerLink="/team-reports">
+    <a routerLink="/team-reports" routerLinkActive="menu__list__item--active">
       <li class="menu__list__item">
         <img class="menu__list__item__img" src="../../assets/team.png" />
         Team Reports
       </li>
     </a>
-    <a routerLink="/profile">
+    <a routerLink="/search" routerLinkActive="menu__list__item--active">
+      <li class="menu__list__item">
+        <img class="menu__list__item__img" src="../../assets/search.png" /> 
+        Search
+      </li>
+    </a>
+    <a routerLink="/profile" routerLinkActive="menu__list__item--active">
       <li class="menu__list__item">
         <img class="menu__list__item__img" src="../../assets/profile.png" />
         Profile
       </li>
     </a>
-    <a routerLink="/settings">
+    <a routerLink="/settings" routerLinkActive="menu__list__item--active">
       <li class="menu__list__item">
         <img class="menu__list__item__img" src="../../assets/settings.png" />
         Settings

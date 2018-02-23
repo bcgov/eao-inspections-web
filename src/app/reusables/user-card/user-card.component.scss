@@ -1,0 +1,44 @@
+@import '../../../scss/_mixins';
+@import '../../../scss/_variables';
+
+.user__card {
+  margin: $dashboard-team-margin;
+  margin-top: $dashboard-content-margin;
+  display: inline;
+  height: 96px;	
+  width: 248px;	
+  border-radius: 2px;	
+  background-color: $background-white;	
+  box-shadow: 0 0 8px 0 rgba(0,0,0,0.2);
+  @include flex;
+
+  &--photo {
+    flex: 1;
+
+    &__img {
+      position: relative;
+      top: 20%;
+      left: 10px;
+      height: 64px;	
+      width: 64px;
+    }
+  }
+
+  &--actions {
+    position: relative;
+    top: 60%;
+    right: 30%;
+  }
+
+  &--details {
+    position: relative;
+    top: 20%;
+    left: 30px;
+    flex: 2;
+
+    h4 {
+      color: $font-black;	
+      font-size: 18px;
+    }
+  }
+}

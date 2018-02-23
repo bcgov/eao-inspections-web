@@ -49,6 +49,14 @@
         list-style-type: none;
         border-left: 10px solid $default-primary-color;
         
+         &--active {
+          text-decoration: none;
+          color: $font-white;
+          background-color: $default-secondary-color;
+          cursor: pointer;
+          border-left: 10px solid $default-link-color;
+        }
+
         &:hover {
           text-decoration: none;
           color: $font-white;
@@ -56,6 +64,7 @@
           cursor: pointer;
           border-left: 10px solid $default-link-color;
         }
+
         
       &__img {
         padding: 0 20px;
@@ -99,3 +108,11 @@
     }
   }
 }
+// .active {
+//   @extend .menu__list__item;
+//           width: 100%;
+//           text-decoration: none;
+//           color: $font-white;
+//           background-color: $default-secondary-color;
+//           border-left: 10px solid $default-link-color;
+// }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'profile-card',
@@ -6,7 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./profile-card.component.scss']
 })
 export class ProfileCardComponent implements OnInit {
-
+  @Input('profile') profile: any;
+  
   constructor() { }
 
   ngOnInit() {
