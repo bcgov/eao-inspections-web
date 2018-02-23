@@ -10,19 +10,25 @@
 
 body {
   font-family: myriad-pro, sans-serif;
+
   .dashboard {
-    min-height: 800px;
+    min-height: fill-available;
     max-height: 100%;
     background-color: $default-background;
-    position: relative;
-    top: -20px;
+    position: absolute;
+    bottom: 0;
     width: calc(100% - 268px);
     left: 268px;
     padding: 20px;
 
     @include tablet {
         width: calc(100% - 70px);
-         left: 70px;
+        left: 70px;
+      }
+
+      @include mobile {
+        width: 100%;
+        left: 0px;
       }
 
     &__header {
@@ -37,6 +43,10 @@ body {
       font-size: 28px;	
       font-weight: bold;	
       line-height: 34px;
+
+       @include mobile {
+        margin-left: 50px;
+      }
     }
 
     &__subtitle {
