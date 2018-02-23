@@ -1,4 +1,5 @@
-<div class="hamburger-menu">
+
+<div class="hamburger-menu" *ngIf="authService.isAuthenticated()">
   <button class="hamburger-menu__btn">
     <div class="hamburger-menu__btn__divider--lg"></div>
     <div class="hamburger-menu__btn__divider--sm"></div>
@@ -6,7 +7,7 @@
   </button>
 </div>
 
-<div class="menu">
+<div class="menu" *ngIf="authService.isAuthenticated()">
   <div class="menu__header">
     <img class="menu__header__img" src="../../assets/bc_logo_supported.png" />
   </div>
@@ -89,7 +90,7 @@
     <img class="menu__profile__img" src="../../assets/inspector-profile@4x.png" />
     <div class="menu__profile__content">
       <p class="menu__profile__content__name">Mittie Benson</p>
-      <a class="menu__profile__content__link" routerLink="/settings">Logout</a>
+        <a class="menu__profile__content__link" (click)="onLogOut()">Logout</a>
     </div>
   </div>
 </div>
