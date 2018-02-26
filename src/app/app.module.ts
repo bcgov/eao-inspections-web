@@ -54,7 +54,7 @@ import { ReportListItemComponent } from './reusables/report-list-item/report-lis
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule,
+    FormsModule
   ],
   providers: [AuthService, AuthGuardService, RoleGuardService],
   bootstrap: [AppComponent]

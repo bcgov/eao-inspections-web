@@ -8,7 +8,6 @@ import { AuthService } from '../../services/auth.service';
   providers: [AuthService]
 })
 export class MenuComponent implements OnInit {
-  public isVisible = false;
 
   constructor(private authService: AuthService) { }
 
