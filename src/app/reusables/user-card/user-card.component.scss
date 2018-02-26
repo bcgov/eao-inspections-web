@@ -25,6 +25,7 @@
   }
 
   &--actions {
+    display: inline-flex;
     position: relative;
     top: 60%;
     right: 30%;
@@ -37,6 +38,7 @@
     flex: 2;
 
     h4 {
+      width: max-content;
       color: $font-black;	
       font-size: 18px;
     }

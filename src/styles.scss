@@ -31,7 +31,7 @@ body {
     top: 0;
     width: calc(100% - 268px);
     left: 268px;
-    padding: 20px;
+    padding: 10px;
     
     @include tablet {
       width: calc(100% - 70px);
@@ -51,6 +51,11 @@ body {
     &__header {
       @include flex;
       justify-content: space-between;
+
+      @include mobile {
+        text-align: center;
+        display: block;
+      }
     }
 
       &__title {
@@ -61,7 +66,7 @@ body {
       font-weight: bold;	
       line-height: 34px;
 
-       @include mobile {
+      @include mobile {
         margin-left: 50px;
       }
     }
@@ -100,6 +105,14 @@ body {
         font-size: 18px;
         background-color: $background-white;
 
+        @include tablet {
+          margin-bottom: 15px;
+        }
+
+         @include mobile {
+          margin-bottom: 15px;
+        }
+
       &__img {
         margin-right: 5px;
       }
@@ -113,6 +126,107 @@ body {
         font-size: 18px;
         background-color: $default-primary-color;
       }
+    }
+  }
+
+  // Responsive Reports Table
+    table { 
+    width: $dashboard-content-width;
+    border-collapse: collapse; 
+    background-color: #FFFFFF;	
+    box-shadow: 0 0 8px 0 rgba(0,0,0,0.2);
+    margin: $dashboard-content-margin;
+  }
+
+  th { 
+    font-weight: 300;
+    height: 56px;		
+    background-color: #EAEEF0;
+    color: $font-dark-gray;	
+    text-align: center;
+    font-size: 16px;
+    text-transform: uppercase; 
+  }
+
+  tbody tr {
+    border-bottom: 1px solid #C6C6C6;
+  }
+
+  td, th { 
+    width: 250px;
+    padding: 15px 10px;
+    text-align: left; 
+  }
+
+  @include large  {
+    table, thead, tbody { 
+      display: block; 
+      background-color: $default-background;
+      box-shadow: none;
+    }
+    
+    tbody tr {
+      display: block;
+      margin-bottom: 20px;
+      background-color: $background-white !important;
+      border: none;
+      box-shadow: 0 0 8px 0 rgba(0,0,0,0.2);
+    }
+    
+    /* Hide table headers (but not display: none;, for accessibility) */
+    thead tr { 
+      position: absolute;
+      top: -9999px;
+      left: -9999px;
+    }
+      
+    td { 
+      width: inherit;
+      padding: 6px;
+      display: block;
+      border: none;
+      position: relative;
+      padding-left: 50%; 
+    }
+    
+    td:before { 
+      position: absolute;
+      top: 6px;
+      left: 6px;
+      width: 45%; 
+      padding-right: 10px; 
+      white-space: nowrap;
+    }
+
+    td:nth-of-type(1):before { 
+      content: "Title"; 
+      color: $font-dark-gray;	
+      font-size: 12px;
+      text-transform: uppercase; 
+    }
+    td:nth-of-type(2):before { 
+      content: "Linked Projects";
+      color: $font-dark-gray;	
+      font-size: 12px;
+      text-transform: uppercase;  
+    }
+    td:nth-of-type(3):before { 
+      content: "Team"; 
+      color: $font-dark-gray;	
+      font-size: 12px;
+      text-transform: uppercase; 
+    }
+    td:nth-of-type(4):before { 
+      content: "Submitted"; 
+      color: $font-dark-gray;	
+      font-size: 12px;
+      text-transform: uppercase; 
+    }
+    td:nth-of-type(5):before { 
+      content: "Action"; 
+      color: $font-dark-gray;	
+      font-size: 12px;
+      text-transform: uppercase; 
     }
   }
 }

@@ -15,7 +15,7 @@ import { ReportsViewComponent } from './dashboard/admin/reports-view/reports-vie
 import { SearchViewComponent } from './dashboard/search-view/search-view.component';
 import { TeamsViewComponent } from './dashboard/admin/teams-view/teams-view.component';
 import { ManageTeamsViewComponent } from './dashboard/admin/teams-view/manage-teams-view/manage-teams-view.component';
-import { TeamReportListComponent } from './team-report-list/team-report-list.component';
+import { TeamReportListComponent } from './dashboard/reports/team-reports/team-report-list/team-report-list.component';
 import {AuthGuardService} from '../services/auth-guard.service';
 import {RoleGuardService} from '../services/role-guard-service';
 

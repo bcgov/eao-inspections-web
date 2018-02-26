@@ -1,0 +1,19 @@
+<div class="dashboard">
+  <p class="dashboard__title">{{data.name}}</p>
+  <table>
+    <div class="report-list__content__header">
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Linked Projects</th>
+          <th>Inspector</th>
+          <th>Submitted</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+    </div>
+    <div class="report-list__content__details" *ngFor="let data of data">
+      <report-list-item [data]="data"></report-list-item>
+    </div>
+  </table>
+</div>
