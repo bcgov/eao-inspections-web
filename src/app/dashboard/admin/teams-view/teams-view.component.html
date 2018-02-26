@@ -9,7 +9,7 @@
       <button class="dashboard__btn">Archived Teams</button>
     </div>
   </div>
-  <div class="team-reports" *ngFor="let team of teams">
+  <div class="dashboard-card__container" *ngFor="let team of teams">
     <a routerLink="manage-team/{{team.id}}">
       <team-card [team]="team"></team-card>
     </a>

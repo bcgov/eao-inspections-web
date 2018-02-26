@@ -13,7 +13,7 @@ import { ProfileComponent } from './dashboard/profile-view/profile.component';
 import { SettingsComponent } from './dashboard/settings-view/settings.component';
 import { ProfileCardComponent } from './reusables/profile-card/profile-card.component';
 import { TeamCardComponent } from './reusables/team-card/team-card.component';
-import { ReportListComponent } from './reusables/report-list/report-list.component';
+import { MyReportListComponent } from './dashboard/reports/my-reports/my-report-list/my-report-list.component';
 import { InspectionViewComponent } from './reusables/inspection-view/inspection-view.component';
 import { ElementViewComponent } from './reusables/element-view/element-view.component';
 import { UsersViewComponent } from './dashboard/admin/users-view/users-view.component';
@@ -22,10 +22,11 @@ import { ReportsViewComponent } from './dashboard/admin/reports-view/reports-vie
 import { SearchViewComponent } from './dashboard/search-view/search-view.component';
 import { UserCardComponent } from './reusables/user-card/user-card.component';
 import { ManageTeamsViewComponent } from './dashboard/admin/teams-view/manage-teams-view/manage-teams-view.component';
-import { TeamReportListComponent } from './team-report-list/team-report-list.component';
+import { TeamReportListComponent } from './dashboard/reports/team-reports/team-report-list/team-report-list.component';
 import { AuthService } from '../services/auth.service';
 import { AuthGuardService} from '../services/auth-guard.service';
 import { RoleGuardService } from '../services/role-guard-service';
+import { ReportListItemComponent } from './reusables/report-list-item/report-list-item.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,7 @@ import { RoleGuardService } from '../services/role-guard-service';
     SettingsComponent,
     ProfileCardComponent,
     TeamCardComponent,
-    ReportListComponent,
+    MyReportListComponent,
     InspectionViewComponent,
     ElementViewComponent,
     UsersViewComponent,
@@ -47,12 +48,13 @@ import { RoleGuardService } from '../services/role-guard-service';
     SearchViewComponent,
     UserCardComponent,
     ManageTeamsViewComponent,
-    TeamReportListComponent
+    TeamReportListComponent,
+    ReportListItemComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule,
+    FormsModule
   ],
   providers: [AuthService, AuthGuardService, RoleGuardService],
   bootstrap: [AppComponent]

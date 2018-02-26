@@ -28,7 +28,7 @@
         <a routerLink="/admin/team-details">
           <li>
             <img class="menu__list__item__img" src="../../assets/team.png" /> 
-            <p>Teams</p>
+            <span>Teams</span>
           </li>
         </a>
       </div>
@@ -36,7 +36,7 @@
         <a routerLink="/admin/report-details">
           <li>
             <img class="menu__list__item__img" src="../../assets/report.png" /> 
-            <p>Reports</p>
+            <span>Reports</span>
           </li>
         </a>
       </div>
@@ -90,7 +90,7 @@
     <img class="menu__profile__img" src="../../assets/inspector-profile@4x.png" />
     <div class="menu__profile__content">
       <p class="menu__profile__content__name">Mittie Benson</p>
-        <a class="menu__profile__content__link" (click)="onLogOut()">Logout</a>
+        <button type="button" class="menu__profile__content__link" (click)="onLogOut()">Logout</button>
     </div>
   </div>
 </div>
