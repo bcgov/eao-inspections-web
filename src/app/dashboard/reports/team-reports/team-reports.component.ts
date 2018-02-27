@@ -1,10 +1,15 @@
 import { Component, OnInit } from '@angular/core';
+
+import {ReportService} from '../../../../services/report.service';
+import {ProfileService} from '../../../../services/profile.service';
+import {parseToJSON} from '../../../../services/parse.service';
 import * as Route from '../../../../constants/routes';
 
 @Component({
   selector: 'team-reports',
   templateUrl: './team-reports.component.html',
-  styleUrls: ['./team-reports.component.scss']
+  styleUrls: ['./team-reports.component.scss'],
+  providers: [ReportService, ProfileService]
 })
 export class TeamReportsComponent implements OnInit {
   title = "Team Reports";
@@ -28,11 +33,26 @@ export class TeamReportsComponent implements OnInit {
       image: "../../assets/inspector-profile@4x.png",
       members: 2
     }
-  ]
+  ];
+  reports = [];
 
-  constructor() { }
+  constructor(private reportService: ReportService, private profileService: ProfileService) { }
 
   ngOnInit() {
+    this.profileService.getTeams()
+      .then((results) => {
+        if (results instanceof Array) {
+          this.teams = parseToJSON(results);
+          console.log(this.teams);
+        }
+      });
+    // this.reportService.getTeamReports()
+    //   .then((results) => {
+    //     if (results instanceof Array) {
+    //       this.reports = results;
+    //     }
+    //     console.log(this.reports);
+    //   });
   }
 
 }

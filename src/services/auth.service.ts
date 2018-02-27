@@ -30,7 +30,19 @@ export class AuthService {
     });
   }
 
-  getRole() {}
+  getRole(role: string) {
+    return new Promise((resolve, reject) => {
+      const currentUser = Parse.User.current();
+      const roleObj = currentUser.get('role');
+      if (roleObj) {
+        roleObj.fetch().then((results) => {
+          resolve (results.get('name') === role);
+        }, (error) => {
+          reject (false);
+        });
+      }
+    });
+  }
 
   isAuthenticated() {
     return !!Parse.User.current();
