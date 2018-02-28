@@ -1,5 +1,5 @@
 
-<div class="hamburger-menu" *ngIf="authService.isAuthenticated()">
+<div class="hamburger-menu" *ngIf="isAuth()">
   <button class="hamburger-menu__btn">
     <div class="hamburger-menu__btn__divider--lg"></div>
     <div class="hamburger-menu__btn__divider--sm"></div>
@@ -7,7 +7,7 @@
   </button>
 </div>
 
-<div class="menu" *ngIf="authService.isAuthenticated()">
+<div class="menu" *ngIf="isAuth()">
   <div class="menu__header">
     <img class="menu__header__img" src="../../assets/bc_logo_supported.png" />
   </div>
@@ -19,7 +19,7 @@
       <div class="menu__list__item" routerLinkActive="menu__list__item--active">
         <a routerLink="/admin/user-details">
           <li>
-            <img class="menu__list__item__img" src="../../assets/users.png" /> 
+            <img class="menu__list__item__img" src="../../assets/users.png" />
             <span>Users</span>
           </li>
         </a>
@@ -27,7 +27,7 @@
       <div class="menu__list__item" routerLinkActive="menu__list__item--active">
         <a routerLink="/admin/team-details">
           <li>
-            <img class="menu__list__item__img" src="../../assets/team.png" /> 
+            <img class="menu__list__item__img" src="../../assets/team.png" />
             <span>Teams</span>
           </li>
         </a>
@@ -35,7 +35,7 @@
       <div class="menu__list__item" routerLinkActive="menu__list__item--active">
         <a routerLink="/admin/report-details">
           <li>
-            <img class="menu__list__item__img" src="../../assets/report.png" /> 
+            <img class="menu__list__item__img" src="../../assets/report.png" />
             <span>Reports</span>
           </li>
         </a>
@@ -43,7 +43,7 @@
     </ul>
   </ng-template>
 
-  <ul class="menu__list">
+  <ul class="menu__list" *ngIf="!isAdmin">
     <div class="menu__list__item" routerLinkActive="menu__list__item--active">
       <a routerLink="/my-reports">
         <li>
@@ -63,7 +63,7 @@
     <div class="menu__list__item" routerLinkActive="menu__list__item--active">
       <a routerLink="/search">
         <li>
-          <img class="menu__list__item__img" src="../../assets/search.png" /> 
+          <img class="menu__list__item__img" src="../../assets/search.png" />
           <span>Search</span>
         </li>
       </a>
