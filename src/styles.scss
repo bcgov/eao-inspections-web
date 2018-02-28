@@ -2,7 +2,7 @@
 
 // All CSS created using BEM naming conventions and SASS.
 
-// Generic/reusable styling for dashboard - all other CSS in appropiate folders.
+// Generic/reusable styling for dashboard (reusable buttons, tables, modals) - all other CSS in appropiate folders.
 // Variables/Mixins found in ./scss/<filename>
 @import '~bootstrap/dist/css/bootstrap.css';
 @import './scss/_variables';
@@ -66,7 +66,7 @@ body {
       line-height: 34px;
 
       @include mobile {
-        margin-left: 50px;
+        margin: 50px 10px;
       }
     }
 
@@ -137,11 +137,14 @@ body {
   }
 
   // modal 
-
   .modal {
     height: 400px;
     top: 30%;
     left: 15%;
+
+    @include mobile {
+      left: 0;
+    }
 
     h4 {
       color: rgba(0,0,0,0.54);
@@ -152,10 +155,11 @@ body {
 
   // Responsive Reports Table
     table { 
+    max-width: 1750px;
     width: $dashboard-content-width;
     border-collapse: collapse; 
     background-color: #FFFFFF;	
-    box-shadow: 0 0 8px 0 rgba(0,0,0,0.2);
+    box-shadow: $default-box-shadow;
     margin: $dashboard-content-margin;
   }
 
@@ -174,7 +178,7 @@ body {
   }
 
   td, th { 
-    width: 250px;
+    width: 350px;
     padding: 15px 10px;
     text-align: left; 
   }
@@ -191,7 +195,7 @@ body {
       margin-bottom: 20px;
       background-color: $background-white !important;
       border: none;
-      box-shadow: 0 0 8px 0 rgba(0,0,0,0.2);
+      box-shadow: $default-box-shadow;
     }
     
     /* Hide table headers (but not display: none;, for accessibility) */

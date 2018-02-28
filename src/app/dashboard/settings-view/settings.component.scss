@@ -15,7 +15,7 @@
     }
 
     @include mobile {
-      width: calc(100% - 20px);
+      padding: 20px;
       display: block;
     }
 
