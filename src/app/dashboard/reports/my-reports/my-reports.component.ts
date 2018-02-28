@@ -6,11 +6,6 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./my-reports.component.scss']
 })
 export class MyReportsComponent implements OnInit {
-  content = [{
-    image: "../../assets/report@2x.png",
-    message: "There is no report yet."
-  }]
-  
   title = "My Reports";
 
   constructor() { }
