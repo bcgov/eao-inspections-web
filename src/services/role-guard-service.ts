@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router, CanActivate, ActivatedRouteSnapshot} from '@angular/router';
+
 import {AuthService} from './auth.service';
-import * as Route from '../constants/routes';
-import * as ParseVar from '../constants/parse';
 
 @Injectable()
 export class RoleGuardService implements CanActivate {
