@@ -5,6 +5,7 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './my-report-list.component.html',
   styleUrls: ['./my-report-list.component.scss']
 })
+
 export class MyReportListComponent implements OnInit {
   title = "Team 1";
   link = "/team-reports";

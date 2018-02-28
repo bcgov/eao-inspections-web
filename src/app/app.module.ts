@@ -30,6 +30,7 @@ import { RoleGuardService } from '../services/role-guard-service';
 import { ReportListItemComponent } from './reusables/report-list-item/report-list-item.component';
 import { ModalService } from '../services/modal.service';
 import { NoRouteComponent } from './no-route/no-route.component';
+import { NoContentComponent } from './reusables/no-content/no-content.component';
 
 @NgModule({
   declarations: [
@@ -53,7 +54,8 @@ import { NoRouteComponent } from './no-route/no-route.component';
     ManageTeamsViewComponent,
     TeamReportListComponent,
     ReportListItemComponent,
-    NoRouteComponent
+    NoRouteComponent,
+    NoContentComponent
   ],
   imports: [
     BrowserModule,
