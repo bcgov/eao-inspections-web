@@ -12,6 +12,7 @@ import {Inspection} from '../../../../../models/inspection.model';
   styleUrls: ['./my-report-list.component.scss'],
   providers: [ReportService]
 })
+
 export class MyReportListComponent implements OnInit {
   title = 'Team 1';
   link = '/team-reports';

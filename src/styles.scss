@@ -2,7 +2,7 @@
 
 // All CSS created using BEM naming conventions and SASS.
 
-// Generic/reusable styling for dashboard - all other CSS in appropiate folders.
+// Generic/reusable styling for dashboard (reusable buttons, tables, modals) - all other CSS in appropiate folders.
 // Variables/Mixins found in ./scss/<filename>
 @import '~bootstrap/dist/css/bootstrap.css';
 @import './scss/_variables';
@@ -22,11 +22,45 @@
 body {
   font-family: myriad-pro, sans-serif;
 
-  
+  .no-content {
+    position: relative;
+    top: 50%;
+    left: 50%;
+    text-align: center;
+    
+    &__img {
+      color: $font-dark-gray !important;	
+    }
+
+    &__title {
+      color: $font-dark-gray;	
+      height: 20px;	
+      width: 182px;	
+      font-size: 20px;	
+      line-height: 24px;
+    
+      @include tablet {
+        top: 40%;
+        left: 40%;
+      }
+    
+      @include mobile {
+        top: 25%;
+        left: 25%;
+      }
+    }
+  }
+ 
+  .no-route {
+    height: 100vh;
+    width: 100vw;
+    background-color: $default-background;
+  }
+
   .dashboard {
+    background-color: $default-background;
     min-height: 100vh;
     max-height: 100%;
-    background-color: $default-background;
     position: relative;
     top: 0;
     width: calc(100% - 268px);
@@ -66,7 +100,7 @@ body {
       line-height: 34px;
 
       @include mobile {
-        margin-left: 50px;
+        margin: 50px 10px;
       }
     }
 
@@ -94,6 +128,12 @@ body {
       }
     }
 
+    &__buttons {
+      @include flex;
+      margin: 20px;
+      justify-content: space-around;
+    }
+
      &__btn {
         color: $default-secondary-color;
         margin-right: 10px;
@@ -103,6 +143,7 @@ body {
         border-radius: 4px;	
         font-size: 18px;
         background-color: $background-white;
+        cursor: pointer;
 
         @include tablet {
           margin-bottom: 15px;
@@ -112,28 +153,47 @@ body {
           margin-bottom: 15px;
         }
 
+        &--dark {
+          color: $font-white;
+          height: 40px;	
+          width: 160px;	
+          border: 1px solid $default-primary-color;	
+          border-radius: 4px;	
+          font-size: 18px;
+          background-color: $default-primary-color;
+          cursor: pointer;
+        }
       &__img {
         margin-right: 5px;
       }
 
-      &__btn--dark {
-        color: $default-secondary-color;
-        height: 40px;	
-        width: 160px;	
-        border: 1px solid $default-primary-color;	
-        border-radius: 4px;	
-        font-size: 18px;
-        background-color: $default-primary-color;
-      }
+    }
+  }
+
+  // modal 
+  .modal {
+    height: 400px;
+    top: 30%;
+    left: 15%;
+
+    @include mobile {
+      left: 0;
+    }
+
+    h4 {
+      color: rgba(0,0,0,0.54);
+      font-size: 18px;
+      margin: 50px;
     }
   }
 
   // Responsive Reports Table
     table { 
+    max-width: 1750px;
     width: $dashboard-content-width;
     border-collapse: collapse; 
     background-color: #FFFFFF;	
-    box-shadow: 0 0 8px 0 rgba(0,0,0,0.2);
+    box-shadow: $default-box-shadow;
     margin: $dashboard-content-margin;
   }
 
@@ -152,7 +212,7 @@ body {
   }
 
   td, th { 
-    width: 250px;
+    width: 350px;
     padding: 15px 10px;
     text-align: left; 
   }
@@ -169,7 +229,7 @@ body {
       margin-bottom: 20px;
       background-color: $background-white !important;
       border: none;
-      box-shadow: 0 0 8px 0 rgba(0,0,0,0.2);
+      box-shadow: $default-box-shadow;
     }
     
     /* Hide table headers (but not display: none;, for accessibility) */

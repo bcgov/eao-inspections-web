@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+
 import { AuthService } from '../../services/auth.service';
 import * as Parsevar from '../../constants/parse';
 
@@ -8,15 +10,18 @@ import * as Parsevar from '../../constants/parse';
   styleUrls: ['./menu.component.scss'],
   providers: [AuthService]
 })
-export class MenuComponent implements OnInit {
-  constructor(private authService: AuthService) { }
+export class MenuComponent {
 
-  ngOnInit() {
+  constructor(private authService: AuthService, private modalService: NgbModal ) { }
+
+  open(content) {
+    this.modalService.open(content);
   }
 
   isAuth() {
     return !! this.authService.isAuthenticated();
   }
+
   onLogOut() {
     this.authService.logOut();
   }

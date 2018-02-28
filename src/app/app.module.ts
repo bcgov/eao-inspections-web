@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { AppRoutingModule } from './app-routing.module';
 
@@ -27,6 +28,9 @@ import { AuthService } from '../services/auth.service';
 import { AuthGuardService} from '../services/auth-guard.service';
 import { RoleGuardService } from '../services/role-guard-service';
 import { ReportListItemComponent } from './reusables/report-list-item/report-list-item.component';
+import { ModalService } from '../services/modal.service';
+import { NoRouteComponent } from './no-route/no-route.component';
+import { NoContentComponent } from './reusables/no-content/no-content.component';
 
 @NgModule({
   declarations: [
@@ -49,14 +53,17 @@ import { ReportListItemComponent } from './reusables/report-list-item/report-lis
     UserCardComponent,
     ManageTeamsViewComponent,
     TeamReportListComponent,
-    ReportListItemComponent
+    ReportListItemComponent,
+    NoRouteComponent,
+    NoContentComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    NgbModule.forRoot(),
   ],
-  providers: [AuthService, AuthGuardService, RoleGuardService],
+  providers: [AuthService, AuthGuardService, RoleGuardService, ModalService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
