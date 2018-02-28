@@ -18,6 +18,7 @@ import { ManageTeamsViewComponent } from './dashboard/admin/teams-view/manage-te
 import { TeamReportListComponent } from './dashboard/reports/team-reports/team-report-list/team-report-list.component';
 import {AuthGuardService} from '../services/auth-guard.service';
 import {RoleGuardService} from '../services/role-guard-service';
+import { NoRouteComponent } from './no-route/no-route.component';
 
 const routes: Routes = [
   // unauthenticated routes
@@ -41,6 +42,9 @@ const routes: Routes = [
   { path: Route.ADMIN_TEAMS, component: TeamsViewComponent, canActivate: [AuthGuardService, RoleGuardService] },
   { path: Route.ADMIN_TEAMS + Route.MANAGE_TEAM_ID, component: ManageTeamsViewComponent, canActivate: [AuthGuardService, RoleGuardService] },
   { path: Route.ADMIN_REPORTS, component: ReportsViewComponent, canActivate: [AuthGuardService, RoleGuardService] },
+
+  //no route
+  { path: '**', component: NoRouteComponent },
 ];
 
 @NgModule({
