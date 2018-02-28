@@ -40,6 +40,40 @@
   }
 }
 
+.mobile-menu {
+  position: fixed;
+  top: -5px !important;
+  left: 0 !important;
+  color: white;
+  background-color: $default-primary-color;
+  width: 100vh;
+  max-height: 100%;
+
+  &__divider {
+    height: 2px;	
+    width: 170px;	
+    border: 1px solid rgba(84,117,167,0.25);
+    margin: 15px 60px;
+    width: 40%;
+  }
+
+  &__header {
+    padding-top: 15px;
+    margin: 10px;
+    @include flex;
+
+    &__img {
+      position: absolute;
+      left: 40%;
+      width: 90px;
+    }
+  }
+
+  &__footer {
+    margin: 2% 15%;
+    @include flex;
+  }
+}
 .menu {
   position: fixed;
   top: 0;

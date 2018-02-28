@@ -6,7 +6,7 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./team-report-list.component.scss']
 })
 export class TeamReportListComponent implements OnInit {
-  @Input('data') data: any;
+  // @Input('data') data: any;
 
   data = [
     {

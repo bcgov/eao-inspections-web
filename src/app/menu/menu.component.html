@@ -1,11 +1,79 @@
 
-<div class="hamburger-menu" *ngIf="authService.isAuthenticated()">
-  <button class="hamburger-menu__btn">
+<!-- Menu for Mobile view -->
+<div class="hamburger-menu" ngbDropdown *ngIf="authService.isAuthenticated()">
+  <button class="hamburger-menu__btn" id="dropdown" ngbDropdownToggle>
     <div class="hamburger-menu__btn__divider--lg"></div>
     <div class="hamburger-menu__btn__divider--sm"></div>
     <div class="hamburger-menu__btn__divider--lg"></div>
   </button>
+  <div ngbDropdownMenu aria-labelledby="dropdown" class="mobile-menu">
+    <div class="mobile-menu__header">
+    <button class="mobile-menu__btn" id="dropdown" ngbDropdownToggle>
+      <div class="hamburger-menu__btn__divider--lg"></div>
+      <div class="hamburger-menu__btn__divider--sm"></div>
+      <div class="hamburger-menu__btn__divider--lg"></div>
+    </button>
+    <img class="mobile-menu__header__img" src="../../assets/bc_logo_mobile@2x.png" />
+    </div>
+    <div class="mobile-menu__divider"></div>
+    <ul class="menu__list">
+      <div class="menu__list__item" routerLinkActive="menu__list__item--active">
+        <a routerLink="/my-reports">
+          <li>
+            <img class="menu__list__item__img" src="../../assets/report.png" data-toggle="tooltip" data-placement="right" title="My Reports"
+            />
+            My Reports
+          </li>
+        </a>
+      </div>
+      <div class="menu__list__item" routerLinkActive="menu__list__item--active">
+        <a routerLink="/team-reports">
+          <li>
+            <img class="menu__list__item__img" src="../../assets/team.png" />
+            Team Reports
+          </li>
+        </a>
+      </div>
+      <div class="menu__list__item" routerLinkActive="menu__list__item--active">
+        <a routerLink="/search">
+          <li>
+            <img class="menu__list__item__img" src="../../assets/search.png" />
+            Search
+          </li>
+        </a>
+      </div>
+      <div class="menu__list__item" routerLinkActive="menu__list__item--active">
+        <a routerLink="/profile">
+          <li>
+            <img class="menu__list__item__img" src="../../assets/profile.png" />
+            Profile
+          </li>
+        </a>
+      </div>
+      <div class="menu__list__item" routerLinkActive="menu__list__item--active">
+        <a routerLink="/settings">
+          <li>
+            <img class="menu__list__item__img" src="../../assets/settings.png" />
+            Settings
+          </li>
+        </a>
+      </div>
+      <div class="mobile-menu__divider"></div>
+      <div>
+        <li class="mobile-menu__footer">
+          <img class="menu__profile__img" src="../../assets/inspector-profile@4x.png" />
+          <div class="mobile-menu__footer__content"> 
+            <p>Mittie Benson</p>
+            <button type="button" class="menu__profile__content__link" (click)="open(content)">Logout</button>
+          </div>
+        </li>
+      </div>
+    </ul>
+  </div>
 </div>
+
+
+<!-- Main menu for Web & Tablet views -->
 
 <div class="menu" *ngIf="authService.isAuthenticated()">
   <div class="menu__header">
@@ -90,7 +158,16 @@
     <img class="menu__profile__img" src="../../assets/inspector-profile@4x.png" />
     <div class="menu__profile__content">
       <p class="menu__profile__content__name">Mittie Benson</p>
-        <button type="button" class="menu__profile__content__link" (click)="onLogOut()">Logout</button>
+        <button type="button" class="menu__profile__content__link" (click)="open(content)">Logout</button>
     </div>
   </div>
 </div>
+
+<!-- logout modal -->
+<ng-template #content let-c="close" let-d="dismiss" class="modal">
+  <h4>Are you sure you want to logout?</h4>
+  <div class="dashboard__buttons">
+    <button type="button" class="dashboard__btn--dark" (click)="onLogOut()">Logout</button>
+    <button type="button" class="dashboard__btn" (click)="c('Close click')">Cancel</button>
+  </div>
+</ng-template>

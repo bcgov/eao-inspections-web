@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'menu',
@@ -7,13 +8,14 @@ import { AuthService } from '../../services/auth.service';
   styleUrls: ['./menu.component.scss'],
   providers: [AuthService]
 })
-export class MenuComponent implements OnInit {
+export class MenuComponent {
 
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService, private modalService: NgbModal ) { }
 
-  ngOnInit() {
+  open(content) {
+    this.modalService.open(content);
   }
-
+  
   onLogOut() {
     this.authService.logOut();
   }

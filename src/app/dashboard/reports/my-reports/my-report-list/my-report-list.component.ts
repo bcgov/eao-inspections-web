@@ -7,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MyReportListComponent implements OnInit {
   title = "Team 1";
-  link = "/team-reports"
+  link = "/team-reports";
 
   data = [
     {
@@ -57,7 +57,7 @@ export class MyReportListComponent implements OnInit {
       team: "Team 2",
       image: "../../assets/team-logo.png",
       submitted: "Jan 6 2018",
-    }
+    },
     {
       id: 7,
       inspection: "Inspection",
