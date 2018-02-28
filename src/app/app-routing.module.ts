@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import {Routes, RouterModule, CanActivate} from '@angular/router';
+import * as ParseVar from '../constants/parse';
 import * as Route from '../constants/routes';
 
 import { LoginComponent } from './login/login.component';
@@ -38,12 +39,12 @@ const routes: Routes = [
   { path: Route.SEARCH, component: SearchViewComponent, canActivate: [AuthGuardService] },
 
   // admin routes
-  { path: Route.ADMIN_USERS, component: UsersViewComponent, canActivate: [AuthGuardService, RoleGuardService] },
-  { path: Route.ADMIN_TEAMS, component: TeamsViewComponent, canActivate: [AuthGuardService, RoleGuardService] },
-  { path: Route.ADMIN_TEAMS + Route.MANAGE_TEAM_ID, component: ManageTeamsViewComponent, canActivate: [AuthGuardService, RoleGuardService] },
-  { path: Route.ADMIN_REPORTS, component: ReportsViewComponent, canActivate: [AuthGuardService, RoleGuardService] },
+  { path: Route.ADMIN_USERS, component: UsersViewComponent, canActivate: [AuthGuardService, RoleGuardService], data: {'expectedRole': ParseVar.ADMIN} },
+  { path: Route.ADMIN_TEAMS, component: TeamsViewComponent, canActivate: [AuthGuardService, RoleGuardService], data: {'expectedRole': ParseVar.ADMIN} },
+  { path: Route.ADMIN_TEAMS + Route.MANAGE_TEAM_ID, component: ManageTeamsViewComponent, canActivate: [AuthGuardService, RoleGuardService], data: {'expectedRole': ParseVar.ADMIN} },
+  { path: Route.ADMIN_REPORTS, component: ReportsViewComponent, canActivate: [AuthGuardService, RoleGuardService], data: {'expectedRole': ParseVar.ADMIN} },
 
-  //no route
+  // no-route
   { path: '**', component: NoRouteComponent },
 ];
 

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../../services/auth.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+
+import { AuthService } from '../../services/auth.service';
+import * as Parsevar from '../../constants/parse';
 
 @Component({
   selector: 'menu',
@@ -15,7 +17,11 @@ export class MenuComponent {
   open(content) {
     this.modalService.open(content);
   }
-  
+
+  isAuth() {
+    return !! this.authService.isAuthenticated();
+  }
+
   onLogOut() {
     this.authService.logOut();
   }
