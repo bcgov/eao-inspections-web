@@ -42,17 +42,9 @@ export class TeamReportsComponent implements OnInit {
     this.profileService.getTeams()
       .then((results) => {
         if (results instanceof Array) {
-          this.teams = parseToJSON(results);
-          console.log(this.teams);
+          this.teams = results;
         }
       });
-    // this.reportService.getTeamReports()
-    //   .then((results) => {
-    //     if (results instanceof Array) {
-    //       this.reports = results;
-    //     }
-    //     console.log(this.reports);
-    //   });
   }
 
 }
