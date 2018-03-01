@@ -197,7 +197,7 @@
 <ng-template #content let-c="close" let-d="dismiss" class="modal">
   <h4>Are you sure you want to logout?</h4>
   <div class="dashboard__buttons">
-    <button type="button" class="dashboard__btn--dark" (click)="onLogOut()">Logout</button>
+    <button type="button" class="dashboard__btn--dark" (click)="onLogOut(); c('Close click');">Logout</button>
     <button type="button" class="dashboard__btn" (click)="c('Close click')">Cancel</button>
   </div>
 </ng-template>
