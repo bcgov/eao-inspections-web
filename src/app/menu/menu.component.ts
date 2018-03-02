@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { AuthService } from '../../services/auth.service';
+import { ModalService } from './../../services/modal.service';
 import * as Parsevar from '../../constants/parse';
 
 @Component({
@@ -12,7 +12,7 @@ import * as Parsevar from '../../constants/parse';
 })
 export class MenuComponent {
 
-  constructor(private authService: AuthService, private modalService: NgbModal ) { }
+  constructor(private authService: AuthService, public modalService: ModalService ) { }
 
   open(content) {
     this.modalService.open(content);
