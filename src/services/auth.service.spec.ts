@@ -10,7 +10,7 @@ const Parse = require('parse');
 Parse.initialize(environment.parseId, environment.parseKey);
 Parse.serverURL = environment.parseURL;
 
-fdescribe('Authentication and Authorization Testing', () => {
+describe('Authentication and Authorization Testing', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
   let service: AuthService;
