@@ -13,28 +13,9 @@ import {Team} from '../../../models/team.model';
 export class ProfileComponent implements OnInit {
   title = "Profile";
   subTitle = "Administrator";
-  teamData = [];
-  adminData = [];
   profile: BasicUser;
   teams;
-  admin = [
-    {
-      id: 1,
-      name: "Clara Logan",
-      team: "Team 2",
-      email: "clara12@email.com",
-      image: "../../assets/admin-2@4x.png",
-      isAdmin: true
-    },
-    {
-      id: 2,
-      name: "Agusta Lyons",
-      team: "Team 1",
-      email: "agusta_lyons@email.com",
-      image: "../../assets/admin-1@4x.png",
-      isAdmin: true
-    }
-  ];
+  admin = [];
 
   constructor(private profileService: ProfileService) {}
 
@@ -55,19 +36,22 @@ export class ProfileComponent implements OnInit {
 
     this.profileService.getTeamAdminInfo()
       .then((teamAdminInfo) => {
-      if (teamAdminInfo instanceof Array) {
-        this.adminData = parseToJSON(teamAdminInfo);
-        this.adminData.forEach((object) => {
-          this.admin.push({
-            id: 2,
-            name: object['fname'] + ' ' + object['lname'],
-            team: "",
-            email: object['email'],
-            image: "../../assets/admin-1@4x.png",
-            isAdmin: true
+        if (teamAdminInfo instanceof Array) {
+          teamAdminInfo.forEach((object) => {
+            const admin = object['admin'];
+            const team = object['team'];
+            this.admin.push(
+              new BasicUser(
+                userData.objectId,
+                admin.get('fname') + ' ' + admin.get('lname'),
+                team,
+                admin.get('publicEmail'),
+                '../../../assets/inspector-profile@4x.png',
+                true
+              )
+            );
           });
-        });
-      }
+        }
     });
   }
 

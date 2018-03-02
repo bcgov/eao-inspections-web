@@ -61,7 +61,17 @@ export class ProfileService {
             results = [results];
           }
           results.forEach((object) => {
-            promises.push(object.get('teamAdmin').fetch().then((obj) => { admins.push(obj); }));
+            promises.push(object.get('teamAdmin')
+              .fetch()
+              .then((obj) => {
+                admins.push(
+                  {
+                    'admin': obj,
+                    'team': [new Team(object.get('name'), object.get('teamAdmin.id'))],
+                  }
+                );
+              })
+            );
           });
         },
         error: function(error) {
