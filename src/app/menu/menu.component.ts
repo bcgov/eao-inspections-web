@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { AuthService } from '../../services/auth.service';
-import * as Parsevar from '../../constants/parse';
+import * as Route from '../../constants/routes';
+
 
 @Component({
   selector: 'menu',
@@ -12,17 +14,23 @@ import * as Parsevar from '../../constants/parse';
 })
 export class MenuComponent {
 
-  constructor(private authService: AuthService, private modalService: NgbModal ) { }
+  constructor(private authService: AuthService, private modalService: NgbModal, private router: Router ) { }
 
   open(content) {
     this.modalService.open(content);
   }
 
   isAuth() {
-    return !! this.authService.isAuthenticated();
+    return this.authService.isAuthenticated();
   }
 
   onLogOut() {
-    this.authService.logOut();
+    this.authService.logOut().then(() => {
+      this.router.navigate([Route.LOGIN]);
+    });
+  }
+
+  isAdmin() {
+    return this.authService.isAdmin();
   }
 }
