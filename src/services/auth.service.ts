@@ -1,8 +1,6 @@
-import { Router } from '@angular/router';
 import { Injectable} from '@angular/core';
 
 import { environment } from '../environments/environment';
-import * as Route from '../constants/routes';
 
 const Parse: any = require('parse');
 
@@ -12,22 +10,29 @@ Parse.serverURL = environment.parseURL;
 @Injectable()
 export class AuthService {
 
-  constructor(private router: Router) {}
+  constructor() {}
 
   logIn(username: string, password: string) {
-    Parse.User.logIn(username, password)
-      .then(() => {
-        this.router.navigate([Route.MY_REPORTS]);
-      },
-      (obj, err) => {
-        return err.message;
-      });
+    return new Promise((resolve) => {
+      Parse.User.logIn(username, password)
+        .then(() => {
+            resolve(true);
+          },
+          () => {
+            resolve(false);
+          });
+    });
   }
 
   logOut() {
-    Parse.User.logOut()
-      .then(() => {
-        this.router.navigate([Route.LOGIN]);
+    return new Promise((resolve) => {
+      Parse.User.logOut()
+        .then(() => {
+            resolve(true);
+          },
+          () => {
+            resolve(false);
+          });
     });
   }
 
@@ -47,5 +52,13 @@ export class AuthService {
 
   isAuthenticated() {
     return !!Parse.User.current();
+  }
+
+  isAdmin() {
+    return (Parse.User.current().get('roleName') === 'admin');
+  }
+
+  isSuperAdmin() {
+    return (Parse.User.current().get('roleName') === 'superadmin');
   }
 }
