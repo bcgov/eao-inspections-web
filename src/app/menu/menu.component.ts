@@ -31,6 +31,6 @@ export class MenuComponent {
   }
 
   isAdmin() {
-    return this.authService.isAdmin();
+    return (this.authService.isAdmin() || this.authService.isSuperAdmin());
   }
 }
