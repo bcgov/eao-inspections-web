@@ -27,6 +27,11 @@ describe('MenuComponent', () => {
           isAdmin: false
         };
       }),
+      isAdmin: jasmine.createSpy('isAdmin').and.callFake(() => {
+        return {
+          isAdmin: true
+        };
+      }),
       logout: jasmine.createSpy('logout').and.callFake(
         () => Promise.resolve(true).then(() => {
         })
@@ -72,19 +77,12 @@ describe('MenuComponent', () => {
 
   it('should create if user is authenticated', () => {
     expect(component).toBeTruthy();
-
-    // inject([AuthService], (injectService: AuthService) => {
-      //   expect(injectService).toBe(authService);
-      // })
-      // expect(authService.isAuthenticated()).toBeTruthy();
-      // spyOn(authService, 'isAuthenticated').and.returnValue(true);
-      // expect(component).toBeTruthy();
     });
 
   fit('when logout button is clicked a modal opens', fakeAsync( () => {
     expect(authServiceStub.isAuthenticated).not.toBeNull();
     let button = fixture.debugElement.nativeElement;
-    button.querySelector('.menu__profile__content__link').click();
+    button.querySelector('button').click();
     tick();
     fixture.detectChanges();
     expect(modalServiceStub.open).toHaveBeenCalled();
