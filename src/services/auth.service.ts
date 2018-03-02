@@ -55,7 +55,7 @@ export class AuthService {
   }
 
   isAdmin() {
-    return (Parse.User.current().get('roleName') === 'admin');
+    return (Parse.User.current().get('roleName') === 'admin' || 'superadmin');
   }
 
   isSuperAdmin() {
