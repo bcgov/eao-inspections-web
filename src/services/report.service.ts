@@ -37,7 +37,6 @@ export class ReportService {
     return new Promise((resolve, reject) => {
       const teamQuery = new Parse.Query('Team');
       teamQuery.equalTo('id', teamId);
-
       const q = new Parse.Query('Inspection');
       q.matchesKeyInQuery('teamId', 'teamId', teamQuery, {
         success: function(results) {
