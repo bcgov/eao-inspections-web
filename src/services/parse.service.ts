@@ -11,9 +11,11 @@ Parse.serverURL = environment.parseURL;
 
 export function parseToJSON(objectList) {
   const listJSON = [];
-  objectList.forEach((object) => {
-    listJSON.push(object.toJSON());
-  });
+  if (objectList.length) {
+    objectList.forEach((object) => {
+      listJSON.push(object.toJSON());
+    });
+  }
   return listJSON;
 }
 
