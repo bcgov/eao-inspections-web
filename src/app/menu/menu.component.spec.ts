@@ -81,8 +81,17 @@ describe('MenuComponent', () => {
 
   fit('when logout button is clicked a modal opens', fakeAsync( () => {
     expect(authServiceStub.isAuthenticated).not.toBeNull();
-    let button = fixture.debugElement.nativeElement;
-    button.querySelector('button').click();
+
+    let event = {
+      type: 'click',
+      stopPropagation: function () { }
+    }
+    let spy = spyOn(event, 'stopPropagation');
+    $('.menu__profile__content__link').trigger(event);
+    expect(spy).toHaveBeenCalled();
+
+    // let button = fixture.debugElement.nativeElement;
+    // button.querySelector('button').click();
     tick();
     fixture.detectChanges();
     expect(modalServiceStub.open).toHaveBeenCalled();
