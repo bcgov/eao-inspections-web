@@ -13,12 +13,12 @@ Parse.serverURL = environment.parseURL;
 @Injectable()
 export class ProfileService {
   user = new Parse.User();
-  constructor(private router: Router) {
+  constructor() {
     this.user = Parse.User.current();
   }
 
   getUser() {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       resolve(this.user.toJSON());
     });
   }
@@ -67,7 +67,7 @@ export class ProfileService {
                 admins.push(
                   {
                     'admin': obj,
-                    'team': [new Team(object.get('name'), object.get('teamAdmin.id'))],
+                    'team': [new Team(object.get('name'), object.get('teamAdmin'))],
                   }
                 );
               })

@@ -31,15 +31,15 @@ export class ProfileComponent implements OnInit {
 
     this.profileService.getTeams().then((results) => {
       this.teams = results;
-      this.profile['teams'] = this.teams;
+      this.profile.teams = this.teams;
     });
 
     this.profileService.getTeamAdminInfo()
       .then((teamAdminInfo) => {
         if (teamAdminInfo instanceof Array) {
           teamAdminInfo.forEach((object) => {
-            const admin = object['admin'];
-            const team = object['team'];
+            const admin = object.admin;
+            const team = object.team;
             this.admin.push(
               new BasicUser(
                 userData.objectId,
