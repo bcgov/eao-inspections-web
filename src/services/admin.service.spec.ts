@@ -11,13 +11,15 @@ const Parse = require('parse');
 Parse.initialize(environment.parseId, environment.parseKey);
 Parse.serverURL = environment.parseURL;
 
-describe('Authentication and Authorization Testing', () => {
+fdescribe('Admin Testing', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
   let service: AdminService;
   let originalTimeout;
 
-  const test_team = new Parse.Object('Team');
+  let test_user;
+  let test_team;
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [FormsModule,
@@ -32,31 +34,37 @@ describe('Authentication and Authorization Testing', () => {
   beforeAll((done) => {
     originalTimeout = jasmine.DEFAULT_TIMEOUT_INTERVAL;
     jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
-    Parse.User.logIn('admin', 'admin').then(() => {
-      test_team.set('name', 'test_team');
-      test_team.save().then(() => {
-        done();
-      });
+    Parse.User.logIn('superadmin', 'superadmin').then(() => {
+      console.log('Logged In as SuperAdmin');
+      done();
     });
   });
 
   beforeEach(() => {
-    jasmine.DEFAULT_TIMEOUT_INTERVAL = originalTimeout;
     fixture = TestBed.createComponent(LoginComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
     service = TestBed.get(AdminService);
   });
 
-  afterEach(() => { });
+  afterEach((done) => {
+    setTimeout(function() {
+      // do some stuff
+      done();
+    }, 1000);
+  });
 
   afterAll((done) => {
-    console.log('destroying test');
-    test_team.destroy().then(() => {
-      Parse.User.logOut().then(() => {
-        jasmine.DEFAULT_TIMEOUT_INTERVAL = originalTimeout;
-        done();
-      });
+    console.log('Test Complete, logging User out.');
+    // test_team.destroy().then(() => {
+    //   Parse.User.logOut().then(() => {
+    //     jasmine.DEFAULT_TIMEOUT_INTERVAL = originalTimeout;
+    //     done();
+    //   });
+    // });
+    Parse.User.logOut().then(() => {
+      jasmine.DEFAULT_TIMEOUT_INTERVAL = originalTimeout;
+      done();
     });
   });
 
@@ -77,47 +85,57 @@ describe('Authentication and Authorization Testing', () => {
     console.log('Testing create user in functionality');
     service.createUser('test_user', 'test_user', 'test_user@test_user.com').then(value => {
       console.log(value);
+      test_user = value;
       expect(value).toBeTruthy();
     });
   });
 
   it('should update user', () => {
     console.log('Testing update user in functionality');
-    service.updateUser('', 'name', 'test_user_changed').then(value => {
+    const name_change = 'test_user_changed';
+    service.updateUser(test_user.id, 'name', name_change).then(value => {
       console.log(value);
-      expect(value).toBeTruthy();
+      expect(test_user.name === name_change).toBeTruthy();
     });
   });
 
   it('should archive user', () => {
     console.log('Testing archive user in functionality');
-    service.deleteUser('').then(value => {
+    service.deleteUser(test_user.id).then(value => {
       console.log(value);
-      expect(value).toBeTruthy();
+      expect(value['status']).toBeFalsy();
     });
   });
 
-  it('should create team', () => {
+  fit('should create team', () => {
     console.log('Testing create team in functionality');
     service.createTeam('test_team').then(value => {
-      console.log(value);
-      expect(value).toBeTruthy();
+      test_team = value;
+      const query = new Parse.Query('Team');
+      query.get(test_team.id).then(object => {
+        console.log('Matching ids...');
+        expect(object.id === test_team.id).toBeTruthy();
+      });
     });
   });
 
-  it('should update team', () => {
-    console.log('Testing create team in functionality');
-    service.updateTeam('', 'name', 'test_team').then(value => {
-      console.log(value);
+  fit('should update team', () => {
+    console.log('Testing updating team in functionality: ' + test_team.id);
+    service.updateTeam(test_team.get('id'), 'name', 'new_name').then(value => {
       expect(value).toBeTruthy();
+      console.log(value);
+      expect(value['name'] === 'new_name').toBeTruthy();
     });
   });
 
-  it('should update team', () => {
+  fit('should delete team', () => {
     console.log('Testing delete team in functionality');
-    service.deleteTeam('').then(value => {
-      console.log(value);
-      expect(value).toBeTruthy();
+    service.deleteTeam(test_team.id).then(() => {
+      const query = new Parse.Query('Team');
+      query.get(test_team.id).then(object => {
+        console.log('Checking status...');
+        expect(object.status).toBeFalsy();
+      });
     });
   });
 

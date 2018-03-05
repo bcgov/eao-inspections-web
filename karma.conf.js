@@ -23,6 +23,11 @@ module.exports = function (config) {
     angularCli: {
       environment: 'dev'
     },
+    browserConsoleLogOptions: {
+      level: 'log',
+      format: '%b %T: %m',
+      terminal: true
+    },
     reporters: ['progress', 'kjhtml'],
     port: 9876,
     colors: true,

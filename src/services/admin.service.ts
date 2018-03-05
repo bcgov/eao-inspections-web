@@ -57,7 +57,7 @@ export class AdminService {
         success: function (user) {
           user.set(attribute, value);
           user.save();
-          resolve('success');
+          resolve(user);
         },
         error: function (object, error) {
           reject(error.message);
@@ -72,9 +72,9 @@ export class AdminService {
       const query = Parse.Query(User);
       query.get(userId, {
         success: function (user) {
-          user.set('status', 'NOT_ACTIVE');
+          user.set('active', 'false');
           user.save();
-          resolve('success');
+          resolve(user);
         },
         error: function (object, error) {
           reject(error.message);
@@ -86,31 +86,27 @@ export class AdminService {
   createTeam(teamName: string) {
     return new Promise((resolve, reject) => {
       const team = new Parse.Object('Team');
-      team.set('name', teamName);
-
-      team.save(null, {
-        success: function (results) {
-          resolve('success');
-        },
-        error: function (object, error) {
-          resolve(error.message);
-        }
+      team.save('name', teamName).then(result => {
+        console.log(result);
+        resolve(result);
+      }, error => {
+        reject(error.message);
       });
     });
   }
 
   updateTeam(teamId: string, attribute: string, value: string) {
     return new Promise((resolve, reject) => {
-      const Team = Parse.Object.extend('Team');
-      const query = Parse.Query(Team);
+      const query = new Parse.Query('Team');
       query.get(teamId, {
-        success: function (team) {
-          team.set(attribute, value);
-          team.save();
-          resolve('success');
+        success: function (object) {
+          object.set(attribute, value);
+          object.save().then((obj) => {
+            resolve(obj);
+          });
         },
         error: function (object, error) {
-          resolve(error.message);
+          reject(error.message);
         }
       });
     });
@@ -118,13 +114,13 @@ export class AdminService {
 
   deleteTeam(teamId: string) {
     return new Promise((resolve, reject) => {
-      const Team = Parse.Object.extend('User');
-      const query = Parse.Query(Team);
+      const query = new Parse.Query('Team');
       query.get(teamId, {
         success: function (team) {
-          team.set('status', 'ARCHIVED');
-          team.save();
-          resolve('success');
+          team.set('active', false);
+          team.save().then((obj) => {
+            resolve(obj);
+          });
         },
         error: function (object, error) {
           resolve(error.message);
