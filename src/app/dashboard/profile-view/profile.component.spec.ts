@@ -57,16 +57,7 @@ describe('ProfileComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('should create with appropiate data', () => {
     expect(component).toBeTruthy();
   });
-
-  // describe('ngOnInit', () => {
-  //   it('should initialize and call getUser', fakeAsync(() => {
-  //   spyOn(component, 'ngOnInit');
-  //   fixture.detectChanges();
-  //   tick();
-  //   expect(component.ngOnInit).toHaveBeenCalled();
-  //   }));
-  // });
 });
