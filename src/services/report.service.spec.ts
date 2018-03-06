@@ -6,18 +6,20 @@ import { LoginComponent } from '../app/login/login.component';
 import { AuthService } from './auth.service';
 import { environment } from '../environments/environment';
 import { ReportService } from './report.service';
+import {createInspection, createObservation, createTeam, deleteInspections, deleteObservations, deleteTeam} from './testing.service';
 const Parse = require('parse');
 
 Parse.initialize(environment.parseId, environment.parseKey);
 Parse.serverURL = environment.parseURL;
 
-describe('Report Testing', () => {
+fdescribe('Report Testing', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
   let service: ReportService;
   let originalTimeout;
-  const test_team = new Parse.Object('Team');
-
+  let team1;
+  let insp1, insp2;
+  let obs1, obs2;
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [FormsModule,
@@ -32,9 +34,35 @@ describe('Report Testing', () => {
   beforeAll((done) => {
     originalTimeout = jasmine.DEFAULT_TIMEOUT_INTERVAL;
     jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
-    Parse.User.logIn('admin', 'admin').then(() => {
-      test_team.set('name', 'test_team');
-      test_team.save().then(() => {
+    const promises = [];
+    Parse.User.logIn('superadmin', 'superadmin').then((user) => {
+      console.log('Logged In as SuperAdmin');
+      promises.push(createInspection('insp1', user.id).then(object => {
+        insp1 = object;
+      }));
+      promises.push(createInspection('insp2', user.id).then( object => {
+        insp2 = object;
+      }));
+      promises.push(createObservation('obs1').then(object => {
+        obs1 = object;
+      }));
+      promises.push(createObservation('obs2').then(object => {
+        obs2 = object;
+      }));
+      promises.push(createTeam('test_team1').then(object => {
+        team1 = object;
+      }));
+    }).then(() => {
+      Promise.all(promises).then(() => {
+        obs1.set('inspectionId', insp1.id);
+        obs1.set('teamId', team1.id);
+        insp1.set('userId', Parse.User.current().id);
+        obs2.set('inspectionId', insp2.id);
+        obs2.set('teamId', team1.id);
+        obs1.save();
+        obs2.save();
+        insp1.save();
+      }).then(() => {
         done();
       });
     });
@@ -50,10 +78,20 @@ describe('Report Testing', () => {
   afterEach(() => { });
 
   afterAll((done) => {
-    console.log('destroying test');
-    test_team.destroy().then(() => {
-      Parse.User.logOut().then(() => {
-        jasmine.DEFAULT_TIMEOUT_INTERVAL = originalTimeout;
+    console.log('Test Complete, logging User out.');
+    const promises = [];
+
+    Parse.User.logOut().then(() => {
+      jasmine.DEFAULT_TIMEOUT_INTERVAL = originalTimeout;
+      console.log('Start Destruction of dummy data...');
+      promises.push(deleteInspections(insp1.get('title')));
+      promises.push(deleteInspections(insp2.get('title')));
+      promises.push(deleteObservations(obs1.get('title')));
+      promises.push(deleteObservations(obs2.get('title')));
+      promises.push(deleteTeam(obs2.get('name')));
+    }).then(() => {
+      Promise.all(promises).then(() => {
+        console.log('Destruction Complete');
         done();
       });
     });
@@ -67,24 +105,23 @@ describe('Report Testing', () => {
   it('should get My Reports', () => {
     console.log('Testing get user in functionality');
     service.getMyReports().then(value => {
-      console.log(value);
-      expect(value).toBeTruthy();
+      expect(value[0].get('id') === insp1.id).toBeTruthy();
     });
   });
 
   it('should get Team Reports', () => {
-    console.log('Testing get team functionality');
-    service.getTeamReports(test_team.get('id')).then(value => {
-      console.log(value);
-      expect(value).toBeTruthy();
+    console.log('Testing get team reports functionality');
+    service.getTeamReports(team1.get('id')).then(value => {
+      console.log('Matching ids for reports');
+      expect(value[0].get('id') === (insp1.id || insp2.id)).toBeTruthy();
     });
   });
 
   it('should get Element of Report', () => {
     console.log('Testing get team functionality');
-    service.getTeamReports(test_team.get('id')).then(value => {
-      console.log(value);
-      expect(value).toBeTruthy();
+    service.getElements(insp1.id).then(value => {
+      console.log('Matching ids for elements');
+      expect(value[0].id === (obs1.id || obs2.id)).toBeTruthy();
     });
   });
 

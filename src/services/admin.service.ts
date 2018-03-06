@@ -51,8 +51,7 @@ export class AdminService {
 
   updateUser(userId: string, attribute: string, value: string) {
     return new Promise((resolve, reject) => {
-      const User = Parse.Object.extend('User');
-      const query = Parse.Query(User);
+      const query = new Parse.Query('_User');
       query.get(userId, {
         success: function (user) {
           user.set(attribute, value);
@@ -69,7 +68,7 @@ export class AdminService {
   deleteUser(userId: string) {
     return new Promise((resolve, reject) => {
       const User = Parse.Object.extend('User');
-      const query = Parse.Query(User);
+      const query = new Parse.Query(User);
       query.get(userId, {
         success: function (user) {
           user.set('active', 'false');
@@ -132,7 +131,7 @@ export class AdminService {
   getReports() {
     return new Promise((resolve, reject) => {
       const query = new Parse.Query('Inspection');
-      query.equalTo('userId', this.user.id);
+      query.equalTo('adminId', this.user.id);
       query.find({
         success: function(results) {
           if (!results.length) {
@@ -149,13 +148,12 @@ export class AdminService {
 
   archiveReport(reportId) {
     return new Promise((resolve, reject) => {
-      const Inspection = Parse.Object.extend('Inspection');
-      const query = Parse.Query(Inspection);
+      const query = new Parse.Query('Inspection');
       query.get(reportId, {
         success: function (report) {
-          report.set('status', 'ARCHIVED');
+          report.set('active', false);
           report.save();
-          resolve('success');
+          resolve(report);
         },
         error: function (object, error) {
           resolve(error.message);

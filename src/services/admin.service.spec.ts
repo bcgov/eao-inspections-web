@@ -5,13 +5,15 @@ import { FormsModule } from '@angular/forms';
 import { LoginComponent } from '../app/login/login.component';
 import { AuthService } from './auth.service';
 import { environment } from '../environments/environment';
-import {AdminService} from './admin.service';
+import { AdminService } from './admin.service';
+import {createInspection, deleteInspections} from './testing.service';
+
 const Parse = require('parse');
 
 Parse.initialize(environment.parseId, environment.parseKey);
 Parse.serverURL = environment.parseURL;
 
-fdescribe('Admin Testing', () => {
+describe('Admin Testing', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
   let service: AdminService;
@@ -19,6 +21,7 @@ fdescribe('Admin Testing', () => {
 
   let test_user;
   let test_team;
+  let insp1, insp2, insp3;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -34,9 +37,22 @@ fdescribe('Admin Testing', () => {
   beforeAll((done) => {
     originalTimeout = jasmine.DEFAULT_TIMEOUT_INTERVAL;
     jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
-    Parse.User.logIn('superadmin', 'superadmin').then(() => {
+    const promises = [];
+    Parse.User.logIn('superadmin', 'superadmin').then((user) => {
       console.log('Logged In as SuperAdmin');
-      done();
+      promises.push(createInspection('insp1', user.id).then(object => {
+        insp1 = object;
+      }));
+      promises.push(createInspection('insp2', user.id).then( object => {
+        insp2 = object;
+      }));
+      promises.push(createInspection('insp3', user.id).then(object => {
+        insp3 = object;
+      }));
+    }).then(() => {
+      Promise.all(promises).then(() => {
+        done();
+      });
     });
   });
 
@@ -51,20 +67,22 @@ fdescribe('Admin Testing', () => {
     setTimeout(function() {
       // do some stuff
       done();
-    }, 1000);
+    }, 1500);
   });
 
   afterAll((done) => {
     console.log('Test Complete, logging User out.');
-    // test_team.destroy().then(() => {
-    //   Parse.User.logOut().then(() => {
-    //     jasmine.DEFAULT_TIMEOUT_INTERVAL = originalTimeout;
-    //     done();
-    //   });
-    // });
+    const promises = [];
+
     Parse.User.logOut().then(() => {
       jasmine.DEFAULT_TIMEOUT_INTERVAL = originalTimeout;
-      done();
+      promises.push(deleteInspections(insp1.get('title')));
+      promises.push(deleteInspections(insp2.get('title')));
+      promises.push(deleteInspections(insp3.get('title')));
+    }).then(() => {
+      Promise.all(promises).then(() => {
+        done();
+      });
     });
   });
 
@@ -86,28 +104,34 @@ fdescribe('Admin Testing', () => {
     service.createUser('test_user', 'test_user', 'test_user@test_user.com').then(value => {
       console.log(value);
       test_user = value;
-      expect(value).toBeTruthy();
+      const query = new Parse.Query('_User');
+      query.get(test_user.id).then(result => {
+        console.log('Matching user ids...');
+        expect(result.id === test_user.id).toBeTruthy();
+      });
     });
   });
 
   it('should update user', () => {
-    console.log('Testing update user in functionality');
+    console.log('Testing update user in functionality: ' + test_user.id);
     const name_change = 'test_user_changed';
-    service.updateUser(test_user.id, 'name', name_change).then(value => {
-      console.log(value);
-      expect(test_user.name === name_change).toBeTruthy();
+    service.updateUser(test_user.id, 'fname', name_change).then(result => {
+      console.log('Matching changed names...');
+      test_user = result;
+      expect(test_user.get('fname') === name_change).toBeTruthy();
     });
   });
 
   it('should archive user', () => {
     console.log('Testing archive user in functionality');
-    service.deleteUser(test_user.id).then(value => {
-      console.log(value);
-      expect(value['status']).toBeFalsy();
+    service.deleteUser(test_user.id).then(result => {
+      console.log('Checking status of user...');
+      test_user = result;
+      expect(test_user.get('active') === 'false').toBeTruthy();
     });
   });
 
-  fit('should create team', () => {
+  it('should create team', () => {
     console.log('Testing create team in functionality');
     service.createTeam('test_team').then(value => {
       test_team = value;
@@ -119,7 +143,7 @@ fdescribe('Admin Testing', () => {
     });
   });
 
-  fit('should update team', () => {
+  it('should update team', () => {
     console.log('Testing updating team in functionality: ' + test_team.id);
     service.updateTeam(test_team.get('id'), 'name', 'new_name').then(value => {
       expect(value).toBeTruthy();
@@ -128,30 +152,30 @@ fdescribe('Admin Testing', () => {
     });
   });
 
-  fit('should delete team', () => {
+  it('should delete team', () => {
     console.log('Testing delete team in functionality');
     service.deleteTeam(test_team.id).then(() => {
       const query = new Parse.Query('Team');
       query.get(test_team.id).then(object => {
         console.log('Checking status...');
-        expect(object.status).toBeFalsy();
+        expect(object.active).toBeFalsy();
       });
     });
   });
 
   it('should get Reports', () => {
     console.log('Testing get reports in functionality');
-    service.getReports().then(value => {
-      console.log(value);
-      expect(value).toBeTruthy();
+    service.getReports().then(result => {
+      console.log('Checking retrieved report...');
+      expect(result[0].get('adminId') === Parse.User.current().id).toBeTruthy();
     });
   });
 
   it('should archive Reports', () => {
-    console.log('Testing archive Reports in functionality');
-    service.archiveReport('').then(value => {
-      console.log(value);
-      expect(value).toBeTruthy();
+    console.log('Testing archive Reports in functionality: ' + insp1.id);
+    service.archiveReport(insp1.id).then(result => {
+      insp1 = result;
+      expect(insp1.get('active')).toBeFalsy();
     });
   });
 
