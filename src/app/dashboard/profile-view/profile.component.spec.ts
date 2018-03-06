@@ -1,15 +1,52 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
+import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 
 import { ProfileComponent } from './profile.component';
+import { ProfileService } from '../../../services/profile.service';
+import { RouterTestingModule } from '@angular/router/testing';
 
 
 describe('ProfileComponent', () => {
   let component: ProfileComponent;
   let fixture: ComponentFixture<ProfileComponent>;
+  let profileServiceStub: any;
 
   beforeEach(async(() => {
+    profileServiceStub = {
+      getUser: jasmine.createSpy('getUser').and.callFake(() => {
+        return {
+          id: '1',
+          name: 'mockUserName',
+          teams: [],
+          email: "mockUserEmail@gmail.com",
+          image: "mock-user-image",
+          isAdmin: false
+        };
+      }),
+      getTeams: jasmine.createSpy('getTeams').and.callFake(() => {
+        return {
+          teams: []
+        };
+      }),
+      getTeamAdminInfo: jasmine.createSpy('getTeamAdminInfo').and.callFake(() => {
+        return {
+          id: 2,
+          name: "mockAdminName",
+          team: "",
+          email: "mockAdminEmail@gmail.com",
+          image: "mock-admin-image.png",
+          isAdmin: true
+        };
+      }),
+    };
+
     TestBed.configureTestingModule({
-      declarations: [ ProfileComponent ]
+      declarations: [ ProfileComponent ],
+      providers: [
+        { provide: ProfileService, useValue: profileServiceStub }
+      ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
+      imports: [ RouterTestingModule ],
     })
     .compileComponents();
   }));
@@ -23,4 +60,13 @@ describe('ProfileComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  // describe('ngOnInit', () => {
+  //   it('should initialize and call getUser', fakeAsync(() => {
+  //   spyOn(component, 'ngOnInit');
+  //   fixture.detectChanges();
+  //   tick();
+  //   expect(component.ngOnInit).toHaveBeenCalled();
+  //   }));
+  // });
 });

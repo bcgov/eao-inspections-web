@@ -2,7 +2,6 @@ import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed, inject, fakeAsync, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
-// import { RouterLinkDirectiveStub } from '../../testing/router-link-directive-stub';
 
 import { MenuComponent } from './menu.component';
 import { AuthService } from '../../services/auth.service';
@@ -16,8 +15,6 @@ describe('MenuComponent', () => {
   let fixture: ComponentFixture<MenuComponent>;
   let authServiceStub: any;
   let modalServiceStub: any;
-  let routerLinks;
-  let linkDes;
 
   beforeEach(async(() => {
     authServiceStub = {
@@ -32,10 +29,6 @@ describe('MenuComponent', () => {
           isAdmin: true
         };
       }),
-      logout: jasmine.createSpy('logout').and.callFake(
-        () => Promise.resolve(true).then(() => {
-        })
-      )
     };
 
     modalServiceStub = {
@@ -60,41 +53,10 @@ describe('MenuComponent', () => {
     fixture = TestBed.createComponent(MenuComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
-
-  //   linkDes = fixture.debugElement
-  //     .queryAll(By.directive(RouterLinkDirectiveStub));
-  //   routerLinks = linkDes.map(de => de.injector.get(RouterLinkDirectiveStub));
   });
-
-  // fit('can get RouterLinks from RouterLinksDirectiveStub', () => {
-  //   expect(routerLinks.length).toBe(5, 'should have routerLinks');
-  //   expect(routerLinks[0].linkParams).toBe('/my-reports');
-  //   expect(routerLinks[1].linkParams).toBe('/team-reports');
-  //   expect(routerLinks[2].linkParams).toBe('/search');
-  //   expect(routerLinks[3].linkParams).toBe('/profile');
-  //   expect(routerLinks[3].linkParams).toBe('/settings');
-  // });
 
   it('should create if user is authenticated', () => {
     expect(component).toBeTruthy();
-    });
-
-  fit('when logout button is clicked a modal opens', fakeAsync( () => {
-    expect(authServiceStub.isAuthenticated).not.toBeNull();
-
-    let event = {
-      type: 'click',
-      stopPropagation: function () { }
-    }
-    let spy = spyOn(event, 'stopPropagation');
-    $('.menu__profile__content__link').trigger(event);
-    expect(spy).toHaveBeenCalled();
-
-    // let button = fixture.debugElement.nativeElement;
-    // button.querySelector('button').click();
-    tick();
-    fixture.detectChanges();
-    expect(modalServiceStub.open).toHaveBeenCalled();
-  }));
+  });
 });
  
