@@ -229,9 +229,7 @@ body {
     }
 
     .form-upload__img {
-      img {
-        color: $font-dark-gray !important;
-      }
+      width: 80px;
     } 
   }
 
@@ -279,6 +277,7 @@ body {
       border: none;
       box-shadow: $default-box-shadow;
     }
+    
     
     /* Hide table headers (but not display: none;, for accessibility) */
     thead tr { 
