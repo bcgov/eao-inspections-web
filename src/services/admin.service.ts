@@ -31,12 +31,16 @@ export class AdminService {
     });
   }
 
-  createUser(username: string, password: string, email: string) {
+  createUser(firstName: string, lastName: string, email: string, password: string, permission: string) {
     return new Promise((resolve, reject) => {
       const user = new Parse.User();
-      user.set('username', username);
+      user.set('fname', firstName);
+      user.set('username', firstName);
+      user.set('lname', lastName);
       user.set('password', password);
       user.set('email', email);
+      user.set('publicEmail', email);
+      user.set('roleName', permission);
       user.signUp(null, {
         success: function (results) {
           resolve(user);

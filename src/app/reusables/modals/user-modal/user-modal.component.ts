@@ -7,6 +7,7 @@ import { NgForm } from '@angular/forms';
   styleUrls: ['./user-modal.component.scss']
 })
 export class UserModalComponent implements OnInit {
+  permissions = ["superadmin", "inspector"]
   @Input('modal') modal: any;
   @Input() closeValue: any;
   @Output() submitValue: EventEmitter<any> = new EventEmitter();
@@ -22,7 +23,9 @@ export class UserModalComponent implements OnInit {
     const lastName = form.value.lastName;
     const email = form.value.email;
     const password = form.value.password;
-    this.submitValue.emit();
+    const team = form.value.team;
+    const permission = form.value.permission;
+    this.submitValue.emit({firstName, lastName, email, password, permission});
   }
 
   close() {

@@ -1,3 +1,4 @@
+import { AdminService } from './../../../../services/admin.service';
 import { ModalService } from './../../../../services/modal.service';
 import { Component, OnInit } from '@angular/core';
 
@@ -6,7 +7,8 @@ import * as String from '../../../../constants/strings';
 @Component({
   selector: 'app-users-view',
   templateUrl: './users-view.component.html',
-  styleUrls: ['./users-view.component.scss']
+  styleUrls: ['./users-view.component.scss'],
+  providers: [ AdminService ]
 })
 export class UsersViewComponent implements OnInit {
   title = "Users";
@@ -30,10 +32,17 @@ export class UsersViewComponent implements OnInit {
       }
     ]
 
-  constructor(private modalService: ModalService) { }
+  constructor(
+    private modalService: ModalService, 
+    private adminService: AdminService
+  ) { }
 
   open(modal) {
     this.modalService.open(modal);
+  }
+
+  onSubmit(value) {
+    this.adminService.createUser(value.firstName, value.lastName, value.email, value.password, value.permission);
   }
 
   ngOnInit() {

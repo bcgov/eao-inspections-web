@@ -40,7 +40,7 @@ export class TeamsViewComponent implements OnInit {
       image: "../../assets/inspector-profile@4x.png",
       members: 106
     }
-  ],
+  ];
 
   modal = {
     header: String.CREATE_TEAM

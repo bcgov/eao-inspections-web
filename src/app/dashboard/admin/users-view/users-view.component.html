@@ -16,5 +16,9 @@
 
 <!-- modal to add new user -->
 <ng-template #addUser let-c="close" class="modal">
-  <user-modal [closeValue]="this.c" [modal]="modal"></user-modal>
+  <user-modal 
+    (submitValue)="onSubmit($event)"
+    [closeValue]="this.c" 
+    [modal]="modal">
+  </user-modal>
 </ng-template>
