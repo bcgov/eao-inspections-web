@@ -1,8 +1,4 @@
-import { Injectable} from '@angular/core';
-import { Router } from '@angular/router';
-
 import { environment } from '../environments/environment';
-import * as Route from '../constants/routes';
 
 const Parse: any = require('parse');
 

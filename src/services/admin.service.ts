@@ -1,7 +1,6 @@
 import { environment } from '../environments/environment';
 import { Router } from '@angular/router';
 import { Injectable} from '@angular/core';
-import {getObject} from '../services/parse.service';
 
 const Parse: any = require('parse');
 
@@ -51,13 +50,12 @@ export class AdminService {
 
   updateUser(userId: string, attribute: string, value: string) {
     return new Promise((resolve, reject) => {
-      const User = Parse.Object.extend('User');
-      const query = Parse.Query(User);
+      const query = new Parse.Query('User');
       query.get(userId, {
         success: function (user) {
           user.set(attribute, value);
           user.save();
-          resolve('success');
+          resolve(user);
         },
         error: function (object, error) {
           reject(error.message);
@@ -69,12 +67,12 @@ export class AdminService {
   deleteUser(userId: string) {
     return new Promise((resolve, reject) => {
       const User = Parse.Object.extend('User');
-      const query = Parse.Query(User);
+      const query = new Parse.Query(User);
       query.get(userId, {
         success: function (user) {
-          user.set('status', 'NOT_ACTIVE');
+          user.set('active', 'false');
           user.save();
-          resolve('success');
+          resolve(user);
         },
         error: function (object, error) {
           reject(error.message);
@@ -86,31 +84,27 @@ export class AdminService {
   createTeam(teamName: string) {
     return new Promise((resolve, reject) => {
       const team = new Parse.Object('Team');
-      team.set('name', teamName);
-
-      team.save(null, {
-        success: function (results) {
-          resolve('success');
-        },
-        error: function (object, error) {
-          resolve(error.message);
-        }
+      team.save('name', teamName).then(result => {
+        console.log(result);
+        resolve(result);
+      }, error => {
+        reject(error.message);
       });
     });
   }
 
   updateTeam(teamId: string, attribute: string, value: string) {
     return new Promise((resolve, reject) => {
-      const Team = Parse.Object.extend('Team');
-      const query = Parse.Query(Team);
+      const query = new Parse.Query('Team');
       query.get(teamId, {
-        success: function (team) {
-          team.set(attribute, value);
-          team.save();
-          resolve('success');
+        success: function (object) {
+          object.set(attribute, value);
+          object.save().then((obj) => {
+            resolve(obj);
+          });
         },
         error: function (object, error) {
-          resolve(error.message);
+          reject(error.message);
         }
       });
     });
@@ -118,13 +112,13 @@ export class AdminService {
 
   deleteTeam(teamId: string) {
     return new Promise((resolve, reject) => {
-      const Team = Parse.Object.extend('User');
-      const query = Parse.Query(Team);
+      const query = new Parse.Query('Team');
       query.get(teamId, {
         success: function (team) {
-          team.set('status', 'ARCHIVED');
-          team.save();
-          resolve('success');
+          team.set('active', false);
+          team.save().then((obj) => {
+            resolve(obj);
+          });
         },
         error: function (object, error) {
           resolve(error.message);
@@ -136,7 +130,7 @@ export class AdminService {
   getReports() {
     return new Promise((resolve, reject) => {
       const query = new Parse.Query('Inspection');
-      query.equalTo('userId', this.user.id);
+      query.equalTo('adminId', this.user.id);
       query.find({
         success: function(results) {
           if (!results.length) {
@@ -153,13 +147,12 @@ export class AdminService {
 
   archiveReport(reportId) {
     return new Promise((resolve, reject) => {
-      const Inspection = Parse.Object.extend('Inspection');
-      const query = Parse.Query(Inspection);
+      const query = new Parse.Query('Inspection');
       query.get(reportId, {
         success: function (report) {
-          report.set('status', 'ARCHIVED');
+          report.set('active', false);
           report.save();
-          resolve('success');
+          resolve(report);
         },
         error: function (object, error) {
           resolve(error.message);
