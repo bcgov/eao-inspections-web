@@ -1,9 +1,6 @@
 import { environment } from '../environments/environment';
-import { Router } from '@angular/router';
 import { Injectable} from '@angular/core';
-import {getObject} from '../services/parse.service';
 import {Team} from '../models/team.model';
-import {BasicUser} from '../models/user.model';
 
 const Parse: any = require('parse');
 
@@ -13,17 +10,17 @@ Parse.serverURL = environment.parseURL;
 @Injectable()
 export class ProfileService {
   user = new Parse.User();
-  constructor(private router: Router) {
+  constructor() {
     this.user = Parse.User.current();
   }
 
-  getUser() {
-    return new Promise((resolve, reject) => {
-      resolve(this.user.toJSON());
+  getUser(): Promise<any> {
+    return new Promise((resolve) => {
+      resolve(this.user);
     });
   }
 
-  getTeams() {
+  getTeams(): Promise<any[]> {
     return new Promise((resolve, reject) => {
       const promises = [];
       const teams = [];
@@ -31,7 +28,7 @@ export class ProfileService {
       query.equalTo('users', this.user);
       query.find({
         success: function(results) {
-          if (!results.length) {
+          if (!Array.isArray(results)) {
             results = [results];
           }
           results.forEach((object) => {
@@ -49,7 +46,7 @@ export class ProfileService {
     });
   }
 
-  getTeamAdminInfo() {
+  getTeamAdminInfo(): Promise<any> {
     return new Promise((resolve, reject) => {
       const admins = [];
       const promises = [];
@@ -57,11 +54,21 @@ export class ProfileService {
       query.equalTo('users', this.user);
       query.find({
         success: function(results) {
-          if (!results.length) {
+          if (!Array.isArray(results)) {
             results = [results];
           }
           results.forEach((object) => {
-            promises.push(object.get('teamAdmin').fetch().then((obj) => { admins.push(obj); }));
+            promises.push(object.get('teamAdmin')
+              .fetch()
+              .then((obj) => {
+                admins.push(
+                  {
+                    'admin': obj,
+                    'team': [new Team(object.get('name'), object.get('teamAdmin'))],
+                  }
+                );
+              })
+            );
           });
         },
         error: function(error) {
