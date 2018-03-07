@@ -22,21 +22,24 @@
         <div class="menu__list__item" routerLinkActive="menu__list__item--active">
           <a routerLink="/admin/user-details">
             <li>
-              <img class="menu__list__item__img" src="../../assets/users.png" /> Users
+              <img class="menu__list__item__img" src="../../assets/users.png" /> 
+              Users
             </li>
           </a>
         </div>
         <div class="menu__list__item" routerLinkActive="menu__list__item--active">
           <a routerLink="/admin/team-details">
             <li>
-              <img class="menu__list__item__img" src="../../assets/team.png" /> Teams
+              <img class="menu__list__item__img" src="../../assets/team.png" /> 
+              Teams
             </li>
           </a>
         </div>
         <div class="menu__list__item" routerLinkActive="menu__list__item--active">
           <a routerLink="/admin/report-details">
             <li>
-              <img class="menu__list__item__img" src="../../assets/report.png" /> Reports
+              <img class="menu__list__item__img" src="../../assets/report.png" /> 
+              Reports
             </li>
           </a>
         </div>
@@ -53,7 +56,8 @@
         <div class="menu__list__item" routerLinkActive="menu__list__item--active">
           <a routerLink="/team-reports">
             <li>
-              <img class="menu__list__item__img" src="../../assets/team.png" /> Team Reports
+              <img class="menu__list__item__img" src="../../assets/team.png" /> 
+              Team Reports
             </li>
           </a>
         </div>
@@ -184,11 +188,7 @@
 </div>
 
 <!-- logout modal -->
-<ng-template #content let-c="close" let-d="dismiss" class="modal">
-  <h4>Are you sure you want to logout?</h4>
-  <div class="dashboard__buttons">
-    <button type="button" class="dashboard__btn--dark" (click)="onLogOut(); c('Close click');">Logout</button>
-    <button type="button" class="dashboard__btn" (click)="c('Close click')">Cancel</button>
-  </div>
+<ng-template #content let-c="close" class="modal">
+  <confirmation-modal (confirmationValue)="onLogOut()" [closeValue]="this.c" [modal]="modal"></confirmation-modal>
 </ng-template>
 

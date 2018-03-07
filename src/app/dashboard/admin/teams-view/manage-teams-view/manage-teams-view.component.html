@@ -5,13 +5,17 @@
   <div class="dashboard__header">
     <p class="dashboard__title">Team Name Here..</p>
     <div class="dashboard__buttons">
-      <button class="dashboard__btn">
+      <button type="button" class="dashboard__btn" (click)="open(addMember)">
         <img class="dashboard__header__btn__img" src="../../assets/add-active.png" /> 
         Add Member
       </button>
     </div>
   </div>
-  <div *ngFor="let user of users">
+  <div class="dashboard-card__container" *ngFor="let user of users">
     <user-card [user]="user"></user-card>
   </div>
 </div>
+
+<ng-template #addMember let-c="close" class="modal">
+  <user-modal [closeValue]="this.c" [modal]="modal"></user-modal>
+</ng-template>

@@ -1,0 +1,71 @@
+<div class="modal__header">
+  <h1>{{modal.header}}</h1>
+</div>
+<form>
+  <div class="form-group">
+    <label class="col-sm-2 col-form-label" for="inputAddress">Profile</label>
+    <div id="upload">
+      <img class="form-upload__img" src="../../assets/avatar@2x.png" />
+      <button class="dashboard-upload__btn">Upload</button>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label class="col-sm-2 col-form-label" for="inputAddress">First name
+      <span>*</span>
+    </label>
+    <div class="col-sm-10">
+      <input type="email" class="form-control" id="inputEmail3">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label class="col-sm-2 col-form-label" for="inputAddress">Last Name
+      <span>*</span>
+    </label>
+    <div class="col-sm-10">
+      <input type="email" class="form-control" id="inputEmail3">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label class="col-sm-2 col-form-label" for="inputAddress">email
+      <span>*</span>
+    </label>
+    <div class="col-sm-10">
+      <input type="email" class="form-control" id="inputEmail3">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label class="col-sm-2 col-form-label" for="inputAddress">password
+      <span>*</span>
+    </label>
+    <div class="col-sm-10">
+      <input type="email" class="form-control" id="inputEmail3">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label class="col-sm-2 col-form-label" for="inputState">Team
+      <span>*</span>
+    </label>
+    <div class="col-sm-10">
+      <select id="inputState" class="form-control">
+        <option selected>Choose...</option>
+        <option>...</option>
+      </select>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label class="col-sm-2 col-form-label" for="inputState">permission
+      <span>*</span>
+    </label>
+    <div class="col-sm-10">
+      <select id="inputState" class="form-control">
+        <option selected>Choose...</option>
+        <option>Admin</option>
+        <option>Inspector</option>
+      </select>
+    </div>
+  </div>
+  <div class="dashboard__buttons">
+    <button type="button" class="dashboard__btn--dark" (click)="close()">Add User</button>
+    <button type="button" class="dashboard__btn" (click)="close()">Cancel</button>
+  </div>
+</form>

@@ -1,4 +1,7 @@
+import { ModalService } from './../../../services/modal.service';
 import { Component, Input } from '@angular/core';
+
+import * as String from '../../../constants/strings';
 
 @Component({
   selector: 'user-card',
@@ -8,6 +11,16 @@ import { Component, Input } from '@angular/core';
 export class UserCardComponent {
   @Input('user') user: any;
 
-  constructor() { }
+  modal = {
+    message: String.REMOVE_USER,
+    header: String.EDIT_USER,
+    conformationYes: String.REMOVE_BUTTON,
+    conformationNo: String.CANCEL_BUTTON,
+  };
 
+  constructor(private modalService: ModalService) { }
+
+  open(modal) {
+    this.modalService.open(modal);
+  }
 }

@@ -6,11 +6,21 @@
     <h4>{{user.name}}</h4>
   </div>
   <div class="user__card--actions">
-    <button class="dashboard--actions">
+    <button type="button" class="dashboard--actions" (click)="open(editUser)">
       Edit
     </button>
-    <button class="dashboard--actions">
+    <button type="button" class="dashboard--actions" (click)="open(deleteUser)">
       Remove
     </button>
   </div>
 </div>
+
+<!-- edit user modal -->
+<ng-template #editUser let-c="close" class="modal">
+  <user-modal [closeValue]="this.c" [modal]="modal"></user-modal>
+</ng-template>
+
+<!-- delete confirmation modal -->
+<ng-template #deleteUser let-c="close" class="modal">
+  <confirmation-modal [closeValue]="this.c" [modal]="modal"></confirmation-modal>
+</ng-template>

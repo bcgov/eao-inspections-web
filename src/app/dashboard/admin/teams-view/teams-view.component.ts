@@ -1,5 +1,6 @@
-import { ModalService } from './../../../../services/modal.service';
 import { Component, OnInit } from '@angular/core';
+import { ModalService } from './../../../../services/modal.service';
+import * as String from '../../../../constants/strings';
 
 @Component({
   selector: 'app-teams-view',
@@ -39,7 +40,11 @@ export class TeamsViewComponent implements OnInit {
       image: "../../assets/inspector-profile@4x.png",
       members: 106
     }
-  ]
+  ],
+
+  modal = {
+    header: String.CREATE_TEAM
+  };
 
   constructor(private modalService: ModalService) { }
 
