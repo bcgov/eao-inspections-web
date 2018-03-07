@@ -1,8 +1,6 @@
 import { Injectable} from '@angular/core';
-import { Router } from '@angular/router';
 
 import { environment } from '../environments/environment';
-import * as Route from '../constants/routes';
 
 const Parse: any = require('parse');
 
@@ -12,16 +10,16 @@ Parse.serverURL = environment.parseURL;
 @Injectable()
 export class ReportService {
   user = new Parse.User();
-  constructor(private router: Router) {
+  constructor() {
     this.user = Parse.User.current();
   }
-  getMyReports() {
+  getMyReports(): Promise<any[]> {
     return new Promise((resolve, reject) => {
       const query = new Parse.Query('Inspection');
       query.equalTo('userId', this.user.id);
       query.find({
         success: function(results) {
-          if (!results.length) {
+          if (!Array.isArray(results)) {
             results = [results];
           }
           resolve (results);
@@ -33,29 +31,32 @@ export class ReportService {
     });
   }
 
-  getTeamReports(teamId: string) {
+  getTeamReports(teamId: string): Promise<any[]> {
     return new Promise((resolve, reject) => {
       const teamQuery = new Parse.Query('Team');
       teamQuery.equalTo('id', teamId);
       const q = new Parse.Query('Inspection');
       q.matchesKeyInQuery('teamId', 'teamId', teamQuery, {
         success: function(results) {
-          return results;
+          if (!Array.isArray(results)) {
+            results = [results];
+          }
+          resolve (results);
         },
         error: function(error) {
-          return error.message;
+          reject (error.message);
         }
       });
     });
   }
 
-  getElements(inspectionId: string) {
+  getElements(inspectionId: string): Promise<any[]> {
     return new Promise((resolve, reject) => {
       const query = new Parse.Query('Observation');
       query.equalTo('inspectionId', inspectionId);
       query.find({
         success: function(results) {
-          if (!results.length) {
+          if (!Array.isArray(results)) {
             results = [results];
           }
           resolve (results);

@@ -13,7 +13,7 @@ const Parse = require('parse');
 Parse.initialize(environment.parseId, environment.parseKey);
 Parse.serverURL = environment.parseURL;
 
-fdescribe('Admin Testing', () => {
+describe('Admin Testing', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
   let service: AdminService;
@@ -42,13 +42,13 @@ fdescribe('Admin Testing', () => {
     Parse.User.logIn('superadmin', 'superadmin').then((user) => {
       console.log('Logged In as SuperAdmin');
       admin_user = user;
-      promises.push(createInspection('insp1', user.id).then(object => {
+      promises.push(createInspection('insp1', user.id).then((object) => {
         insp1 = object;
       }));
-      promises.push(createInspection('insp2', user.id).then( object => {
+      promises.push(createInspection('insp2', user.id).then( (object) => {
         insp2 = object;
       }));
-      promises.push(createInspection('insp3', user.id).then(object => {
+      promises.push(createInspection('insp3', user.id).then((object) => {
         insp3 = object;
       }));
     }).then(() => {
@@ -107,7 +107,7 @@ fdescribe('Admin Testing', () => {
     service.createUser(randKey, randKey, randKey + '@test_user.com').then(value => {
       test_user = value;
       const query = new Parse.Query('_User');
-      query.get(test_user.id).then(result => {
+      query.get(test_user.id).then((result) => {
         console.log('Matching user ids...');
         expect(result.id === test_user.id).toBeTruthy();
       });
@@ -118,9 +118,9 @@ fdescribe('Admin Testing', () => {
     console.log('Testing update user in functionality: ' + test_user.id);
     const name_change = 'test_user_changed';
     Parse.User.logIn('superadmin', 'superadmin').then(() => {
-      service.updateUser(test_user.id, 'fname', name_change).then(result => {
+      service.updateUser(test_user.id, 'fname', name_change).then((object) => {
         console.log('Matching changed names...');
-        test_user = result;
+        test_user = object;
         expect(test_user.get('fname') === name_change).toBeTruthy();
       });
     });
@@ -128,30 +128,30 @@ fdescribe('Admin Testing', () => {
 
   it('should archive user', () => {
     console.log('Testing archive user in functionality');
-    service.deleteUser(test_user.id).then(result => {
+    service.deleteUser(test_user.id).then((object) => {
       console.log('Checking status of user...');
-      test_user = result;
+      test_user = object;
       expect(test_user.get('active') === 'false').toBeTruthy();
     });
   });
 
   it('should create team', () => {
     console.log('Testing create team in functionality');
-    service.createTeam('test_team').then(value => {
-      test_team = value;
+    service.createTeam('test_team').then((object) => {
+      test_team = object;
       const query = new Parse.Query('Team');
-      query.get(test_team.id).then(object => {
+      query.get(test_team.id).then((result) => {
         console.log('Matching ids...');
-        expect(object.id === test_team.id).toBeTruthy();
+        expect(result.id === test_team.id).toBeTruthy();
       });
     });
   });
 
   it('should update team', () => {
     console.log('Testing updating team in functionality: ' + test_team.id);
-    service.updateTeam(test_team.id, 'name', 'new_name').then(value => {
-      test_team = value;
-      expect(value).toBeTruthy();
+    service.updateTeam(test_team.id, 'name', 'new_name').then((object) => {
+      test_team = object;
+      expect(object).toBeTruthy();
       expect(test_team.get('name') === 'new_name').toBeTruthy();
     });
   });
@@ -160,8 +160,8 @@ fdescribe('Admin Testing', () => {
     console.log('Testing delete team in functionality');
     service.deleteTeam(test_team.id).then(() => {
       const query = new Parse.Query('Team');
-      query.get(test_team.id).then(object => {
-        test_team = object;
+      query.get(test_team.id).then((result) => {
+        test_team = result;
         console.log('Checking status...');
         expect(test_team.get('active')).toBeFalsy();
       });
@@ -170,16 +170,16 @@ fdescribe('Admin Testing', () => {
 
   it('should get Reports', () => {
     console.log('Testing get reports in functionality');
-    service.getReports().then(result => {
+    service.getReports().then((object) => {
       console.log('Checking retrieved report...');
-      expect(result[0].get('adminId') === Parse.User.current().id).toBeTruthy();
+      expect(object[0].get('adminId') === Parse.User.current().id).toBeTruthy();
     });
   });
 
   it('should archive Reports', () => {
     console.log('Testing archive Reports in functionality: ' + insp1.id);
-    service.archiveReport(insp1.id).then(result => {
-      insp1 = result;
+    service.archiveReport(insp1.id).then((object) => {
+      insp1 = object;
       expect(insp1.get('active')).toBeFalsy();
     });
   });

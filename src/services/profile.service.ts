@@ -17,13 +17,13 @@ export class ProfileService {
     this.user = Parse.User.current();
   }
 
-  getUser() {
+  getUser(): Promise<any> {
     return new Promise((resolve) => {
-      resolve(this.user.toJSON());
+      resolve(this.user);
     });
   }
 
-  getTeams() {
+  getTeams(): Promise<any[]> {
     return new Promise((resolve, reject) => {
       const promises = [];
       const teams = [];
@@ -31,7 +31,7 @@ export class ProfileService {
       query.equalTo('users', this.user);
       query.find({
         success: function(results) {
-          if (!results.length) {
+          if (!Array.isArray(results)) {
             results = [results];
           }
           results.forEach((object) => {
@@ -49,7 +49,7 @@ export class ProfileService {
     });
   }
 
-  getTeamAdminInfo() {
+  getTeamAdminInfo(): Promise<any> {
     return new Promise((resolve, reject) => {
       const admins = [];
       const promises = [];
@@ -57,7 +57,7 @@ export class ProfileService {
       query.equalTo('users', this.user);
       query.find({
         success: function(results) {
-          if (!results.length) {
+          if (!Array.isArray(results)) {
             results = [results];
           }
           results.forEach((object) => {

@@ -20,6 +20,7 @@ describe('Report Testing', () => {
   let team1;
   let insp1, insp2;
   let obs1, obs2;
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [FormsModule,
@@ -75,8 +76,6 @@ describe('Report Testing', () => {
     service = TestBed.get(ReportService);
   });
 
-  afterEach(() => { });
-
   afterAll((done) => {
     console.log('Test Complete, logging User out.');
     const promises = [];
@@ -105,25 +104,31 @@ describe('Report Testing', () => {
   it('should get My Reports', () => {
     console.log('Testing get user in functionality');
     Parse.User.logIn('superadmin', 'superadmin').then((user) => {
-      service.getMyReports().then(value => {
-        expect(value[0].get('userId') === user.id).toBeTruthy();
+      service.getMyReports().then((object) => {
+        object.forEach((item) => {
+          expect(item.get('userId') === user.id).toBeTruthy();
+        });
       });
     });
   });
 
   it('should get Team Reports', () => {
     console.log('Testing get team reports functionality');
-    service.getTeamReports(team1.get('id')).then(value => {
+    service.getTeamReports(team1.get('id')).then((object) => {
       console.log('Matching ids for reports');
-      expect(value[0].get('id') === (insp1.id || insp2.id)).toBeTruthy();
+      object.forEach((item) => {
+        expect(item.get('id') === (insp1.id || insp2.id)).toBeTruthy();
+      });
     });
   });
 
   it('should get Element of Report', () => {
     console.log('Testing get team functionality');
-    service.getElements(insp1.id).then(value => {
+    service.getElements(insp1.id).then((object) => {
       console.log('Matching ids for elements');
-      expect(value[0].id === (obs1.id || obs2.id)).toBeTruthy();
+      object.forEach((item) => {
+        expect(item.id === (obs1.id || obs2.id)).toBeTruthy();
+      });
     });
   });
 

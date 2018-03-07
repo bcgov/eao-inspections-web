@@ -10,7 +10,7 @@ const Parse = require('parse');
 Parse.initialize(environment.parseId, environment.parseKey);
 Parse.serverURL = environment.parseURL;
 
-fdescribe('Authentication and Authorization Testing', () => {
+describe('Authentication and Authorization Testing', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
   let service: AuthService;
@@ -80,7 +80,6 @@ fdescribe('Authentication and Authorization Testing', () => {
   it('should be inspector', () => {
     console.log('Testing authorization level of inspector role');
     service.logIn('inspector', 'inspector').then(() => {
-      console.log(Parse.User.current());
       expect(service.isSuperAdmin()).toBeFalsy();
       expect(service.isAdmin()).toBeFalsy();
     });
@@ -89,7 +88,6 @@ fdescribe('Authentication and Authorization Testing', () => {
   it('should be admin', () => {
     console.log('Testing authorization level of admin role');
     service.logIn('admin', 'admin').then(() => {
-      console.log(Parse.User.current());
       expect(service.isSuperAdmin()).toBeFalsy();
       expect(service.isAdmin()).toBeTruthy();
     });
@@ -98,9 +96,8 @@ fdescribe('Authentication and Authorization Testing', () => {
   it('should be superadmin', () => {
     console.log('Testing authorization level of admin role');
     service.logIn('superadmin', 'superadmin').then(() => {
-      console.log(Parse.User.current());
       expect(service.isSuperAdmin()).toBeTruthy();
-      expect(service.isAdmin()).toBeTruthy();
+      expect(service.isAdmin()).toBeFalsy();
     });
   });
 
