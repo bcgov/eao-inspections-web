@@ -31,6 +31,9 @@ import { ReportListItemComponent } from './reusables/report-list-item/report-lis
 import { ModalService } from '../services/modal.service';
 import { NoRouteComponent } from './no-route/no-route.component';
 import { NoContentComponent } from './reusables/no-content/no-content.component';
+import { UserModalComponent } from './reusables/modals/user-modal/user-modal.component';
+import { TeamModalComponent } from './reusables/modals/team-modal/team-modal.component';
+import { ConfirmationModalComponent } from './reusables/modals/confirmation-modal/confirmation-modal.component';
 
 @NgModule({
   declarations: [
@@ -55,13 +58,16 @@ import { NoContentComponent } from './reusables/no-content/no-content.component'
     TeamReportListComponent,
     ReportListItemComponent,
     NoRouteComponent,
-    NoContentComponent
+    NoContentComponent,
+    UserModalComponent,
+    TeamModalComponent,
+    ConfirmationModalComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    NgbModule.forRoot(),
+    NgbModule.forRoot()
   ],
   providers: [AuthService, AuthGuardService, RoleGuardService, ModalService],
   bootstrap: [AppComponent]

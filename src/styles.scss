@@ -128,6 +128,10 @@ body {
       }
     }
 
+    &-upload__btn {
+      color: $default-link-color;
+    }
+
     &__buttons {
       @include flex;
       margin: 20px;
@@ -172,9 +176,28 @@ body {
 
   // modal 
   .modal {
+    min-height: 100% !important;
     height: 400px;
-    top: 30%;
+    top: 8%;
     left: 15%;
+
+    &__header {
+      background-color: $default-primary-color;
+      height: 72px;
+      text-align: center;
+      
+      h1 {
+        position: relative;
+        top: 20px;
+        font-size: 24px;
+        font-weight: bold;	
+        line-height: 29px;
+        color: $font-white;
+      }
+    }
+    @include tablet {
+      left: 0;
+    }
 
     @include mobile {
       left: 0;
@@ -185,6 +208,30 @@ body {
       font-size: 18px;
       margin: 50px;
     }
+
+    form {
+      margin: 30px 30px;
+
+      label {
+        padding: 0;
+        text-transform: uppercase;
+        color: $font-gray;
+        font-size: 12px;
+        font-weight: 300;
+
+        span {
+          font-size: 18px;
+          color: #D0021B;
+        }
+      }
+    }
+    #upload {
+      display: inline-grid;
+    }
+
+    .form-upload__img {
+      width: 80px;
+    } 
   }
 
   // Responsive Reports Table
@@ -231,6 +278,7 @@ body {
       border: none;
       box-shadow: $default-box-shadow;
     }
+    
     
     /* Hide table headers (but not display: none;, for accessibility) */
     thead tr { 

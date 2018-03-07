@@ -1,4 +1,7 @@
+import { ModalService } from './../../../../services/modal.service';
 import { Component, OnInit } from '@angular/core';
+
+import * as String from '../../../../constants/strings';
 
 @Component({
   selector: 'app-users-view',
@@ -7,6 +10,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UsersViewComponent implements OnInit {
   title = "Users";
+  
+  modal = {
+    header: String.CREATE_USER
+  };
+
   users = [
       {
         name: "Lou Ballard",
@@ -22,7 +30,11 @@ export class UsersViewComponent implements OnInit {
       }
     ]
 
-  constructor() { }
+  constructor(private modalService: ModalService) { }
+
+  open(modal) {
+    this.modalService.open(modal);
+  }
 
   ngOnInit() {
   }

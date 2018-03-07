@@ -4,21 +4,9 @@ import { Subject } from 'rxjs';
 
 @Injectable()
 export class ModalService {
-  isShowing = false;
-  modal = new Subject();
+    constructor(private modalService: NgbModal) { }
 
-    getModal() {
-        return this.modal;
-    }
-    open() {
-        this.isShowing = true;
-        this.modal.next(true);
-    }
-    close() {
-        this.isShowing = false;
-        this.modal.next(false);
-    }
-    closeModal() {
-        this.close();
+    open(modalName) {
+        this.modalService.open(modalName);
     }
 }

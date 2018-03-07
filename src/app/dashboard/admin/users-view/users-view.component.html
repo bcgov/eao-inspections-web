@@ -2,7 +2,7 @@
   <div class="dashboard__header">
     <p class="dashboard__title">{{title}}</p>
     <div class="dashboard__buttons">
-      <button class="dashboard__btn">
+      <button type="button" class="dashboard__btn" (click)="open(addUser)">
         <img class="dashboard__header__btn__img" src="../../assets/add-active.png" /> 
         Create New
       </button>
@@ -12,3 +12,9 @@
     <user-card [user]="user"></user-card>
   </div>
 </div>
+
+
+<!-- modal to add new user -->
+<ng-template #addUser let-c="close" class="modal">
+  <user-modal [closeValue]="this.c" [modal]="modal"></user-modal>
+</ng-template>

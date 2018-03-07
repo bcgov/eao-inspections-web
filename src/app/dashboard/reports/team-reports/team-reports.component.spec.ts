@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 
 import { TeamReportsComponent } from './team-reports.component';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('TeamReportsComponent', () => {
   let component: TeamReportsComponent;
@@ -8,7 +10,9 @@ describe('TeamReportsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TeamReportsComponent ]
+      declarations: [ TeamReportsComponent ],
+      schemas: [ CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA ],
+      imports: [ RouterTestingModule ],
     })
     .compileComponents();
   }));

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import * as String from '../../../../../constants/strings';
+import { ModalService } from './../../../../../services/modal.service';
 
 @Component({
   selector: 'app-manage-teams-view',
@@ -19,7 +21,15 @@ export class ManageTeamsViewComponent implements OnInit {
     }
   ]
 
-  constructor() { }
+  modal = {
+    header: String.CREATE_USER
+  };
+
+  constructor(private modalService: ModalService) { }
+
+  open(modal) {
+    this.modalService.open(modal);
+  }
 
   ngOnInit() {
   }
