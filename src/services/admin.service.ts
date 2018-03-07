@@ -51,7 +51,7 @@ export class AdminService {
 
   updateUser(userId: string, attribute: string, value: string) {
     return new Promise((resolve, reject) => {
-      const query = new Parse.Query('_User');
+      const query = new Parse.Query('User');
       query.get(userId, {
         success: function (user) {
           user.set(attribute, value);

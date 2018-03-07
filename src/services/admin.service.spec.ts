@@ -6,14 +6,14 @@ import { LoginComponent } from '../app/login/login.component';
 import { AuthService } from './auth.service';
 import { environment } from '../environments/environment';
 import { AdminService } from './admin.service';
-import {createInspection, deleteInspections} from './testing.service';
+import {createInspection, deleteInspections, deleteTeam, randomKey} from './testing.service';
 
 const Parse = require('parse');
 
 Parse.initialize(environment.parseId, environment.parseKey);
 Parse.serverURL = environment.parseURL;
 
-describe('Admin Testing', () => {
+fdescribe('Admin Testing', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
   let service: AdminService;
@@ -21,6 +21,7 @@ describe('Admin Testing', () => {
 
   let test_user;
   let test_team;
+  let admin_user;
   let insp1, insp2, insp3;
 
   beforeEach(async(() => {
@@ -40,6 +41,7 @@ describe('Admin Testing', () => {
     const promises = [];
     Parse.User.logIn('superadmin', 'superadmin').then((user) => {
       console.log('Logged In as SuperAdmin');
+      admin_user = user;
       promises.push(createInspection('insp1', user.id).then(object => {
         insp1 = object;
       }));
@@ -79,6 +81,7 @@ describe('Admin Testing', () => {
       promises.push(deleteInspections(insp1.get('title')));
       promises.push(deleteInspections(insp2.get('title')));
       promises.push(deleteInspections(insp3.get('title')));
+      promises.push(deleteTeam(test_team.get('name')));
     }).then(() => {
       Promise.all(promises).then(() => {
         done();
@@ -94,15 +97,14 @@ describe('Admin Testing', () => {
   it('should get Users', () => {
     console.log('Testing get user in functionality');
     service.getUsers().then(value => {
-      console.log(value);
       expect(value).toBeTruthy();
     });
   });
 
   it('should create user', () => {
     console.log('Testing create user in functionality');
-    service.createUser('test_user', 'test_user', 'test_user@test_user.com').then(value => {
-      console.log(value);
+    const randKey = randomKey();
+    service.createUser(randKey, randKey, randKey + '@test_user.com').then(value => {
       test_user = value;
       const query = new Parse.Query('_User');
       query.get(test_user.id).then(result => {
@@ -115,10 +117,12 @@ describe('Admin Testing', () => {
   it('should update user', () => {
     console.log('Testing update user in functionality: ' + test_user.id);
     const name_change = 'test_user_changed';
-    service.updateUser(test_user.id, 'fname', name_change).then(result => {
-      console.log('Matching changed names...');
-      test_user = result;
-      expect(test_user.get('fname') === name_change).toBeTruthy();
+    Parse.User.logIn('superadmin', 'superadmin').then(() => {
+      service.updateUser(test_user.id, 'fname', name_change).then(result => {
+        console.log('Matching changed names...');
+        test_user = result;
+        expect(test_user.get('fname') === name_change).toBeTruthy();
+      });
     });
   });
 
@@ -145,10 +149,10 @@ describe('Admin Testing', () => {
 
   it('should update team', () => {
     console.log('Testing updating team in functionality: ' + test_team.id);
-    service.updateTeam(test_team.get('id'), 'name', 'new_name').then(value => {
+    service.updateTeam(test_team.id, 'name', 'new_name').then(value => {
+      test_team = value;
       expect(value).toBeTruthy();
-      console.log(value);
-      expect(value['name'] === 'new_name').toBeTruthy();
+      expect(test_team.get('name') === 'new_name').toBeTruthy();
     });
   });
 
@@ -157,8 +161,9 @@ describe('Admin Testing', () => {
     service.deleteTeam(test_team.id).then(() => {
       const query = new Parse.Query('Team');
       query.get(test_team.id).then(object => {
+        test_team = object;
         console.log('Checking status...');
-        expect(object.active).toBeFalsy();
+        expect(test_team.get('active')).toBeFalsy();
       });
     });
   });

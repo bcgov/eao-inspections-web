@@ -12,7 +12,7 @@ const Parse = require('parse');
 Parse.initialize(environment.parseId, environment.parseKey);
 Parse.serverURL = environment.parseURL;
 
-fdescribe('Report Testing', () => {
+describe('Report Testing', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
   let service: ReportService;
@@ -88,7 +88,7 @@ fdescribe('Report Testing', () => {
       promises.push(deleteInspections(insp2.get('title')));
       promises.push(deleteObservations(obs1.get('title')));
       promises.push(deleteObservations(obs2.get('title')));
-      promises.push(deleteTeam(obs2.get('name')));
+      promises.push(deleteTeam(team1.get('name')));
     }).then(() => {
       Promise.all(promises).then(() => {
         console.log('Destruction Complete');
@@ -104,8 +104,10 @@ fdescribe('Report Testing', () => {
 
   it('should get My Reports', () => {
     console.log('Testing get user in functionality');
-    service.getMyReports().then(value => {
-      expect(value[0].get('id') === insp1.id).toBeTruthy();
+    Parse.User.logIn('superadmin', 'superadmin').then((user) => {
+      service.getMyReports().then(value => {
+        expect(value[0].get('userId') === user.id).toBeTruthy();
+      });
     });
   });
 

@@ -21,7 +21,7 @@ export class ReportService {
       query.equalTo('userId', this.user.id);
       query.find({
         success: function(results) {
-          if (results.length === 1) {
+          if (!results.length) {
             results = [results];
           }
           resolve (results);

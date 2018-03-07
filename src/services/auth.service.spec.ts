@@ -10,10 +10,12 @@ const Parse = require('parse');
 Parse.initialize(environment.parseId, environment.parseKey);
 Parse.serverURL = environment.parseURL;
 
-describe('Authentication and Authorization Testing', () => {
+fdescribe('Authentication and Authorization Testing', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
   let service: AuthService;
+  let originalTimeout;
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [FormsModule,
@@ -32,10 +34,23 @@ describe('Authentication and Authorization Testing', () => {
     service = TestBed.get(AuthService);
   });
 
-  afterEach(() => {
+  beforeAll(() => {
+    originalTimeout = jasmine.DEFAULT_TIMEOUT_INTERVAL;
+    jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
+  });
+
+  afterEach((done) => {
     if (Parse.User.current()) {
-      Parse.User.logOut();
+      Parse.User.logOut().then(() => {
+        done();
+      });
+    } else {
+      done();
     }
+  });
+
+  afterAll(() => {
+    jasmine.DEFAULT_TIMEOUT_INTERVAL = originalTimeout;
   });
 
   it('should create', () => {
@@ -65,6 +80,7 @@ describe('Authentication and Authorization Testing', () => {
   it('should be inspector', () => {
     console.log('Testing authorization level of inspector role');
     service.logIn('inspector', 'inspector').then(() => {
+      console.log(Parse.User.current());
       expect(service.isSuperAdmin()).toBeFalsy();
       expect(service.isAdmin()).toBeFalsy();
     });
@@ -73,14 +89,16 @@ describe('Authentication and Authorization Testing', () => {
   it('should be admin', () => {
     console.log('Testing authorization level of admin role');
     service.logIn('admin', 'admin').then(() => {
+      console.log(Parse.User.current());
       expect(service.isSuperAdmin()).toBeFalsy();
       expect(service.isAdmin()).toBeTruthy();
     });
   });
 
-  it('should be admin', () => {
+  it('should be superadmin', () => {
     console.log('Testing authorization level of admin role');
-    service.logIn('admin', 'admin').then(() => {
+    service.logIn('superadmin', 'superadmin').then(() => {
+      console.log(Parse.User.current());
       expect(service.isSuperAdmin()).toBeTruthy();
       expect(service.isAdmin()).toBeTruthy();
     });

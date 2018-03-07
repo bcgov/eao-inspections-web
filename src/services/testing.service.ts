@@ -12,12 +12,12 @@ export function createTeam(name) {
     console.log('creating team: ' + name);
     teamTemp.save(null, {
       success: function (team) {
-        console.log(team);
+        resolve(team);
       },
       error: function () {
         return(resolve());
       }
-    }).then(function(object){ return resolve(object) });
+    });
   });
 }
 
@@ -29,12 +29,12 @@ export function createInspection(title, adminId) {
     console.log('creating Inpsection: ' + title);
     temp.save(null, {
       success: function (obj) {
-        console.log(obj);
+        resolve(obj);
       },
       error: function () {
         return(resolve());
       }
-    }).then(function(object) { return resolve(object); });
+    });
   });
 }
 
@@ -45,12 +45,12 @@ export function createObservation(title) {
     console.log('creating Observation: ' + title);
     temp.save(null, {
       success: function (obj) {
-        console.log(obj);
+        resolve(obj);
       },
       error: function () {
         return(resolve());
       }
-    }).then(function(object){ return resolve(object) });
+    });
   });
 }
 
@@ -91,4 +91,8 @@ export function deleteTeam(teamName) {
       });
     });
   });
+}
+
+export function randomKey() {
+  return (Math.random() + 1).toString(36).substring(7);
 }
