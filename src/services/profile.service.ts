@@ -1,9 +1,6 @@
 import { environment } from '../environments/environment';
-import { Router } from '@angular/router';
 import { Injectable} from '@angular/core';
-import {getObject} from '../services/parse.service';
 import {Team} from '../models/team.model';
-import {BasicUser} from '../models/user.model';
 
 const Parse: any = require('parse');
 

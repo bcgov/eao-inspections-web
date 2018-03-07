@@ -67,7 +67,6 @@ describe('Admin Testing', () => {
 
   afterEach((done) => {
     setTimeout(function() {
-      // do some stuff
       done();
     }, 1500);
   });

@@ -7,6 +7,7 @@ import { AuthService } from './auth.service';
 import { environment } from '../environments/environment';
 import { ReportService } from './report.service';
 import {createInspection, createObservation, createTeam, deleteInspections, deleteObservations, deleteTeam} from './testing.service';
+
 const Parse = require('parse');
 
 Parse.initialize(environment.parseId, environment.parseKey);

@@ -13,6 +13,7 @@ export class ReportService {
   constructor() {
     this.user = Parse.User.current();
   }
+
   getMyReports(): Promise<any[]> {
     return new Promise((resolve, reject) => {
       const query = new Parse.Query('Inspection');
