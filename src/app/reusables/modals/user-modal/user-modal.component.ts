@@ -13,7 +13,15 @@ export class UserModalComponent implements OnInit {
 
   constructor() { }
 
-  onSubmit() {
+  ngOnInit() {
+
+  }
+
+  onSubmit(form: NgForm) {
+    const firstName = form.value.firstName;
+    const lastName = form.value.lastName;
+    const email = form.value.email;
+    const password = form.value.password;
     this.submitValue.emit();
   }
 
