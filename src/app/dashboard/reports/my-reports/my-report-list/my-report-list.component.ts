@@ -33,8 +33,9 @@ export class MyReportListComponent implements OnInit {
       .then((results) => {
         if (results instanceof Array) {
           this.reports = parseToJSON(results);
+          console.log(results);
           this.reports.forEach((obj) => {
-            this.data.push(new Inspection(obj.title, obj.subtitle, obj.id, null, obj.project, obj.end, null, null,null, null));
+            this.data.push(new Inspection(obj.title, obj.subtitle, obj.id, null, obj.project, obj.end, null, null,null, null, obj.submitted));
           });
         }
       });

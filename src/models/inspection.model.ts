@@ -11,6 +11,7 @@ export class Inspection {
   public requirement: string;
   public geoPoint: string;
   public media: string;
+  public submitted: boolean;
 
   constructor(
     title: string,
@@ -23,6 +24,7 @@ export class Inspection {
     requirement: string,
     geoPoint: string,
     media: string,
+    submitted: boolean
     ) {
     this.title = title;
     this.subtitle = subtitle;
@@ -34,6 +36,7 @@ export class Inspection {
     this.requirement = requirement;
     this.geoPoint = geoPoint;
     this.media = media;
+    this.submitted = submitted;
   }
 
 }

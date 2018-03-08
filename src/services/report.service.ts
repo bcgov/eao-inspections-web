@@ -16,18 +16,32 @@ export class ReportService {
 
   getMyReports(): Promise<any[]> {
     return new Promise((resolve, reject) => {
+      const promises = [];
+      const reports = [];
+      let resultList;
       const query = new Parse.Query('Inspection');
       query.equalTo('userId', this.user.id);
       query.find({
         success: function(results) {
+          console.log(results);
           if (!Array.isArray(results)) {
             results = [results];
           }
-          resolve (results);
+          resultList = results;
         },
         error: function(error) {
           reject (error.message);
         }
+      }).then(() => {
+        resultList.forEach((object) => {
+          let teamTemp;
+          // fetch team, create new team object and place it in as team things into report.
+          promises.push();
+        });
+      }).then(() => {
+        Promise.all(promises).then(() => {
+          resolve(reports);
+        });
       });
     });
   }
