@@ -12,9 +12,10 @@ export class UserCardComponent {
   @Input('user') user: any;
 
   modal = {
-    message: String.REMOVE_USER,
+    message: String.ARCHIVE_USER,
     header: String.EDIT_USER,
-    conformationYes: String.REMOVE_BUTTON,
+    userButton: String.EDIT_BUTTON,
+    conformationYes: String.ARCHIVE_BUTTON,
     conformationNo: String.CANCEL_BUTTON,
   };
 

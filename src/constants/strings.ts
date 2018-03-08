@@ -7,6 +7,7 @@ export const EDIT_TEAM = "Edit team";
 export const ADD_MEMBER = "Add member";
 //confirmation modal
 export const REMOVE_USER = "Are you sure you want to remove this user?";
+export const ARCHIVE_USER = "Are you sure you want to archive this user?";
 export const LOGOUT_USER = "Are you sure you want to logout?";
 export const ARCHIVE_TEAM = "Are you sure you want to archive this team?";
 export const ARCHIVE_REPORT = "Are you sure you want to archive this inspection?";
@@ -28,5 +29,13 @@ export const LOGOUT_BUTTON = "Logout";
 export const REMOVE_BUTTON = "Remove";
 export const DONE_BUTTON = "Done";
 export const ARCHIVE_BUTTON = 'Archive';
+export const EDIT_BUTTON = "Edit User";
+export const ADD_BUTTON = "Add User";
 export const YES_BUTTON = "Yes, I would love to";
 export const NO_BUTTON = "No, I'll do it later";
+
+// noContent messages 
+export const EMPTY_USER = "There are no users yet.";
+export const EMPTY_TEAM_INSPECTIONS = "There are no inspections for this team.";
+export const EMPTY_TEAM = "There are no teams yet.";
+export const EMPTY_INSPECTIONS = "There are no inspections yet.";

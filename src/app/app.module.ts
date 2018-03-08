@@ -34,6 +34,8 @@ import { NoContentComponent } from './reusables/no-content/no-content.component'
 import { UserModalComponent } from './reusables/modals/user-modal/user-modal.component';
 import { TeamModalComponent } from './reusables/modals/team-modal/team-modal.component';
 import { ConfirmationModalComponent } from './reusables/modals/confirmation-modal/confirmation-modal.component';
+import { UserListComponent } from './dashboard/admin/users-view/user-list/user-list.component';
+import { UserListItemComponent } from './dashboard/admin/users-view/user-list-item/user-list-item.component';
 
 @NgModule({
   declarations: [
@@ -61,7 +63,9 @@ import { ConfirmationModalComponent } from './reusables/modals/confirmation-moda
     NoContentComponent,
     UserModalComponent,
     TeamModalComponent,
-    ConfirmationModalComponent
+    ConfirmationModalComponent,
+    UserListComponent,
+    UserListItemComponent
   ],
   imports: [
     BrowserModule,

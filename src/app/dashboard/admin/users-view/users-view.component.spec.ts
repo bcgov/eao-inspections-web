@@ -1,7 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { RouterTestingModule } from '@angular/router/testing';
 
 import { UsersViewComponent } from './users-view.component';
-import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { AdminService } from './../../../../services/admin.service';
 
 describe('UsersViewComponent', () => {
   let component: UsersViewComponent;
@@ -10,7 +12,8 @@ describe('UsersViewComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ UsersViewComponent ],
-      schemas: [NO_ERRORS_SCHEMA]
+      schemas: [ NO_ERRORS_SCHEMA ],
+      providers: [AdminService, RouterTestingModule ]
     })
     .compileComponents();
   }));

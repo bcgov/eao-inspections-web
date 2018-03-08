@@ -30,7 +30,13 @@
         width: 320px;	
         border: 1px solid rgba(198,198,198,0.3);	
         border-radius: 4px;	
+
       }
+    }
+
+    // validation erros
+    .login__body__form__input.ng-touched.ng-invalid {
+      border: 2px solid red;
     }
 
     &__btn {

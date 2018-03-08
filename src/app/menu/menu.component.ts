@@ -23,6 +23,14 @@ export class MenuComponent {
   }
 
   constructor(private authService: AuthService, public modalService: ModalService, private router: Router ) { }
+  myInspections = Route.MY_REPORTS;
+  teamInspections = Route.TEAM_REPORTS;
+  profile = Route.PROFILE;
+  settings = Route.SETTINGS;
+  search = Route.SEARCH;
+  adminUser = Route.ADMIN_USERS;
+  adminTeam = Route.ADMIN_TEAMS;
+  adminReport = Route.ADMIN_REPORTS;
 
   open(content) {
     this.modalService.open(content);
