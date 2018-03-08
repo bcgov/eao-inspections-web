@@ -38,15 +38,23 @@ export class AuthService {
 
   getRole(role: string) {
     return new Promise((resolve, reject) => {
+      let isRole = false;
       const currentUser = Parse.User.current();
-      const roleObj = currentUser.get('role');
-      if (roleObj) {
-        roleObj.fetch().then((results) => {
-          resolve (results.get('name') === role);
-        }, (error) => {
-          reject (false);
-        });
-      }
+      const query = new Parse.Query('Role');
+      query.equalto('name', role);
+      query.equalto('users', currentUser);
+      query.find({
+        success: function(object) {
+          if (object) {
+            isRole = true;
+          }
+        },
+        error: function(error) {
+          reject(error.message);
+        }
+      }).then(() => {
+        resolve(isRole);
+      });
     });
   }
 
@@ -55,10 +63,10 @@ export class AuthService {
   }
 
   isAdmin() {
-    return (Parse.User.current().get('roleName') === ('admin'));
+    return Parse.User.current().get('isAdmin');
   }
 
   isSuperAdmin() {
-    return (Parse.User.current().get('roleName') === 'superadmin');
+    return Parse.User.current().get('isSuperAdmin');
   }
 }

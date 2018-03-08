@@ -20,11 +20,11 @@ export class ProfileComponent implements OnInit {
   constructor(private profileService: ProfileService) {}
 
   ngOnInit() {
-    const userData = parseToJSON([this.profileService.user])[0];
+    const userData = this.profileService.user;
     this.profile = new BasicUser(
       userData.objectId,
-      userData.fname + ' ' + userData.lname,
-      this.teams, userData.email,
+      userData.get('firstName') + ' ' + userData.get('lastName'),
+      this.teams, userData.get('publicEmail'),
       '../../../assets/inspector-profile@4x.png',
       false
     );
@@ -43,7 +43,7 @@ export class ProfileComponent implements OnInit {
             this.admin.push(
               new BasicUser(
                 userData.objectId,
-                admin.get('fname') + ' ' + admin.get('lname'),
+                admin.get('firstName') + ' ' + admin.get('lastName'),
                 team,
                 admin.get('publicEmail'),
                 '../../../assets/inspector-profile@4x.png',
