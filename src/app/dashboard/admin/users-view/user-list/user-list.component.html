@@ -8,22 +8,29 @@
   </div>
 </div>
 
-<table>
-  <div class="report-list__content__header">
-    <thead>
-      <tr>
-        <th>Full Name</th>
-        <th>Email</th>
-        <th>Team</th>
-        <th>Permissions</th>
-        <th>Action</th>
-      </tr>
-    </thead>
-  </div>
-  <div class="report-list__content__details" *ngFor="let user of users">
-    <user-list-item [user]="user"></user-list-item>
-  </div>
-</table>
+<div *ngIf="users<=0; then noContent else content"></div>
+<ng-template #content>
+  <table>
+    <div class="report-list__content__header">
+      <thead>
+        <tr>
+          <th>Full Name</th>
+          <th>Email</th>
+          <th>Team</th>
+          <th>Permissions</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+    </div>
+    <div class="report-list__content__details" *ngFor="let user of users">
+      <user-list-item [user]="user"></user-list-item>
+    </div>
+  </table>
+</ng-template>
+
+<ng-template #noContent>
+  <no-content [emptyContent]="emptyContent"></no-content>
+</ng-template>
 
 <!-- modal to add new user -->
 <ng-template #addUser let-c="close" class="modal">

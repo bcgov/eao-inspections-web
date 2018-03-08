@@ -23,9 +23,9 @@ body {
   font-family: myriad-pro, sans-serif;
 
   .no-content {
-    position: relative;
-    top: 50%;
-    left: 50%;
+    position: absolute;
+    top: 40%;
+    left: 40%;
     text-align: center;
     
     &__img {
@@ -33,9 +33,10 @@ body {
     }
 
     &__title {
+      margin-top: 30px;
       color: $font-dark-gray;	
       height: 20px;	
-      width: 182px;	
+      font-weight: 300;
       font-size: 20px;	
       line-height: 24px;
     
@@ -121,9 +122,15 @@ body {
       border: none;
       margin-right: 10px;
       text-transform: uppercase;
-
-        &--sm {
+      
+      &--sm {
+          width: auto;
+          display: inline-flex;
           text-transform: capitalize;
+
+          &__img {
+            width: 19px;
+          }
         }
 
       &:hover {
@@ -267,9 +274,15 @@ body {
     border-bottom: 1px solid #C6C6C6;
   }
 
-  td, th { 
+  th {
     width: 350px;
+    text-align: left; 
     padding: 15px 10px;
+  }
+  td { 
+    max-width: 100%;
+    min-width: 200px;
+    // padding: 15px 10px;
     text-align: left; 
   }
 
@@ -295,7 +308,7 @@ body {
       top: -9999px;
       left: -9999px;
     }
-      
+  
     td { 
       width: inherit;
       padding: 6px;

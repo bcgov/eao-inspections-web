@@ -2,12 +2,22 @@
   <tr>
     <td><img class="table__img" src={{user.image}} />{{user.name}}</td>
     <td>{{user.email}}</td>
-    <td>{{user.team}}</td>
+    <td><img class="table__img" src={{user.teamImage}} />{{user.team}}</td>
     <td>{{user.permissions}}</td>
     <td>
-      <button class="dashboard--actions dashboard--actions--sm"><img class="dashboard__header__btn__img" src="../../assets/add-active.png" />Edit</button>
-      <button class="dashboard--actions dashboard--actions--sm"><img class="dashboard__header__btn__img" src="../../assets/add-active.png" />Reset Password</button>
-      <button class="dashboard--actions dashboard--actions--sm"><img class="dashboard__header__btn__img" src="../../assets/add-active.png" />Archive</button>
+      <button (click)="open(editUser)" class="dashboard--actions dashboard--actions--sm"><img class="dashboard--actions--sm__img" src="../../assets/edit.png" />Edit</button>
+      <button class="dashboard--actions dashboard--actions--sm"><img class="dashboard--actions--sm__img" src="../../assets/reset-password@2x.png" />Reset Password</button>
+      <button (click)="open(archiveUser)" class="dashboard--actions dashboard--actions--sm"><img class="dashboard--actions--sm__img" src="../../assets/archive.png" />Archive</button>
     </td>
   </tr>
 </tbody>
+
+<!-- edit user modal -->
+<ng-template #editUser let-c="close" class="modal">
+  <user-modal (submitValue)="onSubmit($event)" [closeValue]="this.c" [modal]="modal"></user-modal>
+</ng-template>
+
+<!-- delete confirmation modal -->
+<ng-template #archiveUser let-c="close" class="modal">
+  <confirmation-modal (conformationValue)="onArchive($event)" [closeValue]="this.c" [modal]="modal"></confirmation-modal>
+</ng-template>
