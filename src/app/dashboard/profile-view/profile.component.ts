@@ -25,7 +25,7 @@ export class ProfileComponent implements OnInit {
       userData.objectId,
       userData.get('firstName') + ' ' + userData.get('lastName'),
       this.teams, userData.get('publicEmail'),
-      '../../../assets/inspector-profile@4x.png',
+      '../../../assets/inspector-profile-photo@4x.png',
       false
     );
 
@@ -46,7 +46,7 @@ export class ProfileComponent implements OnInit {
                 admin.get('firstName') + ' ' + admin.get('lastName'),
                 team,
                 admin.get('publicEmail'),
-                '../../../assets/inspector-profile@4x.png',
+                '../../../assets/admin-2@4x.png',
                 true
               )
             );
