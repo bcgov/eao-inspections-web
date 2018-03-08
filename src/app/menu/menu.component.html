@@ -20,7 +20,7 @@
       <div *ngIf="isAdmin(); then admin else notAdmin"></div>
       <ng-template #admin>
         <div class="menu__list__item" routerLinkActive="menu__list__item--active">
-          <a routerLink="/admin/user-details">
+          <a routerLink={{adminUser}}>
             <li>
               <img class="menu__list__item__img" src="../../assets/users.png" /> 
               Users
@@ -28,7 +28,7 @@
           </a>
         </div>
         <div class="menu__list__item" routerLinkActive="menu__list__item--active">
-          <a routerLink="/admin/team-details">
+          <a routerLink={{adminTeam}}>
             <li>
               <img class="menu__list__item__img" src="../../assets/team.png" /> 
               Teams
@@ -36,34 +36,34 @@
           </a>
         </div>
         <div class="menu__list__item" routerLinkActive="menu__list__item--active">
-          <a routerLink="/admin/report-details">
+          <a routerLink={{adminReport}}>
             <li>
               <img class="menu__list__item__img" src="../../assets/report.png" /> 
-              Reports
+              Inspections
             </li>
           </a>
         </div>
       </ng-template>
       <ng-template #notAdmin>
         <div class="menu__list__item" routerLinkActive="menu__list__item--active">
-          <a routerLink="/my-reports">
+          <a routerLink={{myInspections}}>
             <li>
               <img class="menu__list__item__img" src="../../assets/report.png" data-toggle="tooltip" data-placement="right" title="My Reports"
-              /> My Reports
+              /> My Inspections
             </li>
           </a>
         </div>
         <div class="menu__list__item" routerLinkActive="menu__list__item--active">
-          <a routerLink="/team-reports">
+          <a routerLink={{teamInspections}}>
             <li>
               <img class="menu__list__item__img" src="../../assets/team.png" /> 
-              Team Reports
+              Team Inspections
             </li>
           </a>
         </div>
       </ng-template>
       <div class="menu__list__item" routerLinkActive="menu__list__item--active">
-        <a routerLink="/search">
+        <a routerLink={{search}}>
           <li>
             <img class="menu__list__item__img" src="../../assets/search.png" />
             Search
@@ -71,7 +71,7 @@
         </a>
       </div>
       <div class="menu__list__item" routerLinkActive="menu__list__item--active">
-        <a routerLink="/profile">
+        <a routerLink={{profile}}>
           <li>
             <img class="menu__list__item__img" src="../../assets/profile.png" />
             Profile
@@ -79,7 +79,7 @@
         </a>
       </div>
       <div class="menu__list__item" routerLinkActive="menu__list__item--active">
-        <a routerLink="/settings">
+        <a routerLink={{settings}}>
           <li>
             <img class="menu__list__item__img" src="../../assets/settings.png" />
             Settings
@@ -110,7 +110,7 @@
     <div *ngIf="isAdmin(); then admin else notAdmin"></div>
     <ng-template #admin>
       <div class="menu__list__item" routerLinkActive="menu__list__item--active">
-        <a routerLink="/admin/user-details">
+        <a routerLink={{aminUser}}>
           <li>
             <img class="menu__list__item__img" src="../../assets/users.png" />
             <span>Users</span>
@@ -118,7 +118,7 @@
         </a>
       </div>
       <div class="menu__list__item" routerLinkActive="menu__list__item--active">
-        <a routerLink="/admin/team-details">
+        <a routerLink={{adminTeam}}>
           <li>
             <img class="menu__list__item__img" src="../../assets/team.png" />
             <span>Teams</span>
@@ -126,34 +126,34 @@
         </a>
       </div>
       <div class="menu__list__item" routerLinkActive="menu__list__item--active">
-        <a routerLink="/admin/report-details">
+        <a routerLink={{adminReport}}>
           <li>
             <img class="menu__list__item__img" src="../../assets/report.png" />
-            <span>Reports</span>
+            <span>Inspections</span>
           </li>
         </a>
       </div>
     </ng-template>
     <ng-template #notAdmin>
       <div class="menu__list__item" routerLinkActive="menu__list__item--active">
-        <a routerLink="/my-reports">
+        <a routerLink={{myInspections}}>
           <li>
             <img class="menu__list__item__img" src="../../assets/report.png" data-toggle="tooltip" data-placement="right" title="My Reports"/>
-            <span>My Reports</span>
+            <span>My Inspections</span>
           </li>
         </a>
       </div>
       <div class="menu__list__item" routerLinkActive="menu__list__item--active">
-        <a routerLink="/team-reports">
+        <a routerLink={{teamInspections}}>
           <li>
             <img class="menu__list__item__img" src="../../assets/team.png" />
-            <span>Team Reports</span>
+            <span>Team Inspections</span>
           </li>
         </a>
       </div>
     </ng-template>
     <div class="menu__list__item" routerLinkActive="menu__list__item--active">
-      <a routerLink="/search">
+      <a routerLink={{search}}>
         <li>
           <img class="menu__list__item__img" src="../../assets/search.png" />
           <span>Search</span>
@@ -161,7 +161,7 @@
       </a>
     </div>
     <div class="menu__list__item" routerLinkActive="menu__list__item--active">
-      <a routerLink="/profile">
+      <a routerLink={{profile}}>
         <li>
           <img class="menu__list__item__img" src="../../assets/profile.png" />
           <span>Profile</span>
@@ -169,7 +169,7 @@
       </a>
     </div>
     <div class="menu__list__item" routerLinkActive="menu__list__item--active">
-      <a routerLink="/settings">
+      <a routerLink={{settings}}>
         <li>
           <img class="menu__list__item__img" src="../../assets/settings.png" />
           <span>Settings</span>

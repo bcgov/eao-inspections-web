@@ -5,7 +5,7 @@ import { Component, OnInit } from '@angular/core';
 import * as String from '../../../../constants/strings';
 
 @Component({
-  selector: 'app-users-view',
+  selector: 'users-view',
   templateUrl: './users-view.component.html',
   styleUrls: ['./users-view.component.scss'],
   providers: [ AdminService ]
@@ -42,7 +42,7 @@ export class UsersViewComponent implements OnInit {
   }
 
   onSubmit(value) {
-    this.adminService.createUser(value.firstName, value.lastName, value.email, value.password, value.permission);
+    this.adminService.createUser(value.firstName, value.lastName, value.email, value.password, value.team, value.permission);
   }
 
   ngOnInit() {

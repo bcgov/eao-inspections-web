@@ -1,7 +1,7 @@
 // menu links
 export const LOGIN = 'login';
-export const MY_REPORTS = 'my-reports';
-export const TEAM_REPORTS = 'team-reports';
+export const MY_REPORTS = 'my-inspections';
+export const TEAM_REPORTS = 'team-inspections';
 export const PROFILE = 'profile';
 export const SETTINGS = 'settings';
 export const SEARCH = 'search';
@@ -9,9 +9,9 @@ export const SEARCH = 'search';
 // all admin routes
 export const ADMIN_USERS = 'admin/user-details';
 export const ADMIN_TEAMS = 'admin/team-details';
-export const ADMIN_REPORTS = 'admin/report-details';
+export const ADMIN_REPORTS = 'admin/inspections';
 
 export const MANAGE_TEAM_ID = '/manage-team/:id';
 export const TEAM_ID = '/:id';
-export const INSPECTION_DETAILS = '/inspection-details';
+export const INSPECTION_DETAILS = ':id/inspection-details';
 export const ELEMENT_ID = '/element/:id';

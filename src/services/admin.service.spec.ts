@@ -103,7 +103,7 @@ describe('Admin Testing', () => {
   it('should create user', () => {
     console.log('Testing create user in functionality');
     const randKey = randomKey();
-    service.createUser(randKey, randKey, randKey + '@test_user.com').then(value => {
+    service.createUser(randKey, randKey, randKey, randKey, randKey, randKey + '@test_user.com').then(value => {
       test_user = value;
       const query = new Parse.Query('_User');
       query.get(test_user.id).then((result) => {
