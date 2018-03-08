@@ -122,6 +122,10 @@ body {
       margin-right: 10px;
       text-transform: uppercase;
 
+        &--sm {
+          text-transform: capitalize;
+        }
+
       &:hover {
         cursor: pointer;
         color: $default-primary-color;
@@ -242,6 +246,11 @@ body {
     background-color: #FFFFFF;	
     box-shadow: $default-box-shadow;
     margin: $dashboard-content-margin;
+  }
+
+  .table__img {
+    width: 40px;
+    margin-right: 5px;
   }
 
   th { 

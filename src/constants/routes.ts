@@ -13,5 +13,5 @@ export const ADMIN_REPORTS = 'admin/inspections';
 
 export const MANAGE_TEAM_ID = '/manage-team/:id';
 export const TEAM_ID = '/:id';
-export const INSPECTION_DETAILS = ':id/inspection-details';
+export const INSPECTION_DETAILS = '/inspection-details';
 export const ELEMENT_ID = '/element/:id';

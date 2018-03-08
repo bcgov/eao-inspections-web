@@ -1,24 +1,5 @@
 <div class="dashboard">
-  <div class="dashboard__header">
-    <p class="dashboard__title">{{title}}</p>
-    <div class="dashboard__buttons">
-      <button type="button" class="dashboard__btn" (click)="open(addUser)">
-        <img class="dashboard__header__btn__img" src="../../assets/add-active.png" /> 
-        Create New
-      </button>
-    </div>
-  </div>
-  <div class="dashboard-card__container" *ngFor="let user of users">
-    <user-card [user]="user"></user-card>
+  <div>
+    <user-list></user-list>
   </div>
 </div>
-
-
-<!-- modal to add new user -->
-<ng-template #addUser let-c="close" class="modal">
-  <user-modal 
-    (submitValue)="onSubmit($event)"
-    [closeValue]="this.c" 
-    [modal]="modal">
-  </user-modal>
-</ng-template>
