@@ -38,12 +38,11 @@ const routes: Routes = [
   { path: Route.SETTINGS, component: SettingsComponent, canActivate: [AuthGuardService] },
   { path: Route.SEARCH, component: SearchViewComponent, canActivate: [AuthGuardService] },
 
-  // , canActivate: [AuthGuardService, RoleGuardService], data: { 'expectedRole': ParseVar.SUADMIN }
   // admin routes
-  { path: Route.ADMIN_USERS, component: UsersViewComponent },
-  { path: Route.ADMIN_TEAMS, component: TeamsViewComponent },
-  { path: Route.ADMIN_TEAMS + Route.MANAGE_TEAM_ID, component: ManageTeamsViewComponent },
-  { path: Route.ADMIN_REPORTS, component: ReportsViewComponent },
+  { path: Route.ADMIN_USERS, component: UsersViewComponent, canActivate: [AuthGuardService, RoleGuardService], data: { 'expectedRole': ParseVar.SUADMIN } },
+  { path: Route.ADMIN_TEAMS, component: TeamsViewComponent, canActivate: [AuthGuardService, RoleGuardService], data: { 'expectedRole': ParseVar.SUADMIN } },
+  { path: Route.ADMIN_TEAMS + Route.MANAGE_TEAM_ID, component: ManageTeamsViewComponent, canActivate: [AuthGuardService, RoleGuardService], data: { 'expectedRole': ParseVar.SUADMIN } },
+  { path: Route.ADMIN_REPORTS, component: ReportsViewComponent, canActivate: [AuthGuardService, RoleGuardService], data: { 'expectedRole': ParseVar.SUADMIN } },
 
   // no-route
   { path: '**', component: NoRouteComponent },
