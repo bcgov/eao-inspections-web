@@ -37,6 +37,7 @@ export class AuthService {
   }
 
   getRole(role: string) {
+    debugger
     return new Promise((resolve, reject) => {
       let isRole = false;
       const currentUser = Parse.User.current();
