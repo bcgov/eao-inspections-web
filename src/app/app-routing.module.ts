@@ -28,7 +28,7 @@ const routes: Routes = [
   // user routes
   { path: '', redirectTo: Route.MY_REPORTS, pathMatch: 'full', canActivate: [AuthGuardService] },
   { path: Route.MY_REPORTS, component: MyReportsComponent, canActivate: [AuthGuardService] },
-  { path: Route.MY_REPORTS + Route.TEAM_ID + Route.INSPECTION_DETAILS, component: InspectionViewComponent, canActivate: [AuthGuardService] },
+  { path: Route.MY_REPORTS + Route.INSPECTION_DETAILS, component: InspectionViewComponent, canActivate: [AuthGuardService] },
   { path: Route.MY_REPORTS + Route.INSPECTION_DETAILS + Route.ELEMENT_ID, component: ElementViewComponent, canActivate: [AuthGuardService] },
   { path: Route.TEAM_REPORTS, component: TeamReportsComponent, canActivate: [AuthGuardService] },
   { path: Route.TEAM_REPORTS + Route.TEAM_ID, component: TeamReportListComponent, canActivate: [AuthGuardService] },
