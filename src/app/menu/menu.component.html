@@ -110,7 +110,7 @@
     <div *ngIf="isAdmin(); then admin else notAdmin"></div>
     <ng-template #admin>
       <div class="menu__list__item" routerLinkActive="menu__list__item--active">
-        <a routerLink={{aminUser}}>
+        <a routerLink={{adminUser}}>
           <li>
             <img class="menu__list__item__img" src="../../assets/users.png" />
             <span>Users</span>

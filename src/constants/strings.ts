@@ -1,3 +1,4 @@
+// All data passed into modals
 //modal headers 
 export const PERMISSIONS = "Set Permissions";
 export const CREATE_USER = "Create a new user";
@@ -8,6 +9,7 @@ export const ADD_MEMBER = "Add member";
 //confirmation modal
 export const REMOVE_USER = "Are you sure you want to remove this user?";
 export const ARCHIVE_USER = "Are you sure you want to archive this user?";
+export const UNARCHIVE_USER = "Are you sure you want to unarchive this user?";
 export const LOGOUT_USER = "Are you sure you want to logout?";
 export const ARCHIVE_TEAM = "Are you sure you want to archive this team?";
 export const ARCHIVE_REPORT = "Are you sure you want to archive this inspection?";
@@ -29,6 +31,7 @@ export const LOGOUT_BUTTON = "Logout";
 export const REMOVE_BUTTON = "Remove";
 export const DONE_BUTTON = "Done";
 export const ARCHIVE_BUTTON = 'Archive';
+export const UNARCHIVE_BUTTON = "Unarchive";
 export const EDIT_BUTTON = "Edit User";
 export const ADD_BUTTON = "Add User";
 export const YES_BUTTON = "Yes, I would love to";

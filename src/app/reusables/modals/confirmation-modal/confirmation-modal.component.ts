@@ -12,8 +12,8 @@ export class ConfirmationModalComponent implements OnInit {
 
   constructor() { }
 
-  conformation(value?: string) {
-    this.confirmationValue.emit(value);
+  conformation() {
+    this.confirmationValue.emit();
   }
 
   close() {

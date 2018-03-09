@@ -41,8 +41,8 @@ export class AuthService {
       let isRole = false;
       const currentUser = Parse.User.current();
       const query = new Parse.Query('Role');
-      query.equalto('name', role);
-      query.equalto('users', currentUser);
+      query.get('name', role);
+      query.get('users', currentUser);
       query.find({
         success: function(object) {
           if (object) {

@@ -16,11 +16,6 @@ export class ArchivedUsersComponent implements OnInit {
   title = "Archived Users";
   usersLink = Route.ADMIN_USERS;
 
-  modal = {
-    header: String.CREATE_USER,
-    userButton: String.ADD_BUTTON,
-  };
-
   emptyContent = {
     image: "../../assets/team-member.png",
     message: String.EMPTY_USER,
@@ -29,14 +24,7 @@ export class ArchivedUsersComponent implements OnInit {
   users = [];
 
 
-  constructor(
-    private modalService: ModalService,
-    private adminService: AdminService
-  ) { }
-
-  open(modal) {
-    this.modalService.open(modal);
-  }
+  constructor( private adminService: AdminService ) { }
 
   ngOnInit() {
     this.adminService.getArchivedUsers()

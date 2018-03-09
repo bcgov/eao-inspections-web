@@ -37,6 +37,7 @@ import { ConfirmationModalComponent } from './reusables/modals/confirmation-moda
 import { UserListComponent } from './dashboard/admin/users-view/user-list/user-list.component';
 import { UserListItemComponent } from './dashboard/admin/users-view/user-list-item/user-list-item.component';
 import { ArchivedUsersComponent } from './dashboard/admin/users-view/archived-users/archived-users.component';
+import { ArchiveModalComponent } from './reusables/modals/archive-modal/archive-modal.component';
 
 @NgModule({
   declarations: [
@@ -67,7 +68,8 @@ import { ArchivedUsersComponent } from './dashboard/admin/users-view/archived-us
     ConfirmationModalComponent,
     UserListComponent,
     UserListItemComponent,
-    ArchivedUsersComponent
+    ArchivedUsersComponent,
+    ArchiveModalComponent
   ],
   imports: [
     BrowserModule,

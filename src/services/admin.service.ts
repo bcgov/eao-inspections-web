@@ -91,7 +91,7 @@ export class AdminService {
 
   createUser(firstName: string, lastName: string, email: string, password: string, team: string, permission: string) {
     return new Promise((resolve, reject) => {
-      const query = new Parse.Query('Role');
+      const query = new Parse.Query(Parse.Role);
       const user = new Parse.User();
       user.set('isActive', true);
       user.set('isAdmin', this.getAdminStatus(permission));
@@ -106,11 +106,14 @@ export class AdminService {
       user.set('team', team);
       user.signUp(null, {
         success: function (results) {
-          query.get('name', permission).then(() => {
-            query.relation("users").add(user);
-            query.save();
-            resolve(user);
-          });
+          // console.log(results);
+          // query.equalTo('name', permission);
+          // query.find().then((obj) => {
+          //   console.log(obj);
+          //   obj.relation("users").add(results);
+          //   obj.save();
+          // });
+          resolve(results);
           console.log("success!!!");
         },
         error: function (object, error) {
@@ -138,21 +141,23 @@ export class AdminService {
 
   archiveUser(userId: string) {
     return new Promise((resolve, reject) => {
-      const User = Parse.Object.extend('User');
-      const query = new Parse.Query(User);
+      const query = new Parse.Query('User');
       query.get(userId, {
         success: function (user) {
           user.set('isActive', false);
-          user.save();
+          user.save()
           resolve(user);
+            // replace with toast message
+            console.log("success!!");
         },
         error: function (object, error) {
           reject(error.message);
+          console.log("error");
         }
       });
     });
   }
-
+  
   unArchiveUser(userId: string) {
     return new Promise((resolve, reject) => {
       const query = new Parse.Query('User');
@@ -161,9 +166,11 @@ export class AdminService {
           user.set('isActive', true);
           user.save();
           resolve(user);
+          console.log("success");
         },
         error: function (object, error) {
           resolve(error.message);
+          console.log("error");
         }
       });
     });
