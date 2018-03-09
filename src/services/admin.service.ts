@@ -45,6 +45,36 @@ export class AdminService {
     });
   }
 
+  getArchivedUsers() {
+    return new Promise((resolve, reject) => {
+      const query = new Parse.Query('User');
+      query.equalTo('isActive', false);
+      query.find({
+        success: function (results) {
+          resolve(results);
+        },
+        error: function (error) {
+          reject(error.message);
+        }
+      });
+    });
+  }
+
+  getActiveUsers() {
+    return new Promise((resolve, reject) => {
+      const query = new Parse.Query('User');
+      query.equalTo('isActive', true);
+      query.find({
+        success: function (results) {
+          resolve(results);
+        },
+        error: function (error) {
+          reject(error.message);
+        }
+      });
+    });
+  }
+
   getSuperAdminStatus(permission: string) {
     if (permission === "superadmin") {
       return true
@@ -106,7 +136,7 @@ export class AdminService {
     });
   }
 
-  deleteUser(userId: string) {
+  archiveUser(userId: string) {
     return new Promise((resolve, reject) => {
       const User = Parse.Object.extend('User');
       const query = new Parse.Query(User);
@@ -118,22 +148,6 @@ export class AdminService {
         },
         error: function (object, error) {
           reject(error.message);
-        }
-      });
-    });
-  }
-
-  archiveUser(userId: string) {
-    return new Promise((resolve, reject) => {
-      const query = new Parse.Query('User');
-      query.get(userId, {
-        success: function (user) {
-          user.set('isActive', false);
-          user.save();
-          resolve(user);
-        },
-        error: function (object, error) {
-          resolve(error.message);
         }
       });
     });

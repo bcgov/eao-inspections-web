@@ -25,7 +25,7 @@ export class TeamsViewComponent implements OnInit {
     {
       id: 3,
       name: "Team 3",
-      image: "../../assets/inspector-profile@4x.png",
+      image: "../../assets/inspector-profile-photo@4x.png",
       members: 2
     },
     {
@@ -37,7 +37,7 @@ export class TeamsViewComponent implements OnInit {
     {
       id: 4,
       name: "Team 5",
-      image: "../../assets/inspector-profile@4x.png",
+      image: "../../assets/inspector-profile-photo@4x.png",
       members: 106
     }
   ];

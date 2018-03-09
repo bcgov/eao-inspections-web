@@ -39,7 +39,7 @@ export class ArchivedUsersComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.adminService.getAllUsers()
+    this.adminService.getArchivedUsers()
       .then((results) => {
         if (results instanceof Array) {
           this.users = parseToJSON(results);

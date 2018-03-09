@@ -42,7 +42,7 @@ export class UserListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.adminService.getAllUsers()
+    this.adminService.getActiveUsers()
       .then((results) => {
         if (results instanceof Array) {
           this.users = parseToJSON(results);
