@@ -8,7 +8,8 @@
     "build": "ng build --prod",
     "test": "ng test --sourcemaps=false",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "build-prod": "ng build --aot -prod"
   },
   "private": true,
   "dependencies": {
@@ -54,3 +55,4 @@
     "typescript": "~2.5.3"
   }
 }
+
