@@ -27,7 +27,7 @@ export class UserListComponent implements OnInit {
   };
 
   users = [];
-  
+
   constructor(
     private modalService: ModalService,
     private adminService: AdminService

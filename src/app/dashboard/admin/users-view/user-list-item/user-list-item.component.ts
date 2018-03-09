@@ -36,7 +36,7 @@ export class UserListItemComponent implements OnInit {
   }
 
   onArchive(value) {
-    console.log("Archived user");
+    this.adminService.archiveUser(value);
   }
   
   ngOnInit() {

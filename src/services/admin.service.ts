@@ -123,6 +123,38 @@ export class AdminService {
     });
   }
 
+  archiveUser(userId: string) {
+    return new Promise((resolve, reject) => {
+      const query = new Parse.Query('User');
+      query.get(userId, {
+        success: function (user) {
+          user.set('isActive', false);
+          user.save();
+          resolve(user);
+        },
+        error: function (object, error) {
+          resolve(error.message);
+        }
+      });
+    });
+  }
+
+  unArchiveUser(userId: string) {
+    return new Promise((resolve, reject) => {
+      const query = new Parse.Query('User');
+      query.get(userId, {
+        success: function (user) {
+          user.set('isActive', true);
+          user.save();
+          resolve(user);
+        },
+        error: function (object, error) {
+          resolve(error.message);
+        }
+      });
+    });
+  }
+
   createTeam(teamName: string) {
     return new Promise((resolve, reject) => {
       const team = new Parse.Object('Team');

@@ -36,7 +36,7 @@
 
 <!-- delete confirmation modal -->
 <ng-template #archiveUser let-c="close" class="modal">
-  <confirmation-modal (conformationValue)="onArchive($event)" [closeValue]="this.c" [modal]="modal"></confirmation-modal>
+  <confirmation-modal (conformationValue)="onArchive(user.objectId)" [closeValue]="this.c" [modal]="modal"></confirmation-modal>
 </ng-template>
 
 <ng-template #unArchive let-c="close" class="modal">
