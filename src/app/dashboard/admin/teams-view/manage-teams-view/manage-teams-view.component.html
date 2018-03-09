@@ -11,11 +11,17 @@
       </button>
     </div>
   </div>
-  <div class="dashboard-card__container" *ngFor="let user of users">
-    <user-card [user]="user"></user-card>
-  </div>
+  <div *ngIf="users<=0; then noContent else content"></div>
+  <ng-template #noContent>
+    <no-content [emptyContent]="emptyContent"></no-content>
+  </ng-template>
+  <ng-template #content>
+    <div class="dashboard-card__container" *ngFor="let user of users">
+      <user-card [user]="user"></user-card>
+    </div>
+  </ng-template>
 </div>
 
 <ng-template #addMember let-c="close" class="modal">
-  <user-modal [closeValue]="this.c" [modal]="modal"></user-modal>
+  <user-modal (submitValue)="addMember($event)" [closeValue]="this.c" [modal]="modal"></user-modal>
 </ng-template>

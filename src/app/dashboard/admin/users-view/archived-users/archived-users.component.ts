@@ -1,3 +1,4 @@
+import { EMPTY_ARCHIVED_USERS } from './../../../../../constants/strings';
 import { Component, OnInit } from '@angular/core';
 
 import { AdminService } from './../../../../../services/admin.service';
@@ -18,7 +19,7 @@ export class ArchivedUsersComponent implements OnInit {
 
   emptyContent = {
     image: "../../assets/team-member.png",
-    message: String.EMPTY_USER,
+    message: String.EMPTY_ARCHIVED_USERS,
   };
 
   users = [];

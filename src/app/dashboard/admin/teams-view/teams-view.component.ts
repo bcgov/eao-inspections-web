@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalService } from './../../../../services/modal.service';
 import * as String from '../../../../constants/strings';
+import * as Route from '../../../../constants/routes';
 
 @Component({
   selector: 'app-teams-view',
@@ -9,6 +10,7 @@ import * as String from '../../../../constants/strings';
 })
 export class TeamsViewComponent implements OnInit {
   title = "Teams";
+  archivedLink = Route.ARCHIVED_TEAMS;
   teams = [
     {
       id: 1,

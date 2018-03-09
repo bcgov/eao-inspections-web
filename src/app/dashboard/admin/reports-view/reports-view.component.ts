@@ -1,3 +1,4 @@
+import * as String from './../../../../constants/strings';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -6,21 +7,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./reports-view.component.scss']
 })
 export class ReportsViewComponent implements OnInit {
-  title = "Reports";
-  teams = [
-    {
-      id: 1,
-      name: "Team 1",
-      image: "../../assets/admin-2@4x.png",
-      members: 9
-    },
-    {
-      id: 2,
-      name: "Team 2",
-      image: "../../assets/admin-1@4x.png",
-      members: 55
-    }
-  ]
+  title = "Inspections";
+
+  emptyContent = {
+    image: "../../assets/inspections.png",
+    message: String.EMPTY_INSPECTIONS,
+  };
+  teams = []
 
   constructor() { }
 

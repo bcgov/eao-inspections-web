@@ -189,6 +189,10 @@ body {
           margin-bottom: 15px;
         }
 
+        &--lg {
+          width: 200px;
+        }
+
         &--dark {
           color: $font-white;
           height: 40px;	
@@ -296,10 +300,11 @@ body {
   }
 
   th {
-    width: 250px;
+    width: 300px;
     text-align: left; 
-    padding: 15px 10px;
+    padding: 15px 25px;
   }
+
   th:last-child {
     width: 400px;
   }
@@ -307,8 +312,8 @@ body {
   td { 
     font-size: 13px;
     max-width: 100%;
-    min-width: 206px;
-    // padding: 15px 10px;
+    min-width: 220px;
+    padding: 15px 10px;
     text-align: left; 
   }
 
@@ -326,7 +331,6 @@ body {
       border: none;
       box-shadow: $default-box-shadow;
     }
-    
     
     /* Hide table headers (but not display: none;, for accessibility) */
     thead tr { 
@@ -353,7 +357,41 @@ body {
       padding-right: 10px; 
       white-space: nowrap;
     }
+   
+    // titles for user List
+      .user:nth-of-type(1):before { 
+        content: "Full Name"; 
+        color: $font-dark-gray;	
+        font-size: 12px;
+        text-transform: uppercase; 
+      }
+      .user:nth-of-type(2):before { 
+        content: "Email";
+        color: $font-dark-gray;	
+        font-size: 12px;
+        text-transform: uppercase;  
+      }
+      .user:nth-of-type(3):before { 
+        content: "Team"; 
+        color: $font-dark-gray;	
+        font-size: 12px;
+        text-transform: uppercase; 
+      }
+      .user:nth-of-type(4):before { 
+        content: "Permissions"; 
+        color: $font-dark-gray;	
+        font-size: 12px;
+        text-transform: uppercase; 
+      }
+      .user:nth-of-type(5):before { 
+        content: "Action"; 
+        color: $font-dark-gray;	
+        font-size: 12px;
+        text-transform: uppercase; 
+      }
+   
 
+// titles for reports list
     td:nth-of-type(1):before { 
       content: "Title"; 
       color: $font-dark-gray;	

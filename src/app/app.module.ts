@@ -38,6 +38,7 @@ import { UserListComponent } from './dashboard/admin/users-view/user-list/user-l
 import { UserListItemComponent } from './dashboard/admin/users-view/user-list-item/user-list-item.component';
 import { ArchivedUsersComponent } from './dashboard/admin/users-view/archived-users/archived-users.component';
 import { ArchiveModalComponent } from './reusables/modals/archive-modal/archive-modal.component';
+import { ArchivedTeamsComponent } from './dashboard/admin/teams-view/archived-teams/archived-teams.component';
 
 @NgModule({
   declarations: [
@@ -69,7 +70,8 @@ import { ArchiveModalComponent } from './reusables/modals/archive-modal/archive-
     UserListComponent,
     UserListItemComponent,
     ArchivedUsersComponent,
-    ArchiveModalComponent
+    ArchiveModalComponent,
+    ArchivedTeamsComponent
   ],
   imports: [
     BrowserModule,

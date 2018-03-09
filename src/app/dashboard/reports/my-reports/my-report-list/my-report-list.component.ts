@@ -4,6 +4,7 @@ import {ReportService} from '../../../../../services/report.service';
 import {parseToJSON} from '../../../../../services/parse.service';
 import {Team} from '../../../../../models/team.model';
 import {Inspection} from '../../../../../models/inspection.model';
+import * as String from '../../../../../constants/strings';
 
 
 @Component({
@@ -16,6 +17,11 @@ import {Inspection} from '../../../../../models/inspection.model';
 export class MyReportListComponent implements OnInit {
   title = 'Team 1';
   link = '/team-reports';
+  emptyContent = {
+    image: "../../assets/inspections.png",
+    message: String.EMPTY_INSPECTIONS,
+  };
+
   reports = [];
   data = [];
 

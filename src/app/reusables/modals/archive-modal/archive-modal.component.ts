@@ -14,7 +14,6 @@ export class ArchiveModalComponent {
   constructor() { }
 
   conformation(value) {
-    console.log("I MADE IT TO STEP ONE " + value);
     this.submitValue.emit(value);
   }
 
