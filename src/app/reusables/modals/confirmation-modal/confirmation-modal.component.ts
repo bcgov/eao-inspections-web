@@ -12,7 +12,7 @@ export class ConfirmationModalComponent implements OnInit {
 
   constructor() { }
 
-  conformation(value?: string) {
+  conformation() {
     this.confirmationValue.emit();
   }
 

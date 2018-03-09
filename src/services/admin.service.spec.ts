@@ -127,7 +127,7 @@ describe('Admin Testing', () => {
 
   it('should archive user', () => {
     console.log('Testing archive user in functionality');
-    service.deleteUser(test_user.id).then((object) => {
+    service.archiveUser(test_user.id).then((object) => {
       console.log('Checking status of user...');
       test_user = object;
       expect(test_user.get('active') === 'false').toBeTruthy();

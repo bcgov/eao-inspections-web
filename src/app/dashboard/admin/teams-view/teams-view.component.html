@@ -6,7 +6,7 @@
         <img class="dashboard__header__btn__img" src="../../assets/add-active.png" /> 
         Create New
       </button>
-      <button class="dashboard__btn">Archived Teams</button>
+      <a href={{archivedLink}}><button class="dashboard__btn">Archived Teams</button></a>
     </div>
   </div>
   <div class="dashboard-card__container" *ngFor="let team of teams">

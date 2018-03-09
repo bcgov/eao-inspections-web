@@ -90,7 +90,7 @@
     <div class="mobile-menu__divider"></div>
     <div>
       <div class="mobile-menu__footer">
-        <img class="menu__profile__img" src="../../assets/inspector-profile@4x.png" />
+        <img class="menu__profile__img" src="../../assets/inspector-profile-photo@1x.png" />
         <div class="mobile-menu__footer__content">
           <p>Mittie Benson</p>
           <button type="button" class="menu__profile__content__link" (click)="open(content)">Logout</button>
@@ -110,7 +110,7 @@
     <div *ngIf="isAdmin(); then admin else notAdmin"></div>
     <ng-template #admin>
       <div class="menu__list__item" routerLinkActive="menu__list__item--active">
-        <a routerLink={{aminUser}}>
+        <a routerLink={{adminUser}}>
           <li>
             <img class="menu__list__item__img" src="../../assets/users.png" />
             <span>Users</span>

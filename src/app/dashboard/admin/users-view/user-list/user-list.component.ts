@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 
 import { AdminService } from './../../../../../services/admin.service';
 import { ModalService } from './../../../../../services/modal.service';
+import { parseToJSON } from './../../../../../services/parse.service';
 import * as String from '../../../../../constants/strings';
+import * as Route from '../../../../../constants/routes';
 
 @Component({
   selector: 'user-list',
@@ -12,6 +14,7 @@ import * as String from '../../../../../constants/strings';
 })
 export class UserListComponent implements OnInit {
   title = "Users";
+  archivedLink = Route.ARCHIVED_USERS;
 
   modal = {
     header: String.CREATE_USER,
@@ -23,48 +26,7 @@ export class UserListComponent implements OnInit {
     message: String.EMPTY_USER,
   };
 
-  users = [
-    {
-      name: "Lou Ballard",
-      team: "Team 2",
-      email: "lou@gmail.com",
-      teamImage: "../../assets/team-logo.png",
-      permissions: "Inspector",
-      image: "../../assets/admin-2@4x.png"
-    },
-    {
-      name: "Janet Thorton",
-      team: "Team 1",
-      email: "thorton25@gmail.com",
-      teamImage: "../../assets/team-logo.png",
-      permissions: "Inspector",
-      image: "../../assets/admin-1@4x.png"
-    },
-    {
-      name: "Lydia Baxter",
-      team: "Team 1",
-      email: "l_baxter@gmail.com",
-      teamImage: "../../assets/team-logo.png",
-      permissions: "Superadmin",
-      image: "../../assets/inspector-profile@4x.png"
-    },
-    {
-      name: "Janet Thorton",
-      team: "Team 1",
-      teamImage: "../../assets/team-logo.png",
-      email: "jt@gmail.com",
-      permissions: "Inspector",
-      image: "../../assets/admin-1@4x.png"
-    },
-    {
-      name: "Susan Pike",
-      team: "Team 1",
-      email: "pike_place@gmail.com",
-      teamImage: "../../assets/team-logo.png",
-      permissions: "Inspector",
-      image: "../../assets/inspector-profile@4x.png"
-    }
-  ]
+  users = [];
 
   constructor(
     private modalService: ModalService,
@@ -80,6 +42,12 @@ export class UserListComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.adminService.getActiveUsers()
+      .then((results) => {
+        if (results instanceof Array) {
+          this.users = parseToJSON(results);
+        }
+      });
   }
 
 }

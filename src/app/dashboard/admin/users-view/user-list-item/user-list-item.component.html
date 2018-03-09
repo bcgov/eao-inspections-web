@@ -1,13 +1,29 @@
 <tbody>
   <tr>
-    <td><img class="table__img" src={{user.image}} />{{user.name}}</td>
-    <td>{{user.email}}</td>
-    <td><img class="table__img" src={{user.teamImage}} />{{user.team}}</td>
-    <td>{{user.permissions}}</td>
-    <td>
-      <button (click)="open(editUser)" class="dashboard--actions dashboard--actions--sm"><img class="dashboard--actions--sm__img" src="../../assets/edit.png" />Edit</button>
-      <button class="dashboard--actions dashboard--actions--sm"><img class="dashboard--actions--sm__img" src="../../assets/reset-password@2x.png" />Reset Password</button>
-      <button (click)="open(archiveUser)" class="dashboard--actions dashboard--actions--sm"><img class="dashboard--actions--sm__img" src="../../assets/archive.png" />Archive</button>
+    <td class="user">
+      <img *ngIf="user.image" class="table__img" src={{user.image}} />
+      <img *ngIf="!user.image" class="table__img" src="../../../assets/team-member.png" />
+      {{user.firstName + " " + user.lastName}}
+    </td>
+    <td class="user">{{user.publicEmail}}</td>
+    <td class="user">
+      <img *ngIf="user.teamImage" class="table__img" src={{user.teamImage}} />
+      <img *ngIf="!user.teamImage" class="table__img" src="../../../assets/team-lg.png"/>
+      {{user.team}}
+    </td>
+    <td class="user">{{user.permission}}</td>
+    <td class="user">
+      <div *ngIf="user.isActive; then active else notActive"></div>
+      <ng-template #active>
+        <button (click)="open(editUser)" class="dashboard--actions dashboard--actions--sm"><img class="dashboard--actions--sm__img" src="../../assets/edit.png" />Edit</button>
+        <button (click)="open(archiveUser)" class="dashboard--actions dashboard--actions--sm"><img class="dashboard--actions--sm__img" src="../../assets/archive.png" />Archive</button>
+      </ng-template>
+      <ng-template #notActive>
+        <button (click)="open(unArchive)" class="dashboard--actions dashboard--actions--sm">
+          <img class="dashboard--actions--sm__img" src="../../assets/unarchive.png" />
+          Unarchive
+        </button>
+      </ng-template>
     </td>
   </tr>
 </tbody>
@@ -17,7 +33,23 @@
   <user-modal (submitValue)="onSubmit($event)" [closeValue]="this.c" [modal]="modal"></user-modal>
 </ng-template>
 
-<!-- delete confirmation modal -->
+<!-- archive confirmation modal -->
 <ng-template #archiveUser let-c="close" class="modal">
-  <confirmation-modal (conformationValue)="onArchive($event)" [closeValue]="this.c" [modal]="modal"></confirmation-modal>
+  <archive-modal 
+    [data]="user" 
+    (submitValue)="onArchive($event)" 
+    [closeValue]="this.c" 
+    [modal]="modal"
+  >
+  </archive-modal>
+</ng-template>
+
+<ng-template #unArchive let-c="close" class="modal">
+  <archive-modal 
+    [data]="user" 
+    [closeValue]="this.c" 
+    [modal]="modal"
+    (submitValue)="onUnarchive($event)"
+  >
+  </archive-modal>
 </ng-template>

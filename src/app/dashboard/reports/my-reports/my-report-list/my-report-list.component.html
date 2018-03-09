@@ -1,19 +1,24 @@
-
-<table>
-  <div class="report-list__content__header">
-    <thead>
-    <tr>
-      <th>Title</th>
-      <th>Linked Projects</th>
-      <th>Team</th>
-      <th>Submitted</th>
-      <th>Action</th>
-    </tr>
-  </thead>
-  </div>
-  <div class="report-list__content__details" *ngFor="let data of data">
-    <report-list-item [data]="data"></report-list-item>
-  </div>
-</table>
+<div *ngIf="data<=0; then noContent else content"></div>
+<ng-template #noContent>
+  <no-content [emptyContent]="emptyContent"></no-content>
+</ng-template>
+<ng-template #content>
+  <table>
+    <div class="report-list__content__header">
+      <thead>
+      <tr>
+        <th>Title</th>
+        <th>Linked Projects</th>
+        <th>Team</th>
+        <th>Submitted</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    </div>
+    <div class="report-list__content__details" *ngFor="let data of data">
+      <report-list-item [data]="data"></report-list-item>
+    </div>
+  </table>
+</ng-template>
 
  

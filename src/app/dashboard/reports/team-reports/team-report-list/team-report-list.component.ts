@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import * as String from '../../../../../constants/strings';
 
 @Component({
   selector: 'team-report-list',
@@ -7,6 +8,10 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class TeamReportListComponent implements OnInit {
   // @Input('data') data: any;
+  emptyContent = {
+    image: "../../assets/team-lg.png",
+    message: String.EMPTY_TEAM,
+  };
 
   data = [
     {
