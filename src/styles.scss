@@ -60,7 +60,7 @@ body {
     &__title {
       position: absolute;
       top: 40%;
-      left: 50%;
+      left: 40%;
       color: $font-dark-gray;	
       height: 20px;	
       font-weight: 300;
@@ -296,13 +296,18 @@ body {
   }
 
   th {
-    width: 350px;
+    width: 250px;
     text-align: left; 
     padding: 15px 10px;
   }
+  th:last-child {
+    width: 400px;
+  }
+
   td { 
+    font-size: 13px;
     max-width: 100%;
-    min-width: 200px;
+    min-width: 206px;
     // padding: 15px 10px;
     text-align: left; 
   }
@@ -331,6 +336,7 @@ body {
     }
   
     td { 
+      font-size: 13px;
       width: inherit;
       padding: 6px;
       display: block;

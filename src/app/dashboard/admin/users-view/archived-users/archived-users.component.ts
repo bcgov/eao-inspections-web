@@ -7,14 +7,14 @@ import * as String from '../../../../../constants/strings';
 import * as Route from '../../../../../constants/routes';
 
 @Component({
-  selector: 'user-list',
-  templateUrl: './user-list.component.html',
-  styleUrls: ['./user-list.component.scss'],
-  providers: [ AdminService ]
+  selector: 'app-archived-users',
+  templateUrl: './archived-users.component.html',
+  styleUrls: ['./archived-users.component.scss'],
+  providers: [AdminService]
 })
-export class UserListComponent implements OnInit {
-  title = "Users";
-  archivedLink = Route.ARCHIVED_USERS;
+export class ArchivedUsersComponent implements OnInit {
+  title = "Archived Users";
+  usersLink = Route.ADMIN_USERS;
 
   modal = {
     header: String.CREATE_USER,
@@ -27,7 +27,8 @@ export class UserListComponent implements OnInit {
   };
 
   users = [];
-  
+
+
   constructor(
     private modalService: ModalService,
     private adminService: AdminService
@@ -35,10 +36,6 @@ export class UserListComponent implements OnInit {
 
   open(modal) {
     this.modalService.open(modal);
-  }
-
-  onSubmit(value) {
-    this.adminService.createUser(value.firstName, value.lastName, value.email, value.password, value.team, value.permission);
   }
 
   ngOnInit() {
@@ -49,5 +46,4 @@ export class UserListComponent implements OnInit {
         }
       });
   }
-
 }

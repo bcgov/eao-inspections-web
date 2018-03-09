@@ -20,6 +20,7 @@ import { TeamReportListComponent } from './dashboard/reports/team-reports/team-r
 import {AuthGuardService} from '../services/auth-guard.service';
 import {RoleGuardService} from '../services/role-guard-service';
 import { NoRouteComponent } from './no-route/no-route.component';
+import { ArchivedUsersComponent } from './dashboard/admin/users-view/archived-users/archived-users.component';
 
 const routes: Routes = [
   // unauthenticated routes
@@ -38,8 +39,10 @@ const routes: Routes = [
   { path: Route.SETTINGS, component: SettingsComponent, canActivate: [AuthGuardService] },
   { path: Route.SEARCH, component: SearchViewComponent, canActivate: [AuthGuardService] },
 
+  // , canActivate: [AuthGuardService, RoleGuardService], data: { 'expectedRole': ParseVar.SUADMIN } 
   // admin routes
-  { path: Route.ADMIN_USERS, component: UsersViewComponent, canActivate: [AuthGuardService, RoleGuardService], data: { 'expectedRole': ParseVar.SUADMIN } },
+  { path: Route.ADMIN_USERS, component: UsersViewComponent },
+  { path: Route.ARCHIVED_USERS, component: ArchivedUsersComponent },
   { path: Route.ADMIN_TEAMS, component: TeamsViewComponent, canActivate: [AuthGuardService, RoleGuardService], data: { 'expectedRole': ParseVar.SUADMIN } },
   { path: Route.ADMIN_TEAMS + Route.MANAGE_TEAM_ID, component: ManageTeamsViewComponent, canActivate: [AuthGuardService, RoleGuardService], data: { 'expectedRole': ParseVar.SUADMIN } },
   { path: Route.ADMIN_REPORTS, component: ReportsViewComponent, canActivate: [AuthGuardService, RoleGuardService], data: { 'expectedRole': ParseVar.SUADMIN } },

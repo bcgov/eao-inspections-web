@@ -31,6 +31,10 @@ export class UserListItemComponent implements OnInit {
     console.log(value.firstName, value.lastName, value.email, value.password, value.team, value.permission);
   }
 
+  onUnarchive(value) {
+    console.log("Unarchived User");
+  }
+
   onArchive(value) {
     console.log("Archived user");
   }

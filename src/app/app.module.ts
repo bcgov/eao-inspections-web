@@ -36,6 +36,7 @@ import { TeamModalComponent } from './reusables/modals/team-modal/team-modal.com
 import { ConfirmationModalComponent } from './reusables/modals/confirmation-modal/confirmation-modal.component';
 import { UserListComponent } from './dashboard/admin/users-view/user-list/user-list.component';
 import { UserListItemComponent } from './dashboard/admin/users-view/user-list-item/user-list-item.component';
+import { ArchivedUsersComponent } from './dashboard/admin/users-view/archived-users/archived-users.component';
 
 @NgModule({
   declarations: [
@@ -65,7 +66,8 @@ import { UserListItemComponent } from './dashboard/admin/users-view/user-list-it
     TeamModalComponent,
     ConfirmationModalComponent,
     UserListComponent,
-    UserListItemComponent
+    UserListItemComponent,
+    ArchivedUsersComponent
   ],
   imports: [
     BrowserModule,

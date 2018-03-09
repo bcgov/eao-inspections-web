@@ -9,7 +9,7 @@ import { NgForm } from '@angular/forms';
 
 export class UserModalComponent implements OnInit {
   teams = ["Team 1", "Team 2", "Team 3"];
-  permissions = ["superadmin", "inspector"];
+  permissions = ["admin", "superadmin", "inspector"];
 
   @Input('modal') modal: any;
   @Input() closeValue: any;
