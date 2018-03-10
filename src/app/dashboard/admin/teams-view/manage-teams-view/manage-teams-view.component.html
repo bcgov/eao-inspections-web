@@ -23,5 +23,5 @@
 </div>
 
 <ng-template #addMember let-c="close" class="modal">
-  <user-modal (submitValue)="addMember($event)" [closeValue]="this.c" [modal]="modal"></user-modal>
+  <permissions-modal (submitValue)="onAddMember($event)" [closeValue]="this.c" [modal]="modal"></permissions-modal>
 </ng-template>

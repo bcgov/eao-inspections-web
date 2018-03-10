@@ -1,3 +1,4 @@
+import { ArchivedInspectionsComponent } from './dashboard/admin/reports-view/archived-inspections/archived-inspections.component';
 import { ArchivedTeamsComponent } from './dashboard/admin/teams-view/archived-teams/archived-teams.component';
 import { NgModule } from '@angular/core';
 import {Routes, RouterModule, CanActivate} from '@angular/router';
@@ -47,6 +48,7 @@ const routes: Routes = [
   { path: Route.ARCHIVED_TEAMS, component: ArchivedTeamsComponent, canActivate: [AuthGuardService, RoleGuardService], data: { 'expectedRole': ParseVar.SUADMIN } },
   { path: Route.ADMIN_TEAMS + Route.MANAGE_TEAM_ID, component: ManageTeamsViewComponent, canActivate: [AuthGuardService, RoleGuardService], data: { 'expectedRole': ParseVar.SUADMIN } },
   { path: Route.ADMIN_REPORTS, component: ReportsViewComponent, canActivate: [AuthGuardService, RoleGuardService], data: { 'expectedRole': ParseVar.SUADMIN } },
+  { path: Route.ARCHIVED_INSPECTIONS, component: ArchivedInspectionsComponent, canActivate: [AuthGuardService, RoleGuardService], data: { 'expectedRole': ParseVar.SUADMIN } },
 
   // no-route
   { path: '**', component: NoRouteComponent },

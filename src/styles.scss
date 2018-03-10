@@ -27,6 +27,10 @@ body {
     top: 40%;
     left: 40%;
     text-align: center;
+
+    @include mobile {
+      left: 10%;
+    }
     
     &__img {
       color: $font-dark-gray !important;	
@@ -47,7 +51,7 @@ body {
     
       @include mobile {
         top: 25%;
-        left: 25%;
+        left: 10%;
       }
     }
   }
