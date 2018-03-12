@@ -1,11 +1,12 @@
 <tbody>
   <tr>
     <td>
-      <a routerLink="inspection-details">{{data.title}}</a>
+      <a [routerLink]="['inspection-details', data.id]">{{data.title}}</a>
     </td>
-    <td>{{data.project}}</td>
-    <td><img src={{data.image}} />{{data.team}}</td>
-    <td>{{data.updatedAt}}</td>
+    <td>{{ data.project || '-' }}</td>
+    <td><img src={{data.image}} />{{ data.team || '-' }}</td>
+    <td *ngIf="data.submitted; else no">Yes</td>
+    <ng-template #no><td>No</td></ng-template>
     <td>
       <button class="dashboard--actions">Download</button>
     </td>

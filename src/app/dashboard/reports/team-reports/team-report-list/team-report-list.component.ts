@@ -4,7 +4,8 @@ import * as String from '../../../../../constants/strings';
 @Component({
   selector: 'team-report-list',
   templateUrl: './team-report-list.component.html',
-  styleUrls: ['./team-report-list.component.scss']
+  styleUrls: ['./team-report-list.component.scss'],
+  providers: [ProfileService]
 })
 export class TeamReportListComponent implements OnInit {
   // @Input('data') data: any;
@@ -13,50 +14,7 @@ export class TeamReportListComponent implements OnInit {
     message: String.EMPTY_TEAM,
   };
 
-  data = [
-    {
-      id: 1,
-      inspection: "Inspection",
-      linkedProject: "57463 Marshall Rd Extension",
-      team: "Thomas Thorton",
-      image: "../../assets/team-logo.png",
-      submitted: "Feb 6 2018",
-    },
-    {
-      id: 2,
-      inspection: "Inspection",
-      linkedProject: "Ajax Mine",
-      team: "Lou Ballard",
-      image: "../../assets/team-logo.png",
-      submitted: "Feb 6 2018",
-    },
-    {
-      id: 3,
-      inspection: "Inspection",
-      linkedProject: "Air Liquide Liquid Nitrogen Plant",
-      team: "Mark Tucker",
-      image: "../../assets/team-logo.png",
-      submitted: "Feb 6 2018",
-    },
-    {
-      id: 4,
-      inspection: "Inspection",
-      linkedProject: "57463 Marshall Rd Extension",
-      team: "Lou Ballard",
-      image: "../../assets/team-logo.png",
-      submitted: "Feb 6 2018",
-    },
-    {
-      id: 5,
-      inspection: "Inspection",
-      linkedProject: "Ajax Mine",
-      team: "Thomas Thorton",
-      image: "../../assets/team-logo.png",
-      submitted: "Oct 10 2017",
-    }
-  ]
-
-  constructor() { }
+  constructor(private reportService: ReportService) { }
 
   ngOnInit() {
   }

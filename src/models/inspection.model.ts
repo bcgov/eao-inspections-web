@@ -1,42 +1,42 @@
 import {BasicUser} from './user.model';
 
 export class Inspection {
+  public id: string;
   public title: string;
   public subtitle: string;
   public inspectionNumber: string;
-  public inspector: BasicUser;
+  public userId: string;
   public project: string;
   public startDate: Date;
   public endDate: Date;
   public requirement: string;
-  public geoPoint: string;
-  public media: string;
   public submitted: boolean;
+  public team: string;
 
   constructor(
+    id: string,
     title: string,
     subtitle: string,
     inspectionNumber: string,
-    inspector: BasicUser,
+    userId: string,
     project: string,
     startDate: Date,
     endDate: Date,
     requirement: string,
-    geoPoint: string,
-    media: string,
-    submitted: boolean
+    submitted: boolean,
+    team: string
     ) {
+    this.id = id;
     this.title = title;
     this.subtitle = subtitle;
     this.inspectionNumber = inspectionNumber;
-    this.inspector = inspector;
+    this.userId = userId;
     this.project = project;
     this.startDate = startDate;
     this.endDate = endDate;
     this.requirement = requirement;
-    this.geoPoint = geoPoint;
-    this.media = media;
     this.submitted = submitted;
+    this.team = team;
   }
 
 }

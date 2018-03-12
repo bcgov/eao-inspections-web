@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 
 import {ReportService} from '../../../../../services/report.service';
 import {parseToJSON} from '../../../../../services/parse.service';
@@ -15,6 +15,7 @@ import * as String from '../../../../../constants/strings';
 })
 
 export class MyReportListComponent implements OnInit {
+  @Input('data') data: any;
   title = 'Team 1';
   link = '/team-reports';
   emptyContent = {
@@ -23,22 +24,13 @@ export class MyReportListComponent implements OnInit {
   };
 
   reports = [];
-  data = [];
 
-  constructor(private reportService: ReportService) {
+
+  constructor() {
   }
 
   ngOnInit() {
-    this.reportService.getMyReports()
-      .then((results) => {
-        if (results instanceof Array) {
-          this.reports = parseToJSON(results);
-          console.log(results);
-          this.reports.forEach((obj) => {
-            this.data.push(new Inspection(obj.title, obj.subtitle, obj.id, null, obj.project, obj.end, null, null,null, null, obj.submitted));
-          });
-        }
-      });
+
   }
 }
 

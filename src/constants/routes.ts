@@ -15,5 +15,5 @@ export const ARCHIVED_TEAMS = 'admin/team-details/archived-teams';
 
 export const MANAGE_TEAM_ID = '/manage-team/:id';
 export const TEAM_ID = '/:id';
-export const INSPECTION_DETAILS = '/inspection-details';
+export const INSPECTION_DETAILS = '/inspection-details/:id';
 export const ELEMENT_ID = '/element/:id';
