@@ -1,5 +1,6 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import * as String from '../../../../constants/strings';
 
 @Component({
   selector: 'user-modal',

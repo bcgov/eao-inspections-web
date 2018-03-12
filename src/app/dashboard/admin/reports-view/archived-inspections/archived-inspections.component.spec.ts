@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ArchivedInspectionsComponent } from './archived-inspections.component';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 describe('ArchivedInspectionsComponent', () => {
   let component: ArchivedInspectionsComponent;
@@ -8,7 +9,8 @@ describe('ArchivedInspectionsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ArchivedInspectionsComponent ]
+      declarations: [ ArchivedInspectionsComponent ],
+      schemas: [ NO_ERRORS_SCHEMA ]
     })
     .compileComponents();
   }));

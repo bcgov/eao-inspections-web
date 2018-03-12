@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ArchivedTeamsComponent } from './archived-teams.component';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 describe('ArchivedTeamsComponent', () => {
   let component: ArchivedTeamsComponent;
@@ -8,7 +9,8 @@ describe('ArchivedTeamsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ArchivedTeamsComponent ]
+      declarations: [ ArchivedTeamsComponent ],
+      schemas: [ NO_ERRORS_SCHEMA ]
     })
     .compileComponents();
   }));

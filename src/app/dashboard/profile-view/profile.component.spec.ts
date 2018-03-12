@@ -15,7 +15,7 @@ describe('ProfileComponent', () => {
     profileServiceStub = {
       getUser: jasmine.createSpy('getUser').and.callFake(() => {
         return {
-          id: '1',
+          objectId: '1',
           name: 'mockUserName',
           teams: [],
           email: "mockUserEmail@gmail.com",
@@ -30,7 +30,7 @@ describe('ProfileComponent', () => {
       }),
       getTeamAdminInfo: jasmine.createSpy('getTeamAdminInfo').and.callFake(() => {
         return {
-          id: 2,
+          objectId: '2',
           name: "mockAdminName",
           team: "",
           email: "mockAdminEmail@gmail.com",
@@ -45,7 +45,7 @@ describe('ProfileComponent', () => {
       providers: [
         { provide: ProfileService, useValue: profileServiceStub }
       ],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
+      schemas: [ CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA ],
       imports: [ RouterTestingModule ],
     })
     .compileComponents();
