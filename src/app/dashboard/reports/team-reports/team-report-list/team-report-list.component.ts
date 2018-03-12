@@ -1,5 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import * as String from '../../../../../constants/strings';
+import {ProfileService} from '../../../../../services/profile.service';
+import {ReportService} from '../../../../../services/report.service';
 
 @Component({
   selector: 'team-report-list',
