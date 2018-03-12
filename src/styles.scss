@@ -5,6 +5,8 @@
 // Generic/reusable styling for dashboard (reusable buttons, tables, modals) - all other CSS in appropiate folders.
 // Variables/Mixins found in ./scss/<filename>
 @import '~bootstrap/dist/css/bootstrap.css';
+// @import "~ngx-toastr/toastr-bs4-alert";
+@import "~ngx-toastr/toastr";
 @import './scss/_variables';
 @import './scss/_mixins';
 
@@ -82,6 +84,20 @@ body {
       }
     }
   }
+
+   // override toast css
+   .toast-success {
+     background-color: $default_primary_color !important;
+   }
+
+   .toast-error {
+     background-color: $error-red !important;
+   }
+
+   .toast-progress {
+     background-color: $font-white !important;
+     opacity: 0.9 !important;
+   }
 
   .dashboard {
     background-color: $default-background;
@@ -218,7 +234,7 @@ body {
   .modal {
     min-height: 100% !important;
     height: 400px;
-    top: 8%;
+    bottom: 15%;
     left: 15%;
 
     &__header {
@@ -256,7 +272,7 @@ body {
         padding: 0;
         text-transform: uppercase;
         color: $font-gray;
-        font-size: 12px;
+        font-size: 11px;
         font-weight: 300;
 
         span {

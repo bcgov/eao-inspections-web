@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 
 import { AdminService } from './../../../../../services/admin.service';
 import { ModalService } from './../../../../../services/modal.service';
@@ -30,7 +31,8 @@ export class UserListComponent implements OnInit {
 
   constructor(
     private modalService: ModalService,
-    private adminService: AdminService
+    private adminService: AdminService,
+    private toast: ToastrService
   ) { }
 
   open(modal) {
@@ -38,7 +40,11 @@ export class UserListComponent implements OnInit {
   }
 
   onSubmit(value) {
-    this.adminService.createUser(value.firstName, value.lastName, value.email, value.password, value.team, value.permission);
+    this.adminService.createUser(value.firstName, value.lastName, value.email, value.password, value.team, value.permission).then((results) => {
+      if (results) {
+        this.toast.success('Successfully added ' + value.firstName + " " + value.lastName);
+      }
+    });
   }
 
   ngOnInit() {

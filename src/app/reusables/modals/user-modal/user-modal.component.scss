@@ -7,4 +7,8 @@
 .error {
   color: $error-red;
   font-size: 12px;
+
+  &__content {
+    text-align: center;
+  }
 }

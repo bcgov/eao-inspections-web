@@ -2,6 +2,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ToastrModule } from 'ngx-toastr';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppRoutingModule } from './app-routing.module';
 
@@ -81,7 +83,9 @@ import { PermissionsModalComponent } from './reusables/modals/permissions-modal/
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    NgbModule.forRoot()
+    NgbModule.forRoot(),
+    ToastrModule.forRoot({ timeOut: 100000, progressBar: true, tapToDismiss: true, progressAnimation: 'decreasing'}),
+    BrowserAnimationsModule
   ],
   providers: [AuthService, AuthGuardService, RoleGuardService, ModalService],
   bootstrap: [AppComponent]
