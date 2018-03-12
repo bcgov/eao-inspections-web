@@ -43,7 +43,7 @@ export class UserListComponent implements OnInit {
     this.adminService.createUser(value.firstName, value.lastName, value.email, value.password, value.team, value.permission).then((results) => {
       if (results) {
         this.toast.success('Successfully added ' + value.firstName + " " + value.lastName);
-      }
+      };
     });
   }
 
