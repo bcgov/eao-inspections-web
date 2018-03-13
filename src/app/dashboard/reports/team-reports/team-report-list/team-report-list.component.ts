@@ -18,7 +18,7 @@ export class TeamReportListComponent implements OnInit {
     message: String.EMPTY_TEAM,
   };
 
-  isDesc = false;
+  isDesc: boolean = false;
   direction: number;
   column: string;
 
@@ -29,6 +29,7 @@ export class TeamReportListComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.sort('updatedAt');
     const teamId = this.route.snapshot.params['id'];
     this.teamService.getTeam(teamId).then((team) => {
       this.team = team;

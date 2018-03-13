@@ -13,7 +13,7 @@ const Parse = require('parse');
 Parse.initialize(environment.parseId, environment.parseKey);
 Parse.serverURL = environment.parseURL;
 
-fdescribe('Report Testing', () => {
+describe('Report Testing', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
   let service: ReportService;

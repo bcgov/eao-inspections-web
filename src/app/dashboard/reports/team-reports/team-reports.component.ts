@@ -1,30 +1,30 @@
 import { Component, OnInit } from '@angular/core';
 
-import {ReportService} from '../../../../services/report.service';
 import {ProfileService} from '../../../../services/profile.service';
 import {parseToJSON} from '../../../../services/parse.service';
 import * as Route from '../../../../constants/routes';
+import { Team } from '../../../../models/team.model';
 
 @Component({
   selector: 'team-reports',
   templateUrl: './team-reports.component.html',
   styleUrls: ['./team-reports.component.scss'],
-  providers: [ReportService, ProfileService]
+  providers: [ProfileService]
 })
 export class TeamReportsComponent implements OnInit {
   title = 'Team Reports';
-  link = 'team/id';
-  teams = [];
-  reports = [];
+  teams: Array<Team>;
+ 
 
-
-  constructor(private reportService: ReportService, private profileService: ProfileService) { }
+  constructor(private profileService: ProfileService) { }
 
   ngOnInit() {
     this.profileService.getTeams()
       .then((results) => {
         if (results instanceof Array) {
           this.teams = results;
+        } else {
+          this.teams = [results];
         }
       });
   }
