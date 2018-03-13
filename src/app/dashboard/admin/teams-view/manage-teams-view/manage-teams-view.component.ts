@@ -29,7 +29,7 @@ export class ManageTeamsViewComponent implements OnInit {
     this.modalService.open(modal);
   }
 
-  addMember(value) {
+  onAddMember(value) {
     console.log("Adding User: " + value);
   }
 

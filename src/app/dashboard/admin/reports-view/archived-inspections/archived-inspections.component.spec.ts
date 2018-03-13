@@ -1,22 +1,22 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ArchivedTeamsComponent } from './archived-teams.component';
+import { ArchivedInspectionsComponent } from './archived-inspections.component';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 
-describe('ArchivedTeamsComponent', () => {
-  let component: ArchivedTeamsComponent;
-  let fixture: ComponentFixture<ArchivedTeamsComponent>;
+describe('ArchivedInspectionsComponent', () => {
+  let component: ArchivedInspectionsComponent;
+  let fixture: ComponentFixture<ArchivedInspectionsComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ArchivedTeamsComponent ],
+      declarations: [ ArchivedInspectionsComponent ],
       schemas: [ NO_ERRORS_SCHEMA ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ArchivedTeamsComponent);
+    fixture = TestBed.createComponent(ArchivedInspectionsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

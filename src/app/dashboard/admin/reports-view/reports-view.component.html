@@ -2,7 +2,7 @@
   <div class="dashboard__header">
     <p class="dashboard__title">{{title}}</p>
     <div class="dashboard__buttons">
-      <button class="dashboard__btn dashboard__btn--lg">Archived Inspections</button>
+      <a href={{archivedLink}}><button class="dashboard__btn dashboard__btn--lg">Archived Inspections</button></a>
     </div>
   </div>
 <div *ngIf="teams<=0; then noContent else content"></div>

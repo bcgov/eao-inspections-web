@@ -2,6 +2,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ToastrModule } from 'ngx-toastr';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppRoutingModule } from './app-routing.module';
 
@@ -39,6 +41,8 @@ import { UserListItemComponent } from './dashboard/admin/users-view/user-list-it
 import { ArchivedUsersComponent } from './dashboard/admin/users-view/archived-users/archived-users.component';
 import { ArchiveModalComponent } from './reusables/modals/archive-modal/archive-modal.component';
 import { ArchivedTeamsComponent } from './dashboard/admin/teams-view/archived-teams/archived-teams.component';
+import { ArchivedInspectionsComponent } from './dashboard/admin/reports-view/archived-inspections/archived-inspections.component';
+import { PermissionsModalComponent } from './reusables/modals/permissions-modal/permissions-modal.component';
 
 @NgModule({
   declarations: [
@@ -71,13 +75,17 @@ import { ArchivedTeamsComponent } from './dashboard/admin/teams-view/archived-te
     UserListItemComponent,
     ArchivedUsersComponent,
     ArchiveModalComponent,
-    ArchivedTeamsComponent
+    ArchivedTeamsComponent,
+    ArchivedInspectionsComponent,
+    PermissionsModalComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    NgbModule.forRoot()
+    NgbModule.forRoot(),
+    ToastrModule.forRoot({ timeOut: 100000, progressBar: true, tapToDismiss: true, progressAnimation: 'decreasing'}),
+    BrowserAnimationsModule
   ],
   providers: [AuthService, AuthGuardService, RoleGuardService, ModalService],
   bootstrap: [AppComponent]
