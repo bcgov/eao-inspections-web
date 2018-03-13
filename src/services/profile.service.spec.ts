@@ -11,6 +11,7 @@ const Parse = require('parse');
 
 Parse.initialize(environment.parseId, environment.parseKey);
 Parse.serverURL = environment.parseURL;
+Parse.masterKey = environment.parseMasterKey;
 
 describe('Authentication and Authorization Testing', () => {
   let component: LoginComponent;

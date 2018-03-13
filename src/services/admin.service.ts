@@ -7,6 +7,7 @@ const Parse: any = require('parse');
 
 Parse.initialize(environment.parseId, environment.parseKey);
 Parse.serverURL = environment.parseURL;
+Parse.masterKey = environment.parseMasterKey;
 
 @Injectable()
 export class AdminService {
@@ -90,7 +91,12 @@ export class AdminService {
     return false;
   }
 
-  createUser(firstName: string, lastName: string, email: string, password: string, team: string, permission: string) {
+  createUser(firstName: string,
+             lastName: string,
+             email: string,
+             password: string,
+             team: string,
+             permission: string): Promise<any> {
     return new Promise((resolve, reject) => {
       const query = new Parse.Query(Parse.Role);
       const user = new Parse.User();
@@ -110,30 +116,42 @@ export class AdminService {
           query.equalTo('name', permission);
           query.first().then((obj) => {
             obj.getUsers().add(results);
-            obj.save(null, {
-              error: (object, error) => {
-                this.toast.error(error.message);
-                reject(error.message);
-              }
+            obj.save().then(object => {
+              resolve(object);
+            }, error => {
+              reject(error.message);
             });
           });
-          resolve(results);
         },
         error: function (object, error) {
-          this.toast.error(error.message);
           reject(error.message);
         }
       });
     });
   }
 
-  updateUser(userId: string, attribute: string, value: string) {
+  updateUser(userId: string,
+             firstName: string,
+             lastName: string,
+             email: string,
+             password: string,
+             team: string,
+             permission: string): Promise<any> {
     return new Promise((resolve, reject) => {
-      const query = new Parse.Query('User');
+      const query = new Parse.Query(Parse.User);
       query.get(userId, {
         success: function (user) {
-          user.set(attribute, value);
-          user.save();
+          user.set('firstName', firstName);
+          user.set('lastName', lastName);
+          user.set('email', email);
+          user.set('password', password);
+          user.set('team', team);
+          user.set('permission', permission);
+          user.save(null, { useMasterKey: true }).then((object) => {
+            resolve(object);
+          }, (error) => {
+            reject(error.message);
+          });
           resolve(user);
         },
         error: function (object, error) {
@@ -143,7 +161,7 @@ export class AdminService {
     });
   }
 
-  archiveUser(userId: string) {
+  archiveUser(userId: string): Promise<any> {
     return new Promise((resolve, reject) => {
       const query = new Parse.Query(Parse.User);
       query.get(userId, {
@@ -152,32 +170,30 @@ export class AdminService {
           user.save(null, {useMasterKey: true}).then(object => {
             resolve(object);
           }, error => {
-            console.log(error);
+            reject(error.message);
           });
-            // replace with toast message
-            console.log("success!!");
         },
         error: function (object, error) {
           reject(error.message);
-          console.log("error");
         }
       });
     });
   }
 
-  unArchiveUser(userId: string) {
+  unArchiveUser(userId: string): Promise<any> {
     return new Promise((resolve, reject) => {
       const query = new Parse.Query('User');
       query.get(userId, {
         success: function (user) {
           user.set('isActive', true);
-          user.save();
-          resolve(user);
-          console.log("success");
+          user.save(null, {useMasterKey: true}).then(object => {
+            resolve(object);
+          }, error => {
+            reject(error.message);
+          });
         },
         error: function (object, error) {
-          resolve(error.message);
-          console.log("error");
+          reject(error.message);
         }
       });
     });

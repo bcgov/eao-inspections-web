@@ -40,11 +40,21 @@ export class UserListComponent implements OnInit {
   }
 
   onSubmit(value) {
-    this.adminService.createUser(value.firstName, value.lastName, value.email, value.password, value.team, value.permission).then((results) => {
-      if (results) {
-        this.toast.success('Successfully added ' + value.firstName + " " + value.lastName);
-      }
-    });
+    this.adminService.createUser(
+      value.firstName,
+      value.lastName,
+      value.email,
+      value.password,
+      value.team,
+      value.permission
+    )
+      .then((results) => {
+        if (results) {
+          this.toast.success('Successfully added ' + value.firstName + ' ' + value.lastName);
+        }
+      }, (error) => {
+        this.toast.error(error.message || String.GENERAL_ERROR);
+      });
   }
 
   ngOnInit() {

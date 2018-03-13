@@ -1,5 +1,5 @@
 // All data passed into modals
-//modal headers 
+//modal headers
 export const PERMISSIONS = "Set Permissions";
 export const CREATE_USER = "Create a new user";
 export const EDIT_USER = "Edit user";
@@ -21,7 +21,7 @@ export const PASSWORD_SUCCESS = "Password has been updated";
 export const VIEW_ONLY_MESSAGE = "You don't have access to download this report. Please contact your Administrator for permission.";
 export const ARCHIVE_MESSAGE = "You cannot archive this team. There are members associated with this team";
 
-//buttons 
+//buttons
 export const OK_BUTTON = "OK";
 export const CONFIRM_BUTTON = "Confirm";
 export const UPDATE_BUTTON = "Update";
@@ -39,7 +39,7 @@ export const ADD_MEMBER_BUTTON = "Add Member";
 export const YES_BUTTON = "Yes, I would love to";
 export const NO_BUTTON = "No, I'll do it later";
 
-// noContent messages 
+// noContent messages
 export const EMPTY_USER = "There are no users yet.";
 export const EMPTY_ARCHIVED_USERS = "There are no archived users."
 export const EMPTY_ARCHIVED_INSPECTIONS = "There are no archived inspections yet.";
@@ -48,3 +48,7 @@ export const EMPTY_TEAM = "There are no teams yet.";
 export const EMPTY_TEAM_MEMBER = "This team does not have any members yet."
 export const EMPTY_ARCHIVED_TEAMS = "There are no archived teams yet.";
 export const EMPTY_INSPECTIONS = "There are no inspections yet.";
+
+
+// error messages
+export const GENERAL_ERROR = "Error has occured. Please try again.";

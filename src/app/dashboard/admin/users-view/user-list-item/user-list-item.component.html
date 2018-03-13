@@ -30,24 +30,24 @@
 
 <!-- edit user modal -->
 <ng-template #editUser let-c="close" class="modal">
-  <user-modal (submitValue)="onSubmit($event)" [closeValue]="this.c" [modal]="modal"></user-modal>
+  <user-modal (submitValue)="onSubmit($event)" [data]="user" [closeValue]="this.c" [modal]="modal"></user-modal>
 </ng-template>
 
 <!-- archive confirmation modal -->
 <ng-template #archiveUser let-c="close" class="modal">
-  <archive-modal 
-    [data]="user" 
-    (submitValue)="onArchive($event)" 
-    [closeValue]="this.c" 
+  <archive-modal
+    [data]="user"
+    (submitValue)="onArchive($event)"
+    [closeValue]="this.c"
     [modal]="modal"
   >
   </archive-modal>
 </ng-template>
 
 <ng-template #unArchive let-c="close" class="modal">
-  <archive-modal 
-    [data]="user" 
-    [closeValue]="this.c" 
+  <archive-modal
+    [data]="user"
+    [closeValue]="this.c"
     [modal]="modal"
     (submitValue)="onUnarchive($event)"
   >
