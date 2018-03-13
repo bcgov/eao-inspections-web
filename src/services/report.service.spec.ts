@@ -125,7 +125,7 @@ describe('Report Testing', () => {
 
   it('should get Element of Report', () => {
     console.log('Testing get team functionality');
-    service.getElements(insp1.id).then((object) => {
+    service.getObservations(insp1.id).then((object) => {
       console.log('Matching ids for elements');
       object.forEach((item) => {
         expect(item.id === (obs1.id || obs2.id)).toBeTruthy();

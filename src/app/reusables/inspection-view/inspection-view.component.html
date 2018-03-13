@@ -10,52 +10,53 @@
         Download
       </button>
     </div>
-    <div class="inspection-details">
+    <div class="inspection-details" *ngIf="data">
       <div class="inspection-details-content">
         <div>
           <h4>title</h4>
-          <p></p>
+          <p>{{ data.title || '-'  }}</p>
         </div>
         <div>
           <h4>subtitle</h4>
-          <p></p>
+          <p>{{ data.subtitle || '-'  }}</p>
         </div>
         <div>
           <h4>inspection number</h4>
-          <p></p>
+          <p>{{ data.inspectionNumber || '-'  }}</p>
         </div>
         <div>
           <h4>inspector</h4>
-          <p></p>
+          <p>{{ data.inspectorName || '-'  }}</p>
         </div>
       </div>
       <div class="inspection-divider"></div>
       <div class="inspection-details-content">
         <div>
           <h4>linked project</h4>
-          <p></p>
+          <p>{{ data.project || '-'  }}</p>
         </div>
         <div>
           <h4>inspection start date</h4>
-          <p></p>
+          <p>{{ data.startDate || '-'  }}</p>
         </div>
         <div>
           <h4>inspection end date</h4>
-          <p></p>
+          <p>{{ data.endDate || '-'  }}</p>
         </div>
       </div>
     </div>
-    <h1 class="dashboard__subtitle">{{subTitle}}</h1>
-    <div class="inspection-details">
-      <div class="inspection-details__header">
-        <h4>Name</h4>
-        <h4>Submitted</h4>
+    <div *ngIf="elements">
+      <h1 class="dashboard__subtitle">{{subTitle}}</h1>
+      <div class="inspection-details">
+        <div class="inspection-details__header">
+          <h4>Name</h4>
+          <h4>Submitted</h4>
+        </div>
+        <div class="inspection-details-content" *ngFor="let element of elements">
+          <a [routerLink]="['element', element.id]">{{ element.title || '-'  }}</a>
+          <p>{{ element.createdAt | date: 'longDate' || '-' }}</p>
+        </div>
       </div>
-      <div class="inspection-details-content">
-        <a routerLink="element/id">Element 1</a>
-        <p>Feb 6 2018</p>
-      </div>
-
     </div>
   </div>
 </div>
