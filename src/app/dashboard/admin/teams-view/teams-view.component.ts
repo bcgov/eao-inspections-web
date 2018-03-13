@@ -27,8 +27,8 @@ export class TeamsViewComponent implements OnInit {
   };
 
   constructor(
-    private modalService: ModalService, 
-    private adminService: AdminService, 
+    private modalService: ModalService,
+    private adminService: AdminService,
     private toast: ToastrService
   ) { }
 
