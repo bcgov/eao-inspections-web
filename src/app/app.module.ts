@@ -43,6 +43,7 @@ import { ArchiveModalComponent } from './reusables/modals/archive-modal/archive-
 import { ArchivedTeamsComponent } from './dashboard/admin/teams-view/archived-teams/archived-teams.component';
 import { ArchivedInspectionsComponent } from './dashboard/admin/reports-view/archived-inspections/archived-inspections.component';
 import { PermissionsModalComponent } from './reusables/modals/permissions-modal/permissions-modal.component';
+import { OrderByPipe } from './directives/orderby.pipe';
 
 @NgModule({
   declarations: [
@@ -77,7 +78,8 @@ import { PermissionsModalComponent } from './reusables/modals/permissions-modal/
     ArchiveModalComponent,
     ArchivedTeamsComponent,
     ArchivedInspectionsComponent,
-    PermissionsModalComponent
+    PermissionsModalComponent,
+    OrderByPipe
   ],
   imports: [
     BrowserModule,

@@ -1,14 +1,19 @@
 <tbody>
-  <tr>
-    <td>
-      <a [routerLink]="['inspection-details', data.id]">{{data.title}}</a>
-    </td>
-    <td>{{ data.project || '-' }}</td>
-    <td><img src={{data.image}} />{{ data.team || '-' }}</td>
-    <td *ngIf="data.submitted; else no">Yes</td>
-    <ng-template #no><td>No</td></ng-template>
-    <td>
-      <button class="dashboard--actions">Download</button>
-    </td>
-  </tr>
+    <tr>
+        <td>
+            <a [routerLink]="['inspection-details', data.id]">{{data.title}}</a>
+        </td>
+        <td>{{ data.project || '-' }}</td>
+        <td>{{data.updatedAt | date : "MMM d y" }}</td>
+        <td>
+            <img width="40px" [src]="data.inspector.image" (error)="setDefaultPic()" /> {{data.inspector.name || '-'}}
+        </td>
+        <!-- <td *ngIf="data.submitted; else no">Yes</td>
+        <ng-template #no>
+            <td>No</td>
+        </ng-template> -->
+        <td>
+            <button class="dashboard--actions">Download</button>
+        </td>
+    </tr>
 </tbody>

@@ -12,10 +12,11 @@ import * as Route from '../../../../constants/routes';
   providers: [ReportService, ProfileService]
 })
 export class TeamReportsComponent implements OnInit {
-  title = "Team Reports";
-  link = "team/id";
+  title = 'Team Reports';
+  link = 'team/id';
   teams = [];
   reports = [];
+
 
   constructor(private reportService: ReportService, private profileService: ProfileService) { }
 

@@ -13,4 +13,8 @@ export class ReportListItemComponent implements OnInit {
   ngOnInit() {
   }
 
+  setDefaultPic() {
+    this.data.inspector.image = '../../assets/admin-1@1x.png';
+  }
+
 }
