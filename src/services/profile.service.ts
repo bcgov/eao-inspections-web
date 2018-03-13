@@ -32,7 +32,7 @@ export class ProfileService {
             results = [results];
           }
           results.forEach((object) => {
-            promises.push(teams.push(new Team(object.get('name'), object.get('teamAdmin.id'))));
+            promises.push(teams.push(new Team(object.id, object.get('name'), object.get('teamAdmin.id'))));
           });
         },
         error: function(error) {
@@ -64,7 +64,7 @@ export class ProfileService {
                 admins.push(
                   {
                     'admin': obj,
-                    'team': [new Team(object.get('name'), object.get('teamAdmin'))],
+                    'team': [new Team(object.id, object.get('name'), object.get('teamAdmin'))],
                   }
                 );
               })

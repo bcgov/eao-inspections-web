@@ -7,7 +7,6 @@ import * as String from '../../../../constants/strings';
   templateUrl: './user-modal.component.html',
   styleUrls: ['./user-modal.component.scss']
 })
-
 export class UserModalComponent implements OnInit {
   teams = ["Team 1", "Team 2", "Team 3"];
   permissions = ["admin", "superadmin", "inspector"];

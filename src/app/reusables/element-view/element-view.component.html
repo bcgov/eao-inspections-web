@@ -5,11 +5,33 @@
     </a> -->
     <h1 class="dashboard__title">{{title}}</h1>
     <div class="element-details">
-
+      <div class="element-details-content" *ngIf="data">
+        <div>
+          <h4>title</h4>
+          <p>{{ data.title || '-' }}</p>
+        </div>
+        <div>
+          <h4>requirement</h4>
+          <p>{{ data.requirement || '-' }}</p>
+        </div>
+        <div>
+          <h4>gps coordinates</h4>
+          <p *ngIf="data.coordinate">Lat: {{ data.coordinate.latitude || '-' }} Lon: {{ data.coordinate.longitude || '-' }}</p>
+        </div>
+      </div>
+      <div class="element-details-content" *ngIf="data">
+        <div class="col-6">
+          <h4>description</h4>
+          <textarea>{{ data.description || '-' }}</textarea>
+        </div>
+        <div class="col-6">
+          <img src="../../../assets/default-map.png" />
+        </div>
+      </div>
     </div>
     <h1 class="dashboard__subtitle">{{subTitle}}</h1>
-    <div class="element-details">
-    
+    <div class="element-details" *ngFor="let photo of photos">
+      <img class="thumbnail" src="{{ photo.fileURL }}">
     </div>
   </div>
 </div>
