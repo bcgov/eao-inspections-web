@@ -13,7 +13,7 @@ const Parse = require('parse');
 Parse.initialize(environment.parseId, environment.parseKey);
 Parse.serverURL = environment.parseURL;
 
-describe('Report Testing', () => {
+fdescribe('Report Testing', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
   let service: ReportService;
@@ -125,7 +125,7 @@ describe('Report Testing', () => {
 
   it('should get Element of Report', () => {
     console.log('Testing get team functionality');
-    service.getObservations(insp1.id).then((object) => {
+    service.getObservation(insp1.id).then((object) => {
       console.log('Matching ids for elements');
       object.forEach((item) => {
         expect(item.id === (obs1.id || obs2.id)).toBeTruthy();

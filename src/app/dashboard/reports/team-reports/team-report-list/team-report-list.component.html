@@ -1,25 +1,30 @@
 <div *ngIf="data<=0; then noContent else content"></div>
 <ng-template #noContent>
-  <no-content [emptyContent]="emptyContent"></no-content>
+    <no-content [emptyContent]="emptyContent"></no-content>
 </ng-template>
 <ng-template #content>
-  <div class="dashboard">
-    <p class="dashboard__title">{{data.name}}</p>
-    <table>
-      <div class="report-list__content__header">
-        <thead>
-          <tr>
-            <th>Title</th>
-            <th>Linked Projects</th>
-            <th>Inspector</th>
-            <th>Submitted</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-      </div>
-      <div class="report-list__content__details" *ngFor="let data of data">
-        <report-list-item [data]="data"></report-list-item>
-      </div>
-    </table>
-  </div>
+    <div class="dashboard">
+
+        <p class="dashboard__title" *ngIf="team">
+            <img width="60px" [src]="team.image" (error)="setDefaultPic()" /> {{team.name}}
+        </p>
+        <table>
+            <div class="report-list__content__header">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Linked Projects</th>
+                        <th class="pointer" (click)="sort('updatedAt')">
+                            Submmited
+                        </th>
+                        <th>Inspector</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+            </div>
+            <div class="report-list__content__details" *ngFor="let data of data | orderBy : {property: column, direction: direction}">
+                <report-list-item [data]="data"></report-list-item>
+            </div>
+        </table>
+    </div>
 </ng-template>
