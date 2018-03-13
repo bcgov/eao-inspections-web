@@ -5,6 +5,7 @@
   <div class="form-group">
     <label class="col-sm-2 col-form-label">Profile</label>
     <div id="upload">
+      <input type="file" id="file" name="file1" class="form-control" ngModel (change)="getPhoto($event)">
       <img class="form-upload__img" src="../../assets/avatar@2x.png" />
       <button class="dashboard-upload__btn">Upload</button>
     </div>

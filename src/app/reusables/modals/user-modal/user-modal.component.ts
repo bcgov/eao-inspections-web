@@ -9,6 +9,7 @@ import * as String from '../../../../constants/strings';
 })
 
 export class UserModalComponent implements OnInit {
+  selectedPhoto = null;
   teams = ["Team 1", "Team 2", "Team 3"];
   permissions = ["admin", "superadmin", "inspector"];
 
@@ -20,6 +21,14 @@ export class UserModalComponent implements OnInit {
 
   ngOnInit() {
 
+  }
+
+  getPhoto(event) {
+    this.selectedPhoto = event.target.files;
+  }
+
+  selectPhoto() {
+    
   }
 
   onSubmit(form: NgForm) {
