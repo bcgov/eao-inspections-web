@@ -24,6 +24,7 @@ export class ReportService {
       let resultList;
       const query = new Parse.Query('Inspection');
       query.equalTo('userId', this.user.id);
+      query.ascending('createdAt');
       query.find({
         success: function (results) {
           if (!Array.isArray(results)) {
@@ -41,7 +42,7 @@ export class ReportService {
             object.get('title'),
             object.get('subtitle'),
             object.get('inspectionNumber'),
-            object.get('userId'),
+            this.user.get('firstName') + ' ' + this.user.get('lastName'),
             object.get('project'),
             object.get('startDate'),
             object.get('endDate'),
@@ -80,19 +81,27 @@ export class ReportService {
     return new Promise((resolve, reject) => {
       const query = new Parse.Query('Inspection');
       query.get(inspectionId).then((object) => {
-        resolve(new Inspection(
-          object.get('id'),
-          object.get('title'),
-          object.get('subtitle'),
-          object.get('inspectionNumber'),
-          object.get('userId'),
-          object.get('project'),
-          object.get('startDate'),
-          object.get('endDate'),
-          object.get('requirement'),
-          object.get('submitted'),
-          object.get('team.name')
-        ));
+        const tempUserId = object.get('userId');
+        let tempInspectorName;
+        const userQuery = new Parse.Query(Parse.User);
+        userQuery.get(tempUserId).then((userObject) => {
+          tempInspectorName = userObject.get('firstName') + ' ' + userObject.get('lastName');
+        }).then(() => {
+          resolve(new Inspection(
+            object.id,
+            object.get('title'),
+            object.get('subtitle'),
+            object.get('inspectionNumber'),
+            tempInspectorName,
+            object.get('project'),
+            object.get('startDate'),
+            object.get('endDate'),
+            object.get('requirement'),
+            object.get('submitted'),
+            object.get('team.name')
+          ));
+        });
+
       }, (error) => {
         reject(error.message);
       });
@@ -122,7 +131,7 @@ export class ReportService {
             object.get('title'),
             object.get('observationDescription'),
             object.get('requirement'),
-            object.get('geopoint'),
+            object.get('coordinate'),
             object.get('media'),
             object.get('createdAt')
           ));

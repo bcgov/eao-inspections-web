@@ -26,7 +26,7 @@
         </div>
         <div>
           <h4>inspector</h4>
-          <p>{{ data.inspector || '-'  }}</p>
+          <p>{{ data.inspectorName || '-'  }}</p>
         </div>
       </div>
       <div class="inspection-divider"></div>
@@ -54,7 +54,7 @@
         </div>
         <div class="inspection-details-content" *ngFor="let element of elements">
           <a [routerLink]="['element', element.id]">{{ element.title || '-'  }}</a>
-          <p>{{ element.createdAt || '-' }}</p>
+          <p>{{ element.createdAt | date: 'longDate' || '-' }}</p>
         </div>
       </div>
     </div>

@@ -1,11 +1,10 @@
-import {BasicUser} from './user.model';
 
 export class Inspection {
   public id: string;
   public title: string;
   public subtitle: string;
   public inspectionNumber: string;
-  public userId: string;
+  public inspectorName: string;
   public project: string;
   public startDate: Date;
   public endDate: Date;
@@ -18,7 +17,7 @@ export class Inspection {
     title: string,
     subtitle: string,
     inspectionNumber: string,
-    userId: string,
+    inspectorName: string,
     project: string,
     startDate: Date,
     endDate: Date,
@@ -30,7 +29,7 @@ export class Inspection {
     this.title = title;
     this.subtitle = subtitle;
     this.inspectionNumber = inspectionNumber;
-    this.userId = userId;
+    this.inspectorName = inspectorName;
     this.project = project;
     this.startDate = startDate;
     this.endDate = endDate;
