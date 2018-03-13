@@ -1,9 +1,10 @@
-<div class="team__card">
+<div [ngStyle]="{ 'border-left': '10px solid' + team.color }" class="team__card">
   <div class="team__card--photo">
-    <img class="team__card--photo__img" src={{team.image}} />
+    <img *ngIf="team.image" class="team__card--photo__img" src={{team.image}} />
+    <img *ngIf="!team.image" class="team__card--photo__img" src="../../../assets/team-lg.png"/>
   </div>
   <div class="team__card--details">
     <h4>{{team.name}}</h4>
-    <p>{{team.members}} Members</p>
+    <p>?? Members</p>
   </div>
 </div>

@@ -1,60 +1,55 @@
+import { AdminService } from './../../../../services/admin.service';
 import { Component, OnInit } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 import { ModalService } from './../../../../services/modal.service';
 import * as String from '../../../../constants/strings';
 import * as Route from '../../../../constants/routes';
+import { parseToJSON } from '../../../../services/parse.service';
 
 @Component({
   selector: 'app-teams-view',
   templateUrl: './teams-view.component.html',
-  styleUrls: ['./teams-view.component.scss']
+  styleUrls: ['./teams-view.component.scss'],
+  providers: [ AdminService ]
 })
 export class TeamsViewComponent implements OnInit {
   title = "Teams";
   archivedLink = Route.ARCHIVED_TEAMS;
-  teams = [
-    {
-      id: 1,
-      name: "Team 1",
-      image: "../../assets/admin-2@4x.png",
-      members: 9
-    },
-    {
-      id: 2,
-      name: "Team 2",
-      image: "../../assets/admin-1@4x.png",
-      members: 55
-    },
-    {
-      id: 3,
-      name: "Team 3",
-      image: "../../assets/inspector-profile-photo@4x.png",
-      members: 2
-    },
-    {
-      id: 4,
-      name: "Team 4",
-      image: "../../assets/admin-1@4x.png",
-      members: 19
-    },
-    {
-      id: 4,
-      name: "Team 5",
-      image: "../../assets/inspector-profile-photo@4x.png",
-      members: 106
-    }
-  ];
+  teams = [];
 
   modal = {
     header: String.CREATE_TEAM
   };
 
-  constructor(private modalService: ModalService) { }
+  emptyContent = {
+    image: "../../assets/team-lg.png",
+    message: String.EMPTY_TEAM,
+  };
+
+  constructor(
+    private modalService: ModalService, 
+    private adminService: AdminService, 
+    private toast: ToastrService
+  ) { }
 
   open(modal) {
     this.modalService.open(modal);
   }
 
-  ngOnInit() {
+  onSubmit(value) {
+    this.adminService.createTeam(value.teamName, value.color).then((results) => {
+      if (results) {
+        this.toast.success('Successfully added a new Team');
+      };
+    });
   }
 
+  ngOnInit() {
+    this.adminService.getActiveTeams()
+    .then((results) => {
+      if (results instanceof Array) {
+        this.teams = parseToJSON(results);
+      }
+    });
+  }
 }
