@@ -1,7 +1,6 @@
 import { environment } from '../environments/environment';
 import { Router } from '@angular/router';
 import { Injectable} from '@angular/core';
-import { ToastrService } from 'ngx-toastr';
 
 const Parse: any = require('parse');
 
@@ -12,7 +11,7 @@ Parse.masterKey = environment.parseMasterKey;
 @Injectable()
 export class AdminService {
   user = new Parse.User();
-  constructor(private router: Router, private toast: ToastrService) {
+  constructor(private router: Router) {
     this.user = Parse.User.current();
   }
 

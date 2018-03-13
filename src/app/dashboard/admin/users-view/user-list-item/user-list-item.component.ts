@@ -12,7 +12,6 @@ import {ToastrService} from 'ngx-toastr';
 
 export class UserListItemComponent implements OnInit {
   @Input('user') user: any;
-  @Input('data') data: any;
 
   modal = {
     message: String.ARCHIVE_USER,
@@ -33,7 +32,19 @@ export class UserListItemComponent implements OnInit {
   onSubmit(value) {
     // edit user here
     console.log(value.id, value.firstName, value.lastName, value.email, value.password, value.team, value.permission);
-    // this.adminService.updateUser();
+    // this.adminService.updateUser(
+    //   value.id,
+    //   value.firstName,
+    //   value.lastName,
+    //   value.email,
+    //   value.password,
+    //   value.team,
+    //   value.permission)
+    //   .then((object) => {
+    //     this.toast.success('Successfully updated ' + object.get('firstName') + ' ' + object.get('lastName'));
+    //   }, (error) => {
+    //     this.toast.error(error.message || String.GENERAL_ERROR);
+    //   });
   }
 
   onUnarchive(value) {
