@@ -1,17 +1,17 @@
 import { environment } from '../environments/environment';
 import { Router } from '@angular/router';
 import { Injectable} from '@angular/core';
-import { ToastrService } from 'ngx-toastr';
 
 const Parse: any = require('parse');
 
 Parse.initialize(environment.parseId, environment.parseKey);
 Parse.serverURL = environment.parseURL;
+Parse.masterKey = environment.parseMasterKey;
 
 @Injectable()
 export class AdminService {
   user = new Parse.User();
-  constructor(private router: Router, private toast: ToastrService) {
+  constructor(private router: Router) {
     this.user = Parse.User.current();
   }
 
@@ -78,7 +78,7 @@ export class AdminService {
 
   getSuperAdminStatus(permission: string) {
     if (permission === "superadmin") {
-      return true
+      return true;
     }
     return false;
   }
@@ -90,7 +90,12 @@ export class AdminService {
     return false;
   }
 
-  createUser(firstName: string, lastName: string, email: string, password: string, team: string, permission: string) {
+  createUser(firstName: string,
+             lastName: string,
+             email: string,
+             password: string,
+             team: string,
+             permission: string): Promise<any> {
     return new Promise((resolve, reject) => {
       const query = new Parse.Query(Parse.Role);
       const user = new Parse.User();
@@ -105,32 +110,47 @@ export class AdminService {
       user.set('publicEmail', email);
       user.set('permission', permission);
       user.set('team', team);
-      user.signUp(null, {
+      user.save(null, {
         success: function (results) {
-          // console.log(results);
-          // query.equalTo('name', permission);
-          // query.find().then((obj) => {
-          //   console.log(obj);
-          //   obj.relation("users").add(results);
-          //   obj.save();
-          // });
-          resolve(results);
+          query.equalTo('name', permission);
+          query.first().then((obj) => {
+            obj.getUsers().add(results);
+            obj.save().then(object => {
+              resolve(object);
+            }, error => {
+              reject(error.message);
+            });
+          });
         },
         error: function (object, error) {
-          this.toast.error(error.message);
           reject(error.message);
         }
       });
     });
   }
 
-  updateUser(userId: string, attribute: string, value: string) {
+  updateUser(userId: string,
+             firstName: string,
+             lastName: string,
+             email: string,
+             password: string,
+             team: string,
+             permission: string): Promise<any> {
     return new Promise((resolve, reject) => {
-      const query = new Parse.Query('User');
+      const query = new Parse.Query(Parse.User);
       query.get(userId, {
         success: function (user) {
-          user.set(attribute, value);
-          user.save();
+          user.set('firstName', firstName);
+          user.set('lastName', lastName);
+          user.set('email', email);
+          user.set('password', password);
+          user.set('team', team);
+          user.set('permission', permission);
+          user.save(null, { useMasterKey: true }).then((object) => {
+            resolve(object);
+          }, (error) => {
+            reject(error.message);
+          });
           resolve(user);
         },
         error: function (object, error) {
@@ -140,38 +160,39 @@ export class AdminService {
     });
   }
 
-  archiveUser(userId: string) {
+  archiveUser(userId: string): Promise<any> {
     return new Promise((resolve, reject) => {
-      const query = new Parse.Query('User');
+      const query = new Parse.Query(Parse.User);
       query.get(userId, {
         success: function (user) {
           user.set('isActive', false);
-          user.save()
-          resolve(user);
-            // replace with toast message
-            console.log("success!!");
+          user.save(null, {useMasterKey: true}).then(object => {
+            resolve(object);
+          }, error => {
+            reject(error.message);
+          });
         },
         error: function (object, error) {
           reject(error.message);
-          console.log("error");
         }
       });
     });
   }
-  
-  unArchiveUser(userId: string) {
+
+  unArchiveUser(userId: string): Promise<any> {
     return new Promise((resolve, reject) => {
       const query = new Parse.Query('User');
       query.get(userId, {
         success: function (user) {
           user.set('isActive', true);
-          user.save();
-          resolve(user);
-          console.log("success");
+          user.save(null, {useMasterKey: true}).then(object => {
+            resolve(object);
+          }, error => {
+            reject(error.message);
+          });
         },
         error: function (object, error) {
-          resolve(error.message);
-          console.log("error");
+          reject(error.message);
         }
       });
     });

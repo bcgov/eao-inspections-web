@@ -2,6 +2,7 @@ import { AdminService } from './../../../../../services/admin.service';
 import { Component, OnInit, Input } from '@angular/core';
 import { ModalService } from './../../../../../services/modal.service';
 import * as String from './../../../../../constants/strings';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'user-list-item',
@@ -22,7 +23,7 @@ export class UserListItemComponent implements OnInit {
     conformationNo: String.CANCEL_BUTTON,
   };
 
-  constructor(private modalService: ModalService, private adminService: AdminService ) { }
+  constructor(private modalService: ModalService, private adminService: AdminService, private toast: ToastrService ) { }
 
   open(modal) {
     this.modalService.open(modal);
@@ -30,21 +31,39 @@ export class UserListItemComponent implements OnInit {
 
   onSubmit(value) {
     // edit user here
-    console.log(value.firstName, value.lastName, value.email, value.password, value.team, value.permission);
-    // this.adminService.updateUser();
+    console.log(value.id, value.firstName, value.lastName, value.email, value.password, value.team, value.permission);
+    // this.adminService.updateUser(
+    //   value.id,
+    //   value.firstName,
+    //   value.lastName,
+    //   value.email,
+    //   value.password,
+    //   value.team,
+    //   value.permission)
+    //   .then((object) => {
+    //     this.toast.success('Successfully updated ' + object.get('firstName') + ' ' + object.get('lastName'));
+    //   }, (error) => {
+    //     this.toast.error(error.message || String.GENERAL_ERROR);
+    //   });
   }
 
   onUnarchive(value) {
-    console.log("Unarchived User:" + value);
-    // this.adminService.unArchiveUser(value);
+    this.adminService.unArchiveUser(value).then((object) => {
+      this.toast.success('Successfully unarchived ' + object.get('firstName') + ' ' + object.get('lastName'));
+    }, (error) => {
+      this.toast.error(error.message || String.GENERAL_ERROR);
+    });
   }
 
   onArchive(value) {
-    console.log("archived User:" + value);
-    // this.adminService.archiveUser(value);
+    this.adminService.archiveUser(value).then((object) => {
+      this.toast.success('Successfully archived ' + object.get('firstName') + ' ' + object.get('lastName'));
+    }, (error) => {
+      this.toast.error(error.message || String.GENERAL_ERROR);
+    });
   }
-  
+
   ngOnInit() {
-  } 
+  }
 
 }
