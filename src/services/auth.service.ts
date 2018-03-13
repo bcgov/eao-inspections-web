@@ -6,6 +6,7 @@ const Parse: any = require('parse');
 
 Parse.initialize(environment.parseId, environment.parseKey);
 Parse.serverURL = environment.parseURL;
+Parse.masterKey = environment.parseMasterKey;
 
 @Injectable()
 export class AuthService {

@@ -4,6 +4,7 @@ const Parse = require('parse');
 
 Parse.initialize(environment.parseId, environment.parseKey);
 Parse.serverURL = environment.parseURL;
+Parse.masterKey = environment.parseMasterKey;
 
 export function createTeam(name) {
   return new Promise(function(resolve, reject) {
