@@ -33,7 +33,7 @@ export class TeamsViewComponent implements OnInit {
   ) { }
 
   open(modal) {
-    this.modalService.open(modal);
+    this.modalService.open(modal, { backdrop: 'static', keyboard: false });
   }
 
   onSubmit(value) {

@@ -15,7 +15,7 @@
   </ng-template>
   <ng-template #content>
     <div class="dashboard-card__container" *ngFor="let team of teams">
-      <a routerLink="manage-team/{{team.id}}">
+      <a routerLink="{{team.id}}">
         <team-card [team]="team"></team-card>
       </a>
     </div>
@@ -26,3 +26,5 @@
 <ng-template #addTeam let-c="close" class="modal">
   <team-modal (submitValue)="onSubmit($event)" [closeValue]="this.c" [modal]="modal"></team-modal>
 </ng-template>
+
+

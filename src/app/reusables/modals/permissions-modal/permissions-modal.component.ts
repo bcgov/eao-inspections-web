@@ -5,7 +5,7 @@ import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
   templateUrl: './permissions-modal.component.html',
   styleUrls: ['./permissions-modal.component.scss']
 })
-export class PermissionsModalComponent implements OnInit {
+export class PermissionsModalComponent {
   permissions = ["Administrator", "Superadmin", "Inspector"];
   @Input('modal') modal: any;
   @Input('data') data: any;
@@ -22,6 +22,4 @@ export class PermissionsModalComponent implements OnInit {
     this.closeValue();
   }
 
-  ngOnInit() {
-  }
 }

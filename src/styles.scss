@@ -272,9 +272,12 @@ body {
         padding: 0;
         text-transform: uppercase;
         color: $font-gray;
-        font-size: 11px;
+        font-size: 14px;
         font-weight: 300;
 
+        @include large {
+          font-size: 11px;
+        }
         span {
           font-size: 18px;
           color: #D0021B;
