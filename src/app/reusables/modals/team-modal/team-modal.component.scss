@@ -1,0 +1,22 @@
+@import '../../../../scss/variables';
+
+input.color-picker {
+  text-align: center;
+  border-radius: 5px;
+  padding: 5px;
+  width: 40px;
+}
+
+// validation erros
+.form-control.ng-touched.ng-invalid {
+  border: 2px solid $error-red;
+}
+
+.error {
+  color: $error-red;
+  font-size: 12px;
+
+  &__content {
+    text-align: center;
+  }
+}

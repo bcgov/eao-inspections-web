@@ -177,10 +177,14 @@ export class AdminService {
     });
   }
 
-  createTeam(teamName: string) {
+  createTeam(teamName: string, color: string) {
     return new Promise((resolve, reject) => {
       const team = new Parse.Object('Team');
-      team.save('name', teamName).then(result => {
+      team.set('name', teamName);
+      team.set('color', color);
+      team.set('active', true);
+      team.save()
+      .then(result => {
         console.log(result);
         resolve(result);
       }, error => {
@@ -200,6 +204,36 @@ export class AdminService {
           });
         },
         error: function (object, error) {
+          reject(error.message);
+        }
+      });
+    });
+  }
+
+  getArchivedTeams() {
+    return new Promise((resolve, reject) => {
+      const query = new Parse.Query('Team');
+      query.equalTo('active', false);
+      query.find({
+        success: function (results) {
+          resolve(results);
+        },
+        error: function (error) {
+          reject(error.message);
+        }
+      });
+    });
+  }
+
+  getActiveTeams() {
+    return new Promise((resolve, reject) => {
+      const query = new Parse.Query('Team');
+      query.equalTo('active', true);
+      query.find({
+        success: function (results) {
+          resolve(results);
+        },
+        error: function (error) {
           reject(error.message);
         }
       });

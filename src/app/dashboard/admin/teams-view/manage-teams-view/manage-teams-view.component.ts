@@ -26,7 +26,7 @@ export class ManageTeamsViewComponent implements OnInit {
   constructor(private modalService: ModalService) { }
 
   open(modal) {
-    this.modalService.open(modal);
+    this.modalService.open(modal, { size: 'lg', backdrop: 'static', keyboard: false });
   }
 
   onAddMember(value) {

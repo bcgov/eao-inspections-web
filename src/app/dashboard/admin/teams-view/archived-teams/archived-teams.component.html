@@ -2,18 +2,19 @@
     <a href={{teamsLink}}>
       <img src="../../assets/back.png" />
     </a>
-    <p class="dashboard__title">{{title}}</p>
+    <div class="dashboard__header">
+      <p class="dashboard__title">{{title}}</p>
+    </div>
+    <div *ngIf="teams<=0; then noContent else content"></div>
+    <ng-template #noContent>
+      <no-content [emptyContent]="emptyContent"></no-content>
+    </ng-template>
+    
+    <ng-template #content>
+      <div class="dashboard-card__container" *ngFor="let team of teams">
+        <a routerLink="manage-team/{{team.id}}">
+          <team-card [team]="team"></team-card>
+        </a>
+      </div>
+    </ng-template>
   </div>
-
-<div *ngIf="teams<=0; then noContent else content"></div>
-<ng-template #noContent>
-  <no-content [emptyContent]="emptyContent"></no-content>
-</ng-template>
-
-<ng-template #content>
-  <div class="dashboard-card__container" *ngFor="let team of teams">
-    <a routerLink="manage-team/{{team.id}}">
-      <team-card [team]="team"></team-card>
-    </a>
-  </div>
-</ng-template>

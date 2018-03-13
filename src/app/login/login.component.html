@@ -7,6 +7,7 @@
       <div class="login__body__form">
         <label class="login__body__form__label">Email</label>
         <input
+          #email="ngModel"
           type="email"
           class="login__body__form__input"
           id="email"
@@ -18,6 +19,7 @@
       <div class="login__body__form">
         <label class="login__body__form__label">Password</label>
         <input
+          #password="ngModel"
           type="password"
           class="login__body__form__input"
           id="password"
@@ -26,7 +28,10 @@
           ngModel
         >
       </div>
-      <button type="submit" class="login__body__btn btn">Login</button>
+      <button type="submit" class="login__body__btn btn" [disabled]="!f.valid">Login</button>
+      <div class="error error__content" *ngIf="((email.touched && !email.valid) || (password.touched && !password.valid))  && !f.valid">
+        *Required fields cannot be blank
+      </div>
     </form>
     <p class="login__body__link">Forgot Password?</p>
   </div>

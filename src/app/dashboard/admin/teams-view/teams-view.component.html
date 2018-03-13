@@ -9,14 +9,22 @@
       <a href={{archivedLink}}><button class="dashboard__btn">Archived Teams</button></a>
     </div>
   </div>
-  <div class="dashboard-card__container" *ngFor="let team of teams">
-    <a routerLink="manage-team/{{team.id}}">
-      <team-card [team]="team"></team-card>
-    </a>
-  </div>
+  <div *ngIf="teams<=0; then noContent else content"></div>
+  <ng-template #noContent>
+    <no-content [emptyContent]="emptyContent"></no-content>
+  </ng-template>
+  <ng-template #content>
+    <div class="dashboard-card__container" *ngFor="let team of teams">
+      <a routerLink="{{team.id}}">
+        <team-card [team]="team"></team-card>
+      </a>
+    </div>
+  </ng-template>
 </div>
 
 <!-- modal to add new user -->
 <ng-template #addTeam let-c="close" class="modal">
-  <team-modal [closeValue]="this.c" [modal]="modal"></team-modal>
+  <team-modal (submitValue)="onSubmit($event)" [closeValue]="this.c" [modal]="modal"></team-modal>
 </ng-template>
+
+
