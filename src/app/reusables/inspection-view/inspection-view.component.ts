@@ -17,23 +17,22 @@ export class InspectionViewComponent implements OnInit {
   routeParam;
   message: string;
 
-  isDesc = false;
+  isDesc:boolean = false;
   direction: number;
   column: string;
 
 
   constructor(private route: ActivatedRoute, private reportService: ReportService) {
-    this.route.params.subscribe(params => this.routeParam = params);
+    this.routeParam = this.route.snapshot.params;
   }
 
   ngOnInit() {
+    this.sort('createdAt');
     this.reportService.getInspection(this.routeParam.id).then(object => {
       this.data = object;
-      console.log(this.data);
     });
     this.reportService.getObservations(this.routeParam.id)
       .then((results) => {
-        console.log(results);
         if (results instanceof Array) {
           this.elements = results;
         } else {

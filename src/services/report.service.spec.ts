@@ -14,7 +14,7 @@ Parse.initialize(environment.parseId, environment.parseKey);
 Parse.serverURL = environment.parseURL;
 Parse.masterKey = environment.parseMasterKey;
 
-fdescribe('Report Testing', () => {
+describe('Report Testing', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
   let service: ReportService;
