@@ -114,7 +114,6 @@ export class AdminService {
           //   obj.save();
           // });
           resolve(results);
-          console.log("success!!!");
         },
         error: function (object, error) {
           reject(error.message);
