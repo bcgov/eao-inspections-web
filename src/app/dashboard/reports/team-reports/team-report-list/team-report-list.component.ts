@@ -1,24 +1,51 @@
 import { Component, OnInit, Input } from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
 import * as String from '../../../../../constants/strings';
-import {ProfileService} from '../../../../../services/profile.service';
 import {ReportService} from '../../../../../services/report.service';
+import { Inspection } from '../../../../../models/inspection.model';
+import { Team } from '../../../../../models/team.model';
+import { TeamService } from '../../../../../services/team.service';
 
 @Component({
   selector: 'team-report-list',
   templateUrl: './team-report-list.component.html',
   styleUrls: ['./team-report-list.component.scss'],
-  providers: [ProfileService]
+  providers: [ReportService, TeamService]
 })
 export class TeamReportListComponent implements OnInit {
-  // @Input('data') data: any;
   emptyContent = {
-    image: "../../assets/team-lg.png",
+    image: '../../assets/team-lg.png',
     message: String.EMPTY_TEAM,
   };
 
-  constructor(private reportService: ReportService) { }
+  isDesc = false;
+  direction: number;
+  column: string;
 
-  ngOnInit() {
+  team: Team;
+  data: Array<Inspection>;
+
+  constructor(private reportService: ReportService, private teamService: TeamService, private route: ActivatedRoute) {
   }
 
+  ngOnInit() {
+    const teamId = this.route.snapshot.params['id'];
+    this.teamService.getTeam(teamId).then((team) => {
+      this.team = team;
+    });
+    this.reportService.getTeamReports(teamId)
+      .then((results) => {
+        this.data = results;
+      });
+  }
+
+  setDefaultPic() {
+    this.team.image = '../../../assets/team-logo.png';
+  }
+
+  sort(property: string) {
+    this.isDesc = !this.isDesc;
+    this.column = property;
+    this.direction = this.isDesc ? 1 : -1;
+  }
 }

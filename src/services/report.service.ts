@@ -5,6 +5,7 @@ import { Team } from '../models/team.model';
 import { Inspection } from '../models/inspection.model';
 import {Observation} from '../models/observation.model';
 import {Media} from '../models/media.model';
+import { BasicUser } from '../models/user.model';
 
 const Parse: any = require('parse');
 
@@ -16,6 +17,30 @@ export class ReportService {
   user = new Parse.User();
   constructor() {
     this.user = Parse.User.current();
+  }
+
+  getInspector(inspectorId: string): Promise<any> {
+    return new Promise((resolve, reject) => {
+      const userQuery = new Parse.Query('User')
+      userQuery.equalTo('objectId', inspectorId);
+      userQuery.first({
+        success: function(result) {
+          const inspector = new BasicUser(
+            result.id,
+            result.get('username'),
+            [],
+            result.get('email'),
+            result.get('image'),
+            result.get('isAdmin')
+          );
+          resolve (inspector);
+        },
+        error: function(error) {
+          reject (error.message);
+        }
+      });
+    });
+
   }
 
   getMyReports(): Promise<any[]> {
@@ -37,20 +62,25 @@ export class ReportService {
         }
       }).then(() => {
         resultList.forEach((object) => {
-          reports.push(new Inspection(
-            object.id,
-            object.get('title'),
-            object.get('subtitle'),
-            object.get('inspectionNumber'),
-            this.user.get('firstName') + ' ' + this.user.get('lastName'),
-            object.get('project'),
-            object.get('startDate'),
-            object.get('endDate'),
-            object.get('requirement'),
-            object.get('submitted'),
-            object.get('team.name')
-            )
-          );
+          this.getInspector(object.get('userId'))
+          .then((inspector) => {
+            reports.push(
+              new Inspection(
+                object.id,
+                object.get('title'),
+                object.get('subtitle'),
+                object.get('inspectionNumber'),
+                inspector,
+                object.get('project'),
+                object.get('startDate'),
+                object.get('endDate'),
+                object.get('updatedAt'),
+                object.get('requirement'),
+                object.get('isSubmitted'),
+                object.get('media')
+              )
+            );
+          });
         });
       }).then(() => {
         resolve(reports);
@@ -60,19 +90,33 @@ export class ReportService {
 
   getTeamReports(teamId: string): Promise<any[]> {
     return new Promise((resolve, reject) => {
-      const teamQuery = new Parse.Query('Team');
-      teamQuery.equalTo('id', teamId);
+      const promises = [];
+      const reports = [];
       const q = new Parse.Query('Inspection');
-      q.matchesKeyInQuery('teamId', 'teamId', teamQuery, {
-        success: function(results) {
-          if (!Array.isArray(results)) {
-            results = [results];
-          }
-          resolve (results);
-        },
-        error: function(error) {
-          reject (error.message);
-        }
+      q.equalTo('team', {'__type': 'Pointer', 'className': 'Team', 'objectId': teamId });
+      q.find().then((results) => {
+          results.forEach((object) => {
+            this.getInspector(object.get('userId'))
+            .then((inspector) => {
+                reports.push(
+                new Inspection(
+                  object.id,
+                  object.get('title'),
+                  object.get('subtitle'),
+                  object.get('inspectionNumber'),
+                  inspector,
+                  object.get('project'),
+                  object.get('startDate'),
+                  object.get('endDate'),
+                  object.get('updatedAt'),
+                  object.get('requirement'),
+                  object.get('isSubmitted'),
+                  object.get('media')
+                )
+              );
+            });
+          });
+          resolve(reports);
       });
     });
   }
@@ -81,27 +125,23 @@ export class ReportService {
     return new Promise((resolve, reject) => {
       const query = new Parse.Query('Inspection');
       query.get(inspectionId).then((object) => {
-        const tempUserId = object.get('userId');
-        let tempInspectorName;
-        const userQuery = new Parse.Query(Parse.User);
-        userQuery.get(tempUserId).then((userObject) => {
-          tempInspectorName = userObject.get('firstName') + ' ' + userObject.get('lastName');
-        }).then(() => {
-          resolve(new Inspection(
-            object.id,
-            object.get('title'),
-            object.get('subtitle'),
-            object.get('inspectionNumber'),
-            tempInspectorName,
-            object.get('project'),
-            object.get('startDate'),
-            object.get('endDate'),
-            object.get('requirement'),
-            object.get('submitted'),
-            object.get('team.name')
-          ));
+        this.getInspector(object.get('userId'))
+        .then((inspector) => {
+            resolve(new Inspection(
+              object.id,
+              object.get('title'),
+              object.get('subtitle'),
+              object.get('inspectionNumber'),
+              inspector,
+              object.get('project'),
+              object.get('startDate'),
+              object.get('endDate'),
+              object.get('updatedAt'),
+              object.get('requirement'),
+              object.get('isSubmitted'),
+              object.get('media')
+            ));
         });
-
       }, (error) => {
         reject(error.message);
       });
@@ -126,6 +166,7 @@ export class ReportService {
         }
       }).then(() => {
         elementList.forEach((object) => {
+          console.log(object);
           elements.push(new Observation(
             object.id,
             object.get('title'),

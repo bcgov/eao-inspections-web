@@ -24,13 +24,22 @@ export class MyReportListComponent implements OnInit {
   };
 
   reports = [];
+  team: Team;
 
+  isDesc = false;
+  direction: number;
+  column: string;
 
   constructor() {
   }
 
   ngOnInit() {
+  }
 
+  sort(property: string) {
+    this.isDesc = !this.isDesc;
+    this.column = property;
+    this.direction = this.isDesc ? 1 : -1;
   }
 }
 
