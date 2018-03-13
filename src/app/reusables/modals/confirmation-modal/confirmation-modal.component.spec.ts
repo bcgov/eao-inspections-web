@@ -39,6 +39,5 @@ describe('ConfirmationModalComponent', () => {
     tick();
     fixture.detectChanges();
     expect(component.conformation).toHaveBeenCalled();
-  }))
-  
+  }));
 });

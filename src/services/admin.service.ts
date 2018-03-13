@@ -1,6 +1,7 @@
 import { environment } from '../environments/environment';
 import { Router } from '@angular/router';
 import { Injectable} from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 
 const Parse: any = require('parse');
 
@@ -10,7 +11,7 @@ Parse.serverURL = environment.parseURL;
 @Injectable()
 export class AdminService {
   user = new Parse.User();
-  constructor(private router: Router) {
+  constructor(private router: Router, private toast: ToastrService) {
     this.user = Parse.User.current();
   }
 
@@ -116,6 +117,7 @@ export class AdminService {
           resolve(results);
         },
         error: function (object, error) {
+          this.toast.error(error.message);
           reject(error.message);
         }
       });

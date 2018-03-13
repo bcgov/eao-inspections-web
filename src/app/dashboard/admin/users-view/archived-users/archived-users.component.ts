@@ -11,11 +11,12 @@ import * as Route from '../../../../../constants/routes';
   selector: 'app-archived-users',
   templateUrl: './archived-users.component.html',
   styleUrls: ['./archived-users.component.scss'],
-  providers: [AdminService]
+  providers: [ AdminService ]
 })
+
 export class ArchivedUsersComponent implements OnInit {
   title = "Archived Users";
-  usersLink = Route.ADMIN_USERS;
+  link = Route.ADMIN_USERS;
 
   emptyContent = {
     image: "../../assets/team-member.png",

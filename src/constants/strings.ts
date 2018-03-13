@@ -42,6 +42,7 @@ export const NO_BUTTON = "No, I'll do it later";
 // noContent messages 
 export const EMPTY_USER = "There are no users yet.";
 export const EMPTY_ARCHIVED_USERS = "There are no archived users."
+export const EMPTY_ARCHIVED_INSPECTIONS = "There are no archived inspections yet.";
 export const EMPTY_TEAM_INSPECTIONS = "There are no inspections for this team.";
 export const EMPTY_TEAM = "There are no teams yet.";
 export const EMPTY_TEAM_MEMBER = "This team does not have any members yet."
