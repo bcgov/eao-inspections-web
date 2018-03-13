@@ -78,7 +78,7 @@ export class AdminService {
 
   getSuperAdminStatus(permission: string) {
     if (permission === "superadmin") {
-      return true
+      return true;
     }
     return false;
   }
@@ -105,15 +105,18 @@ export class AdminService {
       user.set('publicEmail', email);
       user.set('permission', permission);
       user.set('team', team);
-      user.signUp(null, {
+      user.save(null, {
         success: function (results) {
-          // console.log(results);
-          // query.equalTo('name', permission);
-          // query.find().then((obj) => {
-          //   console.log(obj);
-          //   obj.relation("users").add(results);
-          //   obj.save();
-          // });
+          query.equalTo('name', permission);
+          query.first().then((obj) => {
+            obj.getUsers().add(results);
+            obj.save(null, {
+              error: (object, error) => {
+                this.toast.error(error.message);
+                reject(error.message);
+              }
+            });
+          });
           resolve(results);
         },
         error: function (object, error) {
@@ -142,12 +145,15 @@ export class AdminService {
 
   archiveUser(userId: string) {
     return new Promise((resolve, reject) => {
-      const query = new Parse.Query('User');
+      const query = new Parse.Query(Parse.User);
       query.get(userId, {
         success: function (user) {
           user.set('isActive', false);
-          user.save()
-          resolve(user);
+          user.save(null, {useMasterKey: true}).then(object => {
+            resolve(object);
+          }, error => {
+            console.log(error);
+          });
             // replace with toast message
             console.log("success!!");
         },
@@ -158,7 +164,7 @@ export class AdminService {
       });
     });
   }
-  
+
   unArchiveUser(userId: string) {
     return new Promise((resolve, reject) => {
       const query = new Parse.Query('User');

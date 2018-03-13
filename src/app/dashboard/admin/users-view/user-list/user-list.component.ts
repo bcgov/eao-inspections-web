@@ -14,7 +14,7 @@ import * as Route from '../../../../../constants/routes';
   providers: [ AdminService ]
 })
 export class UserListComponent implements OnInit {
-  title = "Users";
+  title = 'Users';
   archivedLink = Route.ARCHIVED_USERS;
 
   modal = {
@@ -23,7 +23,7 @@ export class UserListComponent implements OnInit {
   };
 
   emptyContent = {
-    image: "../../assets/team-member.png",
+    image: '../../assets/team-member.png',
     message: String.EMPTY_USER,
   };
 
@@ -43,7 +43,7 @@ export class UserListComponent implements OnInit {
     this.adminService.createUser(value.firstName, value.lastName, value.email, value.password, value.team, value.permission).then((results) => {
       if (results) {
         this.toast.success('Successfully added ' + value.firstName + " " + value.lastName);
-      };
+      }
     });
   }
 
