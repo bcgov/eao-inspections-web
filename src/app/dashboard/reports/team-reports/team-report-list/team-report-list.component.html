@@ -6,7 +6,7 @@
     <div class="dashboard">
 
         <p class="dashboard__title" *ngIf="team">
-            <img width="60px" [src]="team.image" (error)="setDefaultPic()" /> {{team.name}}
+            <img width="60px" [src]="team.badge" (error)="setDefaultPic()" /> {{team.name}}
         </p>
         <table>
             <div class="report-list__content__header">
@@ -23,9 +23,8 @@
                 </thead>
             </div>
             <div class="report-list__content__details" *ngFor="let data of data | orderBy : {property: column, direction: direction}">
-                <report-list-item [data]="data"></report-list-item>
+                <report-list-item [data]="data" [fields]="fields" [actions]="actions"></report-list-item>
             </div>
         </table>
     </div>
 </ng-template>
-

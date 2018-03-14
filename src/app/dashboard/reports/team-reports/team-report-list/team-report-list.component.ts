@@ -15,33 +15,37 @@ import { TeamService } from '../../../../../services/team.service';
 export class TeamReportListComponent implements OnInit {
   emptyContent = {
     image: '../../assets/team-lg.png',
-    message: String.EMPTY_TEAM,
+    message: String.EMPTY_INSPECTIONS,
   };
 
-  isDesc: boolean = false;
+  isDesc: Boolean = false;
   direction: number;
   column: string;
 
   team: Team;
-  data: Array<Inspection>;
+  data: Array<Inspection> = [];
+  fields: Array<any>;
+  actions: Array<any>;
 
   constructor(private reportService: ReportService, private teamService: TeamService, private route: ActivatedRoute) {
+    this.fields = ['title', 'project', 'submitted', 'inspector', 'actions'];
+    this.actions = ['download'];
   }
 
   ngOnInit() {
-    this.sort('updatedAt');
+     this.sort('updatedAt');
     const teamId = this.route.snapshot.params['id'];
     this.teamService.getTeam(teamId).then((team) => {
       this.team = team;
-    });
+     });
     this.reportService.getTeamReports(teamId)
-      .then((results) => {
+    .then((results) => {
         this.data = results;
-      });
+    });
   }
 
   setDefaultPic() {
-    this.team.image = '../../../assets/team-logo.png';
+    this.team.badge = '../../../assets/team-logo.png';
   }
 
   sort(property: string) {
