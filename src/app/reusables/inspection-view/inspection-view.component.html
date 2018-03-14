@@ -10,7 +10,7 @@
         Download
       </button>
         </div>
-        <div class="inspection-details" *ngIf="data">
+        <div id="inspection-details" class="inspection-details" *ngIf="data">
             <div class="inspection-details-content">
                 <div>
                     <h4>title</h4>
@@ -47,7 +47,7 @@
         </div>
         <div *ngIf="elements">
             <h1 class="dashboard__subtitle">{{subTitle}}</h1>
-            <div class="inspection-details">
+            <div id="element-details" class="inspection-details">
                 <div class="inspection-details__header">
                     <h4>Name</h4>
                     <h4 class="pointer" (click)="sort('createdAt')">Submitted</h4>
