@@ -24,7 +24,11 @@ export class UserListItemComponent implements OnInit {
     conformationNo: String.CANCEL_BUTTON,
   };
 
-  constructor(private modalService: ModalService, private adminService: AdminService, private toast: ToastrService ) { }
+  constructor(
+    private modalService: ModalService, 
+    private adminService: AdminService, 
+    private toast: ToastrService 
+  ) { }
 
   openEdit(modal) {
     this.modalService.open(modal, { size: 'lg', backdrop: 'static', keyboard: false })
@@ -35,7 +39,6 @@ export class UserListItemComponent implements OnInit {
   }
 
   onSubmit(value) {
-    console.log(value.id, value.firstName, value.lastName, value.email, value.permission);
     this.adminService.updateUser(
       value.id,
       value.firstName,

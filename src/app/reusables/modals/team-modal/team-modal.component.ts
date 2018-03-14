@@ -10,6 +10,7 @@ import { NgForm } from '@angular/forms';
 export class TeamModalComponent implements OnInit {
   color: string = "#FDB913";
   @Input('modal') modal: any;
+  @Input('team') team: any;
   @Input() closeValue: any;
   @Output() submitValue: EventEmitter<any> = new EventEmitter();
 
@@ -19,10 +20,15 @@ export class TeamModalComponent implements OnInit {
     this.closeValue();
   } 
 
-  onSubmit(form: NgForm) {
-    const teamName = form.value.teamName
-    const color = this.color;
-    this.submitValue.emit({teamName, color});
+  onSubmit(form: NgForm, id?: string) {
+    const teamName = form.value.teamName;
+    if (id) {
+      const color = form.value.color;
+      this.submitValue.emit({teamName, color, id});
+    } else {
+      const color = this.color;
+      this.submitValue.emit({teamName, color});
+    }
   }
 
   ngOnInit() {

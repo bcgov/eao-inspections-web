@@ -138,10 +138,13 @@ export class AdminService {
       const query = new Parse.Query(Parse.User);
       query.get(userId, {
         success: function (user) {
+          user.set('isAdmin', this.getAdminStatus(permission));
+          user.set('isSuperAdmin', this.getSuperAdminStatus(permission));
           user.set('firstName', firstName);
           user.set('lastName', lastName);
           user.set('email', email);
           user.set('permission', permission);
+          user.set('publicEmail', email);
           user.save(null, { useMasterKey: true }).then((object) => {
             resolve(object);
           }, (error) => {
@@ -210,15 +213,21 @@ export class AdminService {
     });
   }
 
-  updateTeam(teamId: string, attribute: string, value: string) {
+  updateTeam(teamId: string,
+    teamName: string,
+    color: string): Promise<any> {
     return new Promise((resolve, reject) => {
       const query = new Parse.Query('Team');
       query.get(teamId, {
-        success: function (object) {
-          object.set(attribute, value);
-          object.save().then((obj) => {
-            resolve(obj);
+        success: function (team) {
+          team.set('name', teamName);
+          team.set('color', color);
+          team.save(null, { useMasterKey: true }).then((object) => {
+            resolve(object);
+          }, (error) => {
+            reject(error.message);
           });
+          resolve(team);
         },
         error: function (object, error) {
           reject(error.message);
@@ -257,18 +266,39 @@ export class AdminService {
     });
   }
 
-  deleteTeam(teamId: string) {
+  archiveTeam(teamId: string): Promise<any> {
     return new Promise((resolve, reject) => {
       const query = new Parse.Query('Team');
       query.get(teamId, {
         success: function (team) {
-          team.set('active', false);
-          team.save().then((obj) => {
-            resolve(obj);
+          team.set('isActive', false);
+          team.save(null, { useMasterKey: true }).then(object => {
+            resolve(object);
+          }, error => {
+            reject(error.message);
           });
         },
         error: function (object, error) {
-          resolve(error.message);
+          reject(error.message);
+        }
+      });
+    });
+  }
+
+  unArchiveTeam(teamId: string): Promise<any> {
+    return new Promise((resolve, reject) => {
+      const query = new Parse.Query('Team');
+      query.get(teamId, {
+        success: function (team) {
+          team.set('isActive', true);
+          team.save(null, { useMasterKey: true }).then(object => {
+            resolve(object);
+          }, error => {
+            reject(error.message);
+          });
+        },
+        error: function (object, error) {
+          reject(error.message);
         }
       });
     });

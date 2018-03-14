@@ -18,6 +18,7 @@ export class TeamsViewComponent implements OnInit {
   teams = [];
 
   modal = {
+    edit: false,
     header: String.CREATE_TEAM
   };
 
@@ -37,10 +38,10 @@ export class TeamsViewComponent implements OnInit {
   }
 
   onSubmit(value) {
-    this.adminService.createTeam(value.teamName, value.color).then((results) => {
-      if (results) {
-        this.toast.success('Successfully added a new Team');
-      };
+    this.adminService.createTeam(value.teamName, value.color).then((object) => {
+      this.toast.success('Successfully added a new team');
+    }, (error) => {
+      this.toast.error(error.message || String.GENERAL_ERROR);
     });
   }
 
