@@ -30,7 +30,13 @@
 
 <!-- edit user modal -->
 <ng-template #editUser let-c="close" class="modal">
-  <user-modal (submitValue)="onSubmit($event)" [closeValue]="this.c" [modal]="modal"></user-modal>
+  <user-modal 
+    (submitValue)="onSubmit($event)" 
+    [closeValue]="this.c" 
+    [modal]="modal" 
+    [user]="user"
+  >
+  </user-modal>
 </ng-template>
 
 <!-- archive confirmation modal -->

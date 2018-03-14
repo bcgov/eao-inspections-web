@@ -133,8 +133,6 @@ export class AdminService {
              firstName: string,
              lastName: string,
              email: string,
-             password: string,
-             team: string,
              permission: string): Promise<any> {
     return new Promise((resolve, reject) => {
       const query = new Parse.Query(Parse.User);
@@ -143,8 +141,6 @@ export class AdminService {
           user.set('firstName', firstName);
           user.set('lastName', lastName);
           user.set('email', email);
-          user.set('password', password);
-          user.set('team', team);
           user.set('permission', permission);
           user.save(null, { useMasterKey: true }).then((object) => {
             resolve(object);

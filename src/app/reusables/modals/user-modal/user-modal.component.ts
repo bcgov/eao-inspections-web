@@ -16,6 +16,7 @@ export class UserModalComponent implements OnInit {
 
   @Input('modal') modal: any;
   @Input() closeValue: any;
+  @Input('user') user: any;
   @Output() submitValue: EventEmitter<any> = new EventEmitter();
 
   constructor(private adminService: AdminService) { }
@@ -25,7 +26,7 @@ export class UserModalComponent implements OnInit {
     this.selectedPhoto = event.target.files[0].name;
   }
 
-  onSubmit(form: NgForm) {
+  onSubmit(form: NgForm, id?: string) {
     const photo = form.value.photo;
     const firstName = form.value.firstName;
     const lastName = form.value.lastName;
@@ -34,7 +35,11 @@ export class UserModalComponent implements OnInit {
     const team = form.value.team;
     const permission = form.value.permission;
     // console.log(this.selectedPhoto);
-    this.submitValue.emit({firstName, lastName, email, password, team, permission});
+    if (id) {
+      this.submitValue.emit({ firstName, lastName, email, permission, id })
+    } else {
+      this.submitValue.emit({firstName, lastName, email, password, team, permission});
+    }
   }
 
   close() {
@@ -42,11 +47,11 @@ export class UserModalComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.adminService.getActiveTeams()
-      .then((results) => {
-        if (results instanceof Array) {
-          this.teams = parseToJSON(results);
-        }
-      });
+  this.adminService.getActiveTeams()
+    .then((results) => {
+      if (results instanceof Array) {
+        this.teams = parseToJSON(results);
+      }
+    });
   }
 }
