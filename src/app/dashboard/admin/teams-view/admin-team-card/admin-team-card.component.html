@@ -3,7 +3,7 @@
     <img class="team__card--photo__img" [src]="team.image" (error)="setDefaultPic()" />
   </div>
   <div class="team__card--details">
-    <a routerLink="manage-team/{{team.objectId}}">
+    <a routerLink="manage-team/{{team.id}}">
       <h4>{{team.name}}</h4>
     </a>
     <div class="team__card--actions"></div>

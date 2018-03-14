@@ -4,7 +4,7 @@ import { ToastrService } from 'ngx-toastr';
 import { ModalService } from './../../../../services/modal.service';
 import * as String from '../../../../constants/strings';
 import * as Route from '../../../../constants/routes';
-import { parseToJSON } from '../../../../services/parse.service';
+import { Team } from '../../../../models/team.model';
 
 @Component({
   selector: 'app-teams-view',
@@ -15,7 +15,7 @@ import { parseToJSON } from '../../../../services/parse.service';
 export class TeamsViewComponent implements OnInit {
   title = "Teams";
   archivedLink = Route.ARCHIVED_TEAMS;
-  teams = [];
+  teams: Array<Team>;
 
   modal = {
     edit: false,
@@ -48,9 +48,7 @@ export class TeamsViewComponent implements OnInit {
   ngOnInit() {
     this.adminService.getActiveTeams()
     .then((results) => {
-      if (results instanceof Array) {
-        this.teams = parseToJSON(results);
-      }
+        this.teams = results;
     });
   }
 }

@@ -5,6 +5,7 @@ export class Team {
   public color: string;
   public badge: string;
   public users: Array<any>;
+  public isActive: Boolean;
   constructor(id: string, name: string, admin: string, color: string, badge: string = null, users: Array<any> = []) {
     this.id = id;
     this.name = name;
@@ -12,5 +13,6 @@ export class Team {
     this.color = color;
     this.badge = badge;
     this.users = users;
+    this.isActive = true;
   }
 }
