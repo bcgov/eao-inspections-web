@@ -20,7 +20,7 @@ export class MenuComponent {
     message: String.LOGOUT_USER,
     conformationYes: String.LOGOUT_BUTTON,
     conformationNo: String.CANCEL_BUTTON
-  }
+  };
 
   constructor(private authService: AuthService, public modalService: ModalService, private router: Router ) { }
   myInspections = Route.MY_REPORTS;
