@@ -1,15 +1,30 @@
-<div class="dashboard">
-  <a href={{inspectionsLink}}>
-    <img src="../../assets/back.png" />
-  </a>
-  <p class="dashboard__title">{{title}}</p>
-  <div *ngIf="teams.length<=0; then noContent else content"></div>
-  <ng-template #noContent>
+<div *ngIf="data<=0; then noContent else content"></div>
+<ng-template #noContent>
     <no-content [emptyContent]="emptyContent"></no-content>
-  </ng-template>
-  <ng-template #content>
-    <div class="dashboard-card__container" *ngFor="let team of teams">
-      <team-card [team]="team"></team-card>
+</ng-template>
+<ng-template #content>
+    <div class="dashboard">
+        <div class="dashboard__header">
+            <p class="dashboard__title">{{title}}</p>
+        </div>
+        <table>
+            <div class="report-list__content__header">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Linked Projects</th>
+                        <th class="pointer" (click)="sort('updatedAt')">
+                            Submitted
+                        </th>
+                        <th>Team</th>
+                        <th>Inspector</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+            </div>
+            <div class="report-list__content__details" *ngFor="let data of data | orderBy : {property: column, direction: direction}">
+                <report-list-item [data]="data" [fields]="fields" [actions]="actions"></report-list-item>
+            </div>
+        </table>
     </div>
-  </ng-template>
-</div>
+</ng-template>

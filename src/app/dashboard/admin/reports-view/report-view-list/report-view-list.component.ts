@@ -1,18 +1,18 @@
-import { Component, OnInit, Input } from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
-import * as String from '../../../../../constants/strings';
-import {ReportService} from '../../../../../services/report.service';
+import { Component, OnInit } from '@angular/core';
 import { Inspection } from '../../../../../models/inspection.model';
 import { Team } from '../../../../../models/team.model';
+import { ReportService } from '../../../../../services/report.service';
 import { TeamService } from '../../../../../services/team.service';
+import { ActivatedRoute } from '@angular/router';
+import * as String from '../../../../../constants/strings';
 
 @Component({
-  selector: 'team-report-list',
-  templateUrl: './team-report-list.component.html',
-  styleUrls: ['./team-report-list.component.scss'],
+  selector: 'report-view-list',
+  templateUrl: './report-view-list.component.html',
+  styleUrls: ['./report-view-list.component.scss'],
   providers: [ReportService, TeamService]
 })
-export class TeamReportListComponent implements OnInit {
+export class ReportViewListComponent implements OnInit {
   emptyContent = {
     image: '../../assets/team-lg.png',
     message: String.EMPTY_INSPECTIONS,
@@ -29,23 +29,23 @@ export class TeamReportListComponent implements OnInit {
 
   constructor(private reportService: ReportService, private teamService: TeamService, private route: ActivatedRoute) {
     this.fields = ['title', 'project', 'submitted', 'inspector', 'actions'];
-    this.actions = ['download'];
+    this.actions = ['download', 'permission', 'archive'];
   }
 
   ngOnInit() {
-     this.sort('updatedAt');
+    this.sort('updatedAt');
     const teamId = this.route.snapshot.params['id'];
     this.teamService.getTeam(teamId).then((team) => {
       this.team = team;
-     });
-    this.reportService.getTeamReports(teamId)
-    .then((results) => {
-        this.data = results;
     });
+    this.reportService.getTeamReports(teamId)
+      .then((results) => {
+        this.data = results;
+      });
   }
 
   setDefaultPic() {
-    this.team.badge = '../../../assets/team-logo.png';
+    this.team.image = '../../../assets/team-logo.png';
   }
 
   sort(property: string) {

@@ -1,10 +1,9 @@
 <div [ngStyle]="{ 'border-left': '10px solid' + team.color }" class="team__card">
-  <div class="team__card--photo">
-    <img class="team__card--photo__img" [src]="team.image" (error)="setDefaultPic()" />
-  </div>
-  <div class="team__card--details">
-    <h4>{{team.name}}</h4>
-    <p>?? Members</p>
-  </div>
+    <div class="team__card--photo">
+        <img class="team__card--photo__img" [src]="team.badge" (error)="setDefaultPic()" />
+    </div>
+    <div class="team__card--details">
+        <h4>{{team.name}}</h4>
+        <p>{{team.users.length}} Members</p>
+    </div>
 </div>
-

@@ -25,12 +25,16 @@ export class MyReportListComponent implements OnInit {
 
   reports = [];
   team: Team;
+  fields: Array<any>;
+  actions: Array<any>;
 
-  isDesc = false;
+  isDesc: Boolean = false;
   direction: number;
   column: string;
 
   constructor() {
+    this.fields = ['title', 'project', 'submitted', 'team', 'actions'];
+    this.actions = ['download'];
   }
 
   ngOnInit() {

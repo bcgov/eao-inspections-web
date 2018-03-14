@@ -6,6 +6,7 @@ import { Inspection } from '../models/inspection.model';
 import {Observation} from '../models/observation.model';
 import {Media} from '../models/media.model';
 import { BasicUser } from '../models/user.model';
+import { parseUserToModel, parseInspectionToModel } from './parse.service';
 
 const Parse: any = require('parse');
 
@@ -26,14 +27,7 @@ export class ReportService {
       userQuery.equalTo('objectId', inspectorId);
       userQuery.first({
         success: function(result) {
-          const inspector = new BasicUser(
-            result.id,
-            result.get('username'),
-            [],
-            result.get('email'),
-            result.get('image'),
-            result.get('isAdmin')
-          );
+          const inspector = parseUserToModel(result); 
           resolve (inspector);
         },
         error: function(error) {
@@ -41,7 +35,6 @@ export class ReportService {
         }
       });
     });
-
   }
 
   getMyReports(): Promise<any[]> {
@@ -65,22 +58,9 @@ export class ReportService {
         resultList.forEach((object) => {
           this.getInspector(object.get('userId'))
           .then((inspector) => {
-            reports.push(
-              new Inspection(
-                object.id,
-                object.get('title'),
-                object.get('subtitle'),
-                object.get('inspectionNumber'),
-                inspector,
-                object.get('project'),
-                object.get('startDate'),
-                object.get('endDate'),
-                object.get('updatedAt'),
-                object.get('requirement'),
-                object.get('isSubmitted'),
-                object.get('media')
-              )
-            );
+            const inspection = parseInspectionToModel(object);
+            inspection.inspector = inspector;
+            reports.push(inspection);
           });
         });
       }).then(() => {
@@ -99,22 +79,9 @@ export class ReportService {
           results.forEach((object) => {
             this.getInspector(object.get('userId'))
             .then((inspector) => {
-                reports.push(
-                new Inspection(
-                  object.id,
-                  object.get('title'),
-                  object.get('subtitle'),
-                  object.get('inspectionNumber'),
-                  inspector,
-                  object.get('project'),
-                  object.get('startDate'),
-                  object.get('endDate'),
-                  object.get('updatedAt'),
-                  object.get('requirement'),
-                  object.get('isSubmitted'),
-                  object.get('media')
-                )
-              );
+              const inspection = parseInspectionToModel(object);
+              inspection.inspector = inspector;
+              reports.push(inspection);
             });
           });
           resolve(reports);
@@ -128,20 +95,9 @@ export class ReportService {
       query.get(inspectionId).then((object) => {
         this.getInspector(object.get('userId'))
         .then((inspector) => {
-            resolve(new Inspection(
-              object.id,
-              object.get('title'),
-              object.get('subtitle'),
-              object.get('inspectionNumber'),
-              inspector,
-              object.get('project'),
-              object.get('startDate'),
-              object.get('endDate'),
-              object.get('updatedAt'),
-              object.get('requirement'),
-              object.get('isSubmitted'),
-              object.get('media')
-            ));
+            const inspection = parseInspectionToModel(object);
+            inspection.inspector = inspector;
+            resolve(inspection);
         });
       }, (error) => {
         reject(error.message);

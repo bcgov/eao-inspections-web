@@ -61,9 +61,9 @@ describe('TeamReportListComponent', () => {
   it('shodld render the correct number of report items', fakeAsync(() => {
     const reportService = fixture.debugElement.injector.get(ReportService);
     const reports = [
-      new Inspection('test', 'test', 'test', 'test', null, 'test', null, null, null, 'test', true, 'test'),
-      new Inspection('test', 'test', 'test', 'test', null, 'test', null, null, null, 'test', true, 'test'),
-      new Inspection('test', 'test', 'test', 'test', null, 'test', null, null, null, 'test', true, 'test'),
+      new Inspection('test', 'test', 'test', 'test', null, 'test', null, null, null, 'test', true, null),
+      new Inspection('test', 'test', 'test', 'test', null, 'test', null, null, null, 'test', true, null),
+      new Inspection('test', 'test', 'test', 'test', null, 'test', null, null, null, 'test', true, null),
     ];
     spyOn(reportService, 'getTeamReports').and.returnValue(Promise.resolve(reports));
     component.ngOnInit();

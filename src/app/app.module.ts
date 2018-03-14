@@ -46,7 +46,11 @@ import { ArchivedInspectionsComponent } from './dashboard/admin/reports-view/arc
 import { PermissionsModalComponent } from './reusables/modals/permissions-modal/permissions-modal.component';
 import { OrderByPipe } from './directives/orderby.pipe';
 import { AdminTeamCardComponent } from './dashboard/admin/teams-view/admin-team-card/admin-team-card.component';
+<<<<<<< HEAD
 import { MemberModalComponent } from './reusables/modals/member-modal/member-modal.component';
+=======
+import { ReportViewListComponent } from './dashboard/admin/reports-view/report-view-list/report-view-list.component';
+>>>>>>> b4190554709ebcda8b9ddae6734583f6c90fe0c2
 
 @NgModule({
   declarations: [
@@ -84,7 +88,11 @@ import { MemberModalComponent } from './reusables/modals/member-modal/member-mod
     PermissionsModalComponent,
     OrderByPipe,
     AdminTeamCardComponent,
+<<<<<<< HEAD
     MemberModalComponent
+=======
+    ReportViewListComponent 
+>>>>>>> b4190554709ebcda8b9ddae6734583f6c90fe0c2
   ],
   imports: [
     BrowserModule,

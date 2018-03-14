@@ -1,6 +1,10 @@
 import { environment } from '../environments/environment';
 import { Router } from '@angular/router';
 import { Injectable} from '@angular/core';
+import { Team } from '../models/team.model';
+import { Inspection } from '../models/inspection.model';
+import { parseInspectionToModel, parseUserToModel } from './parse.service';
+import { BasicUser } from '../models/user.model';
 
 const Parse: any = require('parse');
 
@@ -11,9 +15,11 @@ Parse.masterKey = environment.parseMasterKey;
 @Injectable()
 export class AdminService {
   user = new Parse.User();
+  
   constructor(private router: Router) {
     this.user = Parse.User.current();
   }
+
 
   getUsers() {
     return new Promise((resolve, reject) => {
@@ -236,32 +242,65 @@ export class AdminService {
     });
   }
 
-  getArchivedTeams() {
+  getArchivedTeams(): Promise<Team[]> {
     return new Promise((resolve, reject) => {
       const query = new Parse.Query('Team');
+      const promises = [];
+      const teams = [];
       query.equalTo('isActive', false);
       query.find({
         success: function (results) {
-          resolve(results);
+          if (!Array.isArray(results)) {
+            results = [results];
+          }
+          results.forEach((object) => {
+            const userRelation = object.relation('users');
+            userRelation.query().find().then((users) => {
+              console.log(users);
+              promises.push(teams.push(new Team(object.id, object.get('name'), object.get('teamAdmin.id'), null, users)));
+            });
+          });
         },
         error: function (error) {
           reject(error.message);
         }
+      }).then(() => {
+        Promise.all(promises).then(() => {
+          resolve(teams);
+        });
       });
     });
   }
 
-  getActiveTeams() {
+  getActiveTeams(): Promise<Team[]> {
     return new Promise((resolve, reject) => {
       const query = new Parse.Query('Team');
+      const promises = [];
+      const teams = [];
       query.equalTo('isActive', true);
       query.find({
         success: function (results) {
-          resolve(results);
+          if (!Array.isArray(results)) {
+            results = [results];
+          }
+          results.forEach((object) => {
+            const userRelation = object.relation('users');
+            userRelation.query().find().then((users) => {
+              promises.push(
+                teams.push(
+                  new Team(object.id, object.get('name'), object.get('teamAdmin.id'), object.get('color'), null, users)
+                )
+              );
+            });
+          });
         },
         error: function (error) {
           reject(error.message);
         }
+      }).then(() => {
+        Promise.all(promises).then(() => {
+          resolve(teams);
+        });
       });
     });
   }
@@ -319,6 +358,48 @@ export class AdminService {
           reject (error.message);
         }
       });
+    });
+  }
+
+  getInspector(inspectorId: string): Promise<any> {
+    return new Promise((resolve, reject) => {
+      const userQuery = new Parse.Query('User')
+      userQuery.equalTo('objectId', inspectorId);
+      userQuery.first({
+        success: function(result) {
+          const inspector = parseUserToModel(result);
+          resolve (inspector);
+        },
+        error: function(error) {
+          console.log(error);
+          reject (error.message);
+        }
+      });
+    });
+  }
+
+
+  getArchivedReport(): Promise<Inspection[]> {
+    return new Promise((resolve, reject) => {
+      const query = new Parse.Query('Inspection');
+      const reports = [];
+      if (!this.user.get('isSuperAdmin')) {
+        query.equalTo('adminId', this.user.id);
+      }
+      query.equalTo('isActive', false);
+      query.find().then((results) => {
+          results.forEach((object) => {
+            this.getInspector(object.get('userId'))
+            .then((inspector) => {
+              const inspection = parseInspectionToModel(object);
+              inspection.inspector = inspector;
+              reports.push(
+                inspection
+              );
+            });
+          });
+          resolve(reports);
+        });
     });
   }
 
