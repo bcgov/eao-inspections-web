@@ -6,12 +6,12 @@
     <p class="dashboard__title">Team Name Here..</p>
     <div class="dashboard__buttons">
       <button type="button" class="dashboard__btn" (click)="open(addMember)">
-        <img class="dashboard__header__btn__img" src="../../assets/add-active.png" /> 
+        <img class="dashboard__header__btn__img" src="../../assets/add-active.png" />
         Add Member
       </button>
     </div>
   </div>
-  <div *ngIf="users<=0; then noContent else content"></div>
+  <div *ngIf="users.length<=0; then noContent else content"></div>
   <ng-template #noContent>
     <no-content [emptyContent]="emptyContent"></no-content>
   </ng-template>

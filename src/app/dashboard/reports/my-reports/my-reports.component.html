@@ -1,13 +1,4 @@
 <div class="dashboard">
   <p class="dashboard__title">{{ title }}</p>
   <my-report-list [data]="data"></my-report-list>
-  <ul class="list-group">
-    <a
-      class="list-group-item"
-      style="cursor: pointer"
-      *ngFor="let report of reports"
-    >
-      {{ report.title }} ({{ report.id }})
-    </a>
-  </ul>
 </div>
