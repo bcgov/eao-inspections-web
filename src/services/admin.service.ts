@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { Injectable} from '@angular/core';
 import { Team } from '../models/team.model';
 import { Inspection } from '../models/inspection.model';
-import { parseInspectionToModel, parseUserToModel } from './parse.service';
+import { parseInspectionToModel, parseUserToModel, parseTeamToModel } from './parse.service';
 import { BasicUser } from '../models/user.model';
 
 const Parse: any = require('parse');
@@ -251,8 +251,9 @@ export class AdminService {
           results.forEach((object) => {
             const userRelation = object.relation('users');
             userRelation.query().find().then((users) => {
-              console.log(users);
-              promises.push(teams.push(new Team(object.id, object.get('name'), object.get('teamAdmin.id'), null, users)));
+               const team = parseTeamToModel(object);
+               team.users = users;
+               promises.push(teams.push(team));
             });
           });
         },
@@ -281,9 +282,11 @@ export class AdminService {
           results.forEach((object) => {
             const userRelation = object.relation('users');
             userRelation.query().find().then((users) => {
+              const team = parseTeamToModel(object);
+              team.users = users;
               promises.push(
                 teams.push(
-                  new Team(object.id, object.get('name'), object.get('teamAdmin.id'), object.get('color'), null, users)
+                  team
                 )
               );
             });

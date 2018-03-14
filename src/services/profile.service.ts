@@ -1,6 +1,7 @@
 import { environment } from '../environments/environment';
 import { Injectable} from '@angular/core';
 import {Team} from '../models/team.model';
+import { parseTeamToModel } from './parse.service';
 
 const Parse: any = require('parse');
 
@@ -33,7 +34,7 @@ export class ProfileService {
             results = [results];
           }
           results.forEach((object) => {
-            promises.push(teams.push(new Team(object.id, object.get('name'), object.get('teamAdmin.id'), object.get('color'))));
+            promises.push(teams.push(parseTeamToModel(object)));
           });
         },
         error: function(error) {
@@ -62,10 +63,11 @@ export class ProfileService {
             promises.push(object.get('teamAdmin')
               .fetch()
               .then((obj) => {
+                const team = parseTeamToModel(obj);
                 admins.push(
                   {
                     'admin': obj,
-                    'team': [new Team(object.id, object.get('name'), object.get('teamAdmin'), object.get('color'))],
+                    'team': [team],
                   }
                 );
               })

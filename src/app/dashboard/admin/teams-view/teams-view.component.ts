@@ -5,6 +5,7 @@ import { ModalService } from './../../../../services/modal.service';
 import * as String from '../../../../constants/strings';
 import * as Route from '../../../../constants/routes';
 import { parseToJSON } from '../../../../services/parse.service';
+import { Team } from '../../../../models/team.model';
 
 @Component({
   selector: 'app-teams-view',
@@ -13,16 +14,16 @@ import { parseToJSON } from '../../../../services/parse.service';
   providers: [ AdminService ]
 })
 export class TeamsViewComponent implements OnInit {
-  title = "Teams";
+  title = 'Teams';
   archivedLink = Route.ARCHIVED_TEAMS;
-  teams = [];
+  teams: Array<Team> = [];
 
   modal = {
     header: String.CREATE_TEAM
   };
 
   emptyContent = {
-    image: "../../assets/team-lg.png",
+    image: '../../assets/team-lg.png',
     message: String.EMPTY_TEAM,
   };
 
@@ -47,9 +48,7 @@ export class TeamsViewComponent implements OnInit {
   ngOnInit() {
     this.adminService.getActiveTeams()
     .then((results) => {
-      if (results instanceof Array) {
-        this.teams = parseToJSON(results);
-      }
+        this.teams = results;
     });
   }
 }

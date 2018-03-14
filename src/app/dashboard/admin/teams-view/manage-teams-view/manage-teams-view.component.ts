@@ -30,7 +30,7 @@ export class ManageTeamsViewComponent implements OnInit {
   }
 
   onAddMember(value) {
-    console.log("Adding User: " + value);
+    console.log('Adding User: ' + value);
   }
 
   ngOnInit() {
