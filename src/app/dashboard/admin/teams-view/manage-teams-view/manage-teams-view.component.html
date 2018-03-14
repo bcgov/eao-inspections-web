@@ -11,7 +11,7 @@
       </button>
     </div>
   </div>
-  <div *ngIf="users.length<=0; then noContent else content"></div>
+  <div *ngIf="users?.length<=0; then noContent else content"></div>
   <ng-template #noContent>
     <no-content [emptyContent]="emptyContent"></no-content>
   </ng-template>
