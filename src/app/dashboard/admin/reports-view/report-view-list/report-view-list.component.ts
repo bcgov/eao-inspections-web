@@ -45,7 +45,7 @@ export class ReportViewListComponent implements OnInit {
   }
 
   setDefaultPic() {
-    this.team.image = '../../../assets/team-logo.png';
+    this.team.badge = '../../../assets/team-logo.png';
   }
 
   sort(property: string) {

@@ -11,7 +11,7 @@
             </div>
         </div>
         <p class="dashboard__title" *ngIf="team">
-            <img width="60px" [src]="team.image" (error)="setDefaultPic()" /> {{team.name}}
+            <img width="60px" [src]="team.badge" (error)="setDefaultPic()" /> {{team.name}}
         </p>
         <table>
             <div class="report-list__content__header">
