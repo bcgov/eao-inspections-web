@@ -15,9 +15,9 @@
       <span>*</span>
     </label>
     <div class="col-sm-10">
-      <input 
-      class="form-control" 
-      type="firstName" 
+      <input
+      class="form-control"
+      type="firstName"
       id="firstName"
       name="firstName"
       required
@@ -31,9 +31,9 @@
       <span>*</span>
     </label>
     <div class="col-sm-10">
-      <input 
-      type="lastName" 
-      class="form-control" 
+      <input
+      type="lastName"
+      class="form-control"
       id="lastName"
       name="lastName"
       required
@@ -47,9 +47,9 @@
       <span>*</span>
     </label>
     <div class="col-sm-10">
-      <input 
-      type="email" 
-      class="form-control" 
+      <input
+      type="email"
+      class="form-control"
       id="email"
       pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$"
       name="email"
@@ -65,9 +65,9 @@
       <span>*</span>
     </label>
     <div class="col-sm-10">
-      <input 
-      type="password" 
-      class="form-control" 
+      <input
+      type="password"
+      class="form-control"
       id="password"
       name="password"
       required
@@ -82,7 +82,7 @@
     </label>
     <div class="col-sm-10">
       <select id="team" class="form-control" name="team" ngModel required #team="ngModel">
-        <option *ngFor="let team of teams" selected>{{team.name}}</option>
+        <option *ngFor="let team of teams" [value]="team.objectId" selected>{{team.name}}</option>
       </select>
     </div>
   </div>
@@ -100,14 +100,14 @@
     <button type="submit" class="dashboard__btn--dark" [disabled]="!f.valid">{{modal.userButton}}</button>
     <button type="button" class="dashboard__btn" (click)="close()">Cancel</button>
   </div>
-  <div 
-    class="error error__content" 
-    *ngIf="((first.touched && !first.valid)  
-      || (last.touched  && !last.valid ) 
-      || (email.touched && !email.valid) 
-      || (password.touched && !password.valid) 
+  <div
+    class="error error__content"
+    *ngIf="((first.touched && !first.valid)
+      || (last.touched  && !last.valid )
+      || (email.touched && !email.valid)
+      || (password.touched && !password.valid)
       || (team.touched && !team.valid)
-      || (permission.touched && !permission.valid)) 
+      || (permission.touched && !permission.valid))
       && !f.valid"
     >
     *Required fields cannot be blank
