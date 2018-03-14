@@ -31,20 +31,20 @@
     left: 10px;
     flex: 2;
 
-  &--actions {
-    display: inline-flex;
-    position: relative;
-    top: 60%;
-    right: 30%;
-  }
-
+    
     p {
       color: $font-dark-gray;
     }
-
+    
     a h4 {
       font-size: 18px;
       color: $font-black;
     }
+  }
+
+  &--actions {
+    display: inline-flex;
+    position: relative;
+    bottom: -10%;
   }
 }

@@ -11,9 +11,11 @@ export class AdminTeamCardComponent implements OnInit {
   @Input('team') team: any;
   modal = {
     message: String.ARCHIVE_TEAM,
+    secondaryMessage: String.UNARCHIVE_TEAM,
     header: String.EDIT_TEAM,
     userButton: String.EDIT_BUTTON,
     conformationYes: String.ARCHIVE_BUTTON,
+    secondaryYes: String.UNARCHIVE_BUTTON,
     conformationNo: String.CANCEL_BUTTON,
   };
 
