@@ -14,7 +14,7 @@ export class TeamCardComponent implements OnInit {
   }
 
   setDefaultPic() {
-    this.team.image = '../../assets/team-logo@2x.png';
+    this.team.badge = '../../assets/team-logo@2x.png';
   }
 
 }

@@ -1,19 +1,25 @@
 <tbody>
     <tr>
-        <td>
+        <td *ngIf="fields.indexOf('title') >= 0">
             <a [routerLink]="['inspection-details', data.id]">{{data.title}}</a>
         </td>
-        <td>{{ data.project || '-' }}</td>
-        <td>{{data.updatedAt | date : "MMM d y" }}</td>
-        <td>
+        <td *ngIf="fields.indexOf('project') >= 0">{{ data.project || '-' }}</td>
+        <td *ngIf="fields.indexOf('submitted') >= 0">{{data.updatedAt | date : "MMM d y" }}</td>
+        <td *ngIf="fields.indexOf('team') >= 0">
+            {{ data.team?.name || '-' }}
+        </td>
+        <td *ngIf="fields.indexOf('inspector') >= 0">
             <img width="40px" [src]="data.inspector.image" (error)="setDefaultPic()" /> {{data.inspector.name || '-'}}
         </td>
         <!-- <td *ngIf="data.submitted; else no">Yes</td>
         <ng-template #no>
             <td>No</td>
         </ng-template> -->
-        <td>
-            <button class="dashboard--actions">Download</button>
+        <td *ngIf="fields.indexOf('actions') >= 0">
+            <button *ngIf="actions.indexOf('download') >= 0" class="dashboard--actions">Download</button>
+            <button *ngIf="actions.indexOf('permission') >= 0" class="dashboard--actions">Set Permissions</button>
+            <button *ngIf="actions.indexOf('archive') >= 0" class="dashboard--actions">Archive</button>
+            <button *ngIf="actions.indexOf('unarchive') >= 0" class="dashboard--actions">Unarchive</button>
         </td>
     </tr>
 </tbody>

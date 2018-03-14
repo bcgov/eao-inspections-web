@@ -1,17 +1,19 @@
 <div class="dashboard">
-  <div class="dashboard__header">
-    <p class="dashboard__title">{{title}}</p>
-    <div class="dashboard__buttons">
-      <a href={{archivedLink}}><button class="dashboard__btn dashboard__btn--lg">Archived Inspections</button></a>
+    <div class="dashboard__header">
+        <p class="dashboard__title">{{title}}</p>
+        <div class="dashboard__buttons">
+            <a routerLink='archived-inspections'><button class="dashboard__btn dashboard__btn--lg">Archived Inspections</button></a>
+        </div>
     </div>
-  </div>
-<div *ngIf="teams.length<=0; then noContent else content"></div>
-<ng-template #noContent>
-  <no-content [emptyContent]="emptyContent"></no-content>
-</ng-template>
-<ng-template #content>
-  <div class="dashboard-card__container" *ngFor="let team of teams">
-    <team-card [team]="team"></team-card>
-  </div>
-</ng-template>
+    <div *ngIf="teams<=0; then noContent else content"></div>
+    <ng-template #noContent>
+        <no-content [emptyContent]="emptyContent"></no-content>
+    </ng-template>
+    <ng-template #content>
+        <div class="dashboard-card__container" *ngFor="let team of teams">
+            <a routerLink="{{team.id}}">
+                <team-card [team]="team"></team-card>
+            </a>
+        </div>
+    </ng-template>
 </div>

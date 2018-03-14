@@ -1,26 +1,51 @@
-import { EMPTY_ARCHIVED_TEAMS } from './../../../../../constants/strings';
-import * as String from '../../../../../constants/strings';
-import * as Route from '../../../../../constants/routes';
 import { Component, OnInit } from '@angular/core';
+import { Inspection } from '../../../../../models/inspection.model';
+import { ActivatedRoute } from '@angular/router';
+import * as String from '../../../../../constants/strings';
+import { AdminService } from '../../../../../services/admin.service';
 
 @Component({
   selector: 'app-archived-inspections',
   templateUrl: './archived-inspections.component.html',
-  styleUrls: ['./archived-inspections.component.scss']
+  styleUrls: ['./archived-inspections.component.scss'],
+  providers: [AdminService]
 })
 export class ArchivedInspectionsComponent implements OnInit {
-  title = "Archived Inspections";
-  inspectionsLink = Route.ADMIN_REPORTS;
+  title = 'Archived Inspections';
 
   emptyContent = {
-    image: "../../assets/inspections.png",
+    image: '../../assets/inspections.png',    
     message: String.EMPTY_ARCHIVED_INSPECTIONS,
   };
 
-  teams = []
+  isDesc: Boolean = false;
+  direction: number;
+  column: string;
 
-  constructor() { }
+  data: Array<Inspection> = [];
+
+  fields: Array<any>;
+  actions: Array<any>;
+
+
+  constructor(private adminService: AdminService) {
+    this.fields = ['title', 'project', 'submitted', 'team', 'inspector', 'actions'];
+    this.actions = ['unarchive'];
+  }
 
   ngOnInit() {
+    console.log('hello');
+    this.sort('updatedAt');
+    this.adminService.getArchivedReport()
+      .then((results) => {
+        this.data = results;
+        console.log(this.data);
+      });
+  }
+
+  sort(property: string) {
+    this.isDesc = !this.isDesc;
+    this.column = property;
+    this.direction = this.isDesc ? 1 : -1;
   }
 }

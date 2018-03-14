@@ -43,7 +43,7 @@ fdescribe('InspectionViewComponent', () => {
     const endDate = new Date();
     const inspection = 
       new Inspection('testId', 'testTitle', 'testSubTitle', 'testNumber', inspector,
-        'testProject', startDate, endDate, null, 'testRequirement', true, 'testTeam');
+        'testProject', startDate, endDate, null, 'testRequirement', true, null);
     spyOn(reportService, 'getInspection').and.returnValue(Promise.resolve(inspection));
     component.ngOnInit();
     tick();
