@@ -1,6 +1,7 @@
 import { environment } from '../environments/environment';
 import { Injectable} from '@angular/core';
 import {Team} from '../models/team.model';
+import { parseTeamToModel } from './parse.service';
 
 const Parse: any = require('parse');
 
@@ -21,14 +22,7 @@ export class TeamService {
         query.equalTo('objectId', teamId);
         query.first({
             success: function(obj) {
-                const team = new Team(
-                    obj.id,
-                    obj.get('name'),
-                    obj.get('teamAdmin.id'),
-                    obj.get('color'),
-                    null,
-                    []
-                );
+                const team = parseTeamToModel(obj);
                 resolve(team);
             },
             error: function(error) {

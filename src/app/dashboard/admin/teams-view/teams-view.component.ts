@@ -4,6 +4,7 @@ import { ToastrService } from 'ngx-toastr';
 import { ModalService } from './../../../../services/modal.service';
 import * as String from '../../../../constants/strings';
 import * as Route from '../../../../constants/routes';
+import { parseToJSON } from '../../../../services/parse.service';
 import { Team } from '../../../../models/team.model';
 
 @Component({
@@ -13,9 +14,9 @@ import { Team } from '../../../../models/team.model';
   providers: [ AdminService ]
 })
 export class TeamsViewComponent implements OnInit {
-  title = "Teams";
+  title = 'Teams';
   archivedLink = Route.ARCHIVED_TEAMS;
-  teams: Array<Team>;
+  teams: Array<Team> = [];
 
   modal = {
     edit: false,
@@ -23,7 +24,7 @@ export class TeamsViewComponent implements OnInit {
   };
 
   emptyContent = {
-    image: "../../assets/team-lg.png",
+    image: '../../assets/team-lg.png',
     message: String.EMPTY_TEAM,
   };
 

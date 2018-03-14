@@ -36,16 +36,22 @@ export function parseUserToModel(object): BasicUser {
   );
 }
 
+export function parseTeamToModel(object) {
+  return new Team (
+    object.id,
+    object.get('name'),
+    object.get('teamAdmin'),
+    object.get('color'),
+    object.get('isActive'),
+    object.get('badge')
+  );
+}
+
 export function parseInspectionToModel(object) {
   let team = object.get('team');
 
   if (team) {
-    team = new Team (
-      team.id,
-      team.get('name'),
-      team.get('teamAdmin'),
-      team.get('color')
-    );
+    team = parseTeamToModel(team);
   }
 
   return new Inspection(
