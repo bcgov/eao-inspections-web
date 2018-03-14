@@ -22,6 +22,6 @@ export class UserCardComponent {
   constructor(private modalService: ModalService) { }
 
   open(modal) {
-    this.modalService.open(modal);
+    this.modalService.open(modal, { backdrop: 'static', keyboard: false });
   }
 }

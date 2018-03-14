@@ -1,0 +1,54 @@
+<div [ngStyle]="{ 'border-left': '10px solid' + team.color }" class="team__card">
+  <div class="team__card--photo">
+    <img class="team__card--photo__img" [src]="team.image" (error)="setDefaultPic()" />
+  </div>
+  <div class="team__card--details">
+    <a routerLink="manage-team/{{team.objectId}}">
+      <h4>{{team.name}}</h4>
+    </a>
+    <div class="team__card--actions"></div>
+    <div *ngIf="team.isActive; then archive else unarchive"></div>
+    <ng-template #archive>
+      <button type="button" class="dashboard--actions" (click)="open(editTeam)">
+        Edit
+      </button>
+      <button type="button" class="dashboard--actions" (click)="open(archiveTeam)">
+        Archive
+      </button>
+    </ng-template>
+    <ng-template #unarchive>
+      <button type="button" class="dashboard--actions" (click)="open(unarchiveTeam)">
+        Unrchive
+      </button>
+    </ng-template>
+    </div>
+  </div>
+
+<!-- edit user modal -->
+<ng-template #editTeam let-c="close" class="modal">
+  <team-modal 
+  [closeValue]="this.c" 
+  [modal]="modal"
+  (submitValue)="onEdit($event)"
+  ></team-modal>
+</ng-template>
+
+<!-- archive confirmation modal -->
+<ng-template #archiveTeam let-c="close" class="modal">
+  <archive-modal 
+    [closeValue]="this.c" 
+    [modal]="modal" 
+    [data]="team"
+    (submitValue)="onArchive($event)"
+  ></archive-modal>
+</ng-template>
+
+<!-- unarchive confirmation modal -->
+<ng-template #unarchiveTeam let-c="close" class="modal">
+  <archive-modal 
+    [closeValue]="this.c" 
+    [modal]="modal" 
+    [data]="team"
+    (submitValue)="onUnarchive($event)"
+  ></archive-modal>
+</ng-template>

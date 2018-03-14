@@ -1,0 +1,50 @@
+@import '../../../../../scss/_mixins';
+@import '../../../../../scss/_variables';
+
+.team__card {
+  margin: $dashboard-team-margin;
+  margin-top: $dashboard-content-margin;
+  display: inline;
+  height: 97px;	
+  width: 256px;	
+  border-radius: 2px;	
+  background-color: $background-white;	
+  box-shadow: 0 0 8px 0 rgba(0,0,0,0.2);
+  border-left: 10px solid $border-yellow;
+  @include flex;
+
+  &--photo {
+    flex: 1;
+
+    &__img {
+      position: relative;
+      top: 20%;
+      left: 10px;
+      height: 64px;	
+      width: 64px;
+    }
+  }
+
+  &--details {
+    position: relative;
+    top: 20%;
+    left: 10px;
+    flex: 2;
+
+    
+    p {
+      color: $font-dark-gray;
+    }
+    
+    a h4 {
+      font-size: 18px;
+      color: $font-black;
+    }
+  }
+
+  &--actions {
+    display: inline-flex;
+    position: relative;
+    bottom: -10%;
+  }
+}

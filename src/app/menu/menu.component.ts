@@ -33,7 +33,7 @@ export class MenuComponent {
   adminReport = Route.ADMIN_REPORTS;
 
   open(content) {
-    this.modalService.open(content);
+    this.modalService.open(content, { backdrop: 'static', keyboard: false });
   }
 
   isAuth() {

@@ -15,7 +15,7 @@
     <td class="user">
       <div *ngIf="user.isActive; then active else notActive"></div>
       <ng-template #active>
-        <button (click)="open(editUser)" class="dashboard--actions dashboard--actions--sm"><img class="dashboard--actions--sm__img" src="../../assets/edit.png" />Edit</button>
+        <button (click)="openEdit(editUser)" class="dashboard--actions dashboard--actions--sm"><img class="dashboard--actions--sm__img" src="../../assets/edit.png" />Edit</button>
         <button (click)="open(archiveUser)" class="dashboard--actions dashboard--actions--sm"><img class="dashboard--actions--sm__img" src="../../assets/archive.png" />Archive</button>
       </ng-template>
       <ng-template #notActive>

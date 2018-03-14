@@ -203,7 +203,7 @@ export class AdminService {
       const team = new Parse.Object('Team');
       team.set('name', teamName);
       team.set('color', color);
-      team.set('active', true);
+      team.set('isActive', true);
       team.save()
       .then(result => {
         console.log(result);
@@ -234,7 +234,7 @@ export class AdminService {
   getArchivedTeams() {
     return new Promise((resolve, reject) => {
       const query = new Parse.Query('Team');
-      query.equalTo('active', false);
+      query.equalTo('isActive', false);
       query.find({
         success: function (results) {
           resolve(results);
@@ -249,7 +249,7 @@ export class AdminService {
   getActiveTeams() {
     return new Promise((resolve, reject) => {
       const query = new Parse.Query('Team');
-      query.equalTo('active', true);
+      query.equalTo('isActive', true);
       query.find({
         success: function (results) {
           resolve(results);
