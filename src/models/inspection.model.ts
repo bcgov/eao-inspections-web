@@ -1,4 +1,5 @@
 import { BasicUser } from "./user.model";
+import { Team } from "./team.model";
 
 export class Inspection {
   public id: string;
@@ -12,7 +13,7 @@ export class Inspection {
   public updatedAt: Date;
   public requirement: string;
   public submitted: boolean;
-  public team: string;
+  public team: Team;
 
   constructor(
     id: string,
@@ -26,7 +27,7 @@ export class Inspection {
     updatedAt: Date,
     requirement: string,
     submitted: boolean,
-    team: string
+    team: Team = null
     ) {
     this.id = id;
     this.title = title;
@@ -41,5 +42,4 @@ export class Inspection {
     this.submitted = submitted;
     this.team = team;
   }
-
 }

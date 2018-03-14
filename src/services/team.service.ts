@@ -18,14 +18,16 @@ export class TeamService {
   getTeam(teamId: string): Promise<any> {
     return new Promise((resolve, reject) => {
         const query = new Parse.Query('Team');
-        query.equalTo('users', this.user);
         query.equalTo('objectId', teamId);
         query.first({
             success: function(obj) {
                 const team = new Team(
                     obj.id,
                     obj.get('name'),
-                    obj.get('teamAdmin.id')
+                    obj.get('teamAdmin.id'),
+                    obj.get('color'),
+                    null,
+                    []
                 );
                 resolve(team);
             },
