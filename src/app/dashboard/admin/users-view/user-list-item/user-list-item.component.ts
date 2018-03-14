@@ -25,8 +25,12 @@ export class UserListItemComponent implements OnInit {
 
   constructor(private modalService: ModalService, private adminService: AdminService, private toast: ToastrService ) { }
 
+  openEdit(modal) {
+    this.modalService.open(modal, { size: 'lg', backdrop: 'static', keyboard: false })
+  }
+
   open(modal) {
-    this.modalService.open(modal);
+    this.modalService.open(modal, { backdrop: 'static', keyboard: false });
   }
 
   onSubmit(value) {

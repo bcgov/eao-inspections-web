@@ -22,7 +22,19 @@ export class AdminTeamCardComponent implements OnInit {
   constructor(private modalService: ModalService) { }
 
   open(modal) {
-    this.modalService.open(modal);
+    this.modalService.open(modal, { backdrop: 'static', keyboard: false });
+  }
+
+  onEdit(value) {
+    console.log(value.teamName, value.color);
+  }
+
+  onUnarchive(value) {
+    console.log(value);
+  }
+
+  onArchive(value) {
+    console.log(value);
   }
 
   ngOnInit() {

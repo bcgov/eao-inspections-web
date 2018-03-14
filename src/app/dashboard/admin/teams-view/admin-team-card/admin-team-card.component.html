@@ -26,15 +26,29 @@
 
 <!-- edit user modal -->
 <ng-template #editTeam let-c="close" class="modal">
-  <team-modal [closeValue]="this.c" [modal]="modal"></team-modal>
+  <team-modal 
+  [closeValue]="this.c" 
+  [modal]="modal"
+  (submitValue)="onEdit($event)"
+  ></team-modal>
 </ng-template>
 
 <!-- archive confirmation modal -->
 <ng-template #archiveTeam let-c="close" class="modal">
-  <archive-modal [closeValue]="this.c" [modal]="modal" [data]="team"></archive-modal>
+  <archive-modal 
+    [closeValue]="this.c" 
+    [modal]="modal" 
+    [data]="team"
+    (submitValue)="onArchive($event)"
+  ></archive-modal>
 </ng-template>
 
 <!-- unarchive confirmation modal -->
 <ng-template #unarchiveTeam let-c="close" class="modal">
-  <archive-modal [closeValue]="this.c" [modal]="modal" [data]="team"></archive-modal>
+  <archive-modal 
+    [closeValue]="this.c" 
+    [modal]="modal" 
+    [data]="team"
+    (submitValue)="onUnarchive($event)"
+  ></archive-modal>
 </ng-template>
