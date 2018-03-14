@@ -77,14 +77,11 @@ export class AdminService {
   }
 
   getSuperAdminStatus(permission: string) {
-    if (permission === "superadmin") {
-      return true;
-    }
-    return false;
+    return permission === 'superadmin';
   }
 
   getAdminStatus(permission: string) {
-    return (permission === "admin");
+    return permission === 'admin';
   }
 
   createUser(firstName: string,
