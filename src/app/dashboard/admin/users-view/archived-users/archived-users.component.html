@@ -3,8 +3,8 @@
     <a href={{link}}><img src="../../assets/back.png" /></a>
     <p class="dashboard__title">{{title}}</p>
   </div>
-  
-  <div *ngIf="users<=0; then noContent else content"></div>
+
+  <div *ngIf="users.length<=0; then noContent else content"></div>
   <ng-template #content>
     <table>
       <div class="report-list__content__header">

@@ -9,7 +9,7 @@
     <ng-template #noContent>
       <no-content [emptyContent]="emptyContent"></no-content>
     </ng-template>
-    
+
     <ng-template #content>
       <div class="dashboard-card__container" *ngFor="let team of teams">
         <admin-team-card [team]="team"></admin-team-card>
