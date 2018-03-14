@@ -139,8 +139,8 @@ export class AdminService {
       const query = new Parse.Query(Parse.User);
       query.get(userId, {
         success: function (user) {
-          user.set('isAdmin', this.getAdminStatus(permission));
-          user.set('isSuperAdmin', this.getSuperAdminStatus(permission));
+          // user.set('isAdmin', this.getAdminStatus(permission));
+          // user.set('isSuperAdmin', this.getSuperAdminStatus(permission));
           user.set('firstName', firstName);
           user.set('lastName', lastName);
           user.set('email', email);
