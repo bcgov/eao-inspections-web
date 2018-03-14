@@ -4,6 +4,7 @@ import { ModalService } from '../../../../../services/modal.service';
 import * as String from '../../../../../constants/strings';
 import * as Route from '../../../../../constants/routes';
 import { parseToJSON } from '../../../../../services/parse.service';
+import { Team } from '../../../../../models/team.model';
 
 @Component({
   selector: 'app-archived-teams',
@@ -14,8 +15,8 @@ import { parseToJSON } from '../../../../../services/parse.service';
 export class ArchivedTeamsComponent implements OnInit {
   title = "Archived Teams";
   teamsLink = Route.ADMIN_TEAMS;
-  teams = [];
-  
+  teams: Array<Team> = [];
+
   emptyContent = {
     image: "../../assets/team-lg.png",
     message: String.EMPTY_ARCHIVED_TEAMS,
@@ -25,11 +26,9 @@ export class ArchivedTeamsComponent implements OnInit {
   constructor(private adminService: AdminService) { }
 
   ngOnInit() {
-  this.adminService.getArchivedTeams()
-    .then((results) => {
-      if (results instanceof Array) {
-        this.teams = parseToJSON(results);
-      }
-    });
+    this.adminService.getArchivedTeams()
+      .then((results) => {
+        this.teams = results;
+      });
   }
 }

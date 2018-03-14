@@ -14,6 +14,7 @@ export class UserListItemComponent implements OnInit {
   @Input('user') user: any;
 
   modal = {
+    edit: true,
     message: String.ARCHIVE_USER,
     secondaryMessage: String.UNARCHIVE_USER,
     header: String.EDIT_USER,
@@ -23,7 +24,11 @@ export class UserListItemComponent implements OnInit {
     conformationNo: String.CANCEL_BUTTON,
   };
 
-  constructor(private modalService: ModalService, private adminService: AdminService, private toast: ToastrService ) { }
+  constructor(
+    private modalService: ModalService, 
+    private adminService: AdminService, 
+    private toast: ToastrService 
+  ) { }
 
   openEdit(modal) {
     this.modalService.open(modal, { size: 'lg', backdrop: 'static', keyboard: false })
@@ -34,21 +39,17 @@ export class UserListItemComponent implements OnInit {
   }
 
   onSubmit(value) {
-    // edit user here
-    console.log(value.id, value.firstName, value.lastName, value.email, value.password, value.team, value.permission);
-    // this.adminService.updateUser(
-    //   value.id,
-    //   value.firstName,
-    //   value.lastName,
-    //   value.email,
-    //   value.password,
-    //   value.team,
-    //   value.permission)
-    //   .then((object) => {
-    //     this.toast.success('Successfully updated ' + object.get('firstName') + ' ' + object.get('lastName'));
-    //   }, (error) => {
-    //     this.toast.error(error.message || String.GENERAL_ERROR);
-    //   });
+    this.adminService.updateUser(
+      value.id,
+      value.firstName,
+      value.lastName,
+      value.email,
+      value.permission)
+      .then((object) => {
+        this.toast.success('Successfully updated ' + object.get('firstName') + ' ' + object.get('lastName'));
+      }, (error) => {
+        this.toast.error(error.message || String.GENERAL_ERROR);
+      });
   }
 
   onUnarchive(value) {

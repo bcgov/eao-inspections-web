@@ -18,6 +18,7 @@ export class UserListComponent implements OnInit {
   archivedLink = Route.ARCHIVED_USERS;
 
   modal = {
+    edit: false,
     header: String.CREATE_USER,
     userButton: String.ADD_BUTTON,
   };
