@@ -83,27 +83,23 @@ export class AdminService {
   }
 
   getSuperAdminStatus(permission: string) {
-    if (permission === "superadmin") {
-      return true;
-    }
-    return false;
+    return permission === 'superadmin';
   }
 
   getAdminStatus(permission: string) {
-    if (permission === "admin") {
-      return true;
-    }
-    return false;
+    return permission === 'admin';
   }
 
   createUser(firstName: string,
              lastName: string,
              email: string,
              password: string,
-             team: string,
+             team: any,
              permission: string): Promise<any> {
     return new Promise((resolve, reject) => {
+      const promises = [];
       const query = new Parse.Query(Parse.Role);
+      const queryTeam = new Parse.Query('Team');
       const user = new Parse.User();
       user.set('isActive', true);
       user.set('isAdmin', this.getAdminStatus(permission));
@@ -115,22 +111,27 @@ export class AdminService {
       user.set('email', email);
       user.set('publicEmail', email);
       user.set('permission', permission);
-      user.set('team', team);
       user.save(null, {
         success: function (results) {
+          queryTeam.get(team).then((teamObject) => {
+            teamObject.relation('users').add(results);
+            promises.push(teamObject.save());
+          });
           query.equalTo('name', permission);
-          query.first().then((obj) => {
-            obj.getUsers().add(results);
-            obj.save().then(object => {
-              resolve(object);
-            }, error => {
-              reject(error.message);
-            });
+          query.first().then((roleObject) => {
+            roleObject.getUsers().add(results);
+            promises.push(roleObject.save(null, {useMasterKey: true}));
           });
         },
         error: function (object, error) {
           reject(error.message);
         }
+      }).then((userObject) => {
+        Promise.all(promises).then(() => {
+          resolve(userObject);
+        }, error => {
+          reject(error.message);
+        });
       });
     });
   }
@@ -212,7 +213,6 @@ export class AdminService {
       team.set('isActive', true);
       team.save()
       .then(result => {
-        console.log(result);
         resolve(result);
       }, error => {
         reject(error.message);

@@ -118,7 +118,13 @@ describe('Admin Testing', () => {
     console.log('Testing update user in functionality: ' + test_user.id);
     const name_change = 'test_user_changed';
     Parse.User.logIn('superadmin', 'superadmin').then(() => {
-      service.updateUser(test_user.id, 'fname', name_change).then((object) => {
+      service.updateUser(test_user.id,
+        'firstNameChanged',
+        'lastNameChanged',
+        'emailchange@email.com',
+        'passwordChanged',
+        'teamNameChanged',
+        'admin').then((object) => {
         console.log('Matching changed names...');
         test_user = object;
         expect(test_user.get('fname') === name_change).toBeTruthy();
