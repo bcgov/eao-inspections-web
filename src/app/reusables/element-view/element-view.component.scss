@@ -9,6 +9,16 @@
     width: $dashboard-content-width;
     background-color: #FFFFFF;
     box-shadow: 0 0 8px 0 rgba(0,0,0,0.2);
+    .nav-pills {
+      justify-content: center;
+      padding: 20px;
+      .nav-link {
+        border: 1px solid $default-primary-color;
+      }
+    }
+    &-media {
+      padding:10px 20px;
+    }
     &-content {
       padding: 10px;
       @include flex;
