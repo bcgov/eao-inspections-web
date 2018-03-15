@@ -7,7 +7,7 @@ import { Observable } from 'rxjs/Observable';
 import { AdminTeamCardComponent } from './admin-team-card.component';
 import { ToastrService } from 'ngx-toastr';
 
-fdescribe('AdminTeamCardComponent', () => {
+describe('AdminTeamCardComponent', () => {
   let component: AdminTeamCardComponent;
   let fixture: ComponentFixture<AdminTeamCardComponent>;
   let teamInfo: any;
@@ -28,6 +28,7 @@ fdescribe('AdminTeamCardComponent', () => {
         Promise.resolve(true);
       }),
     };
+
     modalServiceStub = {
       open(): Observable<any> {
         return Observable.of(true);
@@ -70,26 +71,42 @@ fdescribe('AdminTeamCardComponent', () => {
   });
 
   it('should allow superAdmin to edit team info', fakeAsync(() => {
-    spyOn(component, 'onEdit').and.callThrough();
+    spyOn(component, 'onEdit').and.returnValue(Promise.resolve(true));
     component.onEdit(component.team.id);
     tick();
     fixture.detectChanges();
-    expect(component.onEdit).toHaveBeenCalled();
-    // expect(adminServiceStub.updateTeam).toHaveBeenCalled();
+    expect(component.onEdit).toHaveBeenCalledWith(component.team.id);
+    adminServiceStub.updateTeam(component.team.id);
+    tick();
+    fixture.detectChanges();
+    expect(adminServiceStub.updateTeam).toHaveBeenCalledWith(component.team.id);
+    expect(toastServiceStub).not.toBeNull();
   }));
 
-  it('should allow superAdmin to archive a team', () => {
-    spyOn(component, 'onArchive').and.callThrough();
+  it('should allow superAdmin to archive a team', fakeAsync(() => {
+    spyOn(component, 'onArchive').and.returnValue(Promise.resolve(true));
     component.onArchive(component.team.id);
-    expect(component.onArchive).toHaveBeenCalled();
-    // expect(adminServiceStub.updateTeam).toHaveBeenCalled();
-  });
+    tick();
+    fixture.detectChanges();
+    expect(component.onArchive).toHaveBeenCalledWith(component.team.id);
+    adminServiceStub.archiveTeams(component.team.id);
+    tick();
+    fixture.detectChanges();
+    expect(adminServiceStub.archiveTeams).toHaveBeenCalledWith(component.team.id);
+    expect(toastServiceStub).not.toBeNull();
+  }));
 
-  it('should allow superAdmin to unArchive a team if team is not active', () => {
+  it('should allow superAdmin to unArchive a team if team is not active', fakeAsync(() => {
     teamInfo.isActive = false;
-    spyOn(component, 'onUnarchive').and.callThrough();
+    spyOn(component, 'onUnarchive').and.returnValue(Promise.resolve(true));
     component.onUnarchive(component.team.id);
-    expect(component.onUnarchive).toHaveBeenCalled();
-    // expect(adminServiceStub.updateTeam).toHaveBeenCalled();
-  });
+    tick();
+    fixture.detectChanges();
+    expect(component.onUnarchive).toHaveBeenCalledWith(component.team.id);
+    adminServiceStub.unArchiveTeams(component.team.id);
+    tick();
+    fixture.detectChanges();
+    expect(adminServiceStub.unArchiveTeams).toHaveBeenCalledWith(component.team.id);
+    expect(toastServiceStub).not.toBeNull();
+  }));
 });

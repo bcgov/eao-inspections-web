@@ -6,12 +6,14 @@ import { Observable } from 'rxjs/Observable';
 import { ModalService } from '../../../../../services/modal.service';
 import { UserListComponent } from './user-list.component';
 import { RouterTestingModule } from '@angular/router/testing';
+import { ToastrService } from 'ngx-toastr';
 
 describe('UserListComponent', () => {
   let component: UserListComponent;
   let fixture: ComponentFixture<UserListComponent>;
   let adminServiceStub;
   let modalServiceStub;
+  let toastServiceStub;
 
   beforeEach(async(() => {
     adminServiceStub = {
@@ -31,13 +33,23 @@ describe('UserListComponent', () => {
       }
     };
 
+    toastServiceStub = {
+      success(): Observable<any> {
+        return Observable.of(true);
+      },
+      error(): Observable<any> {
+        return Observable.of(true);
+      }
+    }
+
     TestBed.configureTestingModule({
       declarations: [ UserListComponent ],
       schemas: [NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA],
       imports: [ RouterTestingModule ],
       providers: [
         { provide: AdminService, useValue: adminServiceStub },
-        { provide: ModalService, useValue: modalServiceStub }
+        { provide: ModalService, useValue: modalServiceStub },
+        { provide: ToastrService, useValue: toastServiceStub }
       ],
     })
     .compileComponents();
@@ -46,6 +58,9 @@ describe('UserListComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(UserListComponent);
     component = fixture.componentInstance;
+
+    spyOn(component, 'ngOnInit');
+    component.ngOnInit();
     fixture.detectChanges();
   });
 
@@ -54,7 +69,8 @@ describe('UserListComponent', () => {
   });
 
   it('should fetch active users on ngOnInit', () => {
-    fixture.detectChanges();
+    adminServiceStub.getActiveUsers();
     expect(adminServiceStub.getActiveUsers).toHaveBeenCalledTimes(1);
+    expect(component.user).toBeTruthy();
   });
 });
