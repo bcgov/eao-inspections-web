@@ -58,6 +58,7 @@ describe('TeamReportListComponent', () => {
       'Inspector',
       'Action'
     ];
+    console.log(compiled);
     (compiled.querySelectorAll('th')).forEach((header, index) => {
       expect(header.textContent.trim()).toBe(headers[index].trim());
     });
