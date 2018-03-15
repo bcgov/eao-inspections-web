@@ -13,6 +13,11 @@ describe('TeamReportListComponent', () => {
   let component: TeamReportListComponent;
   let fixture: ComponentFixture<TeamReportListComponent>;
   let compiled;
+  const reports = [
+    new Inspection('test', 'test', 'test', 'test', null, 'test', null, null, null, 'test', true, null),
+    new Inspection('test', 'test', 'test', 'test', null, 'test', null, null, null, 'test', true, null),
+    new Inspection('test', 'test', 'test', 'test', null, 'test', null, null, null, 'test', true, null),
+  ];
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -35,13 +40,13 @@ describe('TeamReportListComponent', () => {
   });
 
   it('should render correct team name', fakeAsync(() => {
+    component.data = reports;
     const teamService = fixture.debugElement.injector.get(TeamService);
     const team = new Team('team-1-id', 'team1', 'admin1', 'testColor1', true, 'testBadge');
     spyOn(teamService, 'getTeam').and.returnValue(Promise.resolve(team));
     component.ngOnInit();
     tick();
     fixture.detectChanges();
-    console.log(compiled);
     expect(compiled.querySelector('.dashboard__title').textContent).toContain(team.name);
   }));
 
@@ -60,11 +65,7 @@ describe('TeamReportListComponent', () => {
 
   it('should render the correct number of report items', fakeAsync(() => {
     const reportService = fixture.debugElement.injector.get(ReportService);
-    const reports = [
-      new Inspection('test', 'test', 'test', 'test', null, 'test', null, null, null, 'test', true, null),
-      new Inspection('test', 'test', 'test', 'test', null, 'test', null, null, null, 'test', true, null),
-      new Inspection('test', 'test', 'test', 'test', null, 'test', null, null, null, 'test', true, null),
-    ];
+
     spyOn(reportService, 'getTeamReports').and.returnValue(Promise.resolve(reports));
     component.ngOnInit();
     tick();
