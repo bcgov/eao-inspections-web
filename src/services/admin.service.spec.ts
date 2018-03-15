@@ -122,8 +122,6 @@ describe('Admin Testing', () => {
         'firstNameChanged',
         'lastNameChanged',
         'emailchange@email.com',
-        'passwordChanged',
-        'teamNameChanged',
         'admin').then((object) => {
         console.log('Matching changed names...');
         test_user = object;
@@ -143,7 +141,7 @@ describe('Admin Testing', () => {
 
   it('should create team', () => {
     console.log('Testing create team in functionality');
-    service.createTeam('test_team').then((object) => {
+    service.createTeam('test_team', 'team_color').then((object) => {
       test_team = object;
       const query = new Parse.Query('Team');
       query.get(test_team.id).then((result) => {

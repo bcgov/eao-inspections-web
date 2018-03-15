@@ -10,7 +10,7 @@ import { Observable } from 'rxjs/Observable';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Observation } from '../../../models/observation.model';
 
-fdescribe('InspectionViewComponent', () => {
+describe('InspectionViewComponent', () => {
   let component: InspectionViewComponent;
   let fixture: ComponentFixture<InspectionViewComponent>;
   let compiled;
