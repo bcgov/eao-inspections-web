@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {ProfileService} from '../../../services/profile.service';
-import {parseToJSON} from '../../../services/parse.service';
+import {parseToJSON, parseUserToModel} from '../../../services/parse.service';
 import {BasicUser} from '../../../models/user.model';
 import {Team} from '../../../models/team.model';
 
@@ -21,13 +21,7 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit() {
     const userData = this.profileService.user;
-    this.profile = new BasicUser(
-      userData.objectId,
-      userData.get('firstName') + ' ' + userData.get('lastName'),
-      this.teams, userData.get('publicEmail'),
-      '../../../assets/inspector-profile-photo@4x.png',
-      false
-    );
+    this.profile = parseUserToModel(userData);
 
     this.profileService.getTeams().then((results) => {
       this.teams = results;
@@ -41,14 +35,7 @@ export class ProfileComponent implements OnInit {
             const admin = object.admin;
             const team = object.team;
             this.admin.push(
-              new BasicUser(
-                userData.objectId,
-                admin.get('firstName') + ' ' + admin.get('lastName'),
-                team,
-                admin.get('publicEmail'),
-                '../../../assets/admin-2@4x.png',
-                true
-              )
+              parseUserToModel(userData)
             );
           });
         }
