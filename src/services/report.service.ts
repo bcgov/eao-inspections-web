@@ -123,7 +123,6 @@ export class ReportService {
         }
       }).then(() => {
         elementList.forEach((object) => {
-          console.log(object);
           elements.push(new Observation(
             object.id,
             object.get('title'),
