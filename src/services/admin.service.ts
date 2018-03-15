@@ -173,10 +173,12 @@ export class AdminService {
              permission: string): Promise<any> {
     return new Promise((resolve, reject) => {
       const query = new Parse.Query(Parse.User);
+      const isAdmin = this.getAdminStatus(permission);
+      const isSuperAdmin = this.getSuperAdminStatus(permission);
       query.get(userId, {
         success: function (user) {
-          // user.set('isAdmin', this.getAdminStatus(permission));
-          // user.set('isSuperAdmin', this.getSuperAdminStatus(permission));
+          user.set('isAdmin', isAdmin);
+          user.set('isSuperAdmin', isSuperAdmin);
           user.set('firstName', firstName);
           user.set('lastName', lastName);
           user.set('email', email);
