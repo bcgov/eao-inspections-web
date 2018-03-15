@@ -8,7 +8,7 @@
   </div>
 </div>
 
-<div *ngIf="users.length<=0; then noContent else content"></div>
+<div *ngIf="users?.length<=0; then noContent else content"></div>
 <ng-template #content>
   <table>
     <div class="report-list__content__header">

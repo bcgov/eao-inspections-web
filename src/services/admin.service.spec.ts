@@ -162,9 +162,9 @@ describe('Admin Testing', () => {
     });
   });
 
-  it('should delete team', () => {
+  it('should archive team', () => {
     console.log('Testing delete team in functionality');
-    service.deleteTeam(test_team.id).then(() => {
+    service.archiveTeam(test_team.id).then(() => {
       const query = new Parse.Query('Team');
       query.get(test_team.id).then((result) => {
         test_team = result;
