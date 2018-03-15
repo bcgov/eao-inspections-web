@@ -38,16 +38,46 @@ export class AdminService {
     });
   }
 
-  getAllUsers() {
+  getAllUsers(): Promise<BasicUser[]> {
     return new Promise((resolve, reject) => {
       const userQuery = new Parse.Query('User');
+      const users = [];
       userQuery.find({
         success: function (results) {
-          resolve(results);
+          results.forEach((user) => {
+              users.push(
+                parseUserToModel(user)
+              );
+          });
+          resolve(users);
         },
         error: function (error) {
           reject(error.message);
         }
+      });
+    });
+  }
+
+  getUsersByRole(_role: string): Promise<BasicUser[]> {
+    return new Promise((resolve, reject) => {
+      const roleQuery = new Parse.Query(Parse.Role);
+      const users = [];
+      roleQuery.equalTo('name', _role).first().then((role) => {
+        const userQuery = new Parse.Query('User');
+        userQuery.matchesKeyInQuery('objectId', 'objectId', role.get('users').query())
+          .find({
+            success: (results) => {
+              results.forEach((user) => {
+                  users.push(
+                    parseUserToModel(user)
+                  );
+              });
+              resolve(users);
+            },
+            error: (error) => {
+              reject(error.message);
+            }
+        });
       });
     });
   }
@@ -383,7 +413,6 @@ export class AdminService {
     });
   }
 
-
   getArchivedReport(): Promise<Inspection[]> {
     return new Promise((resolve, reject) => {
       const query = new Parse.Query('Inspection');
@@ -420,6 +449,52 @@ export class AdminService {
         error: function (object, error) {
           resolve(error.message);
         }
+      });
+    });
+  }
+
+
+  getTeamMemebers(teamId: string): Promise<any> {
+    return new Promise((resolve, reject) => {
+        const query = new Parse.Query('Team');
+        const users: Array<BasicUser> = [];
+        query.equalTo('objectId', teamId);
+        query.first({
+            success: function(object) {
+              object.get('users').query().find().then((results) => {
+                results.forEach((user) => {
+                    users.push(
+                      parseUserToModel(user)
+                    );
+                 });
+                resolve(users);
+              });
+            },
+            error: function(error) {
+                reject (error);
+            }
+        });
+    });
+  }
+
+  addUsersToTeam(teamId: string, usersIds: Array<string>) {
+    return new Promise((resolve, reject) => {
+      const query = new Parse.Query('Team');
+      query.equalTo('objectId', teamId);
+      query.first({
+          success: function(obj) {
+            const relation = obj.relation('users');
+            usersIds.forEach((userId) => {
+              const user = Parse.Object.extend('User');
+              const userObject = user.createWithoutData(userId);
+              relation.add(userObject);
+            });
+            obj.save();
+            resolve(obj);
+          },
+          error: function(error) {
+              reject (error);
+          }
       });
     });
   }

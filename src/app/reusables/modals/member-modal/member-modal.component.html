@@ -1,24 +1,27 @@
 <div class="modal__header">
-  <h1>{{modal.header}}</h1>
+    <h1>{{modal.header}}</h1>
 </div>
 
 <div class="member-modal__content">
-  <div class="member-modal__content__body">
-    <div class="form-check form-check-inline">
-      <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
-      <label class="form-check-label" for="inlineCheckbox1">1</label>
+    <div class="member-modal__content__body" *ngFor="let user of modal.users">
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" id="{{user.id}}" (change)="onChangeCheckbox(user.id, $event.target.checked)">
+        </div>
+        <img class=" member-modal__content__body__img " src="../../assets/team-logo.png " />
+        <span>{{ user.name }}</span>
+        <!-- <div class="member-modal__content__body-options form-check form-check-inline ">
+            <input class="form-check-input" type="radio" name="{{user.id}} " id="inspector" value="inspector">
+            <label class="form-check-label" for="inspector ">inspector</label>
+            <input class="form-check-input" type="radio" name="{{user.id}} " id="admin" value="superadmin">
+            <label class="form-check-label" for="admin">Administrator</label>
+            <input class="form-check-input" type="radio" name="{{user.id}} " id="manager" value="manager">
+            <label class="form-check-label" for="manager">Manager</label>
+        </div> -->
     </div>
-    <img class="member-modal__content__body__img" src="../../assets/team-logo.png" />
-    <span>User Name</span>
-    <div class="member-modal__content__body-options form-check form-check-inline" *ngFor="let permission of permissions">
-      <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
-      <label class="form-check-label" for="inlineRadio1">{{permission}}</label>
-    </div>
-  </div>
-  <div class="member-modal__content-divider"></div>
+    <div class="member-modal__content-divider "></div>
 </div>
 
-<div class="dashboard__buttons">
-  <button type="button" class="dashboard__btn--dark" (click)="onSubmit(); close();">{{modal.userButton}}</button>
-  <button type="button" class="dashboard__btn" (click)="close()">Cancel</button>
+<div class="dashboard__buttons ">
+    <button type="button " class="dashboard__btn--dark " (click)="onSubmit(); close(); ">{{modal.userButton}}</button>
+    <button type="button " class="dashboard__btn " (click)="close() ">Cancel</button>
 </div>

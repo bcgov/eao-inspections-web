@@ -21,6 +21,10 @@ export class UserCardComponent {
 
   constructor(private modalService: ModalService) { }
 
+  setDefaultPic() {
+    this.user.image = '../../assets/team-logo@2x.png';
+  }
+
   open(modal) {
     this.modalService.open(modal, { backdrop: 'static', keyboard: false });
   }
