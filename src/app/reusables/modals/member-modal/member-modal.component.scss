@@ -1,46 +1,39 @@
 @import '../../../../scss/_variables';
 @import '../../../../scss/_mixins';
-
-
 .member-modal__content {
-  box-shadow: $default-box-shadow;
-  height: 400px;
-  overflow-y: scroll;
-  margin: 70px 70px 0;
-  padding: 20px;
-  border-radius: 2px;
-  
-  &-divider {
-    border: 0.5px solid $font-dark-gray;
-    width: 100%;
-    text-align: center;
+    box-shadow: $default-box-shadow;
+    height: 400px;
+    overflow-y: scroll;
+    margin: 70px 70px 0;
+    padding: 20px;
+    border-radius: 2px;
+    &-divider {
+        border: 0.5px solid $font-dark-gray;
+        width: 100%;
+        text-align: center;
     }
-
-  &__body {
-    color: $font-dark-gray;
-    font-size: 14px;
-    font-weight: 300;
-    @include flex;
-    justify-content: space-between;
-    padding: 10px;
-
-    &-options {
-      @include large {
-        display: block !important;
-      }
+    &__body {
+        color: $font-dark-gray;
+        font-size: 14px;
+        font-weight: 300;
+        @include flex;
+        justify-content: space-between;
+        padding: 10px;
+        &-options {
+            @include large {
+                display: block !important;
+            }
+        }
+        span {
+            color: $font-dark-gray;
+            margin: 9px 10px 0 0;
+            display: inline-table;
+            font-size: 16px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        &__img {
+            // width: 19px;
+        }
     }
-
-  
-    span {
-      color: $font-dark-gray;	
-      margin: 9px 10px 0 0;
-      display: inline-table;
-      font-size: 16px;	
-      font-weight: 600;	
-      text-transform: uppercase;
-    }
-    &__img {
-      // width: 19px;
-    }
-  }
 }

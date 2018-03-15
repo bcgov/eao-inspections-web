@@ -6,7 +6,7 @@
     <div class="dashboard">
 
         <p class="dashboard__title" *ngIf="team">
-            <img width="60px" [src]="team.badge" (error)="setDefaultPic()" /> {{team.name}}
+            <img width="30px" [src]="team.badge" (error)="setDefaultPic()" /> {{team.name}}
         </p>
         <table>
             <div class="report-list__content__header">

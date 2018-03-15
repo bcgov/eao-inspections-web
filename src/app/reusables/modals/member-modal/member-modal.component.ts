@@ -1,4 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { BasicUser } from '../../../../models/user.model';
 
 @Component({
   selector: 'member-modal',
@@ -6,16 +7,30 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
   styleUrls: ['./member-modal.component.scss']
 })
 export class MemberModalComponent {
-  permissions = ["Administrator", "Superadmin", "Inspector"];
   @Input('modal') modal: any;
   @Input('data') data: any;
   @Input() closeValue: any;
   @Output() submitValue: EventEmitter<any> = new EventEmitter();
 
+  selectedUserIds: Array<any> = [];
+
   constructor() { }
 
-  onSubmit(value) {
-    this.submitValue.emit(value);
+  onSubmit() {
+    this.submitValue.emit(this.selectedUserIds);
+  }
+
+  onChangeCheckbox(userId, isChecked) {
+    if (isChecked && !this.selectedUserIds.includes(userId)) {
+        this.selectedUserIds.push(userId);
+    }
+
+    if (!isChecked) {
+      const index: number = this.selectedUserIds.indexOf(userId);
+      if (index !== -1) {
+          this.selectedUserIds.splice(index, 1);
+      }
+    }
   }
 
   close() {
