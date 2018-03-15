@@ -3,7 +3,6 @@ import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 
 import { TeamReportListComponent } from './team-report-list.component';
 import { Team } from '../../../../../models/team.model';
-import { ProfileService } from '../../../../../services/profile.service';
 import { TeamService } from '../../../../../services/team.service';
 import { OrderByPipe } from '../../../../directives/orderby.pipe';
 import { ActivatedRoute } from '@angular/router';
@@ -14,6 +13,11 @@ describe('TeamReportListComponent', () => {
   let component: TeamReportListComponent;
   let fixture: ComponentFixture<TeamReportListComponent>;
   let compiled;
+  const reports = [
+    new Inspection('test', 'test', 'test', 'test', null, 'test', null, null, null, 'test', true, null),
+    new Inspection('test', 'test', 'test', 'test', null, 'test', null, null, null, 'test', true, null),
+    new Inspection('test', 'test', 'test', 'test', null, 'test', null, null, null, 'test', true, null),
+  ];
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -35,7 +39,8 @@ describe('TeamReportListComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('shodld render correct team name', fakeAsync(() => {
+  it('should render correct team name', fakeAsync(() => {
+    component.data = reports;
     const teamService = fixture.debugElement.injector.get(TeamService);
     const team = new Team('team-1-id', 'team1', 'admin1', 'testColor1', true, 'testBadge');
     spyOn(teamService, 'getTeam').and.returnValue(Promise.resolve(team));
@@ -45,7 +50,7 @@ describe('TeamReportListComponent', () => {
     expect(compiled.querySelector('.dashboard__title').textContent).toContain(team.name);
   }));
 
-  it('shodld render correct table headers', () => {
+  it('should render correct table headers', () => {
     const headers = [
       'Title',
       'Linked Projects',
@@ -59,13 +64,9 @@ describe('TeamReportListComponent', () => {
     });
   });
 
-  it('shodld render the correct number of report items', fakeAsync(() => {
+  it('should render the correct number of report items', fakeAsync(() => {
     const reportService = fixture.debugElement.injector.get(ReportService);
-    const reports = [
-      new Inspection('test', 'test', 'test', 'test', null, 'test', null, null, null, 'test', true, null),
-      new Inspection('test', 'test', 'test', 'test', null, 'test', null, null, null, 'test', true, null),
-      new Inspection('test', 'test', 'test', 'test', null, 'test', null, null, null, 'test', true, null),
-    ];
+
     spyOn(reportService, 'getTeamReports').and.returnValue(Promise.resolve(reports));
     component.ngOnInit();
     tick();

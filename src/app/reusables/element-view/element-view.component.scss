@@ -5,7 +5,7 @@
 
   &-details {
     margin: $dashboard-content-margin;
-    height: 344px;
+    height: 100%;
     width: $dashboard-content-width;
     background-color: #FFFFFF;
     box-shadow: 0 0 8px 0 rgba(0,0,0,0.2);
@@ -14,12 +14,22 @@
       padding: 20px;
       .nav-link {
         border: 1px solid $default-primary-color;
+        &.active {
+          background-color: $default-primary-color;
+          color: #fff;
+        }
+        &:not(active) {
+          color: $default-primary-color;
+        }
       }
     }
     &-media {
       padding:10px 20px;
     }
     &-content {
+      .row {
+        width: 100%;
+      }
       padding: 10px;
       @include flex;
       justify-content: space-between;
@@ -37,7 +47,7 @@
         line-height: 24px;
       }
       textarea {
-        height: 200px;
+        max-height: 200px;
         width: 100%;
       }
     }
