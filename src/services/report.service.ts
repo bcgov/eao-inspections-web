@@ -23,11 +23,11 @@ export class ReportService {
 
   getInspector(inspectorId: string): Promise<any> {
     return new Promise((resolve, reject) => {
-      const userQuery = new Parse.Query('User')
+      const userQuery = new Parse.Query('User');
       userQuery.equalTo('objectId', inspectorId);
       userQuery.first({
         success: function(result) {
-          const inspector = parseUserToModel(result); 
+          const inspector = parseUserToModel(result);
           resolve (inspector);
         },
         error: function(error) {
