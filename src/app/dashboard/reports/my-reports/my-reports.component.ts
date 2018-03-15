@@ -1,5 +1,7 @@
 import {Component, OnInit} from '@angular/core';
+
 import {ReportService} from '../../../../services/report.service';
+import {Inspection} from '../../../../models/inspection.model';
 
 @Component({
   selector: 'my-reports',
@@ -9,17 +11,14 @@ import {ReportService} from '../../../../services/report.service';
 })
 export class MyReportsComponent implements OnInit {
   title: 'My Reports';
-  data = [];
+  data: Array<Inspection>;
 
   constructor(private reportService: ReportService) { }
 
   ngOnInit() {
     this.reportService.getMyReports()
       .then((results) => {
-        if (results instanceof Array) {
-          this.data = results;
-        }
+        this.data = (results instanceof Array) ? results : [results];
       });
   }
-
 }

@@ -10,7 +10,7 @@ import { Observable } from 'rxjs/Observable';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Observation } from '../../../models/observation.model';
 
-fdescribe('InspectionViewComponent', () => {
+describe('InspectionViewComponent', () => {
   let component: InspectionViewComponent;
   let fixture: ComponentFixture<InspectionViewComponent>;
   let compiled;
@@ -41,7 +41,7 @@ fdescribe('InspectionViewComponent', () => {
     const inspector = new BasicUser('testId', 'testInspectorName', [], 'testEmail', 'testImage', false);
     const startDate = new Date();
     const endDate = new Date();
-    const inspection = 
+    const inspection =
       new Inspection('testId', 'testTitle', 'testSubTitle', 'testNumber', inspector,
         'testProject', startDate, endDate, null, 'testRequirement', true, null);
     spyOn(reportService, 'getInspection').and.returnValue(Promise.resolve(inspection));
