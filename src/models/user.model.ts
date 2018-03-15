@@ -7,13 +7,16 @@ export class BasicUser {
   public email: string;
   public image: string;
   public isAdmin: boolean;
+  public isSuperAdmin: boolean;
+  
 
-  constructor(id: string, name: string, teams: Team[], email: string, image: string, isAdmin: boolean) {
+  constructor(id: string, name: string, teams: Team[], email: string, image: string, isAdmin: boolean, isSuperAdmin: boolean) {
     this.id = id;
     this.name = name;
     this.teams = teams;
     this.email = email;
     this.image = image;
     this.isAdmin = isAdmin;
+    this.isSuperAdmin = isSuperAdmin;
   }
 }
