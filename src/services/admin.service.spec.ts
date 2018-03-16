@@ -101,10 +101,38 @@ describe('Admin Testing', () => {
     });
   });
 
+  it('should get archived Users', () => {
+    console.log('Testing get archived users in functionality');
+    service.getArchivedUsers().then(value => {
+      expect(value).toBeTruthy();
+    });
+  });
+
+  it('should get active Users', () => {
+    console.log('Testing get active users in functionality');
+    service.getActiveUsers().then(value => {
+      expect(value).toBeTruthy();
+    });
+  });
+
+  it('should retun a bool if permission is "superadmin"', () => {
+    let permission = "superadmin";
+    expect(service.getSuperAdminStatus(permission)).toBeTruthy();
+    permission = "inspector";
+    expect(service.getSuperAdminStatus(permission)).toBeFalsy();
+  });
+
+  it('should retun a bool if permission is "admin"', () => {
+    let permission = "superadmin";
+    expect(service.getAdminStatus(permission)).toBeFalsy();
+    permission = "admin";
+    expect(service.getAdminStatus(permission)).toBeTruthy();
+  });
+
   it('should create user', () => {
     console.log('Testing create user in functionality');
     const randKey = randomKey();
-    service.createUser(randKey, randKey, randKey, randKey, randKey, randKey + '@test_user.com').then(value => {
+    service.createUser(randKey, randKey, 'mockEmail@gmail.com' + randKey, randKey, randKey, randKey).then(value => {
       test_user = value;
       const query = new Parse.Query('_User');
       query.get(test_user.id).then((result) => {
@@ -115,27 +143,48 @@ describe('Admin Testing', () => {
   });
 
   it('should update user', () => {
-    console.log('Testing update user in functionality: ' + test_user.id);
-    const name_change = 'test_user_changed';
-    Parse.User.logIn('superadmin', 'superadmin').then(() => {
-      service.updateUser(test_user.id,
-        'firstNameChanged',
-        'lastNameChanged',
-        'emailchange@email.com',
-        'admin').then((object) => {
-        console.log('Matching changed names...');
-        test_user = object;
-        expect(test_user.get('fname') === name_change).toBeTruthy();
-      });
+    const query = new Parse.Query('_User');
+    query.get(test_user.id).then((result) => {
+     test_user.id = result.id;
+     console.log('Testing update user in functionality: ' + test_user.id);
+     const name_change = 'test_user_changed';
+     Parse.User.logIn('superadmin', 'superadmin').then(() => {
+       service.updateUser(test_user.id,
+         'firstNameChanged',
+         'lastNameChanged',
+         'email@gmail.com',
+         'admin').then((object) => {
+         console.log('Matching changed names...');
+         test_user = object;
+         expect(test_user.get('firstName') === 'firstNameChanged').toBeTruthy();
+       });
+     });
     });
   });
 
   it('should archive user', () => {
-    console.log('Testing archive user in functionality');
-    service.archiveUser(test_user.id).then((object) => {
-      console.log('Checking status of user...');
-      test_user = object;
-      expect(test_user.get('active') === 'false').toBeTruthy();
+    const query = new Parse.Query('_User');
+    query.get(test_user.id).then((result) => {
+      test_user.id = result.id;
+      console.log('Testing archive user in functionality');
+      service.archiveUser(test_user.id).then((object) => {
+        console.log('Checking status of user...');
+        test_user = object;
+        expect(test_user.get('isActive') === 'false').toBeTruthy();
+      });
+    });
+  });
+
+  it('should unArchive user', () => {
+    const query = new Parse.Query('_User');
+    query.get(test_user.id).then((result) => {
+      test_user.id = result.id;
+      console.log('Testing unArchive user in functionality');
+      service.unArchiveUser(test_user.id).then((object) => {
+        console.log('Checking status of user...');
+        test_user = object;
+        expect(test_user.get('isActive') === 'true').toBeTruthy();
+      });
     });
   });
 
@@ -152,25 +201,54 @@ describe('Admin Testing', () => {
   });
 
   it('should update team', () => {
-    console.log('Testing updating team in functionality: ' + test_team.id);
-    service.updateTeam(test_team.id, 'name', 'new_name').then((object) => {
-      test_team = object;
-      expect(object).toBeTruthy();
-      expect(test_team.get('name') === 'new_name').toBeTruthy();
+    const query = new Parse.Query('Team');
+    query.get(test_team.id).then((result) => {
+      test_team.id = result.id;
+      console.log('Testing updating team in functionality: ' + test_team.id);
+      service.updateTeam(test_team.id, 'mockName', '#00000').then((object) => {
+        test_team = object;
+        expect(test_team.get('name') === 'mockName').toBeTruthy();
+      });
     });
   });
 
   it('should archive team', () => {
-    console.log('Testing delete team in functionality');
-    service.archiveTeam(test_team.id).then(() => {
-      const query = new Parse.Query('Team');
-      query.get(test_team.id).then((result) => {
-        test_team = result;
+    console.log('Testing archive team in functionality');
+    const query = new Parse.Query('Team');
+    query.get(test_team.id).then((result) => {
+      test_team = result;
+      service.archiveTeam(test_team.id).then(() => {
         console.log('Checking status...');
-        expect(test_team.get('active')).toBeFalsy();
+        expect(test_team.get('isActive')).toBeFalsy();
       });
     });
   });
+
+  it('should unArchive team', () => {
+    console.log('Testing unArchive team in functionality');
+    const query = new Parse.Query('Team');
+    query.get(test_team.id).then((result) => {
+      test_team = result;
+      service.unArchiveTeam(test_team.id).then(() => {
+        console.log('Checking status...');
+        expect(test_team.get('isActive')).toBeFalsy();
+      });
+    });
+  });
+
+  it('should get archived Teams', () => {
+    console.log('Testing get archived teams in functionality');
+    service.getArchivedTeams().then(value => {
+      expect(value).toBeTruthy();
+    });
+  }); 
+
+  it('should get active Teams', () => {
+    console.log('Testing get active teams in functionality');
+    service.getActiveTeams().then(value => {
+      expect(value).toBeTruthy();
+    });
+  }); 
 
   it('should get Reports', () => {
     console.log('Testing get reports in functionality');
@@ -179,6 +257,13 @@ describe('Admin Testing', () => {
       expect(object[0].get('adminId') === Parse.User.current().id).toBeTruthy();
     });
   });
+
+  it('should get archived reports', () => {
+    console.log('Testing get archive reports in functionality');
+    service.getArchivedReport().then(value => {
+      expect(value).toBeTruthy();
+    });
+  }); 
 
   it('should archive Reports', () => {
     console.log('Testing archive Reports in functionality: ' + insp1.id);
