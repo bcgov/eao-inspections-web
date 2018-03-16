@@ -5,12 +5,14 @@ import { NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
 import { UserListItemComponent } from './user-list-item.component';
+import { ToastrService } from 'ngx-toastr';
 
 describe('UserListItemComponent', () => {
   let component: UserListItemComponent;
   let fixture: ComponentFixture<UserListItemComponent>;
   let modalServiceStub;
   let adminServiceStub;
+  let toastServiceStub;
   let mockData: any;
 
   beforeEach(async(() => {
@@ -22,12 +24,22 @@ describe('UserListItemComponent', () => {
       }
     };
 
+    toastServiceStub = {
+      success(): Observable<any> {
+        return Observable.of(true);
+      },
+      error(): Observable<any> {
+        return Observable.of(true);
+      }
+    }
+
     TestBed.configureTestingModule({
       declarations: [ UserListItemComponent ],
       schemas: [NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA],
       providers: [
         { provide: AdminService, useValue: adminServiceStub },
-        { provide: ModalService, useValue: modalServiceStub }
+        { provide: ModalService, useValue: modalServiceStub },
+        { provide: ToastrService, useValue: toastServiceStub }
       ],
     })
     .compileComponents();
