@@ -24,6 +24,9 @@ describe('UserListComponent', () => {
           isAdmin: false,
           isSuperAdmin: false,
         };
+      }),
+      createUser: jasmine.createSpy('createUser').and.callFake(() => {
+        Promise.resolve(true);
       })
     };
 
@@ -71,6 +74,12 @@ describe('UserListComponent', () => {
   it('should fetch active users on ngOnInit', () => {
     adminServiceStub.getActiveUsers();
     expect(adminServiceStub.getActiveUsers).toHaveBeenCalledTimes(1);
-    expect(component.user).toBeTruthy();
+    expect(component.users).toBeTruthy();
+  });
+
+  it('should create a new user', () => {
+    adminServiceStub.createUser();
+    expect(adminServiceStub.createUser).toHaveBeenCalledTimes(1);
+    expect(toastServiceStub.success).toBeTruthy();
   });
 });

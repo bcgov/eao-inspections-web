@@ -34,6 +34,9 @@ describe('ArchivedUsersComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(ArchivedUsersComponent);
     component = fixture.componentInstance;
+
+    spyOn(component, 'ngOnInit');
+    component.ngOnInit();
     fixture.detectChanges();
   });
 
@@ -42,6 +45,8 @@ describe('ArchivedUsersComponent', () => {
   });
   
   it('should fetch archived users on ngOnInit', () => {
+    adminServiceStub.getArchivedUsers();
     expect(adminServiceStub.getArchivedUsers).toHaveBeenCalledTimes(1);
+    expect(component.users).toBeTruthy();
   });
 });
