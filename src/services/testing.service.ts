@@ -94,6 +94,21 @@ export function deleteTeam(teamName) {
   });
 }
 
+export function deleteUser(userId) {
+  return new Promise(function(resolve, reject) {
+    const q = new Parse.Query(Parse.User);
+    q.get(userId).then(function (userObject) {
+      userObject.destroy({useMasterKey: true}).then(() => {
+        console.log('User deleted...');
+        resolve();
+      }, error => {
+        reject(error);
+      });
+    });
+  });
+}
+
+
 export function randomKey() {
   return (Math.random() + 1).toString(36).substring(7);
 }

@@ -7,6 +7,7 @@ describe('ReportListItemComponent', () => {
   let component: ReportListItemComponent;
   let fixture: ComponentFixture<ReportListItemComponent>;
   let reportInfo: any;
+  const date = Date();
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -19,8 +20,10 @@ describe('ReportListItemComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(ReportListItemComponent);
     component = fixture.componentInstance;
-    reportInfo = { title: 'mockTitle', image: 'mock-image.png', project: 'mockProjectName', team: 'mockTeam', updatedAt: 'mockDate' };
+    reportInfo = { title: 'mockTitle', image: 'mock-image.png', project: 'mockProjectName', team: 'mockTeam', updatedAt: date };
     component.data = reportInfo;
+    component.fields = ['title', 'project', 'submitted', 'team', 'actions'];
+    component.actions = ['download'];
     fixture.detectChanges();
   });
 
@@ -28,11 +31,11 @@ describe('ReportListItemComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should display appropiate report data', () => {
+  it('should display appropriate report data', () => {
     expect(component.data.title).toBe('mockTitle');
     expect(component.data.team).toBe('mockTeam');
     expect(component.data.image).toBe('mock-image.png');
     expect(component.data.project).toBe('mockProjectName');
-    expect(component.data.updatedAt).toBe('mockDate');
+    expect(component.data.updatedAt).toBe(date);
   });
 });

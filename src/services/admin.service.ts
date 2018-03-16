@@ -15,7 +15,7 @@ Parse.masterKey = environment.parseMasterKey;
 @Injectable()
 export class AdminService {
   user = new Parse.User();
-  
+
   constructor(private router: Router) {
     this.user = Parse.User.current();
   }
@@ -267,7 +267,6 @@ export class AdminService {
           }, (error) => {
             reject(error);
           });
-          resolve(team);
         },
         error: function (object, error) {
           reject(error);
@@ -376,7 +375,7 @@ export class AdminService {
         error: function (object, error) {
           reject(error);
         }
-      });
+      }).then(()=>{}, error=>{reject(error)});
     });
   }
 

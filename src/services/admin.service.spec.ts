@@ -6,7 +6,7 @@ import { LoginComponent } from '../app/login/login.component';
 import { AuthService } from './auth.service';
 import { environment } from '../environments/environment';
 import { AdminService } from './admin.service';
-import {createInspection, deleteInspections, deleteTeam, randomKey} from './testing.service';
+import {createInspection, deleteInspections, deleteTeam, deleteUser, randomKey} from './testing.service';
 
 const Parse = require('parse');
 
@@ -69,7 +69,7 @@ describe('Admin Testing', () => {
   afterEach((done) => {
     setTimeout(function() {
       done();
-    }, 1500);
+    }, 500);
   });
 
   afterAll((done) => {
@@ -82,6 +82,7 @@ describe('Admin Testing', () => {
       promises.push(deleteInspections(insp2.get('title')));
       promises.push(deleteInspections(insp3.get('title')));
       promises.push(deleteTeam(test_team.get('name')));
+      promises.push(deleteUser(test_user.id));
     }).then(() => {
       Promise.all(promises).then(() => {
         done();
@@ -115,17 +116,17 @@ describe('Admin Testing', () => {
     });
   });
 
-  it('should retun a bool if permission is "superadmin"', () => {
-    let permission = "superadmin";
+  it('should return a bool if permission is "superadmin"', () => {
+    let permission = 'superadmin';
     expect(service.getSuperAdminStatus(permission)).toBeTruthy();
-    permission = "inspector";
+    permission = 'inspector';
     expect(service.getSuperAdminStatus(permission)).toBeFalsy();
   });
 
-  it('should retun a bool if permission is "admin"', () => {
-    let permission = "superadmin";
+  it('should return a bool if permission is "admin"', () => {
+    let permission = 'superadmin';
     expect(service.getAdminStatus(permission)).toBeFalsy();
-    permission = "admin";
+    permission = 'admin';
     expect(service.getAdminStatus(permission)).toBeTruthy();
   });
 
@@ -134,8 +135,8 @@ describe('Admin Testing', () => {
     const randKey = randomKey();
     service.createUser(randKey, randKey, 'mockEmail@gmail.com' + randKey, randKey, randKey, randKey).then(value => {
       test_user = value;
-      const query = new Parse.Query('_User');
-      query.get(test_user.id).then((result) => {
+      const query = new Parse.Query(Parse.User);
+      query.get(value.id).then((result) => {
         console.log('Matching user ids...');
         expect(result.id === test_user.id).toBeTruthy();
       });
@@ -170,7 +171,7 @@ describe('Admin Testing', () => {
       service.archiveUser(test_user.id).then((object) => {
         console.log('Checking status of user...');
         test_user = object;
-        expect(test_user.get('isActive') === 'false').toBeTruthy();
+        expect(test_user.get('isActive')).toBeFalsy();
       });
     });
   });
@@ -183,7 +184,7 @@ describe('Admin Testing', () => {
       service.unArchiveUser(test_user.id).then((object) => {
         console.log('Checking status of user...');
         test_user = object;
-        expect(test_user.get('isActive') === 'true').toBeTruthy();
+        expect(test_user.get('isActive')).toBeTruthy();
       });
     });
   });
@@ -231,7 +232,7 @@ describe('Admin Testing', () => {
       test_team = result;
       service.unArchiveTeam(test_team.id).then(() => {
         console.log('Checking status...');
-        expect(test_team.get('isActive')).toBeFalsy();
+        expect(test_team.get('isActive')).toBeTruthy();
       });
     });
   });
@@ -241,14 +242,14 @@ describe('Admin Testing', () => {
     service.getArchivedTeams().then(value => {
       expect(value).toBeTruthy();
     });
-  }); 
+  });
 
   it('should get active Teams', () => {
     console.log('Testing get active teams in functionality');
     service.getActiveTeams().then(value => {
       expect(value).toBeTruthy();
     });
-  }); 
+  });
 
   it('should get Reports', () => {
     console.log('Testing get reports in functionality');
@@ -263,7 +264,7 @@ describe('Admin Testing', () => {
     service.getArchivedReport().then(value => {
       expect(value).toBeTruthy();
     });
-  }); 
+  });
 
   it('should archive Reports', () => {
     console.log('Testing archive Reports in functionality: ' + insp1.id);
