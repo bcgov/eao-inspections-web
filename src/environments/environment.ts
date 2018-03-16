@@ -5,8 +5,8 @@
 
 export const environment = {
   production: false,
-  parseId: 'Do1zbdBbN4iSZu9T6J29Ub5pFX3uRfJKYC7xf7ah',
-  parseKey: 'YyhZP2QW3M6HGURcerLKqvwJoke6B4nWZUGQvHh8',
+  parseId: 'k9e0u7xtzlWV6sKXrWeARoGb9LefDZRjdZGIZa8C',
+  parseKey: 'nrT7HbWj3z1lMzuTjrt2binYcKhilUJxk9Kkt1Qi',
   parseURL: 'https://parseapi.back4app.com/',
-  parseMasterKey: '9S8jx2UmaQop3paPsv99sHfen2sQXQDlaU8f9IsL'
+  parseMasterKey: 'KttYtIIS84j274NtHrz11zFKLC6Bf4BWKM9V5Ou2'
 };
