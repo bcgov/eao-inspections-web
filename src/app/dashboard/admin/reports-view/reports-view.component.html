@@ -5,7 +5,7 @@
             <a routerLink='archived-inspections'><button class="dashboard__btn dashboard__btn--lg">Archived Inspections</button></a>
         </div>
     </div>
-    <div *ngIf="teams<=0; then noContent else content"></div>
+    <div *ngIf="teams?.length<=0; then noContent else content"></div>
     <ng-template #noContent>
         <no-content [emptyContent]="emptyContent"></no-content>
     </ng-template>

@@ -1,6 +1,5 @@
 import * as String from './../../../../constants/strings';
 import { Component, OnInit } from '@angular/core';
-import * as Route from './../../../../constants/routes';
 import { Team } from '../../../../models/team.model';
 import { AdminService } from '../../../../services/admin.service';
 
@@ -12,7 +11,6 @@ import { AdminService } from '../../../../services/admin.service';
 })
 export class ReportsViewComponent implements OnInit {
   title = "Inspections";
-  archivedLink = Route.ARCHIVED_INSPECTIONS;
 
   emptyContent = {
     image: '../../assets/inspections.png',
@@ -26,11 +24,7 @@ export class ReportsViewComponent implements OnInit {
   ngOnInit() {
     this.adminService.getActiveTeams()
       .then((results) => {
-        if (results instanceof Array) {
-          this.teams = results;
-        } else {
-          this.teams = [results];
-        }
+        this.teams = (results instanceof Array) ? results : [results];
       });
   }
 

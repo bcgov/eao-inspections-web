@@ -19,8 +19,7 @@ describe('ReportListItemComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(ReportListItemComponent);
     component = fixture.componentInstance;
-    
-    reportInfo = { title: "mockTitle", image: "mock-image.png", project: "mockProjectName", team: "mockTeam", updatedAt: "mockDate" }
+    reportInfo = { title: 'mockTitle', image: 'mock-image.png', project: 'mockProjectName', team: 'mockTeam', updatedAt: 'mockDate' };
     component.data = reportInfo;
     fixture.detectChanges();
   });
@@ -30,10 +29,10 @@ describe('ReportListItemComponent', () => {
   });
 
   it('should display appropiate report data', () => {
-    expect(component.data.title).toBe("mockTitle");
-    expect(component.data.team).toBe("mockTeam");
-    expect(component.data.image).toBe("mock-image.png");
-    expect(component.data.project).toBe("mockProjectName");
-    expect(component.data.updatedAt).toBe("mockDate");
-  })
+    expect(component.data.title).toBe('mockTitle');
+    expect(component.data.team).toBe('mockTeam');
+    expect(component.data.image).toBe('mock-image.png');
+    expect(component.data.project).toBe('mockProjectName');
+    expect(component.data.updatedAt).toBe('mockDate');
+  });
 });
