@@ -36,9 +36,9 @@ describe('InspectionViewComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('shodld render the correct inspection data', fakeAsync(() => {
+  it('should render the correct inspection data', fakeAsync(() => {
     const reportService = fixture.debugElement.injector.get(ReportService);
-    const inspector = new BasicUser('testId', 'testInspectorName', [], 'testEmail', 'testImage', false);
+    const inspector = new BasicUser('testId', 'testInspectorName', [], 'testEmail', 'testImage', false, false);
     const startDate = new Date();
     const endDate = new Date();
     const inspection =
@@ -77,13 +77,13 @@ describe('InspectionViewComponent', () => {
 
   }));
 
-  it('shodld render the correct observation data', fakeAsync(() => {
+  it('should render the correct observation data', fakeAsync(() => {
     const reportService = fixture.debugElement.injector.get(ReportService);
     const createdDate = new Date();
     const observations = [
       new Observation('testId1', 'testTitle1', 'testDescription1', 'testRequirement1', null, 'testMedia1', createdDate),
       new Observation('testId2', 'testTitle2', 'testDescription2', 'testRequirement2', null, 'testMedia2', createdDate)
-    ]
+    ];
     spyOn(reportService, 'getObservations').and.returnValue(Promise.resolve(observations));
     component.ngOnInit();
     tick();
