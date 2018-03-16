@@ -25,7 +25,7 @@ describe('ArchivedUsersComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ ArchivedUsersComponent ],
       schemas: [NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA ],
-      providers: [{ provide: AdminService, useValue: adminServiceStub }, ],
+      providers: [{ provide: AdminService, useValue: adminServiceStub }],
       imports: [ RouterTestingModule ]
     })
     .compileComponents();
