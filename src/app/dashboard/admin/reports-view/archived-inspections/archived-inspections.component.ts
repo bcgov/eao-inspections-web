@@ -34,7 +34,6 @@ export class ArchivedInspectionsComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log('hello');
     this.sort('updatedAt');
     this.adminService.getArchivedReport()
       .then((results) => {
