@@ -37,8 +37,8 @@ describe('TeamModalComponent', () => {
     modalInfo = {
       edit: false,
       header: "mock header",
-      conformationYes: "confirm",
-      conformationNo: "cancel"
+      confirmationYes: "confirm",
+      confirmationNo: "cancel"
     };
 
     teamInfo = {

@@ -21,8 +21,8 @@ export class UserCardComponent {
     message: String.ARCHIVE_USER,
     header: String.EDIT_USER,
     userButton: String.EDIT_BUTTON,
-    conformationYes: String.ARCHIVE_BUTTON,
-    conformationNo: String.CANCEL_BUTTON,
+    confirmationYes: String.ARCHIVE_BUTTON,
+    confirmationNo: String.CANCEL_BUTTON,
     edit: true,
   };
 
@@ -30,8 +30,8 @@ export class UserCardComponent {
     message: String.REMOVE_USER,
     header: String.REMOVE_USER,
     userButton: String.REMOVE_BUTTON,
-    conformationYes: String.REMOVE_BUTTON,
-    conformationNo: String.CANCEL_BUTTON
+    confirmationYes: String.REMOVE_BUTTON,
+    confirmationNo: String.CANCEL_BUTTON
   };
 
 

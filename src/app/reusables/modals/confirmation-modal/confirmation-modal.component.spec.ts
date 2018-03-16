@@ -21,7 +21,7 @@ describe('ConfirmationModalComponent', () => {
     fixture = TestBed.createComponent(ConfirmationModalComponent);
     component = fixture.componentInstance;
 
-    modalInfo = { message: "mock message", conformationYes: "confirm", conformationNo: "cancel" }
+    modalInfo = { message: "mock message", confirmationYes: "confirm", confirmationNo: "cancel" }
     component.modal = modalInfo;
     fixture.detectChanges();
   });
@@ -29,15 +29,15 @@ describe('ConfirmationModalComponent', () => {
   it('should create with custom message and custom buttons', () => {
     expect(component).toBeTruthy();
     expect(component.modal.message).toBe("mock message");
-    expect(component.modal.conformationYes).toBe("confirm");
-    expect(component.modal.conformationNo).toBe("cancel");
+    expect(component.modal.confirmationYes).toBe("confirm");
+    expect(component.modal.confirmationNo).toBe("cancel");
   });
 
-  it('should close when conformation() is called', fakeAsync(() => {
-    spyOn(component, "conformation");
+  it('should close when confirmation() is called', fakeAsync(() => {
+    spyOn(component, "confirmation");
     buttonEl = fixture.debugElement.nativeElement.querySelector('.dashboard__btn--dark').click();
     tick();
     fixture.detectChanges();
-    expect(component.conformation).toHaveBeenCalled();
+    expect(component.confirmation).toHaveBeenCalled();
   }));
 });
