@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { MemberModalComponent } from './member-modal.component';
 
-describe('MemberModalComponent', () => {
+fdescribe('MemberModalComponent', () => {
   let component: MemberModalComponent;
   let fixture: ComponentFixture<MemberModalComponent>;
 

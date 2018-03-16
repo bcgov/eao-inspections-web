@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PermissionsModalComponent } from './permissions-modal.component';
 
-describe('PermissionsModalComponent', () => {
+fdescribe('PermissionsModalComponent', () => {
   let component: PermissionsModalComponent;
   let fixture: ComponentFixture<PermissionsModalComponent>;
 
