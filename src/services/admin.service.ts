@@ -32,7 +32,7 @@ export class AdminService {
           resolve(results);
         },
         error: function (error) {
-          reject(error.message);
+          reject(error);
         }
       });
     });
@@ -52,7 +52,7 @@ export class AdminService {
           resolve(users);
         },
         error: function (error) {
-          reject(error.message);
+          reject(error);
         }
       });
     });
@@ -75,7 +75,7 @@ export class AdminService {
               resolve(users);
             },
             error: (error) => {
-              reject(error.message);
+              reject(error);
             }
         });
       });
@@ -91,7 +91,7 @@ export class AdminService {
           resolve(results);
         },
         error: function (error) {
-          reject(error.message);
+          reject(error);
         }
       });
     });
@@ -106,7 +106,7 @@ export class AdminService {
           resolve(results);
         },
         error: function (error) {
-          reject(error.message);
+          reject(error);
         }
       });
     });
@@ -154,13 +154,14 @@ export class AdminService {
           });
         },
         error: function (object, error) {
-          reject(error.message);
+          console.log(error);
+          reject(error);
         }
       }).then((userObject) => {
         Promise.all(promises).then(() => {
           resolve(userObject);
         }, error => {
-          reject(error.message);
+          reject(error);
         });
       });
     });
@@ -187,12 +188,13 @@ export class AdminService {
           user.save(null, { useMasterKey: true }).then((object) => {
             resolve(object);
           }, (error) => {
-            reject(error.message);
+            reject(error);
           });
           resolve(user);
         },
         error: function (object, error) {
-          reject(error.message);
+          console.log(error);
+          reject(error);
         }
       });
     });
@@ -207,11 +209,11 @@ export class AdminService {
           user.save(null, {useMasterKey: true}).then(object => {
             resolve(object);
           }, error => {
-            reject(error.message);
+            reject(error);
           });
         },
         error: function (object, error) {
-          reject(error.message);
+          reject(error);
         }
       });
     });
@@ -226,11 +228,11 @@ export class AdminService {
           user.save(null, {useMasterKey: true}).then(object => {
             resolve(object);
           }, error => {
-            reject(error.message);
+            reject(error);
           });
         },
         error: function (object, error) {
-          reject(error.message);
+          reject(error);
         }
       });
     });
@@ -246,7 +248,7 @@ export class AdminService {
       .then(result => {
         resolve(result);
       }, error => {
-        reject(error.message);
+        reject(error);
       });
     });
   }
@@ -263,12 +265,12 @@ export class AdminService {
           team.save(null, { useMasterKey: true }).then((object) => {
             resolve(object);
           }, (error) => {
-            reject(error.message);
+            reject(error);
           });
           resolve(team);
         },
         error: function (object, error) {
-          reject(error.message);
+          reject(error);
         }
       });
     });
@@ -287,15 +289,15 @@ export class AdminService {
           }
           results.forEach((object) => {
             const userRelation = object.relation('users');
-            userRelation.query().find().then((users) => {
+            userRelation.query().count().then((count) => {
                const team = parseTeamToModel(object);
-               team.users = users;
+               team.numUsers = count;
                promises.push(teams.push(team));
             });
           });
         },
         error: function (error) {
-          reject(error.message);
+          reject(error);
         }
       }).then(() => {
         Promise.all(promises).then(() => {
@@ -318,9 +320,9 @@ export class AdminService {
           }
           results.forEach((object) => {
             const userRelation = object.relation('users');
-            userRelation.query().find().then((users) => {
+            userRelation.query().count().then((count) => {
               const team = parseTeamToModel(object);
-              team.users = users;
+              team.numUsers = count;
               promises.push(
                 teams.push(
                   team
@@ -330,7 +332,7 @@ export class AdminService {
           });
         },
         error: function (error) {
-          reject(error.message);
+          reject(error);
         }
       }).then(() => {
         Promise.all(promises).then(() => {
@@ -349,11 +351,11 @@ export class AdminService {
           team.save(null, { useMasterKey: true }).then(object => {
             resolve(object);
           }, error => {
-            reject(error.message);
+            reject(error);
           });
         },
         error: function (object, error) {
-          reject(error.message);
+          reject(error);
         }
       });
     });
@@ -368,11 +370,11 @@ export class AdminService {
           team.save(null, { useMasterKey: true }).then(object => {
             resolve(object);
           }, error => {
-            reject(error.message);
+            reject(error);
           });
         },
         error: function (object, error) {
-          reject(error.message);
+          reject(error);
         }
       });
     });
@@ -390,7 +392,7 @@ export class AdminService {
           resolve (results);
         },
         error: function(error) {
-          reject (error.message);
+          reject (error);
         }
       });
     });
@@ -407,7 +409,7 @@ export class AdminService {
         },
         error: function(error) {
           console.log(error);
-          reject (error.message);
+          reject (error);
         }
       });
     });
@@ -447,7 +449,7 @@ export class AdminService {
           resolve(report);
         },
         error: function (object, error) {
-          resolve(error.message);
+          resolve(error);
         }
       });
     });
@@ -489,6 +491,26 @@ export class AdminService {
               const userObject = user.createWithoutData(userId);
               relation.add(userObject);
             });
+            obj.save();
+            resolve(obj);
+          },
+          error: function(error) {
+              reject (error);
+          }
+      });
+    });
+  }
+
+  removeMemberFromTeam(teamId: string, userId: string) {
+    return new Promise((resolve, reject) => {
+      const query = new Parse.Query('Team');
+      query.equalTo('objectId', teamId);
+      query.first({
+          success: function(obj) {
+            const relation = obj.relation('users');
+            const user = Parse.Object.extend('User');
+            const userObject = user.createWithoutData(userId);
+            relation.remove(userObject);
             obj.save();
             resolve(obj);
           },

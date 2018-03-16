@@ -1,7 +1,9 @@
 import { ModalService } from './../../../services/modal.service';
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output,EventEmitter } from '@angular/core';
 
 import * as String from '../../../constants/strings';
+import { AdminService } from '../../../services/admin.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'user-card',
@@ -10,22 +12,48 @@ import * as String from '../../../constants/strings';
 })
 export class UserCardComponent {
   @Input('user') user: any;
+  @Input('team') team: any;
+  @Output() removeMember: EventEmitter<any> = new EventEmitter();
+  @Output() editMember: EventEmitter<any> = new EventEmitter();
 
-  modal = {
+
+  editModal = {
     message: String.ARCHIVE_USER,
     header: String.EDIT_USER,
     userButton: String.EDIT_BUTTON,
     conformationYes: String.ARCHIVE_BUTTON,
     conformationNo: String.CANCEL_BUTTON,
+    edit: true,
   };
 
-  constructor(private modalService: ModalService) { }
+  removeModal = {
+    message: String.REMOVE_USER,
+    header: String.REMOVE_USER,
+    userButton: String.REMOVE_BUTTON,
+    conformationYes: String.REMOVE_BUTTON,
+    conformationNo: String.CANCEL_BUTTON
+  };
+
+
+  constructor(private modalService: ModalService, private adminService: AdminService, private toast: ToastrService ) { }
 
   setDefaultPic() {
     this.user.image = '../../assets/team-logo@2x.png';
   }
 
-  open(modal) {
+  onEditMember(value) {
+    this.editMember.emit(value);
+   }
+
+  onRemoveMember() {
+    this.removeMember.emit(this.user);
+  }
+
+  openEdit(modal) {
+    this.modalService.open(modal, { size:'lg', backdrop: 'static', keyboard: false });
+  }
+
+  openRemove(modal) {
     this.modalService.open(modal, { backdrop: 'static', keyboard: false });
   }
 }

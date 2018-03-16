@@ -28,12 +28,15 @@ export function getObject(userObject) {
 export function parseUserToModel(object): BasicUser {
   return new BasicUser(
     object.id,
+    object.get('firstName'),
+    object.get('lastName'),
     object.get('firstName') + ' ' + object.get('lastName'),
     [],
-    object.get('email'),
+    object.get('publicEmail'),
     object.get('profile_image'),
     object.get('isAdmin'),
-    object.get('isSuperAdmin')
+    object.get('isSuperAdmin'),
+    object.get('permission')
   );
 }
 

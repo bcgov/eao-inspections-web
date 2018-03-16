@@ -54,7 +54,7 @@ export class UserListComponent implements OnInit {
           this.toast.success('Successfully added ' + value.firstName + ' ' + value.lastName);
         }
       }, (error) => {
-        this.toast.error(error.message || String.GENERAL_ERROR);
+        this.toast.error(error || String.GENERAL_ERROR);
       });
   }
 
