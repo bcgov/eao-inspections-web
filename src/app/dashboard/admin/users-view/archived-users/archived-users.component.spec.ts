@@ -9,7 +9,7 @@ describe('ArchivedUsersComponent', () => {
   let component: ArchivedUsersComponent;
   let fixture: ComponentFixture<ArchivedUsersComponent>;
   let adminServiceStub: any;
-  
+
   beforeEach(async(() => {
     adminServiceStub = {
       getArchivedUsers: jasmine.createSpy('getArchivedUsers').and.callFake(() => {
@@ -43,7 +43,7 @@ describe('ArchivedUsersComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-  
+
   it('should fetch archived users on ngOnInit', () => {
     adminServiceStub.getArchivedUsers();
     expect(adminServiceStub.getArchivedUsers).toHaveBeenCalledTimes(1);

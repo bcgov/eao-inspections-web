@@ -5,37 +5,39 @@ import { ProfileComponent } from './profile.component';
 import { ProfileService } from '../../../services/profile.service';
 import { RouterTestingModule } from '@angular/router/testing';
 
-
 describe('ProfileComponent', () => {
   let component: ProfileComponent;
   let fixture: ComponentFixture<ProfileComponent>;
   let profileServiceStub: any;
-
   beforeEach(async(() => {
     profileServiceStub = {
       getUser: jasmine.createSpy('getUser').and.callFake(() => {
         return {
-          objectId: '1',
-          name: 'mockUserName',
+          id: '1',
+          firstName: 'mockUserName',
+          lastName: 'lastName',
           teams: [],
-          email: "mockUserEmail@gmail.com",
-          image: "mock-user-image",
-          isAdmin: false
+          publicEmail: 'mockUserEmail@gmail.com',
+          profile_image: 'mock-user-image',
+          isAdmin: false,
+          isSuperAdmin: false,
+          permission: 'inspector'
         };
       }),
       getTeams: jasmine.createSpy('getTeams').and.callFake(() => {
-        return {
-          teams: []
-        };
+        return [];
       }),
       getTeamAdminInfo: jasmine.createSpy('getTeamAdminInfo').and.callFake(() => {
         return {
-          objectId: '2',
-          name: "mockAdminName",
-          team: "",
-          email: "mockAdminEmail@gmail.com",
-          image: "mock-admin-image.png",
-          isAdmin: true
+          id: '2',
+          firstName: 'mockAdminName',
+          lastName: 'lastName',
+          teams: [],
+          publicEmail: 'mockAdminEmail@gmail.com',
+          profile_image: 'mock-admin-user-image',
+          isAdmin: true,
+          isSuperAdmin: false,
+          permission: 'admin'
         };
       }),
     };
@@ -57,7 +59,8 @@ describe('ProfileComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create with appropiate data', () => {
+  it('should create with appropriate data', () => {
+    component.ngOnInit();
     expect(component).toBeTruthy();
   });
 });
