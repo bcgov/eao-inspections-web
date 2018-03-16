@@ -25,13 +25,15 @@ describe('MenuComponent', () => {
         return {
           isAuthenticated: true,
           id: 1,
-          isAdmin: false
+          isAdmin: false,
+          isSuperAdmin: false
         };
       }),
       isAdmin: jasmine.createSpy('isAdmin').and.callFake(() => {
         return {
           isAuthenticated: true,
-          isAdmin: true
+          isAdmin: true,
+          isSuperAdmin: true
         };
       }),
     };
@@ -61,17 +63,24 @@ describe('MenuComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create if user is authenticated', () => {
+  it('should create if user is authenticated', fakeAsync(() => {
     expect(component).toBeTruthy();
     spyOn(component, "isAuth");
-    fixture.detectChanges();
+    component.isAuth();
     expect(component.isAuth).toHaveBeenCalled();
-  });
-
-  it('modal should open when button is clicked', () => {
-    buttonEl = fixture.debugElement.nativeElement.querySelector('button').click();
+    tick();
     fixture.detectChanges();
-    expect(modalServiceStub.open).toBeTruthy();
-  });
+    authServiceStub.isAuthenticated();
+    expect(authServiceStub.isAuthenticated).toHaveBeenCalled();
+  }));
+
+  it('should check if user is Superadmin/admin and change views', fakeAsync(() => {
+    spyOn(component, "isAdmin");
+    component.isAdmin();
+    expect(component.isAdmin).toHaveBeenCalled();
+    tick();
+    fixture.detectChanges();
+    authServiceStub.isAdmin();
+  }));
 });
  
