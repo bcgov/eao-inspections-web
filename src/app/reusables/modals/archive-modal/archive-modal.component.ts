@@ -13,7 +13,7 @@ export class ArchiveModalComponent {
 
   constructor() { }
 
-  conformation(value) {
+  confirmation(value) {
     this.submitValue.emit(value);
   }
 

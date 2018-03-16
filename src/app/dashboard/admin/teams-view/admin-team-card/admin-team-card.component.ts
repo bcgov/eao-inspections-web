@@ -17,9 +17,9 @@ export class AdminTeamCardComponent implements OnInit {
     secondaryMessage: String.UNARCHIVE_TEAM,
     header: String.EDIT_TEAM,
     userButton: String.EDIT_BUTTON,
-    conformationYes: String.ARCHIVE_BUTTON,
+    confirmationYes: String.ARCHIVE_BUTTON,
     secondaryYes: String.UNARCHIVE_BUTTON,
-    conformationNo: String.CANCEL_BUTTON,
+    confirmationNo: String.CANCEL_BUTTON,
   };
 
   constructor(

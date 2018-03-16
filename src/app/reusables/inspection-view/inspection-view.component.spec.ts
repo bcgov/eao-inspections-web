@@ -38,7 +38,7 @@ describe('InspectionViewComponent', () => {
 
   it('should render the correct inspection data', fakeAsync(() => {
     const reportService = fixture.debugElement.injector.get(ReportService);
-    const inspector = new BasicUser('testId', 'testInspectorName', [], 'testEmail', 'testImage', false, false);
+    const inspector = new BasicUser('testId', 'testFirstName', 'testLastName', 'testInspectorName', [], 'testEmail', 'testImage', false, false);
     const startDate = new Date();
     const endDate = new Date();
     const inspection =

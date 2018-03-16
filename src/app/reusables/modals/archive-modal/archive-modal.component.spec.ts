@@ -21,23 +21,23 @@ describe('ArchiveModalComponent', () => {
     component = fixture.componentInstance;
     mockData = { isActive: true, objectId: "1" };
     component.data = mockData;
-    modalInfo = { message: "mock message", conformationYes: "archive", conformationNo: "cancel" };
+    modalInfo = { message: "mock message", confirmationYes: "archive", confirmationNo: "cancel" };
     component.modal = modalInfo;
     fixture.detectChanges();
   });
 
   it('should create with appropiate data', () => {
     expect(component).toBeTruthy();
-    expect(component.modal.conformationYes).toBe("archive");
-    expect(component.modal.conformationNo).toBe("cancel");
+    expect(component.modal.confirmationYes).toBe("archive");
+    expect(component.modal.confirmationNo).toBe("cancel");
     expect(component.modal.message).toBe("mock message");
   });
 
   it('should archive/unarchive data with correct ID', fakeAsync(() => {
-    spyOn(component, 'conformation');
+    spyOn(component, 'confirmation');
     buttonEl = fixture.debugElement.nativeElement.querySelector('.dashboard__btn--dark').click();
     tick();
     fixture.detectChanges();
-    expect(component.conformation).toHaveBeenCalledWith("1");
+    expect(component.confirmation).toHaveBeenCalledWith("1");
     }));
 });

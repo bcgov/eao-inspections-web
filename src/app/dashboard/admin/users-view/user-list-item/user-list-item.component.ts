@@ -19,9 +19,9 @@ export class UserListItemComponent implements OnInit {
     secondaryMessage: String.UNARCHIVE_USER,
     header: String.EDIT_USER,
     userButton: String.EDIT_BUTTON,
-    conformationYes: String.ARCHIVE_BUTTON,
+    confirmationYes: String.ARCHIVE_BUTTON,
     secondaryYes: String.UNARCHIVE_BUTTON,
-    conformationNo: String.CANCEL_BUTTON,
+    confirmationNo: String.CANCEL_BUTTON,
   };
 
   constructor(

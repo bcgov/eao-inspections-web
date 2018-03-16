@@ -18,8 +18,8 @@ import * as String from '../../constants/strings';
 export class MenuComponent {
   modal = {
     message: String.LOGOUT_USER,
-    conformationYes: String.LOGOUT_BUTTON,
-    conformationNo: String.CANCEL_BUTTON
+    confirmationYes: String.LOGOUT_BUTTON,
+    confirmationNo: String.CANCEL_BUTTON
   };
 
   constructor(private authService: AuthService, public modalService: ModalService, private router: Router ) { }
