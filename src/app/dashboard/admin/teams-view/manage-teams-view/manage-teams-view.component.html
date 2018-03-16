@@ -17,7 +17,7 @@
     </ng-template>
     <ng-template #content>
         <div class="dashboard-card__container" *ngFor="let memeber of memebers">
-            <user-card [user]="memeber"></user-card>
+            <user-card [user]="memeber" [team]="team" (removeMember)="onRemoveMember($event)" (editMember)="onEditMember($event)"></user-card>
         </div>
     </ng-template>
 </div>

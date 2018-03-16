@@ -8,12 +8,12 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 export class ConfirmationModalComponent implements OnInit {
   @Input('modal') modal: any;
   @Input() closeValue: any;
-  @Output() confirmationValue: EventEmitter<any> = new EventEmitter();
+  @Output() submitValue: EventEmitter<any> = new EventEmitter();
 
   constructor() { }
 
-  conformation() {
-    this.confirmationValue.emit();
+  confirmation() {
+    this.submitValue.emit();
   }
 
   close() {

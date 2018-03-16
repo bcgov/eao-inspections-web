@@ -7,6 +7,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Team } from '../../../../../models/team.model';
 import { AdminService } from '../../../../../services/admin.service';
 import { BasicUser } from '../../../../../models/user.model';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'manage-teams-view',
@@ -36,7 +37,8 @@ export class ManageTeamsViewComponent implements OnInit {
     private modalService: ModalService, 
     private teamService: TeamService, 
     private adminService: AdminService, 
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private toast: ToastrService
   ) { }
 
   open(modal) {
@@ -54,6 +56,31 @@ export class ManageTeamsViewComponent implements OnInit {
     });
   }
 
+  onEditMember(value) {
+    this.adminService.updateUser(
+      value.id,
+      value.firstName,
+      value.lastName,
+      value.email,
+      value.permission)
+      .then((object) => {
+        this.toast.success('Successfully updated ' + object.get('firstName') + ' ' + object.get('lastName'));
+      }, (error) => {
+        this.toast.error(error.message || String.GENERAL_ERROR);
+      });
+   }
+
+  onRemoveMember(user) {
+    this.adminService.removeMemberFromTeam(this.team.id, user.id).then(() => {
+      this.adminService.getTeamMemebers(this.team.id).then((memebers) => {
+        this.memebers = memebers;
+        this.adminService.getUsersByRole('inspector').then((users) => {
+          this.modal.users = users.filter(o1 => !this.memebers.some(o2 => o1.id === o2.id));
+        });
+      });
+    });
+  }
+
   ngOnInit() {
     const teamId = this.route.snapshot.params['id'];
     this.teamService.getTeam(teamId).then((team) => {
@@ -62,6 +89,7 @@ export class ManageTeamsViewComponent implements OnInit {
     this.adminService.getTeamMemebers(teamId).then((memebers) => {
       this.memebers = memebers;
       this.adminService.getUsersByRole('inspector').then((users) => {
+        console.log(users);
         this.modal.users = users.filter(o1 => !this.memebers.some(o2 => o1.id === o2.id));
       });
     });

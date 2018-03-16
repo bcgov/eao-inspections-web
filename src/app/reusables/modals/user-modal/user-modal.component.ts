@@ -47,11 +47,9 @@ export class UserModalComponent implements OnInit {
   }
 
   ngOnInit() {
-  this.adminService.getActiveTeams()
+    this.adminService.getActiveTeams()
     .then((results) => {
-      if (results instanceof Array) {
-        this.teams = parseToJSON(results);
-      }
-    });
+         this.teams = results;
+     });
   }
 }
