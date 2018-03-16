@@ -3,16 +3,26 @@ export class Team {
   public name: string;
   public admin: string;
   public color: string;
-  public isActive: Boolean;
+  public isActive: boolean;
   public badge: string;
-  public users: Array<any>;
-  constructor(id: string, name: string, admin: string, color: string, isActive: Boolean, badge: string = null, users: Array<any> = []) {
+  public numUsers: number;
+  public numInspections: number;
+  constructor(
+    id: string, 
+    name: string, 
+    admin: string, 
+    color: string, 
+    isActive: boolean, 
+    badge: string = null, 
+    numUsers: number = 0, 
+    numInspections: number = 0) {
     this.id = id;
     this.name = name;
     this.admin = admin;
     this.color = color;
     this.badge = badge;
-    this.users = users;
+    this.numUsers = numUsers;
+    this.numInspections = numInspections;
     this.isActive = isActive;
   }
 }

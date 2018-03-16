@@ -1,167 +1,140 @@
 <div class="modal__header">
-  <h1>{{modal.header}}</h1>
+    <h1>{{modal.header}}</h1>
 </div>
 <div *ngIf="modal.edit; then edit else add"></div>
 <ng-template #edit>
-  <form (ngSubmit)="onSubmit(f, user.objectId); close();" #f="ngForm">
-    <div class="form-group">
-      <label class="col-sm-2 col-form-label">Profile</label>
-      <div id="upload">
-        <input style="display: none" type="file" id="photo" name="photo" class="form-control" #photoInput ngModel (change)="getPhoto($event)">
-        <img class="form-upload__img" src={{selectedPhoto}} />
-        <button class="dashboard-upload__btn" (click)="photoInput.click(); false">Upload</button>
-      </div>
-    </div>
-    <div class="form-group row">
-      <label class="col-sm-2 col-form-label">First name
+    <form (ngSubmit)="onSubmit(f, user.id); close();" #f="ngForm">
+        <div class="form-group">
+            <label class="col-sm-2 col-form-label">Profile</label>
+            <div id="upload">
+                <input style="display: none" type="file" id="photo" name="photo" class="form-control" #photoInput ngModel (change)="getPhoto($event)">
+                <img class="form-upload__img" src={{selectedPhoto}} />
+                <button class="dashboard-upload__btn" (click)="photoInput.click(); false">Upload</button>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">First name
         <span>*</span>
       </label>
-      <div class="col-sm-10">
-        <input 
-          class="form-control" 
-          type="firstName" 
-          id="firstName" 
-          name="firstName" 
-          required 
-          [(ngModel)]="user.firstName"
-          #first="ngModel"
-        >
-      </div>
-    </div>
-    <div class="form-group row">
-      <label class="col-sm-2 col-form-label">Last Name
+            <div class="col-sm-10">
+                <input class="form-control" type="firstName" id="firstName" name="firstName" required [(ngModel)]="user.firstName" #first="ngModel">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Last Name
         <span>*</span>
       </label>
-      <div class="col-sm-10">
-        <input 
-          type="lastName" 
-          class="form-control" 
-          id="lastName" 
-          name="lastName" 
-          required 
-          [(ngModel)]="user.lastName"
-          #last="ngModel"
-        >
-      </div>
-    </div>
-    <div class="form-group row">
-      <label class="col-sm-2 col-form-label">email
+            <div class="col-sm-10">
+                <input type="lastName" class="form-control" id="lastName" name="lastName" required [(ngModel)]="user.lastName" #last="ngModel">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">email
         <span>*</span>
       </label>
-      <div class="col-sm-10">
-        <input 
-          type="email" 
-          class="form-control" 
-          id="email" 
-          pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" 
-          name="email"
-          required 
-          #email="ngModel" 
-          [(ngModel)]="user.publicEmail"
-        >
-        <div class="error" *ngIf="email.touched && !email.valid">*Must be in valid email format</div>
-      </div>
-    </div>
-    <div class="form-group row">
-      <label class="col-sm-2 col-form-label">permission
+            <div class="col-sm-10">
+                <input type="email" class="form-control" id="email" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" name="email" required #email="ngModel" [(ngModel)]="user.email">
+                <div class="error" *ngIf="email.touched && !email.valid">*Must be in valid email format</div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">permission
         <span>*</span>
       </label>
-      <div class="col-sm-10">
-        <select id="permission" class="form-control" name="permission" [(ngModel)]="user.permission" required #permission="ngModel">
+            <div class="col-sm-10">
+                <select id="permission" class="form-control" name="permission" [(ngModel)]="user.permission" required #permission="ngModel">
           <option *ngFor="let permission of permissions" selected>{{permission}}</option>
         </select>
-      </div>
-    </div>
-    <div class="dashboard__buttons">
-      <button type="submit" class="dashboard__btn--dark" [disabled]="!f.valid">{{modal.userButton}}</button>
-      <button type="button" class="dashboard__btn" (click)="close()">Cancel</button>
-    </div>
-    <div class="error error__content" *ngIf="((first.touched && !first.valid)  
+            </div>
+        </div>
+        <div class="dashboard__buttons">
+            <button type="submit" class="dashboard__btn--dark" [disabled]="!f.valid">{{modal.userButton}}</button>
+            <button type="button" class="dashboard__btn" (click)="close()">Cancel</button>
+        </div>
+        <div class="error error__content" *ngIf="((first.touched && !first.valid)  
         || (last.touched  && !last.valid ) 
         || (email.touched && !email.valid)  
         || (permission.touched && !permission.valid)) 
         && !f.valid">
-      *Required fields cannot be blank
-    </div>
-  </form>
+            *Required fields cannot be blank
+        </div>
+    </form>
 </ng-template>
 <ng-template #add>
-  <form (ngSubmit)="onSubmit(f); close();" #f="ngForm">
-    <div class="form-group">
-      <label class="col-sm-2 col-form-label">Profile</label>
-      <div id="upload">
-        <input style="display: none" type="file" id="photo" name="photo" class="form-control" #photoInput ngModel (change)="getPhoto($event)">
-        <img class="form-upload__img" src={{selectedPhoto}} />
-        <button class="dashboard-upload__btn" (click)="photoInput.click(); false">Upload</button>
-      </div>
-    </div>
-    <div class="form-group row">
-      <label class="col-sm-2 col-form-label">First name
+    <form (ngSubmit)="onSubmit(f); close();" #f="ngForm">
+        <div class="form-group">
+            <label class="col-sm-2 col-form-label">Profile</label>
+            <div id="upload">
+                <input style="display: none" type="file" id="photo" name="photo" class="form-control" #photoInput ngModel (change)="getPhoto($event)">
+                <img class="form-upload__img" src={{selectedPhoto}} />
+                <button class="dashboard-upload__btn" (click)="photoInput.click(); false">Upload</button>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">First name
         <span>*</span>
       </label>
-      <div class="col-sm-10">
-        <input class="form-control" type="firstName" id="firstName" name="firstName" required ngModel #first="ngModel">
-      </div>
-    </div>
-    <div class="form-group row">
-      <label class="col-sm-2 col-form-label">Last Name
+            <div class="col-sm-10">
+                <input class="form-control" type="firstName" id="firstName" name="firstName" required ngModel #first="ngModel">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Last Name
         <span>*</span>
       </label>
-      <div class="col-sm-10">
-        <input type="lastName" class="form-control" id="lastName" name="lastName" required ngModel #last="ngModel">
-      </div>
-    </div>
-    <div class="form-group row">
-      <label class="col-sm-2 col-form-label">email
+            <div class="col-sm-10">
+                <input type="lastName" class="form-control" id="lastName" name="lastName" required ngModel #last="ngModel">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">email
         <span>*</span>
       </label>
-      <div class="col-sm-10">
-        <input type="email" class="form-control" id="email" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" name="email"
-          required #email="ngModel" ngModel>
-        <div class="error" *ngIf="email.touched && !email.valid">*Must be in valid email format</div>
-      </div>
-    </div>
-    <div class="form-group row">
-      <label class="col-sm-2 col-form-label">password
+            <div class="col-sm-10">
+                <input type="email" class="form-control" id="email" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" name="email" required #email="ngModel" ngModel>
+                <div class="error" *ngIf="email.touched && !email.valid">*Must be in valid email format</div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">password
         <span>*</span>
       </label>
-      <div class="col-sm-10">
-        <input type="password" class="form-control" id="password" name="password" required ngModel #password="ngModel">
-      </div>
-    </div>
-    <div class="form-group row">
-      <label class="col-sm-2 col-form-label">Team
+            <div class="col-sm-10">
+                <input type="password" class="form-control" id="password" name="password" required ngModel #password="ngModel">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Team
         <span>*</span>
       </label>
-      <div class="col-sm-10">
-        <select id="team" class="form-control" name="team" ngModel required #team="ngModel">
-          <option *ngFor="let team of teams" [value]="team.objectId" selected>{{team.name}}</option>
+            <div class="col-sm-10">
+                <select id="team" class="form-control" name="team" ngModel required #team="ngModel">
+          <option *ngFor="let team of teams" [value]="team.id" selected>{{team.name}}</option>
         </select>
-      </div>
-    </div>
-    <div class="form-group row">
-      <label class="col-sm-2 col-form-label">permission
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">permission
         <span>*</span>
       </label>
-      <div class="col-sm-10">
-        <select id="permission" class="form-control" name="permission" ngModel required #permission="ngModel">
+            <div class="col-sm-10">
+                <select id="permission" class="form-control" name="permission" ngModel required #permission="ngModel">
           <option *ngFor="let permission of permissions" selected>{{permission}}</option>
         </select>
-      </div>
-    </div>
-    <div class="dashboard__buttons">
-      <button type="submit" class="dashboard__btn--dark" [disabled]="!f.valid">{{modal.userButton}}</button>
-      <button type="button" class="dashboard__btn" (click)="close()">Cancel</button>
-    </div>
-    <div class="error error__content" *ngIf="((first.touched && !first.valid)
+            </div>
+        </div>
+        <div class="dashboard__buttons">
+            <button type="submit" class="dashboard__btn--dark" [disabled]="!f.valid">{{modal.userButton}}</button>
+            <button type="button" class="dashboard__btn" (click)="close()">Cancel</button>
+        </div>
+        <div class="error error__content" *ngIf="((first.touched && !first.valid)
         || (last.touched  && !last.valid )
         || (email.touched && !email.valid)
         || (password.touched && !password.valid)
         || (team.touched && !team.valid)
         || (permission.touched && !permission.valid))
         && !f.valid">
-      *Required fields cannot be blank
-    </div>
-  </form>
+            *Required fields cannot be blank
+        </div>
+    </form>
 </ng-template>
-
