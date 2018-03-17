@@ -11,20 +11,20 @@
 <div *ngIf="users?.length<=0; then noContent else content"></div>
 <ng-template #content>
   <table>
-    <div class="report-list__content__header">
-      <thead>
-        <tr>
-          <th>Full Name</th>
-          <th>Email</th>
-          <th>Team</th>
-          <th>Permissions</th>
-          <th>Action</th>
-        </tr>
-      </thead>
-    </div>
-    <div class="report-list__content__details" *ngFor="let user of users">
-      <user-list-item [user]="user"></user-list-item>
-    </div>
+    <thead>
+      <tr>
+        <th>Full Name</th>
+        <th>Email</th>
+        <th>Team</th>
+        <th>Permissions</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <span *ngFor="let user of users">
+        <user-list-item [user]="user"></user-list-item>
+      </span>
+    </tbody>
   </table>
 </ng-template>
 

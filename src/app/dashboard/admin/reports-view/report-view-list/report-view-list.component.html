@@ -14,22 +14,22 @@
             <img width="60px" [src]="team.badge" (error)="setDefaultPic()" /> {{team.name}}
         </p>
         <table>
-            <div class="report-list__content__header">
-                <thead>
-                    <tr>
-                        <th>Title</th>
-                        <th>Linked Projects</th>
-                        <th class="pointer" (click)="sort('updatedAt')">
-                            Submitted
-                        </th>
-                        <th>Inspector</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-            </div>
-            <div class="report-list__content__details" *ngFor="let data of data | orderBy : {property: column, direction: direction}">
-                <report-list-item [data]="data" [fields]="fields" [actions]="actions"></report-list-item>
-            </div>
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Linked Projects</th>
+                    <th>Inspector</th>
+                    <th class="pointer" (click)="sort('updatedAt')">
+                        Submitted
+                    </th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <span *ngFor="let data of data | orderBy : {property: column, direction: direction}">
+                    <report-list-item [data]="data" [fields]="fields" [actions]="actions"></report-list-item>
+                </span>
+            </tbody>
         </table>
     </div>
 </ng-template>

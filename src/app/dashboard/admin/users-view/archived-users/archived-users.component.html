@@ -7,7 +7,6 @@
   <div *ngIf="users?.length<=0; then noContent else content"></div>
   <ng-template #content>
     <table>
-      <div class="report-list__content__header">
         <thead>
           <tr>
             <th>Full Name</th>
@@ -17,10 +16,9 @@
             <th>Action</th>
           </tr>
         </thead>
-      </div>
-      <div class="report-list__content__details" *ngFor="let user of users">
-        <user-list-item [user]="user"></user-list-item>
-      </div>
+        <tbody *ngFor="let user of users">
+            <user-list-item [user]="user"></user-list-item>
+        </tbody>
     </table>
   </ng-template>
 </div>

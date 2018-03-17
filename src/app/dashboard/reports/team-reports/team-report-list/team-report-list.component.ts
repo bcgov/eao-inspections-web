@@ -28,7 +28,7 @@ export class TeamReportListComponent implements OnInit {
   actions: Array<any>;
 
   constructor(private reportService: ReportService, private teamService: TeamService, private route: ActivatedRoute) {
-    this.fields = ['title', 'project', 'submitted', 'inspector', 'actions'];
+    this.fields = ['title', 'project', 'inspector', 'submitted', 'actions'];
     this.actions = ['download'];
   }
 

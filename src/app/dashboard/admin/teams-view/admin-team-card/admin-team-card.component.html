@@ -9,12 +9,23 @@
         <div class="team__card--actions"></div>
         <div *ngIf="team.isActive; then archive else unarchive"></div>
         <ng-template #archive>
-            <button type="button" class="dashboard--actions" (click)="open(editTeam)">
-        Edit
-      </button>
-            <button type="button" class="dashboard--actions" (click)="open(archiveTeam)">
-        Archive
-      </button>
+            <div *ngIf="team.numUsers<=0; then canArchive else cantArchive"></div>
+            <ng-template #canArchive>
+                <button type="button" class="dashboard--actions" (click)="open(editTeam)">
+                    Edit
+                </button>
+                <button type="button" class="dashboard--actions" (click)="open(archiveTeam)">
+                    Archive
+                </button>
+            </ng-template>
+            <ng-template #cantArchive>
+                <button type="button" class="dashboard--actions" (click)="open(editTeam)">
+                    Edit
+                </button>
+                <button type="button" class="dashboard--actions" (click)="open(cantArchive)">
+                    Archive
+                </button>
+            </ng-template>
         </ng-template>
         <ng-template #unarchive>
             <button type="button" class="dashboard--actions" (click)="open(unarchiveTeam)">
@@ -42,4 +53,8 @@
 <!-- unarchive confirmation modal -->
 <ng-template #unarchiveTeam let-c="close" class="modal">
     <archive-modal [closeValue]="this.c" [modal]="modal" [data]="team" (submitValue)="onUnarchive($event)"></archive-modal>
+</ng-template>
+
+<ng-template #CantArchive let-c="close" class="modal">
+    <confirmation-modal [closeValue]="this.c" [modal]="modal"></confirmation-modal>
 </ng-template>

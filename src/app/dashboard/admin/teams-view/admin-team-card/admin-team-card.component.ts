@@ -21,6 +21,7 @@ export class AdminTeamCardComponent implements OnInit {
     secondaryYes: String.UNARCHIVE_BUTTON,
     confirmationNo: String.CANCEL_BUTTON,
   };
+  
 
   constructor(
     private modalService: ModalService, 
