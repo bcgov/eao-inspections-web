@@ -54,8 +54,8 @@ describe('TeamReportListComponent', () => {
     const headers = [
       'Title',
       'Linked Projects',
-      'Submitted',
       'Inspector',
+      'Submitted',
       'Action'
     ];
     (compiled.querySelectorAll('th')).forEach((header, index) => {
