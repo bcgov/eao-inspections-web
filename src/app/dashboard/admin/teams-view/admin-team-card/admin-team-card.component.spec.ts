@@ -42,7 +42,7 @@ describe('AdminTeamCardComponent', () => {
       error(): Observable<any> {
         return Observable.of(true);
       }
-    }
+    };
 
     TestBed.configureTestingModule({
       declarations: [ AdminTeamCardComponent ],

@@ -13,6 +13,8 @@ import * as String from '../../../../../constants/strings';
   providers: [ReportService, TeamService]
 })
 export class ReportViewListComponent implements OnInit {
+  title = '';
+
   emptyContent = {
     image: '../../assets/team-lg.png',
     message: String.EMPTY_INSPECTIONS,

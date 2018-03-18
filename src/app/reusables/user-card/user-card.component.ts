@@ -2,8 +2,6 @@ import { ModalService } from './../../../services/modal.service';
 import { Component, Input, Output,EventEmitter } from '@angular/core';
 
 import * as String from '../../../constants/strings';
-import { AdminService } from '../../../services/admin.service';
-import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'user-card',
@@ -35,7 +33,7 @@ export class UserCardComponent {
   };
 
 
-  constructor(private modalService: ModalService, private adminService: AdminService, private toast: ToastrService ) { }
+  constructor(private modalService: ModalService) { }
 
   setDefaultPic() {
     this.user.image = '../../assets/team-logo@2x.png';
