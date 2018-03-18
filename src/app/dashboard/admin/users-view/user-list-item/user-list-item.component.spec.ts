@@ -13,6 +13,7 @@ describe('UserListItemComponent', () => {
   let modalServiceStub;
   let adminServiceStub;
   let toastServiceStub;
+
   let mockData: any;
 
   beforeEach(async(() => {
@@ -31,7 +32,7 @@ describe('UserListItemComponent', () => {
       error(): Observable<any> {
         return Observable.of(true);
       }
-    }
+    };
 
     TestBed.configureTestingModule({
       declarations: [ UserListItemComponent ],
@@ -49,19 +50,27 @@ describe('UserListItemComponent', () => {
     fixture = TestBed.createComponent(UserListItemComponent);
     component = fixture.componentInstance;
 
-    mockData = { firstName: "John", lastName: "Smith", team: "Mock Team", publicEmail: "mock@gmail.com", permission: "admin", image: "mock.png", teamImage: "mock-team.png"}
+    mockData = {
+      firstName: 'John',
+      lastName: 'Smith',
+      team: 'Mock Team',
+      publicEmail: 'mock@gmail.com',
+      permission: 'admin',
+      image: 'mock.png',
+      teamImage: 'mock-team.png'
+    };
     component.user = mockData;
     fixture.detectChanges();
   });
 
   it('should create with correct data', () => {
     expect(component).toBeTruthy();
-    expect(component.user.firstName).toBe("John");
-    expect(component.user.lastName).toBe("Smith");
-    expect(component.user.team).toBe("Mock Team");
-    expect(component.user.publicEmail).toBe("mock@gmail.com");
-    expect(component.user.permission).toBe("admin");
-    expect(component.user.image).toBe("mock.png");
-    expect(component.user.teamImage).toBe("mock-team.png");
+    expect(component.user.firstName).toBe('John');
+    expect(component.user.lastName).toBe('Smith');
+    expect(component.user.team).toBe('Mock Team');
+    expect(component.user.publicEmail).toBe('mock@gmail.com');
+    expect(component.user.permission).toBe('admin');
+    expect(component.user.image).toBe('mock.png');
+    expect(component.user.teamImage).toBe('mock-team.png');
   });
 });

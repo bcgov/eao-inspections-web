@@ -26,18 +26,20 @@ export function getObject(userObject) {
 }
 
 export function parseUserToModel(object): BasicUser {
-  return new BasicUser(
-    object.id,
-    object.get('firstName'),
-    object.get('lastName'),
-    object.get('firstName') + ' ' + object.get('lastName'),
-    [],
-    object.get('publicEmail'),
-    object.get('profile_image'),
-    object.get('isAdmin'),
-    object.get('isSuperAdmin'),
-    object.get('permission')
-  );
+  if (object) {
+    return new BasicUser(
+      object.id,
+      object.get('firstName'),
+      object.get('lastName'),
+      object.get('firstName') + ' ' + object.get('lastName'),
+      [],
+      object.get('publicEmail'),
+      object.get('profile_image'),
+      object.get('isAdmin'),
+      object.get('isSuperAdmin'),
+      object.get('permission')
+    );
+  }
 }
 
 export function parseTeamToModel(object) {

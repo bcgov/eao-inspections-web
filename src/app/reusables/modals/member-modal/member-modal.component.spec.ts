@@ -16,6 +16,8 @@ describe('MemberModalComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(MemberModalComponent);
     component = fixture.componentInstance;
+    component.data = {};
+    component.modal = {};
     fixture.detectChanges();
   });
 

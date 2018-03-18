@@ -50,7 +50,12 @@ describe('Authentication and Authorization Testing', () => {
       jasmine.DEFAULT_TIMEOUT_INTERVAL = originalTimeout;
       done();
     });
+  });
 
+  afterEach((done) => {
+    setTimeout(function() {
+      done();
+    }, 500);
   });
 
   it('should create', () => {

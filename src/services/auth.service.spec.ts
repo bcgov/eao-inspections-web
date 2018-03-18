@@ -49,7 +49,11 @@ describe('Authentication and Authorization Testing', () => {
       done();
     }
   });
-
+  afterEach((done) => {
+    setTimeout(function() {
+      done();
+    }, 500);
+  });
   afterAll(() => {
     jasmine.DEFAULT_TIMEOUT_INTERVAL = originalTimeout;
   });
@@ -61,7 +65,7 @@ describe('Authentication and Authorization Testing', () => {
 
   it('should login', () => {
     console.log('Testing log in functionality');
-    service.logIn('bob', 'bob').then(() => {
+    service.logIn('inspector', 'inspector').then(() => {
       console.log('logged in');
       expect(service.isAuthenticated()).toBeTruthy();
     });
@@ -69,7 +73,7 @@ describe('Authentication and Authorization Testing', () => {
 
   it('should logout', () => {
     console.log('Testing log out functionality');
-    service.logIn('bob', 'bob').then(() => {
+    service.logIn('inspector', 'inspector').then(() => {
       console.log('logged in');
       service.logOut().then(() => {
         console.log('logged out');

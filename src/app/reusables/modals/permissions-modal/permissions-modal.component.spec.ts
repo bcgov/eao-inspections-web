@@ -16,6 +16,8 @@ describe('PermissionsModalComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(PermissionsModalComponent);
     component = fixture.componentInstance;
+    component.data = {};
+    component.modal = {};
     fixture.detectChanges();
   });
 
