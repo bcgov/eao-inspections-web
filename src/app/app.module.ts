@@ -48,6 +48,7 @@ import { OrderByPipe } from './directives/orderby.pipe';
 import { AdminTeamCardComponent } from './dashboard/admin/teams-view/admin-team-card/admin-team-card.component';
 import { MemberModalComponent } from './reusables/modals/member-modal/member-modal.component';
 import { ReportViewListComponent } from './dashboard/admin/reports-view/report-view-list/report-view-list.component';
+import { LoadingComponent } from './reusables/loading/loading.component';
 
 @NgModule({
   declarations: [
@@ -86,7 +87,8 @@ import { ReportViewListComponent } from './dashboard/admin/reports-view/report-v
     OrderByPipe,
     AdminTeamCardComponent,
     MemberModalComponent,
-    ReportViewListComponent 
+    ReportViewListComponent,
+    LoadingComponent
   ],
   imports: [
     BrowserModule,

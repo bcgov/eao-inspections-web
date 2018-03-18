@@ -38,11 +38,12 @@
 <!-- edit user modal -->
 <ng-template #editTeam let-c="close" class="modal">
   <team-modal 
-  [closeValue]="this.c" 
-  [modal]="modal"
-  (submitValue)="onEdit($event)"
-  [team]="team"
-  ></team-modal>
+    [closeValue]="this.c" 
+    [modal]="modal"
+    (submitValue)="onEdit($event)"
+    [team]="team"
+    >
+    </team-modal>
 </ng-template>
 
 <!-- archive confirmation modal -->
