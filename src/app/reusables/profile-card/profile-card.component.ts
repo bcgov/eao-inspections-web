@@ -10,6 +10,10 @@ export class ProfileCardComponent implements OnInit {
   
   constructor() { }
 
+  setDefaultPic() {
+    this.profile.image = '../../assets/avatar@2x.png';
+  }
+
   ngOnInit() {
   }
 

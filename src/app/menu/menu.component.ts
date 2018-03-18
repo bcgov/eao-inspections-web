@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
@@ -7,22 +7,31 @@ import * as Parsevar from '../../constants/parse';
 import { AuthService } from '../../services/auth.service';
 import * as Route from '../../constants/routes';
 import * as String from '../../constants/strings';
+import { ProfileService } from '../../services/profile.service';
+import { parseToJSON, parseUserToModel } from '../../services/parse.service';
+import { BasicUser } from '../../models/user.model';
 
 
 @Component({
   selector: 'menu',
   templateUrl: './menu.component.html',
   styleUrls: ['./menu.component.scss'],
-  providers: [AuthService, NgbActiveModal]
+  providers: [AuthService, NgbActiveModal, ProfileService]
 })
-export class MenuComponent {
+export class MenuComponent implements OnInit{
+  user: BasicUser;
   modal = {
     message: String.LOGOUT_USER,
     confirmationYes: String.LOGOUT_BUTTON,
     confirmationNo: String.CANCEL_BUTTON
   };
 
-  constructor(private authService: AuthService, public modalService: ModalService, private router: Router ) { }
+  constructor(
+    private authService: AuthService, 
+    public modalService: ModalService, 
+    private router: Router,
+    private profileService: ProfileService
+  ) { }
   myInspections = Route.MY_REPORTS;
   teamInspections = Route.TEAM_REPORTS;
   profile = Route.PROFILE;
@@ -49,4 +58,13 @@ export class MenuComponent {
   isAdmin() {
     return (this.authService.isAdmin() || this.authService.isSuperAdmin());
   }
+
+  setDefaultPic() {
+    this.user.image = '../../assets/avatar.png';
+  }
+
+  ngOnInit() {
+    const userData = this.profileService.user;
+    this.user = parseUserToModel(userData);
+    };
 }

@@ -21,6 +21,12 @@ export class AdminTeamCardComponent implements OnInit {
     secondaryYes: String.UNARCHIVE_BUTTON,
     confirmationNo: String.CANCEL_BUTTON,
   };
+
+  cantArchiveModal = {
+    message: String.ARCHIVE_MESSAGE,
+    confirmationYes: String.OK_BUTTON,
+    confirmationNo: String.CANCEL_BUTTON,
+  }
   
 
   constructor(

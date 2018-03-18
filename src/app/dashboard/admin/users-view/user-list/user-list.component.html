@@ -20,10 +20,8 @@
         <th>Action</th>
       </tr>
     </thead>
-    <tbody>
-      <span *ngFor="let user of users">
-        <user-list-item [user]="user"></user-list-item>
-      </span>
+    <tbody *ngFor="let user of users">
+      <user-list-item [user]="user"></user-list-item>
     </tbody>
   </table>
 </ng-template>

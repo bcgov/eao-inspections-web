@@ -1,6 +1,6 @@
 <div class="profile__card">
   <div class="profile__card--photo">
-    <img class="profile__card--photo__img" src={{profile.image}} />
+    <img class="profile__card--photo__img" [src]="profile.image" (error)="setDefaultPic()" />
     <span *ngIf="profile.isAdmin === false" class="profile__card--photo__upload">Upload Photo</span>
   </div>
   <div class="profile__card__details">
@@ -12,6 +12,6 @@
   <div class="profile__card__contact">
     <h4>Email</h4>
     <a href="mailto:{{profile.email}}">{{profile.email}}</a>
-    <span *ngIf="profile.isAdmin === false" class="profile__card__contact--disclaimer"><i>*Contact Administration below to change personal information.</i></span>
+    <span *ngIf="!profile.isAdmin && !profile.isSuperAdmin" class="profile__card__contact--disclaimer"><i>*Contact Administration below to change personal information.</i></span>
   </div>
 </div>

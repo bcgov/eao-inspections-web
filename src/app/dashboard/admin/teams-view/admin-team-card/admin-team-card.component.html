@@ -22,7 +22,7 @@
                 <button type="button" class="dashboard--actions" (click)="open(editTeam)">
                     Edit
                 </button>
-                <button type="button" class="dashboard--actions" (click)="open(cantArchive)">
+                <button type="button" class="dashboard--actions" (click)="open(cantArchiveTeam)">
                     Archive
                 </button>
             </ng-template>
@@ -55,6 +55,6 @@
     <archive-modal [closeValue]="this.c" [modal]="modal" [data]="team" (submitValue)="onUnarchive($event)"></archive-modal>
 </ng-template>
 
-<ng-template #CantArchive let-c="close" class="modal">
-    <confirmation-modal [closeValue]="this.c" [modal]="modal"></confirmation-modal>
+<ng-template #cantArchiveTeam let-c="close" class="modal">
+    <confirmation-modal [closeValue]="this.c" [modal]="cantArchiveModal"></confirmation-modal>
 </ng-template>
