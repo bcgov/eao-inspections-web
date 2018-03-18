@@ -1,12 +1,12 @@
+<div class="dashboard">
+    <div class="dashboard__header">
+        <p class="dashboard__title">{{title}}</p>
+    </div>
 <div *ngIf="data<=0; then noContent else content"></div>
 <ng-template #noContent>
     <no-content [emptyContent]="emptyContent"></no-content>
 </ng-template>
 <ng-template #content>
-    <div class="dashboard">
-        <div class="dashboard__header">
-            <p class="dashboard__title">{{title}}</p>
-        </div>
         <table>
             <thead>
                 <tr>
@@ -26,5 +26,5 @@
                 </span>
             </tbody>
         </table>
-    </div>
-</ng-template>
+    </ng-template>
+</div>

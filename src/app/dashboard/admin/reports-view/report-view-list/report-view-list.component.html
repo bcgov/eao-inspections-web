@@ -1,18 +1,18 @@
-<div *ngIf="data?.length<=0; then noContent else content"></div>
-<ng-template #noContent>
-    <no-content [emptyContent]="emptyContent"></no-content>
-</ng-template>
-<ng-template #content>
-    <div class="dashboard">
-        <div class="dashboard__header">
-            <p class="dashboard__title">{{title}}</p>
-            <div class="dashboard__buttons">
-                <a routerLink='../archived-inspections'><button class="dashboard__btn dashboard__btn--lg">Archived Inspections</button></a>
-            </div>
+<div class="dashboard">
+    <div class="dashboard__header">
+        <p class="dashboard__title">{{title}}</p>
+        <div class="dashboard__buttons">
+            <a routerLink='../archived-inspections'><button class="dashboard__btn dashboard__btn--lg">Archived Inspections</button></a>
         </div>
-        <p class="dashboard__title" *ngIf="team">
-            <img width="60px" [src]="team.badge" (error)="setDefaultPic()" /> {{team.name}}
-        </p>
+    </div>
+    <p class="dashboard__title" *ngIf="team">
+        <img width="60px" [src]="team.badge" (error)="setDefaultPic()" /> {{team.name}}
+    </p>
+    <div *ngIf="data?.length<=0; then noContent else content"></div>
+    <ng-template #noContent>
+        <no-content [emptyContent]="emptyContent"></no-content>
+    </ng-template>
+    <ng-template #content>
         <table>
             <thead>
                 <tr>
@@ -31,5 +31,5 @@
                 </span>
             </tbody>
         </table>
-    </div>
-</ng-template>
+    </ng-template>
+</div>
