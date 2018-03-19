@@ -33,19 +33,17 @@
         </div>
       </div>
     </div>
-    <div *ngIf="photos?.length > 0">
+    <div *ngIf="mediaSelected?.length > 0">
       <h1 class="dashboard__subtitle">{{subTitle}}</h1>
 
       <div class="element-details" >
         <nav class="nav nav-pills flex-column flex-sm-row">
-          <a class="flex-sm-fill text-sm-center nav-link active">All</a>
-          <a class="flex-sm-fill text-sm-center nav-link">Photos</a>
-          <a class="flex-sm-fill text-sm-center nav-link">Video</a>
-          <a class="flex-sm-fill text-sm-center nav-link">Voice</a>
+          <a class="flex-sm-fill text-sm-center nav-link" (click)="getMediaAll()" [ngClass]="{'active': isAll}">All</a>
+          <a class="flex-sm-fill text-sm-center nav-link" (click)="getPhotos()" [ngClass]="{'active': isPhotos}">Photos</a>
+          <a class="flex-sm-fill text-sm-center nav-link" (click)="getVideo()" [ngClass]="{'active': isVideo}">Video</a>
+          <a class="flex-sm-fill text-sm-center nav-link" (click)="getVoice()" [ngClass]="{'active': isVoice}">Voice</a>
         </nav>
-        <div class="element-details-media" *ngFor="let photo of photos">
-          <img class="thumbnail" src="{{ photo.fileURL }}">
-        </div>
+        <app-element-media [mediaSelected]="mediaSelected"></app-element-media>
       </div>
     </div>
   </div>

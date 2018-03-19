@@ -12,6 +12,7 @@
     .nav-pills {
       justify-content: center;
       padding: 20px;
+      cursor: pointer;
       .nav-link {
         border: 1px solid $default-primary-color;
         &.active {
@@ -20,6 +21,10 @@
         }
         &:not(active) {
           color: $default-primary-color;
+        }
+        &:hover {
+          background-color: $default-link-color;
+          color: #fff;
         }
       }
     }

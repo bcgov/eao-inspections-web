@@ -9,13 +9,17 @@ import {ActivatedRoute} from '@angular/router';
   providers: [ReportService]
 })
 export class ElementViewComponent implements OnInit {
-  title = "Element 1";
-  subTitle = "Attached Media";
-  link = "/inspection-details";
+  title = 'Element 1';
+  subTitle = 'Attached Media';
+  link = '/inspection-details';
   routeParam;
   data;
-  photos;
-
+  media;
+  mediaSelected;
+  isAll;
+  isPhotos;
+  isVideo;
+  isVoice;
   constructor(private route: ActivatedRoute, private reportService: ReportService) {
     this.route.params.subscribe(params => this.routeParam = params);
   }
@@ -25,8 +29,55 @@ export class ElementViewComponent implements OnInit {
       this.data = object;
     });
     this.reportService.getPhotos(this.routeParam.id).then(object => {
-      this.photos = object;
+      this.media = object;
+      this.getMediaAll();
     });
   }
+
+  setInActive() {
+    this.isAll = false;
+    this.isPhotos = false;
+    this.isVideo = false;
+    this.isVoice = false;
+  }
+
+  getMediaAll() {
+    this.mediaSelected = this.media;
+    this.setInActive();
+    this.isAll = true;
+  }
+
+  getPhotos() {
+    const tempList = [{}];
+    this.setInActive();
+    this.isPhotos = true;
+    this.media.forEach((object) => {
+      if (object.type === 'img') {
+        tempList.push(object);
+      }
+    });
+    this.mediaSelected = tempList;
+  }
+  getVideo() {
+    const tempList = [{}];
+    this.setInActive();
+    this.isVideo = true;
+    this.media.forEach((object) => {
+      if (object.type === 'vid') {
+        tempList.push(object);
+      }
+    });
+    this.mediaSelected = tempList;
+  }
+  getVoice() {
+    const tempList = [{}];
+    this.setInActive();
+    this.isVoice = true;
+    this.media.forEach((object) => {
+      if (object.type === 'aud') {
+        tempList.push(object);
+      }
+    });
+    this.mediaSelected = tempList;  }
 
 }

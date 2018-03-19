@@ -47,9 +47,9 @@ import { OrderByPipe } from './directives/orderby.pipe';
 import { AdminTeamCardComponent } from './dashboard/admin/teams-view/admin-team-card/admin-team-card.component';
 import { MemberModalComponent } from './reusables/modals/member-modal/member-modal.component';
 import { ReportViewListComponent } from './dashboard/admin/reports-view/report-view-list/report-view-list.component';
+import { ElementMediaComponent } from './reusables/element-view/element-media/element-media.component';
 import { LoadingComponent } from './reusables/loading/loading.component';
 import { ObservableService } from '../services/observable.service';
-
 
 @NgModule({
   declarations: [
@@ -88,7 +88,8 @@ import { ObservableService } from '../services/observable.service';
     AdminTeamCardComponent,
     MemberModalComponent,
     ReportViewListComponent,
-    LoadingComponent
+    LoadingComponent,
+    ElementMediaComponent
   ],
   imports: [
     BrowserModule,
