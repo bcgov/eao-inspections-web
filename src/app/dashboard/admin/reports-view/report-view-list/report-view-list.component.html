@@ -13,23 +13,17 @@
         <no-content [emptyContent]="emptyContent"></no-content>
     </ng-template>
     <ng-template #content>
-        <table>
-            <thead>
-                <tr>
-                    <th>Title</th>
-                    <th>Linked Projects</th>
-                    <th>Inspector</th>
-                    <th class="pointer" (click)="sort('updatedAt')">
-                        Submitted
-                    </th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                <span *ngFor="let data of data | orderBy : {property: column, direction: direction}">
-                    <report-list-item [data]="data" [fields]="fields" [actions]="actions"></report-list-item>
-                </span>
-            </tbody>
-        </table>
+        <div class="table">
+            <div class="table-row table-header">
+                <div class="table-row-item">Title</div>
+                <div class="table-row-item">Linked Projects</div>
+                <div class="table-row-item">Inspector</div>
+                <div class="table-row-item pointer" (click)="sort('updatedAt')">Submitted</div>
+                <div class="table-row-item">Action</div>
+            </div>
+            <span *ngFor="let data of data | orderBy : {property: column, direction: direction}">
+                <report-list-item [data]="data" [fields]="fields" [actions]="actions"></report-list-item>
+            </span>
+        </div>
     </ng-template>
 </div>

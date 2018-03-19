@@ -1,32 +1,32 @@
-
-<tr>
-    <td data-label="Title" *ngIf="fields.indexOf('title') >= 0">
+<div class="table-row">
+    <div class="table-row-item" data-header="Title"  *ngIf="fields.indexOf('title') >= 0">
         <a [routerLink]="['inspection-details', data.id]">{{data.title}}</a>
-    </td>
-    <td data-label="Linked Projects" *ngIf="fields.indexOf('project') >= 0">{{ data.project || '-' }}</td>
-    <td data-label="Team" *ngIf="fields.indexOf('team') >= 0">
-        {{ data.team?.name || '-' }}
-    </td>
-    <td data-label="Inspector" *ngIf="fields.indexOf('inspector') >= 0">
-        <img width="40px" [src]="data.inspector.image" (error)="setDefaultPic()" /> {{data.inspector.name || '-'}}
-    </td>
-    <td data-label="Submitted" *ngIf="fields.indexOf('submitted') >= 0">{{data.updatedAt | date : "MMM d y" }}</td>
-    <td data-label="Actions" *ngIf="fields.indexOf('actions') >= 0">
+    </div>
+    <div class="table-row-item" data-header="Linked Project" *ngIf="fields.indexOf('project') >= 0">
+        {{ data.project || '-' }}
+    </div>
+    <div class="table-row-item" data-header="Team" *ngIf="fields.indexOf('team') >= 0">
+         {{ data.team?.name || '-' }}
+    </div>
+    <div class="table-row-item" data-header="Inspector"*ngIf="fields.indexOf('inspector') >= 0">
+        <img width="40px" [src]="data.inspector.image" (error)="setDefaultPic()" /> 
+        {{data.inspector.name || '-'}}
+    </div>
+    <div class="table-row-item" data-header="Submitted" *ngIf="fields.indexOf('submitted') >= 0">
+        {{data.updatedAt | date : "MMM d y" }}
+    </div>
+    <div class="table-row-item" data-header="Action" *ngIf="fields.indexOf('actions') >= 0">
         <button *ngIf="actions.indexOf('download') >= 0" class="dashboard--actions dashboard--actions--sm">
-            <img class="dashboard--actions--sm__img" src="../../assets/download.png" />
-            Download
+            <img class="dashboard--actions--sm__img" src="../../assets/download.png" /> Download
         </button>
         <button *ngIf="actions.indexOf('permission') >= 0" class="dashboard--actions dashboard--actions--sm">
-            <img class="dashboard--actions--sm__img" src="../../assets/archive.png" />
-            Set Permissions
+            <img class="dashboard--actions--sm__img" src="../../assets/archive.png" /> Set Permissions
         </button>
         <button *ngIf="actions.indexOf('archive') >= 0" class="dashboard--actions dashboard--actions--sm">
-            <img class="dashboard--actions--sm__img" src="../../assets/archive.png" />
-            Archive
+            <img class="dashboard--actions--sm__img" src="../../assets/archive.png" /> Archive
         </button>
         <button *ngIf="actions.indexOf('unarchive') >= 0" class="dashboard--actions dashboard--actions--sm">
-            <img class="dashboard--actions--sm__img" src="../../assets/unarchive.png" />
-            Unarchive
+            <img class="dashboard--actions--sm__img" src="../../assets/unarchive.png" /> Unarchive
         </button>
-    </td>
-</tr>
+    </div> 
+</div>

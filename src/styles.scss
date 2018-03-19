@@ -5,7 +5,6 @@
 // Generic/reusable styling for dashboard (reusable buttons, tables, modals) - all other CSS in appropiate folders.
 // Variables/Mixins found in ./scss/<filename>
 @import '~bootstrap/dist/css/bootstrap.css';
-// @import "~ngx-toastr/toastr-bs4-alert";
 @import "~ngx-toastr/toastr";
 @import './scss/_variables';
 @import './scss/_mixins';
@@ -293,12 +292,8 @@ body {
     } 
   }
 
-
-
-
-
   // Responsive Reports Table
-    table { 
+    .table { 
       width: 100%;
       background-color: #FFFFFF;	
       box-shadow: $default-box-shadow;
@@ -307,41 +302,36 @@ body {
       border-collapse: collapse;
       table-layout: fixed;
 
-      tr {
+      .table-row {
+        @include flex;
+        justify-content: space-between;
         padding: 5px;
+        border-bottom: 1px solid $font-gray;
       }
 
-      th, td {
+      .table-row-item {
+        overflow-wrap: break-word;
         padding: 5px;
         text-align: left;
         font-weight: 300;
       }
 
-      th {
+    .table-row.table-header {
         background-color: #EAEEF0;
         color: $font-dark-gray;	
         font-size: 16px;
         text-transform: uppercase; 
+        border-bottom: none;
       }
 
-      td {
-        text-align: left;
-        font-size: 13px;
-        min-width: 15vw;
+      // td {
+      //   font-size: 13px;
+      // }
 
-        @include xxl {
-          min-width: 13vw;
-        }
-      }
-
-      td:last-child {
-        display: inline-flex;
-        min-width: 100%;
-
-        // @include xxl {
-        //   min-width: 100%;
-        // }
-      }
+      // td:last-child {
+      //   display: inline-flex;
+      //   text-align: left;
+      // }
     }
 
   .table__img {
@@ -349,14 +339,13 @@ body {
     margin-right: 5px;
   }
   
-  @include xl  {
-    table, thead, tbody { 
+  @include large  {
+    .table { 
       display: block; 
       background-color: $default-background;
       box-shadow: none;
-    }
     
-    tbody tr {
+    .table-row {
       display: block;
       margin-bottom: 20px;
       background-color: $background-white !important;
@@ -365,28 +354,30 @@ body {
     }
     
     /* Hide table headers (but not display: none;, for accessibility) */
-    thead tr { 
+   .table-row.table-header { 
       position: absolute;
       top: -9999px;
       left: -9999px;
     }
   
-    td { 
+    .table-row-item { 
       width: none;
       height: 40px;
       font-size: 13px;
       text-align: right !important;
-      display: block;
+      display: list-item; 
+      list-style: none;
       border: none;
     }
 
     td:last-child {
       display: inherit !important;
+      text-align: right !important;
       width: none;
     }
     
-    td:before { 
-      content: attr(data-label);
+    .table-row-item:before { 
+      content: attr(data-header);
       float: left;
       white-space: nowrap;
       color: $font-dark-gray;	
@@ -394,4 +385,5 @@ body {
       text-transform: uppercase;
     }
   }
+}
 }

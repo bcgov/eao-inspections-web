@@ -6,20 +6,43 @@
 
   <div *ngIf="users?.length<=0; then noContent else content"></div>
   <ng-template #content>
-    <table>
-        <thead>
-          <tr>
-            <th>Full Name</th>
-            <th>Email</th>
-            <th>Team</th>
-            <th>Permissions</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody *ngFor="let user of users">
-          <user-list-item [user]="user"></user-list-item>
-        </tbody>
-    </table>
+      <div class="table">
+        <div class="table-row table-header">
+          <div class="table-row-item">Full Name</div>
+          <div class="table-row-item">Email</div>
+          <div class="table-row-item">Team</div>
+          <div class="table-row-item">Permission</div>
+          <div class="table-row-item">Action</div>
+      </div>
+      <span *ngFor="let user of users">
+        <div class="table-row">
+          <div class="table-row-item" data-header="Full Name">
+            <img *ngIf="user.image" class="table__img" src={{user.image}} />
+            <img *ngIf="!user.image" class="table__img" src="../../../assets/team-member.png" /> {{user.firstName + " " + user.lastName}}
+          </div>
+          <div class="table-row-item" data-header="Email">
+            {{user.publicEmail}}
+          </div>
+          <div class="table-row-item" data-header="Team">
+            <img *ngIf="user.teamImage" class="table__img" src={{user.teamImage}} />
+            <img *ngIf="!user.teamImage" class="table__img" src="../../../assets/team-lg.png" /> {{user.team}}
+          </div>
+          <div class="table-row-item" data-header="Permission">
+            {{user.permission}}
+          </div>
+          <div class="table-row-item" data-header="Action">
+          <button (click)="open(unArchive)" class="dashboard--actions dashboard--actions--sm">
+            <img class="dashboard--actions--sm__img" src="../../assets/unarchive.png" /> Unarchive
+          </button>
+          </div>
+        </div>
+        <!-- unArchive confirmation modal -->
+        <ng-template #unArchive let-c="close" class="modal">
+          <archive-modal [data]="user" [closeValue]="this.c" [modal]="editModal" (submitValue)="onUnarchive($event)">
+          </archive-modal>
+        </ng-template>
+      </span>
+    </div>
   </ng-template>
 </div>
 

@@ -10,7 +10,9 @@ import * as String from '../../constants/strings';
 import { ProfileService } from '../../services/profile.service';
 import { parseToJSON, parseUserToModel } from '../../services/parse.service';
 import { BasicUser } from '../../models/user.model';
-
+import { Subscription } from 'rxjs/Subscription';
+import { ObservableService } from '../../services/observable.service';
+import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
 
 @Component({
   selector: 'menu',
@@ -54,6 +56,7 @@ export class MenuComponent implements OnInit{
     this.authService.logOut().then(() => {
       this.router.navigate([Route.LOGIN]);
     });
+
   }
 
   isAdmin() {
