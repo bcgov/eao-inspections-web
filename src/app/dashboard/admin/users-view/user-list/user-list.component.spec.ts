@@ -27,6 +27,12 @@ describe('UserListComponent', () => {
       }),
       createUser: jasmine.createSpy('createUser').and.callFake(() => {
         Promise.resolve(true);
+      }),
+      updateUser: jasmine.createSpy('updateUser').and.callFake(() => {
+        Promise.resolve(true);
+      }),
+      archiveUser: jasmine.createSpy('archiveUser').and.callFake(() => {
+        Promise.resolve(true);
       })
     };
 
@@ -80,6 +86,18 @@ describe('UserListComponent', () => {
   it('should create a new user', () => {
     adminServiceStub.createUser();
     expect(adminServiceStub.createUser).toHaveBeenCalledTimes(1);
+    expect(toastServiceStub.success).toBeTruthy();
+  });
+
+  it('should update a current user', () => {
+    adminServiceStub.updateUser();
+    expect(adminServiceStub.updateUser).toHaveBeenCalledTimes(1);
+    expect(toastServiceStub.success).toBeTruthy();
+  });
+
+  it('should archive a user', () => {
+    adminServiceStub.archiveUser();
+    expect(adminServiceStub.archiveUser).toHaveBeenCalledTimes(1);
     expect(toastServiceStub.success).toBeTruthy();
   });
 });

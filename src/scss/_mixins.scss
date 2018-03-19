@@ -1,6 +1,8 @@
 $mobile-width: 500px;
 $tablet-width: 768px;
 $large-width: 1024px;
+$xxl-width: 1400px;
+$xl-width: 1200px;
 $desktop-width: 75em;
 $x-large-width: 90em;
 
@@ -18,6 +20,17 @@ $x-large-width: 90em;
 
 @mixin large {
   @media (max-width: #{$large-width}) {
+    @content;
+  }
+}
+
+@mixin xxl {
+  @media (max-width: #{$xxl-width}) {
+    @content;
+  }
+}
+@mixin xl {
+  @media (max-width: #{$xl-width}) {
     @content;
   }
 }

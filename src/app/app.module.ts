@@ -38,7 +38,6 @@ import { UserModalComponent } from './reusables/modals/user-modal/user-modal.com
 import { TeamModalComponent } from './reusables/modals/team-modal/team-modal.component';
 import { ConfirmationModalComponent } from './reusables/modals/confirmation-modal/confirmation-modal.component';
 import { UserListComponent } from './dashboard/admin/users-view/user-list/user-list.component';
-import { UserListItemComponent } from './dashboard/admin/users-view/user-list-item/user-list-item.component';
 import { ArchivedUsersComponent } from './dashboard/admin/users-view/archived-users/archived-users.component';
 import { ArchiveModalComponent } from './reusables/modals/archive-modal/archive-modal.component';
 import { ArchivedTeamsComponent } from './dashboard/admin/teams-view/archived-teams/archived-teams.component';
@@ -48,6 +47,9 @@ import { OrderByPipe } from './directives/orderby.pipe';
 import { AdminTeamCardComponent } from './dashboard/admin/teams-view/admin-team-card/admin-team-card.component';
 import { MemberModalComponent } from './reusables/modals/member-modal/member-modal.component';
 import { ReportViewListComponent } from './dashboard/admin/reports-view/report-view-list/report-view-list.component';
+import { LoadingComponent } from './reusables/loading/loading.component';
+import { ObservableService } from '../services/observable.service';
+
 
 @NgModule({
   declarations: [
@@ -77,7 +79,6 @@ import { ReportViewListComponent } from './dashboard/admin/reports-view/report-v
     TeamModalComponent,
     ConfirmationModalComponent,
     UserListComponent,
-    UserListItemComponent,
     ArchivedUsersComponent,
     ArchiveModalComponent,
     ArchivedTeamsComponent,
@@ -86,7 +87,8 @@ import { ReportViewListComponent } from './dashboard/admin/reports-view/report-v
     OrderByPipe,
     AdminTeamCardComponent,
     MemberModalComponent,
-    ReportViewListComponent 
+    ReportViewListComponent,
+    LoadingComponent
   ],
   imports: [
     BrowserModule,
@@ -97,7 +99,7 @@ import { ReportViewListComponent } from './dashboard/admin/reports-view/report-v
     BrowserAnimationsModule,
     ColorPickerModule
   ],
-  providers: [AuthService, AuthGuardService, RoleGuardService, ModalService],
+  providers: [AuthService, AuthGuardService, RoleGuardService, ModalService, ObservableService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -22,6 +22,13 @@ export class AdminTeamCardComponent implements OnInit {
     confirmationNo: String.CANCEL_BUTTON,
   };
 
+  cantArchiveModal = {
+    message: String.ARCHIVE_MESSAGE,
+    confirmationYes: String.OK_BUTTON,
+    confirmationNo: String.CANCEL_BUTTON,
+  }
+  
+
   constructor(
     private modalService: ModalService, 
     private adminService: AdminService, 

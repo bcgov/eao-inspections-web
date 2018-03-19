@@ -4,27 +4,20 @@
 </ng-template>
 <ng-template #content>
     <div class="dashboard">
-
         <p class="dashboard__title" *ngIf="team">
             <img width="30px" [src]="team.badge" (error)="setDefaultPic()" /> {{team.name}}
         </p>
-        <table>
-            <div class="report-list__content__header">
-                <thead>
-                    <tr>
-                        <th>Title</th>
-                        <th>Linked Projects</th>
-                        <th class="pointer" (click)="sort('updatedAt')">
-                            Submitted
-                        </th>
-                        <th>Inspector</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
+        <div class="table">
+            <div class="table-row table-header">
+                <div class="table-row-item">Title</div>
+                <div class="table-row-item">Linked Projects</div>
+                <div class="table-row-item">Inspector</div>
+                <div class="table-row-item pointer" (click)="sort('updatedAt')">Submitted</div>
+                <div class="table-row-item">Action</div>
             </div>
-            <div class="report-list__content__details" *ngFor="let data of data | orderBy : {property: column, direction: direction}">
-                <report-list-item [data]="data" [fields]="fields" [actions]="actions"></report-list-item>
+                <span *ngFor="let data of data | orderBy : {property: column, direction: direction}">
+                    <report-list-item [data]="data" [fields]="fields" [actions]="actions"></report-list-item>
+                </span>
             </div>
-        </table>
     </div>
 </ng-template>

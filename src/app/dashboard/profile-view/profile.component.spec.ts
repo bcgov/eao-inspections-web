@@ -9,6 +9,8 @@ describe('ProfileComponent', () => {
   let component: ProfileComponent;
   let fixture: ComponentFixture<ProfileComponent>;
   let profileServiceStub: any;
+  let profileData: any;
+
   beforeEach(async(() => {
     profileServiceStub = {
       getUser: jasmine.createSpy('getUser').and.callFake(() => {
@@ -56,6 +58,10 @@ describe('ProfileComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(ProfileComponent);
     component = fixture.componentInstance;
+
+    profileData = { isSuperAdmin: false }
+    component.profile = profileData;
+
     fixture.detectChanges();
   });
 

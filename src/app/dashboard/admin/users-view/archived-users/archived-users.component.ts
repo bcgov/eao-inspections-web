@@ -6,6 +6,7 @@ import { ModalService } from './../../../../../services/modal.service';
 import { parseToJSON } from './../../../../../services/parse.service';
 import * as String from '../../../../../constants/strings';
 import * as Route from '../../../../../constants/routes';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-archived-users',
@@ -22,11 +23,30 @@ export class ArchivedUsersComponent implements OnInit {
     image: "../../assets/team-member.png",
     message: String.EMPTY_ARCHIVED_USERS,
   };
+  editModal = {
+    edit: true,
+    message: String.ARCHIVE_USER,
+    secondaryMessage: String.UNARCHIVE_USER,
+    secondaryYes: String.UNARCHIVE_BUTTON,
+    confirmationNo: String.CANCEL_BUTTON,
+  };
 
   users = [];
 
 
-  constructor( private adminService: AdminService ) { }
+  constructor(private adminService: AdminService, private toast: ToastrService, private modalService: ModalService ) { }
+
+  open(modal) {
+    this.modalService.open(modal, { backdrop: 'static', keyboard: false });
+  }
+
+  onUnarchive(value) {
+    this.adminService.unArchiveUser(value).then((object) => {
+      this.toast.success('Successfully unarchived ' + object.get('firstName') + ' ' + object.get('lastName'));
+    }, (error) => {
+      this.toast.error(error.message || String.GENERAL_ERROR);
+    });
+  }
 
   ngOnInit() {
     this.adminService.getArchivedUsers()
