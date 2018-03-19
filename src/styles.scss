@@ -311,17 +311,9 @@ body {
         padding: 5px;
       }
 
-      tbody {
-        width: inherit;
-      }
-
-      tbody tr {
-        border-bottom: 1px solid #C6C6C6;
-      }
-
       th, td {
         padding: 5px;
-        text-align: center;
+        text-align: left;
         font-weight: 300;
       }
 
@@ -333,7 +325,22 @@ body {
       }
 
       td {
+        text-align: left;
         font-size: 13px;
+        min-width: 15vw;
+
+        @include xxl {
+          min-width: 13vw;
+        }
+      }
+
+      td:last-child {
+        display: inline-flex;
+        min-width: 100%;
+
+        // @include xxl {
+        //   min-width: 100%;
+        // }
       }
     }
 
@@ -342,7 +349,7 @@ body {
     margin-right: 5px;
   }
   
-  @include large  {
+  @include xl  {
     table, thead, tbody { 
       display: block; 
       background-color: $default-background;
@@ -365,11 +372,17 @@ body {
     }
   
     td { 
+      width: none;
       height: 40px;
       font-size: 13px;
       text-align: right !important;
       display: block;
       border: none;
+    }
+
+    td:last-child {
+      display: inherit !important;
+      width: none;
     }
     
     td:before { 

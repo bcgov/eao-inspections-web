@@ -12,9 +12,21 @@
     </td>
     <td data-label="Submitted" *ngIf="fields.indexOf('submitted') >= 0">{{data.updatedAt | date : "MMM d y" }}</td>
     <td data-label="Actions" *ngIf="fields.indexOf('actions') >= 0">
-        <button *ngIf="actions.indexOf('download') >= 0" class="dashboard--actions">Download</button>
-        <button *ngIf="actions.indexOf('permission') >= 0" class="dashboard--actions">Set Permissions</button>
-        <button *ngIf="actions.indexOf('archive') >= 0" class="dashboard--actions">Archive</button>
-        <button *ngIf="actions.indexOf('unarchive') >= 0" class="dashboard--actions">Unarchive</button>
+        <button *ngIf="actions.indexOf('download') >= 0" class="dashboard--actions dashboard--actions--sm">
+            <img class="dashboard--actions--sm__img" src="../../assets/download.png" />
+            Download
+        </button>
+        <button *ngIf="actions.indexOf('permission') >= 0" class="dashboard--actions dashboard--actions--sm">
+            <img class="dashboard--actions--sm__img" src="../../assets/archive.png" />
+            Set Permissions
+        </button>
+        <button *ngIf="actions.indexOf('archive') >= 0" class="dashboard--actions dashboard--actions--sm">
+            <img class="dashboard--actions--sm__img" src="../../assets/archive.png" />
+            Archive
+        </button>
+        <button *ngIf="actions.indexOf('unarchive') >= 0" class="dashboard--actions dashboard--actions--sm">
+            <img class="dashboard--actions--sm__img" src="../../assets/unarchive.png" />
+            Unarchive
+        </button>
     </td>
 </tr>

@@ -19,6 +19,15 @@ import { BasicUser } from '../../models/user.model';
   providers: [AuthService, NgbActiveModal, ProfileService]
 })
 export class MenuComponent implements OnInit{
+  myInspections = Route.MY_REPORTS;
+  teamInspections = Route.TEAM_REPORTS;
+  profile = Route.PROFILE;
+  settings = Route.SETTINGS;
+  search = Route.SEARCH;
+  adminUser = Route.ADMIN_USERS;
+  adminTeam = Route.ADMIN_TEAMS;
+  adminReport = Route.ADMIN_REPORTS;
+
   user: BasicUser;
   modal = {
     message: String.LOGOUT_USER,
@@ -31,15 +40,7 @@ export class MenuComponent implements OnInit{
     public modalService: ModalService, 
     private router: Router,
     private profileService: ProfileService
-  ) { }
-  myInspections = Route.MY_REPORTS;
-  teamInspections = Route.TEAM_REPORTS;
-  profile = Route.PROFILE;
-  settings = Route.SETTINGS;
-  search = Route.SEARCH;
-  adminUser = Route.ADMIN_USERS;
-  adminTeam = Route.ADMIN_TEAMS;
-  adminReport = Route.ADMIN_REPORTS;
+  ) {}
 
   open(content) {
     this.modalService.open(content, { backdrop: 'static', keyboard: false });
@@ -66,5 +67,5 @@ export class MenuComponent implements OnInit{
   ngOnInit() {
     const userData = this.profileService.user;
     this.user = parseUserToModel(userData);
-    };
+  };
 }

@@ -30,7 +30,7 @@ const routes: Routes = [
   { path: Route.LOGIN, component:  LoginComponent },
 
   // user routes
-  { path: '', redirectTo: Route.MY_REPORTS, pathMatch: 'full', canActivate: [AuthGuardService] },
+  { path: '', redirectTo: Route.PROFILE, pathMatch: 'full', canActivate: [AuthGuardService] },
   { path: Route.MY_REPORTS, component: MyReportsComponent, canActivate: [AuthGuardService] },
   { path: Route.MY_REPORTS + Route.INSPECTION_DETAILS, component: InspectionViewComponent, canActivate: [AuthGuardService] },
   { path: Route.MY_REPORTS + Route.INSPECTION_DETAILS + Route.ELEMENT_ID, component: ElementViewComponent, canActivate: [AuthGuardService] },
