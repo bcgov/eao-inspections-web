@@ -1,25 +1,24 @@
 <div class="table-row">
-    <div class="table-row-item" data-header="Title"  *ngIf="fields.indexOf('title') >= 0">
+    <div class="table-row-item" data-header="Title" *ngIf="fields.indexOf('title') >= 0">
         <a [routerLink]="['inspection-details', data.id]">{{data.title}}</a>
     </div>
     <div class="table-row-item" data-header="Linked Project" *ngIf="fields.indexOf('project') >= 0">
         {{ data.project || '-' }}
     </div>
     <div class="table-row-item" data-header="Team" *ngIf="fields.indexOf('team') >= 0">
-         {{ data.team?.name || '-' }}
+        {{ data.team?.name || '-' }}
     </div>
-    <div class="table-row-item" data-header="Inspector"*ngIf="fields.indexOf('inspector') >= 0">
-        <img width="40px" [src]="data.inspector.image" (error)="setDefaultPic()" /> 
-        {{data.inspector.name || '-'}}
+    <div class="table-row-item" data-header="Inspector" *ngIf="fields.indexOf('inspector') >= 0">
+        <img width="40px" [src]="data.inspector.image" (error)="setDefaultPic()" /> {{data.inspector.name || '-'}}
     </div>
     <div class="table-row-item" data-header="Submitted" *ngIf="fields.indexOf('submitted') >= 0">
         {{data.updatedAt | date : "MMM d y" }}
     </div>
     <div class="table-row-item" data-header="Action" *ngIf="fields.indexOf('actions') >= 0">
-        <button *ngIf="actions.indexOf('download') >= 0" class="dashboard--actions dashboard--actions--sm">
+        <button *ngIf="actions.indexOf('download') >= 0 && (!data.viewOnly || user.isAdmin || user.isSuperAdmin)" class="dashboard--actions dashboard--actions--sm">
             <img class="dashboard--actions--sm__img" src="../../assets/download.png" /> Download
         </button>
-        <button *ngIf="actions.indexOf('permission') >= 0" class="dashboard--actions dashboard--actions--sm">
+        <button *ngIf="actions.indexOf('permission') >= 0" class="dashboard--actions dashboard--actions--sm" (click)="open(setPermission)">
             <img class="dashboard--actions--sm__img" src="../../assets/archive.png" /> Set Permissions
         </button>
         <button *ngIf="actions.indexOf('archive') >= 0" class="dashboard--actions dashboard--actions--sm">
@@ -28,5 +27,9 @@
         <button *ngIf="actions.indexOf('unarchive') >= 0" class="dashboard--actions dashboard--actions--sm">
             <img class="dashboard--actions--sm__img" src="../../assets/unarchive.png" /> Unarchive
         </button>
-    </div> 
+    </div>
 </div>
+
+<ng-template #setPermission let-c="close" class="modal">
+    <permissions-modal (submitValue)="onSetPermission($event)" [closeValue]="this.c" [data]="data" [modal]="setPermissionModal"></permissions-modal>
+</ng-template>

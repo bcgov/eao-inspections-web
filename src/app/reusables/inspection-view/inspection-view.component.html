@@ -4,11 +4,19 @@
       <img src="../../../assets/back.png" />
     </a> -->
         <div class="dashboard__header">
-            <h1 class="dashboard__title">{{title}}</h1>
-            <button class="dashboard__btn">
-        <img class="dashboard__header__btn__img" src="../../assets/add-active.png" />
-        Download
-      </button>
+            <div class="inspection__title">
+                <h1 class="dashboard__title" id="title">{{title}}</h1>
+                <label for="title" class="view-only-btn" *ngIf="data?.viewOnly && !user?.isAdmin && !user?.isSuperAdmin;">
+                        <img class="dashboard__header__btn__img" src="../../assets/view-only.png"/> 
+                        VIEW-ONLY
+                </label>
+            </div>
+            <button class="dashboard__btn" [disabled]="data?.viewOnly && !user?.isAdmin && !user?.isSuperAdmin">
+            <img class="dashboard__header__btn__img" *ngIf="data?.viewOnly && !user?.isAdmin && !user?.isSuperAdmin; else CanDownload"  src="../../assets/add-inactive.png" />
+            <ng-template #CanDownload><img class="dashboard__header__btn__img" src="../../assets/add-active.png" />
+            </ng-template>
+            Download
+        </button>
         </div>
         <div id="inspection-details" class="inspection-details" *ngIf="data">
             <div class="inspection-details-content">

@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {ReportService} from '../../../services/report.service';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'inspection-view',
@@ -17,12 +18,14 @@ export class InspectionViewComponent implements OnInit {
   routeParam;
   message: string;
 
+  user: any;
+
   isDesc:boolean = false;
   direction: number;
   column: string;
 
 
-  constructor(private route: ActivatedRoute, private reportService: ReportService) {
+  constructor(private route: ActivatedRoute, private reportService: ReportService, private authService: AuthService) {
     this.routeParam = this.route.snapshot.params;
   }
 
@@ -30,6 +33,7 @@ export class InspectionViewComponent implements OnInit {
     this.sort('createdAt');
     this.reportService.getInspection(this.routeParam.id).then(object => {
       this.data = object;
+      console.log(this.data);
     });
     this.reportService.getObservations(this.routeParam.id)
       .then((results) => {
@@ -38,7 +42,8 @@ export class InspectionViewComponent implements OnInit {
         } else {
           this.elements = [results];
         }
-      });
+    });
+    this.user = this.authService.getUser();
   }
 
   sort(property: string) {

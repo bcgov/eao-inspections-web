@@ -1,6 +1,7 @@
 import { Injectable} from '@angular/core';
 
 import { environment } from '../environments/environment';
+import { parseUserToModel } from './parse.service';
 
 const Parse: any = require('parse');
 
@@ -69,5 +70,9 @@ export class AuthService {
 
   isSuperAdmin() {
     return Parse.User.current().get('isSuperAdmin');
+  }
+
+  getUser() {
+    return parseUserToModel(Parse.User.current());
   }
 }

@@ -38,9 +38,40 @@
             }
         }
     }
+    &__title {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .dashboard__title {
+        font-size: 40px;
+        font-weight: bold;
+        margin: 0 10px 0 30px;
+    }
+}
+
+.view-only-btn {
+    height: 28px;
+    width: 110px;
+    border-radius: 4px;
+    background-color: #E3A849;
+    color: #FFFFFF;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 0;
+    img {
+        margin-right: 5px;
+    }
 }
 
 // CSS class to change the mouse cursor in hand
 .pointer {
     cursor: pointer;
+}
+
+button:disabled {
+    background: #dddddd;
+    color: #b0b2b2;
 }

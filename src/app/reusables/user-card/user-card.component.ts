@@ -48,7 +48,7 @@ export class UserCardComponent {
   }
 
   openEdit(modal) {
-    this.modalService.open(modal, { size:'lg', backdrop: 'static', keyboard: false });
+    this.modalService.open(modal, { size: 'lg', backdrop: 'static', keyboard: false });
   }
 
   openRemove(modal) {
