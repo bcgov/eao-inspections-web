@@ -23,7 +23,7 @@ export class LoginComponent implements OnInit {
     const password = form.value.password;
     this.authService.logIn(username, password).then((results) => {
       if (results) {
-        this.router.navigate([Route.DASHBOARD + '/' + Route.MY_REPORTS);
+        this.router.navigate([Route.DASHBOARD + '/' + Route.MY_REPORTS]);
       }
     });
   }

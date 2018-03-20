@@ -57,7 +57,7 @@ const routes: Routes = [
       { path: Route.ADMIN_REPORTS + Route.TEAM_ID+ Route.INSPECTION_DETAILS, component: InspectionViewComponent, canActivate: [AuthGuardService, RoleGuardService], data: { 'expectedRole': ParseVar.SUADMIN } },
       { path: Route.ADMIN_REPORTS + Route.TEAM_ID + Route.INSPECTION_DETAILS + Route.ELEMENT_ID, component: ElementViewComponent, canActivate: [AuthGuardService, RoleGuardService], data: { 'expectedRole': ParseVar.SUADMIN } },
     ]
-  }
+  },
 
   // no-route
   { path: '**', component: NoRouteComponent },
