@@ -34,7 +34,7 @@ describe('ElementViewComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ ElementViewComponent ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
-    providers: [{provide : ActivatedRoute, useClass: MockActivatedRoute}]
+      providers: [{provide : ActivatedRoute, useClass: MockActivatedRoute}]
     })
     .compileComponents();
   }));
