@@ -29,11 +29,11 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 const routes: Routes = [
   // unauthenticated routes
   { path: Route.LOGIN, component:  LoginComponent },
+  { path: '', redirectTo: Route.DASHBOARD + '/' + Route.PROFILE, pathMatch: 'full', canActivate: [AuthGuardService] },
 
   { path: Route.DASHBOARD, component: DashboardComponent,
     children: [
       // user routes
-      { path: '', redirectTo: Route.PROFILE, pathMatch: 'full', canActivate: [AuthGuardService] },
       { path: Route.MY_REPORTS, component: MyReportsComponent, canActivate: [AuthGuardService] },
       { path: Route.MY_REPORTS + Route.INSPECTION_DETAILS, component: InspectionViewComponent, canActivate: [AuthGuardService] },
       { path: Route.MY_REPORTS + Route.INSPECTION_DETAILS + Route.ELEMENT_ID, component: ElementViewComponent, canActivate: [AuthGuardService] },

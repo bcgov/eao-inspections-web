@@ -7,7 +7,7 @@ import { ProfileService } from '../../../services/profile.service';
   selector: 'inspection-view',
   templateUrl: './inspection-view.component.html',
   styleUrls: ['./inspection-view.component.scss'],
-  providers: [ReportService]
+  providers: [ReportService, ProfileService]
 })
 export class InspectionViewComponent implements OnInit {
   data;

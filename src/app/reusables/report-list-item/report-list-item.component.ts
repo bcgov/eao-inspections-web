@@ -10,7 +10,7 @@ import { ProfileService } from '../../../services/profile.service';
   selector: 'report-list-item',
   templateUrl: './report-list-item.component.html',
   styleUrls: ['./report-list-item.component.scss'],
-  providers: [AdminService]
+  providers: [AdminService, ProfileService]
 })
 export class ReportListItemComponent implements OnInit {
   @Input('data') data: any;
