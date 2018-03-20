@@ -10,7 +10,7 @@ import { ProfileService } from '../../../services/profile.service';
   selector: 'report-list-item',
   templateUrl: './report-list-item.component.html',
   styleUrls: ['./report-list-item.component.scss'],
-  providers: [ProfileService]
+  providers: [AdminService]
 })
 export class ReportListItemComponent implements OnInit {
   @Input('data') data: any;
@@ -24,8 +24,8 @@ export class ReportListItemComponent implements OnInit {
     userButton: String.UPDATE_BUTTON,
   };
 
-  constructor(private authService: AuthService, private modalService: ModalService, 
-    private profileService: ProfileService, private toast: ToastrService) { }
+  constructor(private profileService: ProfileService, private modalService: ModalService, 
+    private adminService: AdminService, private toast: ToastrService) { }
 
   ngOnInit() {
     this.user = this.profileService.user;
