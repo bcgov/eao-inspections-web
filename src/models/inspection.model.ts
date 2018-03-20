@@ -14,6 +14,7 @@ export class Inspection {
   public requirement: string;
   public submitted: boolean;
   public team: Team;
+  public viewOnly: boolean;
 
   constructor(
     id: string,
@@ -27,7 +28,8 @@ export class Inspection {
     updatedAt: Date,
     requirement: string,
     submitted: boolean,
-    team: Team = null
+    team: Team = null,
+    viewOnly: boolean = false,
     ) {
     this.id = id;
     this.title = title;
@@ -41,5 +43,6 @@ export class Inspection {
     this.requirement = requirement;
     this.submitted = submitted;
     this.team = team;
+    this.viewOnly = viewOnly;
   }
 }

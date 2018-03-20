@@ -72,6 +72,7 @@ export function parseInspectionToModel(object) {
     object.get('updatedAt'),
     object.get('requirement'),
     object.get('isSubmitted'),
-    team
+    team,
+    object.get('viewOnly')
   );
 }

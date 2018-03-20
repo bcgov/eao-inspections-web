@@ -14,8 +14,8 @@ export class PermissionsModalComponent {
 
   constructor() { }
 
-  onSubmit() {
-    this.submitValue.emit();
+  onSubmit(data) {
+    this.submitValue.emit(data);
   }
 
   close() {

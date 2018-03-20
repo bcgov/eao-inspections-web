@@ -519,4 +519,17 @@ export class AdminService {
       });
     });
   }
+
+  updateReportPermission(reportId: string, permission: boolean) {
+    return new Promise((resolve, reject) => {
+      const report = Parse.Object.extend('Inspection');
+      const reportObject = report.createWithoutData(reportId);
+      reportObject.set('viewOnly', permission);
+      reportObject.save().then(() => {
+        resolve(reportObject);
+      }).catch((error) => {
+        reject(error);
+      });
+    });
+  }
 }

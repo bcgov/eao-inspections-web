@@ -1,24 +1,22 @@
 @import '../../../../scss/_variables';
 @import '../../../../scss/_mixins';
-
 .prmissions-modal__body {
-  color: $font-dark-gray;
-  font-size: 14px;
-  font-weight: 300;
-  padding: 10px;
-  border-radius: 2px;
-  box-shadow: $default-box-shadow;
-  @include flex;
-
-  span {
-    color: $font-dark-gray;	
-    margin: 9px 10px 0 0;
-    display: inline-table;
-    font-size: 16px;	
-    font-weight: 600;	
-    text-transform: uppercase;
-  }
-  &__img {
-    // width: 19px;
-  }
+    color: $font-dark-gray;
+    font-size: 14px;
+    font-weight: 300;
+    padding: 10px;
+    border-radius: 2px;
+    box-shadow: $default-box-shadow;
+    @include flex;
+    span {
+        color: $font-dark-gray;
+        margin: 9px 10px 0 0;
+        display: inline-table;
+        font-size: 16px;
+        font-weight: 600;
+        text-transform: uppercase;
+    }
+    &__img {
+        // width: 19px;
+    }
 }
