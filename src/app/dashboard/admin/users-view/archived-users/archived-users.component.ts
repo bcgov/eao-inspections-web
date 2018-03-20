@@ -17,7 +17,7 @@ import { ToastrService } from 'ngx-toastr';
 
 export class ArchivedUsersComponent implements OnInit {
   title = "Archived Users";
-  link = Route.ADMIN_USERS;
+  link = '/' + Route.DASHBOARD + '/' + Route.ADMIN_USERS;
 
   emptyContent = {
     image: "../../assets/team-member.png",

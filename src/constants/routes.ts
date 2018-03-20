@@ -1,3 +1,6 @@
+
+export const DASHBOARD = 'dashboard';
+
 // menu links
 export const LOGIN = 'login';
 export const MY_REPORTS = 'my-inspections';

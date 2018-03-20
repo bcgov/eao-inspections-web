@@ -12,12 +12,17 @@ Parse.masterKey = environment.parseMasterKey;
 @Injectable()
 export class AuthService {
 
-  constructor() {}
+  user = new Parse.User();
+
+  constructor() {
+    this.user = Parse.User.current();
+  }
 
   logIn(username: string, password: string) {
     return new Promise((resolve) => {
       Parse.User.logIn(username, password)
-        .then(() => {
+        .then((user) => {
+            this.user = user;
             resolve(true);
           },
           () => {
@@ -70,9 +75,5 @@ export class AuthService {
 
   isSuperAdmin() {
     return Parse.User.current().get('isSuperAdmin');
-  }
-
-  getUser() {
-    return parseUserToModel(Parse.User.current());
   }
 }

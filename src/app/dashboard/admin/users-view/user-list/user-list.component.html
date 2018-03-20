@@ -1,24 +1,24 @@
 <div class="dashboard__header">
-  <p class="dashboard__title">{{title}}</p>
-  <div class="dashboard__buttons">
-    <button type="button" class="dashboard__btn" (click)="openLg(addUser)">
+    <p class="dashboard__title">{{title}}</p>
+    <div class="dashboard__buttons">
+        <button type="button" class="dashboard__btn" (click)="openLg(addUser)">
       <img class="dashboard__header__btn__img" src="../../assets/add-active.png" /> Create New
     </button>
-    <a href={{archivedLink}}><button type="button" class="dashboard__btn"> Archived Users</button></a>
-  </div>
+        <a routerLink={{archivedLink}}><button type="button" class="dashboard__btn"> Archived Users</button></a>
+    </div>
 </div>
 
 <div *ngIf="users?.length<=0; then noContent else content"></div>
 <ng-template #content>
-  <div class="table">
-    <div class="table-row table-header">
-      <div class="table-row-item">Full Name</div>
-      <div class="table-row-item">Email</div>
-      <div class="table-row-item">Team</div>
-      <div class="table-row-item">Permission</div>
-      <div class="table-row-item">Action</div>
-    </div>
-    <span *ngFor="let user of users">
+    <div class="table">
+        <div class="table-row table-header">
+            <div class="table-row-item">Full Name</div>
+            <div class="table-row-item">Email</div>
+            <div class="table-row-item">Team</div>
+            <div class="table-row-item">Permission</div>
+            <div class="table-row-item">Action</div>
+        </div>
+        <span *ngFor="let user of users">
       <div class="table-row">
         <div class="table-row-item" data-header="Full Name">
           <img *ngIf="user.image" class="table__img" src={{user.image}} />
@@ -59,9 +59,9 @@
         </archive-modal>
       </ng-template>      
   </span>
-</div>
+    </div>
 </ng-template>
- 
+
 
 <ng-template #noContent>
     <loading></loading>
@@ -70,6 +70,6 @@
 
 <!-- modal to add new user -->
 <ng-template #addUser let-c="close" class="modal">
-  <user-modal (submitValue)="onSubmit($event)" [closeValue]="this.c" [modal]="newModal">
-  </user-modal>
+    <user-modal (submitValue)="onSubmit($event)" [closeValue]="this.c" [modal]="newModal">
+    </user-modal>
 </ng-template>

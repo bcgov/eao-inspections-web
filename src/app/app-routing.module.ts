@@ -24,36 +24,41 @@ import {RoleGuardService} from '../services/role-guard-service';
 import { NoRouteComponent } from './no-route/no-route.component';
 import { ArchivedUsersComponent } from './dashboard/admin/users-view/archived-users/archived-users.component';
 import { ReportViewListComponent } from './dashboard/admin/reports-view/report-view-list/report-view-list.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 const routes: Routes = [
   // unauthenticated routes
   { path: Route.LOGIN, component:  LoginComponent },
 
-  // user routes
-  { path: '', redirectTo: Route.PROFILE, pathMatch: 'full', canActivate: [AuthGuardService] },
-  { path: Route.MY_REPORTS, component: MyReportsComponent, canActivate: [AuthGuardService] },
-  { path: Route.MY_REPORTS + Route.INSPECTION_DETAILS, component: InspectionViewComponent, canActivate: [AuthGuardService] },
-  { path: Route.MY_REPORTS + Route.INSPECTION_DETAILS + Route.ELEMENT_ID, component: ElementViewComponent, canActivate: [AuthGuardService] },
-  { path: Route.TEAM_REPORTS, component: TeamReportsComponent, canActivate: [AuthGuardService] },
-  { path: Route.TEAM_REPORTS + Route.TEAM_ID, component: TeamReportListComponent, canActivate: [AuthGuardService] },
-  { path: Route.TEAM_REPORTS + Route.TEAM_ID + Route.INSPECTION_DETAILS, component: InspectionViewComponent, canActivate: [AuthGuardService] },
-  { path: Route.TEAM_REPORTS + Route.TEAM_ID + Route.INSPECTION_DETAILS + Route.ELEMENT_ID, component: ElementViewComponent, canActivate: [AuthGuardService] },
-  { path: Route.PROFILE, component: ProfileComponent, canActivate: [AuthGuardService] },
-  { path: Route.SETTINGS, component: SettingsComponent, canActivate: [AuthGuardService] },
-  { path: Route.SEARCH, component: SearchViewComponent, canActivate: [AuthGuardService] },
+  { path: Route.DASHBOARD, component: DashboardComponent,
+    children: [
+      // user routes
+      { path: '', redirectTo: Route.PROFILE, pathMatch: 'full', canActivate: [AuthGuardService] },
+      { path: Route.MY_REPORTS, component: MyReportsComponent, canActivate: [AuthGuardService] },
+      { path: Route.MY_REPORTS + Route.INSPECTION_DETAILS, component: InspectionViewComponent, canActivate: [AuthGuardService] },
+      { path: Route.MY_REPORTS + Route.INSPECTION_DETAILS + Route.ELEMENT_ID, component: ElementViewComponent, canActivate: [AuthGuardService] },
+      { path: Route.TEAM_REPORTS, component: TeamReportsComponent, canActivate: [AuthGuardService] },
+      { path: Route.TEAM_REPORTS + Route.TEAM_ID, component: TeamReportListComponent, canActivate: [AuthGuardService] },
+      { path: Route.TEAM_REPORTS + Route.TEAM_ID + Route.INSPECTION_DETAILS, component: InspectionViewComponent, canActivate: [AuthGuardService] },
+      { path: Route.TEAM_REPORTS + Route.TEAM_ID + Route.INSPECTION_DETAILS + Route.ELEMENT_ID, component: ElementViewComponent, canActivate: [AuthGuardService] },
+      { path: Route.PROFILE, component: ProfileComponent, canActivate: [AuthGuardService] },
+      { path: Route.SETTINGS, component: SettingsComponent, canActivate: [AuthGuardService] },
+      { path: Route.SEARCH, component: SearchViewComponent, canActivate: [AuthGuardService] },
 
-  // admin routes
-  { path: Route.ADMIN_USERS, component: UsersViewComponent, canActivate: [AuthGuardService, RoleGuardService], data: { 'expectedRole': ParseVar.SUADMIN } },
-  { path: Route.ARCHIVED_USERS, component: ArchivedUsersComponent, canActivate: [AuthGuardService, RoleGuardService], data: { 'expectedRole': ParseVar.SUADMIN }  },
-  { path: Route.ADMIN_TEAMS, component: TeamsViewComponent, canActivate: [AuthGuardService, RoleGuardService], data: { 'expectedRole': ParseVar.SUADMIN } },
-  { path: Route.ARCHIVED_TEAMS, component: ArchivedTeamsComponent, canActivate: [AuthGuardService, RoleGuardService], data: { 'expectedRole': ParseVar.SUADMIN } },
-  { path: Route.ADMIN_TEAMS + Route.MANAGE_TEAM_ID, component: ManageTeamsViewComponent, canActivate: [AuthGuardService, RoleGuardService], data: { 'expectedRole': ParseVar.SUADMIN } },
-  { path: Route.ADMIN_REPORTS, component: ReportsViewComponent, canActivate: [AuthGuardService, RoleGuardService], data: { 'expectedRole': ParseVar.SUADMIN } },
-  { path: Route.ARCHIVED_INSPECTIONS, component: ArchivedInspectionsComponent, canActivate: [AuthGuardService, RoleGuardService], data: { 'expectedRole': ParseVar.SUADMIN } },
-  { path: Route.ADMIN_REPORTS + Route.TEAM_ID, component: ReportViewListComponent, canActivate: [AuthGuardService, RoleGuardService], data: { 'expectedRole': ParseVar.SUADMIN } },
-  { path: Route.ADMIN_REPORTS + Route.TEAM_ID+ Route.INSPECTION_DETAILS, component: InspectionViewComponent, canActivate: [AuthGuardService, RoleGuardService], data: { 'expectedRole': ParseVar.SUADMIN } },
-  { path: Route.ADMIN_REPORTS + Route.TEAM_ID + Route.INSPECTION_DETAILS + Route.ELEMENT_ID, component: ElementViewComponent, canActivate: [AuthGuardService, RoleGuardService], data: { 'expectedRole': ParseVar.SUADMIN } },
-  
+      // admin routes
+      { path: Route.ADMIN_USERS, component: UsersViewComponent, canActivate: [AuthGuardService, RoleGuardService], data: { 'expectedRole': ParseVar.SUADMIN } },
+      { path: Route.ARCHIVED_USERS, component: ArchivedUsersComponent, canActivate: [AuthGuardService, RoleGuardService], data: { 'expectedRole': ParseVar.SUADMIN }  },
+      { path: Route.ADMIN_TEAMS, component: TeamsViewComponent, canActivate: [AuthGuardService, RoleGuardService], data: { 'expectedRole': ParseVar.SUADMIN } },
+      { path: Route.ARCHIVED_TEAMS, component: ArchivedTeamsComponent, canActivate: [AuthGuardService, RoleGuardService], data: { 'expectedRole': ParseVar.SUADMIN } },
+      { path: Route.ADMIN_TEAMS + Route.MANAGE_TEAM_ID, component: ManageTeamsViewComponent, canActivate: [AuthGuardService, RoleGuardService], data: { 'expectedRole': ParseVar.SUADMIN } },
+      { path: Route.ADMIN_REPORTS, component: ReportsViewComponent, canActivate: [AuthGuardService, RoleGuardService], data: { 'expectedRole': ParseVar.SUADMIN } },
+      { path: Route.ARCHIVED_INSPECTIONS, component: ArchivedInspectionsComponent, canActivate: [AuthGuardService, RoleGuardService], data: { 'expectedRole': ParseVar.SUADMIN } },
+      { path: Route.ADMIN_REPORTS + Route.TEAM_ID, component: ReportViewListComponent, canActivate: [AuthGuardService, RoleGuardService], data: { 'expectedRole': ParseVar.SUADMIN } },
+      { path: Route.ADMIN_REPORTS + Route.TEAM_ID+ Route.INSPECTION_DETAILS, component: InspectionViewComponent, canActivate: [AuthGuardService, RoleGuardService], data: { 'expectedRole': ParseVar.SUADMIN } },
+      { path: Route.ADMIN_REPORTS + Route.TEAM_ID + Route.INSPECTION_DETAILS + Route.ELEMENT_ID, component: ElementViewComponent, canActivate: [AuthGuardService, RoleGuardService], data: { 'expectedRole': ParseVar.SUADMIN } },
+    ]
+  }
+
   // no-route
   { path: '**', component: NoRouteComponent },
 ];

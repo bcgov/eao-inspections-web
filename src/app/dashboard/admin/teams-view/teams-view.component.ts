@@ -15,7 +15,7 @@ import { Team } from '../../../../models/team.model';
 })
 export class TeamsViewComponent implements OnInit {
   title = 'Teams';
-  archivedLink = Route.ARCHIVED_TEAMS;
+  archivedLink = '/' + Route.DASHBOARD + '/' + Route.ARCHIVED_TEAMS;
   teams: Array<Team> = [];
 
   modal = {

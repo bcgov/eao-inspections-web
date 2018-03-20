@@ -14,7 +14,7 @@ import { Team } from '../../../../../models/team.model';
 })
 export class ArchivedTeamsComponent implements OnInit {
   title = "Archived Teams";
-  teamsLink = Route.ADMIN_TEAMS;
+  teamsLink = '/' + Route.DASHBOARD + '/' + Route.ADMIN_TEAMS;
   teams: Array<Team> = [];
 
   emptyContent = {

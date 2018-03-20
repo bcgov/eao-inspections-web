@@ -4,12 +4,13 @@ import * as String from '../../../constants/strings';
 import { ModalService } from '../../../services/modal.service';
 import { AdminService } from '../../../services/admin.service';
 import { ToastrService } from 'ngx-toastr';
+import { ProfileService } from '../../../services/profile.service';
 
 @Component({
   selector: 'report-list-item',
   templateUrl: './report-list-item.component.html',
   styleUrls: ['./report-list-item.component.scss'],
-  providers: [AdminService]
+  providers: [ProfileService]
 })
 export class ReportListItemComponent implements OnInit {
   @Input('data') data: any;
@@ -24,11 +25,10 @@ export class ReportListItemComponent implements OnInit {
   };
 
   constructor(private authService: AuthService, private modalService: ModalService, 
-    private adminService: AdminService, private toast: ToastrService) { }
+    private profileService: ProfileService, private toast: ToastrService) { }
 
   ngOnInit() {
-    this.user = this.authService.getUser();
-    console.log(this.user);
+    this.user = this.profileService.user;
   }
 
   setDefaultPic() {

@@ -154,8 +154,7 @@ export class AdminService {
           });
         },
         error: function (object, error) {
-          console.log(error);
-          reject(error);
+           reject(error);
         }
       }).then((userObject) => {
         Promise.all(promises).then(() => {
@@ -193,7 +192,6 @@ export class AdminService {
           resolve(user);
         },
         error: function (object, error) {
-          console.log(error);
           reject(error);
         }
       });
@@ -407,7 +405,6 @@ export class AdminService {
           resolve (inspector);
         },
         error: function(error) {
-          console.log(error);
           reject (error);
         }
       });

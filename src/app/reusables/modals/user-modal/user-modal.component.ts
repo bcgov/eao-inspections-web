@@ -22,7 +22,6 @@ export class UserModalComponent implements OnInit {
   constructor(private adminService: AdminService) { }
 
   getPhoto(event) {
-    console.log(event.target.files[0]);
     this.selectedPhoto = event.target.files[0].name;
   }
 
@@ -34,7 +33,6 @@ export class UserModalComponent implements OnInit {
     const password = form.value.password;
     const team = form.value.team;
     const permission = form.value.permission;
-    // console.log(this.selectedPhoto);
     if (id) {
       this.submitValue.emit({ firstName, lastName, email, permission, id })
     } else {

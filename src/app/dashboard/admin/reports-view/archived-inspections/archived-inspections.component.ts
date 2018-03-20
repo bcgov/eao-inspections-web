@@ -38,7 +38,6 @@ export class ArchivedInspectionsComponent implements OnInit {
     this.adminService.getArchivedReport()
       .then((results) => {
         this.data = results;
-        console.log(this.data);
       });
   }
 
