@@ -1,3 +1,5 @@
-<div class="element-details-media" *ngFor="let item of mediaSelected">
-  <img class="thumbnail" style="width: 200px;padding: 20px;" src="{{ item.fileURL }}">
+<div class="row">
+  <div class="element-details-media" *ngFor="let item of mediaSelected">
+    <img class="col thumbnail" style="width: 200px; padding: 10px;" src="{{ item.fileURL }}">
+  </div>
 </div>

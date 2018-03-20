@@ -42,9 +42,14 @@ export class ElementViewComponent implements OnInit {
   }
 
   getMediaAll() {
-    this.mediaSelected = this.media;
+    const tempList = [{}];
     this.setInActive();
     this.isAll = true;
+    this.media.forEach((object) => {
+      tempList.push(object);
+    });
+    this.mediaSelected = tempList;
+
   }
 
   getPhotos() {
