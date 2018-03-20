@@ -35,7 +35,7 @@ export class ProfileComponent implements OnInit {
             const admin = object.admin;
             const team = object.team;
             this.admin.push(
-              parseUserToModel(userData)
+              parseUserToModel(admin)
             );
           });
         }

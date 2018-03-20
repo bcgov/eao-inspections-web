@@ -56,6 +56,7 @@ export class ProfileService {
       query.equalTo('users', this.user);
       query.find({
         success: function(results) {
+          console.log(results);
           if (!Array.isArray(results)) {
             results = [results];
           }
@@ -63,6 +64,7 @@ export class ProfileService {
             promises.push(object.get('teamAdmin')
               .fetch()
               .then((obj) => {
+                console.log(obj);
                 const team = parseTeamToModel(obj);
                 admins.push(
                   {
