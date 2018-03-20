@@ -50,6 +50,7 @@ import { ReportViewListComponent } from './dashboard/admin/reports-view/report-v
 import { ElementMediaComponent } from './reusables/element-view/element-media/element-media.component';
 import { LoadingComponent } from './reusables/loading/loading.component';
 import { ObservableService } from '../services/observable.service';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 @NgModule({
   declarations: [
@@ -89,7 +90,8 @@ import { ObservableService } from '../services/observable.service';
     MemberModalComponent,
     ReportViewListComponent,
     LoadingComponent,
-    ElementMediaComponent
+    ElementMediaComponent,
+    DashboardComponent
   ],
   imports: [
     BrowserModule,

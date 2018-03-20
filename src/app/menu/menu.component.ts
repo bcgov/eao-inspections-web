@@ -49,7 +49,7 @@ export class MenuComponent implements OnInit{
   }
 
   isAuth() {
-    return this.authService.isAuthenticated();
+    return this.authService.isAuthenticated() && this.user;
   }
 
   onLogOut() {
@@ -68,7 +68,7 @@ export class MenuComponent implements OnInit{
   }
 
   ngOnInit() {
-    const userData = this.profileService.user;
-    this.user = parseUserToModel(userData);
+      const userData = this.profileService.user;
+      this.user = parseUserToModel(userData);
   };
 }

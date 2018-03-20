@@ -1,13 +1,13 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {ReportService} from '../../../services/report.service';
-import { AuthService } from '../../../services/auth.service';
+import { ProfileService } from '../../../services/profile.service';
 
 @Component({
   selector: 'inspection-view',
   templateUrl: './inspection-view.component.html',
   styleUrls: ['./inspection-view.component.scss'],
-  providers: [ReportService]
+  providers: [ReportService, ProfileService]
 })
 export class InspectionViewComponent implements OnInit {
   data;
@@ -25,7 +25,7 @@ export class InspectionViewComponent implements OnInit {
   column: string;
 
 
-  constructor(private route: ActivatedRoute, private reportService: ReportService, private authService: AuthService) {
+  constructor(private route: ActivatedRoute, private reportService: ReportService, private profileService: ProfileService) {
     this.routeParam = this.route.snapshot.params;
   }
 
@@ -33,7 +33,6 @@ export class InspectionViewComponent implements OnInit {
     this.sort('createdAt');
     this.reportService.getInspection(this.routeParam.id).then(object => {
       this.data = object;
-      console.log(this.data);
     });
     this.reportService.getObservations(this.routeParam.id)
       .then((results) => {
@@ -43,7 +42,7 @@ export class InspectionViewComponent implements OnInit {
           this.elements = [results];
         }
     });
-    this.user = this.authService.getUser();
+    this.user = this.profileService.user;
   }
 
   sort(property: string) {

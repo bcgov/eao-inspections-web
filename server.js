@@ -3,6 +3,9 @@ const app = express();
 
 var port = 8080;
 
-app.use(express.static(__dirname + "/dist"));
+const staticServe = express.static(`${ __dirname }/dist`);
+
+app.use("/", staticServe);
+app.use("*", staticServe);
 
 app.listen(port, () => console.log('Server running'));
