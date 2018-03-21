@@ -1,18 +1,41 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
+import { ToastrService } from 'ngx-toastr';
 
 import { ReportListItemComponent } from './report-list-item.component';
 import { RouterTestingModule } from '@angular/router/testing';
+import { ModalService } from '../../../services/modal.service';
 
 describe('ReportListItemComponent', () => {
   let component: ReportListItemComponent;
   let fixture: ComponentFixture<ReportListItemComponent>;
   let reportInfo: any;
   const date = Date();
+  let modalServiceStub;
+  let toastServiceStub;
 
   beforeEach(async(() => {
+    modalServiceStub = {
+      open(): Observable<any> {
+        return Observable.of(true);
+      }
+    };
+
+    toastServiceStub = {
+      open(): Observable<any> {
+        return Observable.of(true);
+      }
+    };
+
     TestBed.configureTestingModule({
       declarations: [ ReportListItemComponent ],
       imports: [ RouterTestingModule ],
+      schemas: [ NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA ],
+      providers: [
+        { provide: ModalService, useValue: modalServiceStub },
+        { provide: ToastrService, useValue: toastServiceStub }
+      ]
     })
     .compileComponents();
   }));

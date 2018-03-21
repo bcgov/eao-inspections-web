@@ -146,6 +146,7 @@ describe('Admin Testing', () => {
   it('should update user', () => {
     const query = new Parse.Query('_User');
     query.get(test_user.id).then((result) => {
+      console.log(result);
      test_user.id = result.id;
      console.log('Testing update user in functionality: ' + test_user.id);
      const name_change = 'test_user_changed';
