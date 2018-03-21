@@ -130,13 +130,14 @@ body {
             line-height: 34px;
         }
         &--actions {
-            font-size: 16px;
+            font-size: 15px;
             height: 16px;
             width: 33px;
             color: $default-link-color;
             border: none;
             margin-right: 10px;
             text-transform: uppercase;
+
             &--sm {
                 width: auto;
                 display: inline-flex;
@@ -255,38 +256,41 @@ body {
         padding: 0;
         border-collapse: collapse;
         table-layout: fixed;
+
         .table-row {
             @include flex;
-            justify-content: space-between;
             padding: 5px;
             border-bottom: 1px solid $font-gray;
         }
         .table-row-item {
+            flex: 3;
+            font-size: 13px;
             overflow-wrap: break-word;
             padding: 5px;
-            text-align: left;
             font-weight: 300;
+            text-align: left !important;
         }
+
+        .table-row-item:last-child {
+            flex: 5;
+        }
+
         .table-row.table-header {
             background-color: #EAEEF0;
             color: $font-dark-gray;
-            font-size: 16px;
             text-transform: uppercase;
             border-bottom: none;
+
+            .table-row-item {
+                font-size: 16px;
+            }
         }
-        // td {
-        //   font-size: 13px;
-        // }
-        // td:last-child {
-        //   display: inline-flex;
-        //   text-align: left;
-        // }
     }
     .table__img {
         width: 40px;
         margin-right: 5px;
     }
-    @include large {
+    @include xl {
         .table {
             display: block;
             background-color: $default-background;

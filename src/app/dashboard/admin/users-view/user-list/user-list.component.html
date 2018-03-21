@@ -22,7 +22,8 @@
       <div class="table-row">
         <div class="table-row-item" data-header="Full Name">
           <img *ngIf="user.image" class="table__img" src={{user.image}} />
-          <img *ngIf="!user.image" class="table__img" src="../../../assets/team-member.png" /> {{user.firstName + " " + user.lastName}}
+          <img *ngIf="!user.image" class="table__img" src="../../../assets/team-member.png" /> 
+          {{user.firstName + " " + user.lastName}}
         </div>
         <div class="table-row-item" data-header="Email">
            {{user.publicEmail}}
