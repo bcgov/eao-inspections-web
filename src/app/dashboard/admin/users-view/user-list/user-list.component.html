@@ -1,7 +1,7 @@
 <div class="dashboard__header">
     <p class="dashboard__title">{{title}}</p>
     <div class="dashboard__buttons">
-        <button type="button" class="dashboard__btn" (click)="open(addUser)">
+        <button type="button" class="dashboard__btn" (click)="openLg(addUser)">
       <img class="dashboard__header__btn__img" src="../../assets/add-active.png" /> Create New
     </button>
         <a routerLink={{archivedLink}}><button type="button" class="dashboard__btn"> Archived Users</button></a>
@@ -70,6 +70,6 @@
 
 <!-- modal to add new user -->
 <ng-template #addUser let-c="close" class="modal">
-    <user-modal (submitValue)="onSubmit($event)" [closeValue]="this.c" [modal]="addUser">
+    <user-modal (submitValue)="onSubmit($event)" [closeValue]="this.c" [modal]="newModal">
     </user-modal>
 </ng-template>
