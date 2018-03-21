@@ -16,6 +16,7 @@ import * as Route from '../../../../../constants/routes';
 export class UserListComponent implements OnInit {
   title = 'Users';
   archivedLink = '/' + Route.DASHBOARD + '/' + Route.ARCHIVED_USERS;
+  users = [];
 
   modal = {
     edit: false,
@@ -23,12 +24,22 @@ export class UserListComponent implements OnInit {
     userButton: String.ADD_BUTTON,
   };
 
+  editModal = {
+    edit: true,
+    message: String.ARCHIVE_USER,
+    secondaryMessage: String.UNARCHIVE_USER,
+    header: String.EDIT_USER,
+    userButton: String.EDIT_BUTTON,
+    confirmationYes: String.ARCHIVE_BUTTON,
+    secondaryYes: String.UNARCHIVE_BUTTON,
+    confirmationNo: String.CANCEL_BUTTON,
+  };
+
   emptyContent = {
     image: '../../assets/team-member.png',
     message: String.EMPTY_USER,
   };
 
-  users = [];
 
   constructor(
     private modalService: ModalService,
@@ -36,8 +47,34 @@ export class UserListComponent implements OnInit {
     private toast: ToastrService
   ) { }
 
-  open(modal) {
+  openLg(modal) {
     this.modalService.open(modal, { size: 'lg', backdrop: 'static', keyboard: false });
+  }
+
+  open(modal) {
+    this.modalService.open(modal, { backdrop: 'static', keyboard: false });
+  }
+
+  onEdit(value) {
+    this.adminService.updateUser(
+      value.id,
+      value.firstName,
+      value.lastName,
+      value.email,
+      value.permission)
+      .then((object) => {
+        this.toast.success('Successfully updated ' + object.get('firstName') + ' ' + object.get('lastName'));
+      }, (error) => {
+        this.toast.error(error.message || String.GENERAL_ERROR);
+      });
+  }
+
+  onArchive(value) {
+    this.adminService.archiveUser(value).then((object) => {
+      this.toast.success('Successfully archived ' + object.get('firstName') + ' ' + object.get('lastName'));
+    }, (error) => {
+      this.toast.error(error.message || String.GENERAL_ERROR);
+    });
   }
 
   onSubmit(value) {

@@ -273,6 +273,11 @@ body {
 
         .table-row-item:last-child {
             flex: 5;
+
+            @include xxl {
+                flex: 3;
+                display: grid;
+            }
         }
 
         .table-row.table-header {
@@ -317,10 +322,8 @@ body {
                 list-style: none;
                 border: none;
             }
-            td:last-child {
-                display: inherit !important;
-                text-align: right !important;
-                width: none;
+            .table-row-item:last-child {
+                display: inherit;
             }
             .table-row-item:before {
                 content: attr(data-header);
