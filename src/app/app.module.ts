@@ -1,3 +1,4 @@
+import { EqualValidator } from './directives/equal-validator.directive';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -93,7 +94,8 @@ import { PasswordModalComponent } from './reusables/modals/password-modal/passwo
     LoadingComponent,
     ElementMediaComponent,
     DashboardComponent,
-    PasswordModalComponent
+    PasswordModalComponent,
+    EqualValidator
   ],
   imports: [
     BrowserModule,

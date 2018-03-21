@@ -98,7 +98,14 @@ export class UserListComponent implements OnInit {
   }
 
   onPasswordChange(value) {
-    console.log(value.password);
+    this.adminService.updatePassword(value.id, value.password).then((results) => {
+      if (results) {
+        this.toast.success('Successfully Updated Password');
+      }
+    }, (error) => {
+      this.toast.error(error.message || String.GENERAL_ERROR);
+    });
+    // console.log(value.id, value.password, value.confirmPassword);
   }
 
   ngOnInit() {

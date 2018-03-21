@@ -33,7 +33,7 @@
         <span>*</span>
       </label>
             <div class="col-sm-10">
-                <input type="email" class="form-control" id="email" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" name="email" required #email="ngModel" [(ngModel)]="user.publicEmail">
+                <input type="email" class="form-control" id="email" pattern="^[a-zA-Z0–9_.+-]+@[a-zA-Z0–9-]+.[a-zA-Z0–9-.]+$" name="email" required #email="ngModel" [(ngModel)]="user.publicEmail">
                 <div class="error" *ngIf="email.touched && !email.valid">*Must be in valid email format</div>
             </div>
         </div>
