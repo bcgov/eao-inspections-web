@@ -51,6 +51,7 @@ import { ElementMediaComponent } from './reusables/element-view/element-media/el
 import { LoadingComponent } from './reusables/loading/loading.component';
 import { ObservableService } from '../services/observable.service';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { PasswordModalComponent } from './reusables/modals/password-modal/password-modal.component';
 
 @NgModule({
   declarations: [
@@ -91,7 +92,8 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     ReportViewListComponent,
     LoadingComponent,
     ElementMediaComponent,
-    DashboardComponent
+    DashboardComponent,
+    PasswordModalComponent
   ],
   imports: [
     BrowserModule,

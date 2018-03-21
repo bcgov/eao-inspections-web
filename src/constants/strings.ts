@@ -6,6 +6,7 @@ export const EDIT_USER = "Edit user";
 export const CREATE_TEAM = "Create a new team";
 export const EDIT_TEAM = "Edit team";
 export const ADD_MEMBER = "Add member";
+export const CHANGE_PASSWORD = "Change Password";
 
 //confirmation modal
 export const REMOVE_USER = "Are you sure you want to remove this user?";

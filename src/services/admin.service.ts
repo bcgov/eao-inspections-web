@@ -198,6 +198,27 @@ export class AdminService {
     });
   }
 
+  updatePassword(userId: string,
+    password: string): Promise<any> {
+    return new Promise((resolve, reject) => {
+      const query = new Parse.Query(Parse.User);
+      query.get(userId, {
+        success: function (user) {
+          user.set('password', password);
+          user.save(null, { useMasterKey: true }).then((object) => {
+            resolve(object);
+          }, (error) => {
+            reject(error);
+          });
+          resolve(user);
+        },
+        error: function (object, error) {
+          reject(error);
+        }
+      });
+    });
+  }
+
   archiveUser(userId: string): Promise<any> {
     return new Promise((resolve, reject) => {
       const query = new Parse.Query(Parse.User);
