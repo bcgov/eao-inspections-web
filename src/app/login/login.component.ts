@@ -4,6 +4,9 @@ import { Router } from '@angular/router';
 
 import { AuthService } from '../../services/auth.service';
 import * as Route from '../../constants/routes';
+import { ModalService } from '../../services/modal.service';
+import * as String from '../../constants/strings';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-login',
@@ -13,10 +16,27 @@ import * as Route from '../../constants/routes';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private authService: AuthService, private router: Router) { }
+  forgotPasswordModal = {
+    message: String.FORGOT_PASSWORD_MESSAGE,
+    userButton: String.SEND_BUTTON,
+  };
+
+  constructor(private authService: AuthService, private router: Router, private modalService: ModalService, private toast: ToastrService) { }
 
   ngOnInit() {
   }
+
+  open(modal) {
+    this.modalService.open(modal, {backdrop: 'static', keyboard: false });
+  }
+
+  onSendEmail(email) {
+    this.authService.sendResetPassword(email).then(() => {
+        this.toast.success('A password reset email was sent successfully');
+    }, (error) => {
+        this.toast.error(error.message || String.GENERAL_ERROR);
+    });
+   }
 
   onLogin(form: NgForm) {
     const username = form.value.email;

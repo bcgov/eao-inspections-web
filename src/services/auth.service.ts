@@ -65,6 +65,21 @@ export class AuthService {
     });
   }
 
+  sendResetPassword(email: string) {
+    return new Promise((resolve, reject) => {
+      Parse.User.requestPasswordReset(email, {
+        success: function() {
+          resolve();
+
+        },
+        error: function(error) {
+          // Show the error message somewhere
+          reject(error);
+        }
+      });
+    });
+  }
+
   isAuthenticated() {
     return !!Parse.User.current();
   }

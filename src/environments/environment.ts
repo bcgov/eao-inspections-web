@@ -5,8 +5,8 @@
 
 export const environment = {
   production: false,
-  parseId: 'k9e0u7xtzlWV6sKXrWeARoGb9LefDZRjdZGIZa8C',
-  parseKey: 'nrT7HbWj3z1lMzuTjrt2binYcKhilUJxk9Kkt1Qi',
-  parseURL: 'https://parseapi.back4app.com/',
-  parseMasterKey: 'KttYtIIS84j274NtHrz11zFKLC6Bf4BWKM9V5Ou2'
+  parseId: 'myAppId',
+  parseKey: 'parse-key',
+  parseURL: 'http://localhost:1337/parse/',
+  parseMasterKey: 'abc123'
 };
