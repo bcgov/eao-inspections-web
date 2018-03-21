@@ -182,6 +182,7 @@ export class AdminService {
           user.set('firstName', firstName);
           user.set('lastName', lastName);
           user.set('email', email);
+          user.set('username', email);
           user.set('permission', permission);
           user.set('publicEmail', email);
           user.save(null, { useMasterKey: true }).then((object) => {
