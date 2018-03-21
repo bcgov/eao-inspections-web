@@ -3,7 +3,7 @@
 </div>
 <div *ngIf="modal.edit; then edit else add"></div>
 <ng-template #edit>
-    <form (ngSubmit)="onSubmit(f, user.id); close();" #f="ngForm">
+    <form (ngSubmit)="onSubmit(f, user.id ? user.id : user.objectId); close();" #f="ngForm">
         <div class="form-group">
             <label class="col-sm-2 col-form-label">Profile</label>
             <div id="upload">

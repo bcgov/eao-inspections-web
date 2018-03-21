@@ -14,6 +14,7 @@
     <div class="table-row-item" data-header="Submitted" *ngIf="fields.indexOf('submitted') >= 0">
         {{data.updatedAt | date : "MMM d y" }}
     </div>
+
     <div class="table-row-item" data-header="Action" *ngIf="fields.indexOf('actions') >= 0">
         <button *ngIf="actions.indexOf('download') >= 0 && (!data.viewOnly || user.isAdmin || user.isSuperAdmin)" class="dashboard--actions dashboard--actions--sm">
             <img class="dashboard--actions--sm__img" src="../../assets/download.png" /> Download
