@@ -1,0 +1,13 @@
+@import '../../../../scss/_mixins';
+@import '../../../../scss/_variables';
+.elements-details-media-block {
+  @media (max-width: #{$mobile-width}) {
+    margin: auto;
+  }
+  .element-details-media {
+    .thumbnail {
+      width: 200px;
+      padding: 10px;
+    }
+  }
+}

@@ -64,12 +64,10 @@ export class ProfileService {
             promises.push(object.get('teamAdmin')
               .fetch()
               .then((obj) => {
-                console.log(obj);
-                const team = parseTeamToModel(obj);
                 admins.push(
                   {
                     'admin': obj,
-                    'team': [team],
+                    'team': [parseTeamToModel(object)],
                   }
                 );
               })

@@ -5,11 +5,11 @@
 <ng-template #content>
     <div class="table">
     <div class="table-row table-header">
-        <div class="col table-row-item">Title</div>
-        <div class="col table-row-item">Linked Projects</div>
-        <div class="col table-row-item">Team</div>
-        <div class="col table-row-item pointer" (click)="sort('updatedAt')">Submitted</div>
-        <div class="col table-row-item">Action</div>
+        <div class="table-row-item">Title</div>
+        <div class="table-row-item">Linked Projects</div>
+        <div class="table-row-item">Team</div>
+        <div class="table-row-item pointer" (click)="sort('updatedAt')">Submitted</div>
+        <div class="table-row-item">Action</div>
     </div>
     <span *ngFor="let data of data | orderBy : {property: column, direction: direction}">
         <report-list-item [data]="data" [fields]="fields" [actions]="actions"></report-list-item>
