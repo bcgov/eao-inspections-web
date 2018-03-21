@@ -23,13 +23,13 @@
       </div>
       <div class="element-details-content" *ngIf="data">
         <div class="row">
-        <div class="col">
-          <h4>description</h4>
-          <textarea style="min-height: 160px;">{{ data.description || '-' }}</textarea>
-        </div>
-        <div class="col" style="text-align:center;">
-          <img src="../../../assets/default-map.png" />
-        </div>
+          <div class="col">
+            <h4>description</h4>
+            <textarea>{{ data.description || '-' }}</textarea>
+          </div>
+          <div class="col element-details-content-map">
+            <img src="../../../assets/default-map.png" />
+          </div>
         </div>
       </div>
     </div>
