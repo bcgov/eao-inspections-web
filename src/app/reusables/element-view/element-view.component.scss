@@ -35,6 +35,9 @@
       .row {
         width: 100%;
       }
+      textarea {
+        min-height: 160px;
+      }
       padding: 10px;
       @include flex;
       justify-content: space-between;
@@ -54,6 +57,9 @@
       textarea {
         max-height: 200px;
         width: 100%;
+      }
+      &-map {
+        text-align:center;
       }
     }
 

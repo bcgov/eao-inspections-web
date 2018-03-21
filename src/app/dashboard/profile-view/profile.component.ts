@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {ProfileService} from '../../../services/profile.service';
-import {parseToJSON, parseUserToModel} from '../../../services/parse.service';
+import {parseTeamToModel, parseToJSON, parseUserToModel} from '../../../services/parse.service';
 import {BasicUser} from '../../../models/user.model';
 import {Team} from '../../../models/team.model';
 
@@ -32,10 +32,10 @@ export class ProfileComponent implements OnInit {
       .then((teamAdminInfo) => {
         if (teamAdminInfo instanceof Array) {
           teamAdminInfo.forEach((object) => {
-            const admin = object.admin;
-            const team = object.team;
+            const admin = parseUserToModel(object.admin);
+            admin.teams = object.team;
             this.admin.push(
-              parseUserToModel(userData)
+              admin
             );
           });
         }
