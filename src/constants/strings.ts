@@ -16,7 +16,7 @@ export const LOGOUT_USER = "Are you sure you want to logout?";
 export const ARCHIVE_TEAM = "Are you sure you want to archive this team?";
 export const UNARCHIVE_TEAM = "Are you sure you want to unarchive this team?";
 export const ARCHIVE_REPORT = "Are you sure you want to archive this inspection?";
-export const UNARCHIVE_REPORT = "Are you sure you want to unarchive this inspections?";
+export const UNARCHIVE_REPORT = "Are you sure you want to unarchive this inspection?";
 export const NEW_TEAM_SUCCESS = "You've created a new team! Do you want to add team members now?";
 
 //success modal

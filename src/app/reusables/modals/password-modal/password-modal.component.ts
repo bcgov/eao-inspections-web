@@ -20,8 +20,7 @@ export class PasswordModalComponent implements OnInit {
 
   onSubmit(form: NgForm, id?: string) {
     const password = form.value.password;
-    const confirmPassword = form.value.confirmPassword;
-      this.submitValue.emit({ id, password });
+    this.submitValue.emit({ id, password });
   }
 
   ngOnInit() {

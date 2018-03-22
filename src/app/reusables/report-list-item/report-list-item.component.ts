@@ -51,16 +51,16 @@ export class ReportListItemComponent implements OnInit {
     });
   }
 
-  onArchive(report) {
-    this.adminService.archiveReport(report.id).then((result) => {
+  onArchive(id) {
+    this.adminService.archiveReport(id).then((result) => {
       this.toast.success('Successfully Archived Inspection');
     }, (error) => {
       this.toast.error(error.message || String.GENERAL_ERROR);
     });
   }
 
-  onUnArchive(report) {
-    this.adminService.unArchiveReport(report.id).then((result) => {
+  onUnArchive(id) {
+    this.adminService.unArchiveReport(id).then((result) => {
       this.toast.success('Successfully Unarchived Inspection');
     }, (error) => {
       this.toast.error(error.message || String.GENERAL_ERROR);

@@ -105,7 +105,6 @@ export class UserListComponent implements OnInit {
     }, (error) => {
       this.toast.error(error.message || String.GENERAL_ERROR);
     });
-    // console.log(value.id, value.password, value.confirmPassword);
   }
 
   ngOnInit() {
