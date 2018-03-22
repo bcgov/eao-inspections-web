@@ -14,13 +14,16 @@
     <div class="table-row-item" data-header="Submitted" *ngIf="fields.indexOf('submitted') >= 0">
         {{data.updatedAt | date : "MMM d y" }}
     </div>
+    <div class="table-row-item view-only" data-header="View Only" *ngIf="fields.indexOf('view') >= 0">
+        <label class="admin-switch">
+            <input class="form-check-input" type="checkbox" name="viewOnly" id="viewOnly" value="viewOnly" [(ngModel)]='data.viewOnly' (change)="onSetPermission(data)">
+            <span class="admin-slider round"></span>
+        </label>
+    </div>
 
     <div class="table-row-item" data-header="Action" *ngIf="fields.indexOf('actions') >= 0">
         <button *ngIf="actions.indexOf('download') >= 0 && (!data.viewOnly || user.isAdmin || user.isSuperAdmin)" class="dashboard--actions dashboard--actions--sm">
             <img class="dashboard--actions--sm__img" src="../../assets/download.png" /> Download
-        </button>
-        <button *ngIf="actions.indexOf('permission') >= 0" class="dashboard--actions dashboard--actions--sm" (click)="open(setPermission)">
-            <img class="dashboard--actions--sm__img" src="../../assets/archive.png" /> Permissions
         </button>
         <button *ngIf="actions.indexOf('archive') >= 0" class="dashboard--actions dashboard--actions--sm" (click)="open(archive)">
             <img class="dashboard--actions--sm__img" src="../../assets/archive.png" /> Archive
@@ -30,10 +33,6 @@
         </button>
     </div>
 </div>
-
-<ng-template #setPermission let-c="close" class="modal">
-    <permissions-modal (submitValue)="onSetPermission($event)" [closeValue]="this.c" [data]="data" [modal]="setPermissionModal"></permissions-modal>
-</ng-template>
 
 <ng-template #archive let-c="close" class="modal">
     <archive-modal [data]="data" (submitValue)="onArchive($event)" [closeValue]="this.c" [modal]="modal">

@@ -19,6 +19,7 @@
                 <div class="table-row-item">Linked Projects</div>
                 <div class="table-row-item">Inspector</div>
                 <div class="table-row-item pointer" (click)="sort('updatedAt')">Submitted</div>
+                <div class="table-row-item view-only">View Only</div>
                 <div class="table-row-item">Action</div>
             </div>
             <span *ngFor="let data of data | orderBy : {property: column, direction: direction}">

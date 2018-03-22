@@ -30,8 +30,8 @@ export class ReportViewListComponent implements OnInit {
   actions: Array<any>;
 
   constructor(private reportService: ReportService, private teamService: TeamService, private route: ActivatedRoute) {
-    this.fields = ['title', 'project', 'submitted', 'inspector', 'actions'];
-    this.actions = ['download', 'permission', 'archive'];
+    this.fields = ['title', 'project', 'submitted', 'inspector', 'view', 'actions'];
+    this.actions = ['download', 'archive'];
   }
 
   ngOnInit() {
