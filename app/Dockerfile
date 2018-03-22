@@ -1,7 +1,7 @@
 # Stage 0, Node.js for Angular
 FROM node:8.10
 ENV APP_ENV dev
-MKDIR /app
+RUN mkdir /app
 WORKDIR /app
 COPY ./ /app/
 RUN npm install
