@@ -5,6 +5,7 @@ import { ModalService } from '../../../services/modal.service';
 import { AdminService } from '../../../services/admin.service';
 import { ToastrService } from 'ngx-toastr';
 import { ProfileService } from '../../../services/profile.service';
+import { parseUserToModel } from '../../../services/parse.service';
 
 @Component({
   selector: 'report-list-item',
@@ -28,7 +29,8 @@ export class ReportListItemComponent implements OnInit {
     private adminService: AdminService, private toast: ToastrService) { }
 
   ngOnInit() {
-    this.user = this.profileService.user;
+    const userData = this.profileService.user;
+    this.user = parseUserToModel(userData);
   }
 
   setDefaultPic() {
@@ -44,6 +46,7 @@ export class ReportListItemComponent implements OnInit {
   }
 
   open(modal) {
+    console.log(this.user);
     this.modalService.open(modal, {backdrop: 'static', keyboard: false });
   }
 
