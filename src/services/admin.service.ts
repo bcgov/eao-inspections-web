@@ -462,7 +462,23 @@ export class AdminService {
       const query = new Parse.Query('Inspection');
       query.get(reportId, {
         success: function (report) {
-          report.set('active', false);
+          report.set('isActive', false);
+          report.save();
+          resolve(report);
+        },
+        error: function (object, error) {
+          resolve(error);
+        }
+      });
+    });
+  }
+
+  unArchiveReport(reportId) {
+    return new Promise((resolve, reject) => {
+      const query = new Parse.Query('Inspection');
+      query.get(reportId, {
+        success: function (report) {
+          report.set('isActive', true);
           report.save();
           resolve(report);
         },
