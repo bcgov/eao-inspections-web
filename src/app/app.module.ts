@@ -53,6 +53,7 @@ import { LoadingComponent } from './reusables/loading/loading.component';
 import { ObservableService } from '../services/observable.service';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { PasswordModalComponent } from './reusables/modals/password-modal/password-modal.component';
+import { ForgotPasswordModalComponent } from './reusables/modals/forgot-password-modal/forgot-password-modal.component';
 
 @NgModule({
   declarations: [
@@ -94,8 +95,12 @@ import { PasswordModalComponent } from './reusables/modals/password-modal/passwo
     LoadingComponent,
     ElementMediaComponent,
     DashboardComponent,
+<<<<<<< HEAD
     PasswordModalComponent,
     EqualValidator
+=======
+    ForgotPasswordModalComponent 
+>>>>>>> 0acdc8f2d82e975b5ecbd100b78f882693e105e1
   ],
   imports: [
     BrowserModule,

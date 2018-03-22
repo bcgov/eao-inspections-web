@@ -24,6 +24,9 @@ export const PASSWORD_SUCCESS = "Password has been updated";
 export const VIEW_ONLY_MESSAGE = "You don't have access to download this report. Please contact your Administrator for permission.";
 export const ARCHIVE_MESSAGE = "You cannot archive this team. There are members associated with this team";
 
+//modal message
+export const FORGOT_PASSWORD_MESSAGE = "Enter your email address below and we'll send you an email to reset password.";
+
 //buttons
 export const OK_BUTTON = "OK";
 export const CONFIRM_BUTTON = "Confirm";
@@ -55,3 +58,4 @@ export const EMPTY_INSPECTIONS = "There are no inspections yet.";
 
 // error messages
 export const GENERAL_ERROR = "Error has occured. Please try again.";
+
