@@ -1,5 +1,5 @@
 # Stage 0, Node.js for Angular
-FROM node:8.10 as node
+FROM node:8.10
 ENV APP_ENV dev
 MKDIR /app
 WORKDIR /app
