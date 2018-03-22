@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {ReportService} from '../../../services/report.service';
 import { ProfileService } from '../../../services/profile.service';
+import { parseUserToModel } from '../../../services/parse.service';
 
 @Component({
   selector: 'inspection-view',
@@ -42,7 +43,8 @@ export class InspectionViewComponent implements OnInit {
           this.elements = [results];
         }
     });
-    this.user = this.profileService.user;
+    const userData = this.profileService.user;
+    this.user = parseUserToModel(userData);
   }
 
   sort(property: string) {
