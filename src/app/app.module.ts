@@ -43,7 +43,6 @@ import { ArchivedUsersComponent } from './dashboard/admin/users-view/archived-us
 import { ArchiveModalComponent } from './reusables/modals/archive-modal/archive-modal.component';
 import { ArchivedTeamsComponent } from './dashboard/admin/teams-view/archived-teams/archived-teams.component';
 import { ArchivedInspectionsComponent } from './dashboard/admin/reports-view/archived-inspections/archived-inspections.component';
-import { PermissionsModalComponent } from './reusables/modals/permissions-modal/permissions-modal.component';
 import { OrderByPipe } from './directives/orderby.pipe';
 import { AdminTeamCardComponent } from './dashboard/admin/teams-view/admin-team-card/admin-team-card.component';
 import { MemberModalComponent } from './reusables/modals/member-modal/member-modal.component';
@@ -87,7 +86,6 @@ import { ForgotPasswordModalComponent } from './reusables/modals/forgot-password
     ArchiveModalComponent,
     ArchivedTeamsComponent,
     ArchivedInspectionsComponent,
-    PermissionsModalComponent,
     OrderByPipe,
     AdminTeamCardComponent,
     MemberModalComponent,

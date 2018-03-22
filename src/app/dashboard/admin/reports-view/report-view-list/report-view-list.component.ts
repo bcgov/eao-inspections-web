@@ -40,7 +40,7 @@ export class ReportViewListComponent implements OnInit {
     this.teamService.getTeam(teamId).then((team) => {
       this.team = team;
     });
-    this.reportService.getTeamReports(teamId)
+    this.reportService.getActiveTeamReports(teamId)
       .then((results) => {
         this.data = results;
       });

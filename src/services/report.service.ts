@@ -89,6 +89,27 @@ export class ReportService {
     });
   }
 
+  getActiveTeamReports(teamId: string): Promise<any[]> {
+    return new Promise((resolve, reject) => {
+      const promises = [];
+      const reports = [];
+      const q = new Parse.Query('Inspection');
+      q.equalTo('team', { '__type': 'Pointer', 'className': 'Team', 'objectId': teamId },);
+      q.equalTo('isActive', true);
+      q.find().then((results) => {
+        results.forEach((object) => {
+          this.getInspector(object.get('userId'))
+            .then((inspector) => {
+              const inspection = parseInspectionToModel(object);
+              inspection.inspector = inspector;
+              reports.push(inspection);
+            });
+        });
+        resolve(reports);
+      });
+    });
+  }
+
   getInspection(inspectionId: string): Promise<any> {
     return new Promise((resolve, reject) => {
       const query = new Parse.Query('Inspection');
