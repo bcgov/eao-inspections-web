@@ -1,0 +1,24 @@
+<div class="dashboard">
+    <div class="dashboard__header">
+        <p class="dashboard__title">{{title}}</p>
+    </div>
+    <div *ngIf="data.length <=0; then noContent else content"></div>
+    <ng-template #noContent>
+        <no-content [emptyContent]="emptyContent"></no-content>
+    </ng-template>
+    <ng-template #content>
+        <div class="table">
+            <div class="table-row table-header">
+                <div class="table-row-item">Title</div>
+                <div class="table-row-item">Linked Projects</div>
+                <div class="table-row-item">Team</div>
+                <div class="table-row-item">Inspector</div>
+                <div class="table-row-item pointer" (click)="sort('updatedAt')">Submitted</div>
+                <div class="table-row-item">Action</div>
+            </div>
+            <span *ngFor="let data of data | orderBy : {property: column, direction: direction}">
+                <report-list-item [data]="data" [fields]="fields" [actions]="actions"></report-list-item>
+            </span>
+        </div>
+    </ng-template>
+</div>
