@@ -95,12 +95,9 @@ import { ForgotPasswordModalComponent } from './reusables/modals/forgot-password
     LoadingComponent,
     ElementMediaComponent,
     DashboardComponent,
-<<<<<<< HEAD
     PasswordModalComponent,
-    EqualValidator
-=======
-    ForgotPasswordModalComponent 
->>>>>>> 0acdc8f2d82e975b5ecbd100b78f882693e105e1
+    EqualValidator,
+    ForgotPasswordModalComponent
   ],
   imports: [
     BrowserModule,
