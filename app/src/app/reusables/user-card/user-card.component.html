@@ -1,6 +1,6 @@
 <div class="user__card">
     <div class="user__card--photo">
-        <img class="user__card--photo__img" [src]="user.image" (error)="setDefaultPic()" />
+        <img class="user__card--photo__img" [src]="user.image || '../../assets/team-logo@2x.png'" />
     </div>
     <div class="user__card--details">
         <h4>{{user.name}}</h4>

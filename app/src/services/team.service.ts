@@ -3,17 +3,12 @@ import { Injectable} from '@angular/core';
 import {Team} from '../models/team.model';
 import { parseTeamToModel } from './parse.service';
 
-const Parse: any = require('parse');
-
-Parse.initialize(environment.parseId, environment.parseKey);
-Parse.serverURL = environment.parseURL;
-Parse.masterKey = environment.parseMasterKey;
+let Parse: any = require('parse');
 
 @Injectable()
 export class TeamService {
   user = new Parse.User();
   constructor() {
-    this.user = Parse.User.current();
   }
 
   getTeam(teamId: string): Promise<any> {

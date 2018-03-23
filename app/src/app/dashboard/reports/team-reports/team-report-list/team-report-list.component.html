@@ -1,6 +1,6 @@
 <div class="dashboard">
     <p class="dashboard__title" *ngIf="team">
-        <img width="30px" [src]="team.badge" (error)="setDefaultPic()" /> {{team.name}}
+      <img width="30px" [src]="team.badge || '../../../assets/team-logo.png'" /> {{team.name}}
     </p>
 <div *ngIf="data?.length<=0; then noContent else content"></div>
 <ng-template #noContent>

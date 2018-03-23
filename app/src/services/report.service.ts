@@ -8,17 +8,13 @@ import {Media} from '../models/media.model';
 import { BasicUser } from '../models/user.model';
 import { parseUserToModel, parseInspectionToModel } from './parse.service';
 
-const Parse: any = require('parse');
-
-Parse.initialize(environment.parseId, environment.parseKey);
-Parse.serverURL = environment.parseURL;
-Parse.masterKey = environment.parseMasterKey;
+let Parse: any = require('parse');
 
 @Injectable()
 export class ReportService {
   user = new Parse.User();
+
   constructor() {
-    this.user = Parse.User.current();
   }
 
   getInspector(inspectorId: string): Promise<any> {

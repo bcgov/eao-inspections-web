@@ -1,6 +1,6 @@
 <div class="profile__card">
   <div class="profile__card--photo">
-    <img class="profile__card--photo__img" [src]="profile.image" (error)="setDefaultPic()" />
+    <img class="profile__card--photo__img" [src]="profile.image || '../../assets/avatar@2x.png'" />
     <span *ngIf="profile.access.isAdmin === false" class="profile__card--photo__upload">Upload Photo</span>
   </div>
   <div class="profile__card__details">

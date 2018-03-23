@@ -1,24 +1,19 @@
 import { environment } from '../environments/environment';
 import { Router } from '@angular/router';
-import { Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Team } from '../models/team.model';
 import { Inspection } from '../models/inspection.model';
 import { parseInspectionToModel, parseUserToModel, parseTeamToModel } from './parse.service';
 import { BasicUser } from '../models/user.model';
 import * as Access from '../constants/accessRights';
 
-const Parse: any = require('parse');
-
-Parse.initialize(environment.parseId, environment.parseKey);
-Parse.serverURL = environment.parseURL;
-Parse.masterKey = environment.parseMasterKey;
+let Parse: any = require('parse');
 
 @Injectable()
 export class AdminService {
   user = new Parse.User();
 
   constructor(private router: Router) {
-    this.user = Parse.User.current();
   }
 
 

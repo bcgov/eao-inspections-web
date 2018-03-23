@@ -12,9 +12,4 @@ export class TeamCardComponent implements OnInit {
 
   ngOnInit() {
   }
-
-  setDefaultPic() {
-    this.team.badge = '../../assets/team-logo@2x.png';
-  }
-
 }

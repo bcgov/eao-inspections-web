@@ -43,11 +43,7 @@ export class TeamReportListComponent implements OnInit {
         this.data = results;
     });
   }
-
-  setDefaultPic() {
-    this.team.badge = '../../../assets/team-logo.png';
-  }
-
+  
   sort(property: string) {
     this.isDesc = !this.isDesc;
     this.column = property;

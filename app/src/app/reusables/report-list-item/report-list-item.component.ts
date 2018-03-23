@@ -40,11 +40,7 @@ export class ReportListItemComponent implements OnInit {
     const userData = this.profileService.user;
     this.user = parseUserToModel(userData);
   }
-
-  setDefaultPic() {
-    this.data.inspector.image = '../../assets/admin-1@1x.png';
-  }
-
+  
   onSetPermission(report) {
     this.adminService.updateReportPermission(report.id, report.viewOnly).then((result) => {
       this.toast.success('Successfully updated ' + report.title);
