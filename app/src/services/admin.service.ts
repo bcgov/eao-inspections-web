@@ -199,6 +199,27 @@ export class AdminService {
     });
   }
 
+  updatePassword(userId: string,
+    password: string): Promise<any> {
+    return new Promise((resolve, reject) => {
+      const query = new Parse.Query(Parse.User);
+      query.get(userId, {
+        success: function (user) {
+          user.set('password', password);
+          user.save(null, { useMasterKey: true }).then((object) => {
+            resolve(object);
+          }, (error) => {
+            reject(error);
+          });
+          resolve(user);
+        },
+        error: function (object, error) {
+          reject(error);
+        }
+      });
+    });
+  }
+
   archiveUser(userId: string): Promise<any> {
     return new Promise((resolve, reject) => {
       const query = new Parse.Query(Parse.User);
@@ -441,7 +462,23 @@ export class AdminService {
       const query = new Parse.Query('Inspection');
       query.get(reportId, {
         success: function (report) {
-          report.set('active', false);
+          report.set('isActive', false);
+          report.save();
+          resolve(report);
+        },
+        error: function (object, error) {
+          resolve(error);
+        }
+      });
+    });
+  }
+
+  unArchiveReport(reportId) {
+    return new Promise((resolve, reject) => {
+      const query = new Parse.Query('Inspection');
+      query.get(reportId, {
+        success: function (report) {
+          report.set('isActive', true);
           report.save();
           resolve(report);
         },

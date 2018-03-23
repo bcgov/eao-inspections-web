@@ -28,7 +28,6 @@
   &--details {
     position: relative;
     top: 20%;
-    left: 10px;
     flex: 2;
 
     p {
@@ -36,7 +35,9 @@
     }
 
     h4 {
+      overflow-wrap: break-word;
       color: $default-secondary-color;
+      font-size: 18px;
     }
   }
 }

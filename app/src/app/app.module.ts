@@ -1,3 +1,4 @@
+import { EqualValidator } from './directives/equal-validator.directive';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -42,7 +43,6 @@ import { ArchivedUsersComponent } from './dashboard/admin/users-view/archived-us
 import { ArchiveModalComponent } from './reusables/modals/archive-modal/archive-modal.component';
 import { ArchivedTeamsComponent } from './dashboard/admin/teams-view/archived-teams/archived-teams.component';
 import { ArchivedInspectionsComponent } from './dashboard/admin/reports-view/archived-inspections/archived-inspections.component';
-import { PermissionsModalComponent } from './reusables/modals/permissions-modal/permissions-modal.component';
 import { OrderByPipe } from './directives/orderby.pipe';
 import { AdminTeamCardComponent } from './dashboard/admin/teams-view/admin-team-card/admin-team-card.component';
 import { MemberModalComponent } from './reusables/modals/member-modal/member-modal.component';
@@ -51,6 +51,7 @@ import { ElementMediaComponent } from './reusables/element-view/element-media/el
 import { LoadingComponent } from './reusables/loading/loading.component';
 import { ObservableService } from '../services/observable.service';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { PasswordModalComponent } from './reusables/modals/password-modal/password-modal.component';
 import { ForgotPasswordModalComponent } from './reusables/modals/forgot-password-modal/forgot-password-modal.component';
 
 @NgModule({
@@ -85,7 +86,6 @@ import { ForgotPasswordModalComponent } from './reusables/modals/forgot-password
     ArchiveModalComponent,
     ArchivedTeamsComponent,
     ArchivedInspectionsComponent,
-    PermissionsModalComponent,
     OrderByPipe,
     AdminTeamCardComponent,
     MemberModalComponent,
@@ -93,7 +93,9 @@ import { ForgotPasswordModalComponent } from './reusables/modals/forgot-password
     LoadingComponent,
     ElementMediaComponent,
     DashboardComponent,
-    ForgotPasswordModalComponent 
+    PasswordModalComponent,
+    EqualValidator,
+    ForgotPasswordModalComponent
   ],
   imports: [
     BrowserModule,

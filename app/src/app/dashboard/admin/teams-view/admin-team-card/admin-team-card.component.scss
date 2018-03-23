@@ -28,23 +28,18 @@
   &--details {
     position: relative;
     top: 20%;
-    left: 10px;
     flex: 2;
 
     
     p {
       color: $font-dark-gray;
+      font-size: 10px;
     }
     
     a h4 {
-      font-size: 18px;
+      overflow-wrap: break-word;
+      font-size: 16px;
       color: $font-black;
     }
-  }
-
-  &--actions {
-    display: inline-flex;
-    position: relative;
-    bottom: -10%;
   }
 }

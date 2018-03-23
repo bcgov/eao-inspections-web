@@ -40,7 +40,7 @@
           <button (click)="openLg(editUser)" class="dashboard--actions dashboard--actions--sm">
             <img class="dashboard--actions--sm__img" src="../../assets/edit.png" /> Edit
           </button>
-          <button (click)="openEdit(editUser)" class="dashboard--actions dashboard--actions--sm">
+          <button (click)="open(updatePassword)" class="dashboard--actions dashboard--actions--sm">
             <img class="dashboard--actions--sm__img" src="../../assets/reset-password.png" /> Password
           </button>
           <button (click)="open(archiveUser)" class="dashboard--actions dashboard--actions--sm">
@@ -48,7 +48,7 @@
           </button>
         </div>
       </div>
-      <!-- following (2) modals must be inside map to access user data -->
+      <!-- following (3) modals must be inside map to access user data -->
       <!-- edit user modal -->
       <ng-template #editUser let-c="close" class="modal">
         <user-modal (submitValue)="onEdit($event)" [closeValue]="this.c" [modal]="editModal" [user]="user">
@@ -58,6 +58,10 @@
       <ng-template #archiveUser let-c="close" class="modal">
         <archive-modal [data]="user" (submitValue)="onArchive($event)" [closeValue]="this.c" [modal]="editModal">
         </archive-modal>
+      </ng-template>   
+      <ng-template #updatePassword let-c="close" class="modal">
+        <password-modal [data]="user" (submitValue)="onPasswordChange($event)" [closeValue]="this.c" [modal]="modal">
+        </password-modal>
       </ng-template>
   </span>
     </div>

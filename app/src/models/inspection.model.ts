@@ -13,6 +13,7 @@ export class Inspection {
   public updatedAt: Date;
   public requirement: string;
   public submitted: boolean;
+  public isActive: boolean;
   public team: Team;
   public viewOnly: boolean;
 
@@ -28,6 +29,7 @@ export class Inspection {
     updatedAt: Date,
     requirement: string,
     submitted: boolean,
+    isActive: boolean,
     team: Team = null,
     viewOnly: boolean = false,
     ) {
@@ -42,6 +44,7 @@ export class Inspection {
     this.updatedAt = updatedAt;
     this.requirement = requirement;
     this.submitted = submitted;
+    this.isActive = isActive;
     this.team = team;
     this.viewOnly = viewOnly;
   }

@@ -1,3 +1,4 @@
+import { CHANGE_PASSWORD } from './../../../../../constants/strings';
 import { Component, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 
@@ -20,6 +21,7 @@ export class UserListComponent implements OnInit {
 
   modal = {
     edit: false,
+    message: String.CHANGE_PASSWORD,
     header: String.CREATE_USER,
     userButton: String.ADD_BUTTON,
   };
@@ -93,6 +95,16 @@ export class UserListComponent implements OnInit {
       }, (error) => {
         this.toast.error(error.message || String.GENERAL_ERROR);
       });
+  }
+
+  onPasswordChange(value) {
+    this.adminService.updatePassword(value.id, value.password).then((results) => {
+      if (results) {
+        this.toast.success('Successfully Updated Password');
+      }
+    }, (error) => {
+      this.toast.error(error.message || String.GENERAL_ERROR);
+    });
   }
 
   ngOnInit() {

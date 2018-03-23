@@ -20,6 +20,14 @@ export class ReportListItemComponent implements OnInit {
 
   user: any;
 
+  modal = {
+    message: String.ARCHIVE_REPORT,
+    secondaryMessage: String.UNARCHIVE_REPORT,
+    confirmationYes: String.ARCHIVE_BUTTON,
+    secondaryYes: String.UNARCHIVE_BUTTON,
+    confirmationNo: String.CANCEL_BUTTON
+  }
+
   setPermissionModal = {
     header: String.PERMISSIONS,
     userButton: String.UPDATE_BUTTON,
@@ -40,6 +48,22 @@ export class ReportListItemComponent implements OnInit {
   onSetPermission(report) {
     this.adminService.updateReportPermission(report.id, report.viewOnly).then((result) => {
       this.toast.success('Successfully updated ' + report.title);
+    }, (error) => {
+      this.toast.error(error.message || String.GENERAL_ERROR);
+    });
+  }
+
+  onArchive(id) {
+    this.adminService.archiveReport(id).then((result) => {
+      this.toast.success('Successfully Archived Inspection');
+    }, (error) => {
+      this.toast.error(error.message || String.GENERAL_ERROR);
+    });
+  }
+
+  onUnArchive(id) {
+    this.adminService.unArchiveReport(id).then((result) => {
+      this.toast.success('Successfully Unarchived Inspection');
     }, (error) => {
       this.toast.error(error.message || String.GENERAL_ERROR);
     });
