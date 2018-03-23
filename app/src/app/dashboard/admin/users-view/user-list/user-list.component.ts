@@ -85,7 +85,6 @@ export class UserListComponent implements OnInit {
       value.lastName,
       value.email,
       value.password,
-      value.team,
       value.permission
     )
       .then((results) => {

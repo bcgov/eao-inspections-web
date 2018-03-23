@@ -1,4 +1,3 @@
-import { AdminService } from './../../../../services/admin.service';
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import * as String from '../../../../constants/strings';
@@ -11,7 +10,6 @@ import { parseToJSON } from '../../../../services/parse.service';
 })
 export class UserModalComponent implements OnInit {
   selectedPhoto = "../../assets/avatar@2x.png";
-  teams = [];
   permissions = ["superadmin", "admin", "manager", "inspector", "inspector(view)"];
 
   @Input('modal') modal: any;
@@ -19,7 +17,7 @@ export class UserModalComponent implements OnInit {
   @Input('user') user: any;
   @Output() submitValue: EventEmitter<any> = new EventEmitter();
 
-  constructor(private adminService: AdminService) { }
+  constructor() { }
 
   getPhoto(event) {
     this.selectedPhoto = event.target.files[0].name;
@@ -31,12 +29,11 @@ export class UserModalComponent implements OnInit {
     const lastName = form.value.lastName;
     const email = form.value.email;
     const password = form.value.password;
-    const team = form.value.team;
     const permission = form.value.permission;
     if (id) {
       this.submitValue.emit({ firstName, lastName, email, permission, id })
     } else {
-      this.submitValue.emit({firstName, lastName, email, password, team, permission});
+      this.submitValue.emit({firstName, lastName, email, password, permission});
     }
   }
 
@@ -45,9 +42,5 @@ export class UserModalComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.adminService.getActiveTeams()
-    .then((results) => {
-         this.teams = results;
-     });
   }
 }

@@ -263,6 +263,8 @@ body {
             border-bottom: 1px solid $font-gray;
         }
         .table-row-item {
+            align-items: center;
+            display: flex;
             flex: 3;
             font-size: 13px;
             overflow: overlay;
@@ -276,6 +278,7 @@ body {
             flex: 5;
 
             @include xxl {
+                overflow: inherit;
                 flex: 3;
                 display: grid;
             }

@@ -146,7 +146,6 @@ export class AdminService {
              lastName: string,
              email: string,
              password: string,
-             team: any,
              permission: string): Promise<any> {
     return new Promise((resolve, reject) => {
       const promises = [];
@@ -166,10 +165,6 @@ export class AdminService {
       user.set('permission', permission);
       user.save(null, {
         success: function (results) {
-          queryTeam.get(team).then((teamObject) => {
-            teamObject.relation('users').add(results);
-            promises.push(teamObject.save());
-          });
           query.equalTo('name', role);
           query.first().then((roleObject) => {
             roleObject.getUsers().add(results);
@@ -195,7 +190,9 @@ export class AdminService {
              email: string,
              permission: string): Promise<any> {
     return new Promise((resolve, reject) => {
+      const promises = [];
       const query = new Parse.Query(Parse.User);
+      const q = new Parse.Query(Parse.Role);
       const role = this.getCorrectRole(permission);
       const access = this.getAppAccess(permission);
       query.get(userId, {
@@ -207,19 +204,28 @@ export class AdminService {
           user.set('username', email);
           user.set('permission', permission);
           user.set('publicEmail', email);
-          user.save(null, { useMasterKey: true }).then((object) => {
-            resolve(object);
+          user.save(null, { useMasterKey: true,
+            success: function (results) {
+              q.equalTo('name', role);
+              q.first().then((roleObject) => {
+                roleObject.getUsers().add(results);
+                promises.push(roleObject.save(null, { useMasterKey: true }));
+              });
+            },
+            error: function (object, error) {
+              reject(error);
+            } 
+           }).then((userObject) => {
+            Promise.all(promises).then(() => {
+              resolve(userObject);
           }, (error) => {
             reject(error);
           });
-          resolve(user);
-        },
-        error: function (object, error) {
-          reject(error);
-        }
-      });
+        });
+      }
     });
-  }
+  });
+}
 
   updatePassword(userId: string,
     password: string): Promise<any> {
