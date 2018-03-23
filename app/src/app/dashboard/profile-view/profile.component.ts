@@ -25,6 +25,7 @@ export class ProfileComponent implements OnInit {
 
     this.profileService.getTeams().then((results) => {
       this.teams = results;
+      console.log(this.profile);
       this.profile.teams = this.teams;
     });
 

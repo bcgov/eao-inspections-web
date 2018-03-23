@@ -35,9 +35,8 @@ export function parseUserToModel(object): BasicUser {
       [],
       object.get('publicEmail'),
       object.get('profile_image'),
-      object.get('isAdmin'),
-      object.get('isSuperAdmin'),
-      object.get('permission')
+      object.get('permission'),
+      object.get('access'),
     );
   }
 }

@@ -21,8 +21,10 @@ describe('ProfileComponent', () => {
           teams: [],
           publicEmail: 'mockUserEmail@gmail.com',
           profile_image: 'mock-user-image',
-          isAdmin: false,
-          isSuperAdmin: false,
+          access: {
+            isAdmin: false,
+            isSuperAdmin: false
+          },
           permission: 'inspector'
         };
       }),
@@ -37,8 +39,10 @@ describe('ProfileComponent', () => {
           teams: [],
           publicEmail: 'mockAdminEmail@gmail.com',
           profile_image: 'mock-admin-user-image',
-          isAdmin: true,
-          isSuperAdmin: false,
+          access: {
+            isAdmin: true,
+            isSuperAdmin: false
+          },
           permission: 'admin'
         };
       }),
@@ -59,7 +63,7 @@ describe('ProfileComponent', () => {
     fixture = TestBed.createComponent(ProfileComponent);
     component = fixture.componentInstance;
 
-    profileData = { isSuperAdmin: false }
+    profileData = { access: { isSuperAdmin: false } }
     component.profile = profileData;
 
     fixture.detectChanges();

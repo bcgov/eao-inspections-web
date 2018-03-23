@@ -12,7 +12,7 @@ import { parseToJSON } from '../../../../services/parse.service';
 export class UserModalComponent implements OnInit {
   selectedPhoto = "../../assets/avatar@2x.png";
   teams = [];
-  permissions = ["admin", "superadmin", "inspector"];
+  permissions = ["superadmin", "admin", "manager", "inspector", "inspector(view)"];
 
   @Input('modal') modal: any;
   @Input() closeValue: any;

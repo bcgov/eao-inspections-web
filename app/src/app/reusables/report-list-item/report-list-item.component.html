@@ -22,7 +22,7 @@
     </div>
 
     <div class="table-row-item" data-header="Action" *ngIf="fields.indexOf('actions') >= 0">
-        <button *ngIf="actions.indexOf('download') >= 0 && (!data.viewOnly || user.isAdmin || user.isSuperAdmin)" class="dashboard--actions dashboard--actions--sm">
+        <button *ngIf="actions.indexOf('download') >= 0 && (!data.viewOnly || user.access.isAdmin || user.access.isSuperAdmin)" class="dashboard--actions dashboard--actions--sm">
             <img class="dashboard--actions--sm__img" src="../../assets/download.png" /> Download
         </button>
         <button *ngIf="actions.indexOf('archive') >= 0" class="dashboard--actions dashboard--actions--sm" (click)="open(archive)">

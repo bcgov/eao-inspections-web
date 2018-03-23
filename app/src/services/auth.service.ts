@@ -85,10 +85,10 @@ export class AuthService {
   }
 
   isAdmin() {
-    return Parse.User.current().get('isAdmin');
+    return Parse.User.current().get('access').isAdmin;
   }
 
   isSuperAdmin() {
-    return Parse.User.current().get('isSuperAdmin');
+    return Parse.User.current().get('access').isSuperAdmin;
   }
 }

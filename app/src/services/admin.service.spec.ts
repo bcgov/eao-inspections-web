@@ -116,20 +116,6 @@ describe('Admin Testing', () => {
     });
   });
 
-  it('should return a bool if permission is "superadmin"', () => {
-    let permission = 'superadmin';
-    expect(service.getSuperAdminStatus(permission)).toBeTruthy();
-    permission = 'inspector';
-    expect(service.getSuperAdminStatus(permission)).toBeFalsy();
-  });
-
-  it('should return a bool if permission is "admin"', () => {
-    let permission = 'superadmin';
-    expect(service.getAdminStatus(permission)).toBeFalsy();
-    permission = 'admin';
-    expect(service.getAdminStatus(permission)).toBeTruthy();
-  });
-
   it('should create user', () => {
     console.log('Testing create user in functionality');
     const randKey = randomKey();

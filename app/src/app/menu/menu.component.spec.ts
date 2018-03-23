@@ -25,15 +25,19 @@ describe('MenuComponent', () => {
         return {
           isAuthenticated: true,
           id: 1,
-          isAdmin: false,
-          isSuperAdmin: false
+          access: {
+            isAdmin: false,
+            isSuperAdmin: false
+          },
         };
       }),
       isAdmin: jasmine.createSpy('isAdmin').and.callFake(() => {
         return {
           isAuthenticated: true,
-          isAdmin: true,
-          isSuperAdmin: true
+          access: {
+            isAdmin: true,
+            isSuperAdmin: false
+          },
         };
       }),
     };
