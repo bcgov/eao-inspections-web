@@ -1,17 +1,17 @@
 <div class="profile__card">
-  <div class="profile__card--photo">
-    <img class="profile__card--photo__img" [src]="profile.image || '../../assets/avatar@2x.png'" />
-    <span *ngIf="profile.access.isAdmin === false" class="profile__card--photo__upload">Upload Photo</span>
-  </div>
-  <div class="profile__card__details">
-    <h4>Full Name</h4>
-    <p>{{profile.name}}</p>
-    <h4 *ngIf="profile.teams?.length>0">Teams</h4>
-    <p *ngFor="let team of profile.teams">{{team.name}}</p>
-  </div>
-  <div class="profile__card__contact">
-    <h4>Email</h4>
-    <a href="mailto:{{profile.email}}">{{profile.email}}</a>
-    <span *ngIf="!profile.access.isAdmin && !profile.access.isSuperAdmin" class="profile__card__contact--disclaimer"><i>*Contact Administration below to change personal information.</i></span>
-  </div>
+    <div class="profile__card--photo">
+        <img class="profile__card--photo__img" [src]="profile.image || '../../assets/avatar@2x.png'" />
+        <span *ngIf="profile.access?.isAdmin === false" class="profile__card--photo__upload">Upload Photo</span>
+    </div>
+    <div class="profile__card__details">
+        <h4>Full Name</h4>
+        <p>{{profile.name}}</p>
+        <h4 *ngIf="profile.teams?.length>0">Teams</h4>
+        <p *ngFor="let team of profile.teams">{{team.name}}</p>
+    </div>
+    <div class="profile__card__contact">
+        <h4>Email</h4>
+        <a href="mailto:{{profile.email}}">{{profile.email}}</a>
+        <span *ngIf="!profile.access?.isAdmin && !profile.access?.isSuperAdmin" class="profile__card__contact--disclaimer"><i>*Contact Administration below to change personal information.</i></span>
+    </div>
 </div>

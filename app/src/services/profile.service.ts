@@ -31,7 +31,17 @@ export class ProfileService {
             results = [results];
           }
           results.forEach((object) => {
-            promises.push(teams.push(parseTeamToModel(object)));
+            const team = parseTeamToModel(object);
+            const userRelation = object.relation('users');
+            const inspectionQuery = new Parse.Query('Inspection');
+            inspectionQuery.equalTo('team', { '__type': 'Pointer', 'className': 'Team', 'objectId': team.id},);
+            userRelation.query().count().then((numUsers) => {
+              team.numUsers = numUsers;
+              inspectionQuery.count().then((numInspections) => {
+                team.numInspections = numInspections;
+                promises.push(teams.push(team));
+              });
+            });
           });
         },
         error: function(error) {

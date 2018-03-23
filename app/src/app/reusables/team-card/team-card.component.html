@@ -4,6 +4,7 @@
     </div>
     <div class="team__card--details">
         <h4>{{team.name}}</h4>
-        <p>{{team.numUsers}} Members</p>
+        <p *ngIf="!showMemebers">{{team.numInspections}} Inspections</p>
+        <p *ngIf="showMemebers">{{team.numUsers}} Memebers</p>
     </div>
 </div>
