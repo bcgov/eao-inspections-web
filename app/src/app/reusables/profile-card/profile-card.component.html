@@ -1,7 +1,11 @@
 <div class="profile__card">
     <div class="profile__card--photo">
-        <img class="profile__card--photo__img" [src]="profile.image || '../../assets/avatar@2x.png'" />
-        <span *ngIf="profile.access?.isAdmin === false" class="profile__card--photo__upload">Upload Photo</span>
+      <img *ngIf="profile.isAdmin === true" class="profile__card--photo__img" [src]="profile.profileImage ? profile.profileImage : defaultPic" (error)="setDefaultPic()" />
+      <div *ngIf="profile.isAdmin === false" id="upload">
+        <input style="display: none" type="file" id="photo" name="photo" class="form-control" #photoInput ngModel (change)="getPhotoAndUpload($event)">
+        <img class="profile__card--photo__img" src={{selectedPhoto}} />
+        <button class="profile__card--photo__upload" (click)="photoInput.click(); false">Upload</button>
+      </div>
     </div>
     <div class="profile__card__details">
         <h4>Full Name</h4>
@@ -15,3 +19,4 @@
         <span *ngIf="!profile.access?.isAdmin && !profile.access?.isSuperAdmin" class="profile__card__contact--disclaimer"><i>*Contact Administration below to change personal information.</i></span>
     </div>
 </div>
+

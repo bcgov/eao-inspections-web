@@ -53,6 +53,7 @@ import { ObservableService } from '../services/observable.service';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { PasswordModalComponent } from './reusables/modals/password-modal/password-modal.component';
 import { ForgotPasswordModalComponent } from './reusables/modals/forgot-password-modal/forgot-password-modal.component';
+import {Ng2ImgMaxModule, Ng2ImgMaxService} from 'ng2-img-max';
 
 @NgModule({
   declarations: [
@@ -104,9 +105,10 @@ import { ForgotPasswordModalComponent } from './reusables/modals/forgot-password
     NgbModule.forRoot(),
     ToastrModule.forRoot({ timeOut: 100000, progressBar: true, tapToDismiss: true, progressAnimation: 'decreasing'}),
     BrowserAnimationsModule,
-    ColorPickerModule
+    ColorPickerModule,
+    Ng2ImgMaxModule
   ],
-  providers: [AuthService, AuthGuardService, RoleGuardService, ModalService, ObservableService],
+  providers: [AuthService, AuthGuardService, RoleGuardService, ModalService, ObservableService, Ng2ImgMaxService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

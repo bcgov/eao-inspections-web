@@ -13,6 +13,7 @@ export class UserModalComponent implements OnInit {
   selectedPhoto = "../../assets/avatar@2x.png";
   teams = [];
   permissions = ["superadmin", "admin", "manager", "inspector", "inspector(view)"];
+  fileToUpload;
 
   @Input('modal') modal: any;
   @Input() closeValue: any;
@@ -22,11 +23,20 @@ export class UserModalComponent implements OnInit {
   constructor(private adminService: AdminService) { }
 
   getPhoto(event) {
-    this.selectedPhoto = event.target.files[0].name;
+    if (event.target.files && event.target.files[0]) {
+      const reader = new FileReader();
+
+      reader.onload = (_event: any) => {
+        this.selectedPhoto = _event.target.result;
+      };
+
+      reader.readAsDataURL(event.target.files[0]);
+    }
+    this.fileToUpload = event.target.files[0];
   }
 
   onSubmit(form: NgForm, id?: string) {
-    const photo = form.value.photo;
+    const photo = this.fileToUpload;
     const firstName = form.value.firstName;
     const lastName = form.value.lastName;
     const email = form.value.email;
@@ -34,9 +44,9 @@ export class UserModalComponent implements OnInit {
     const team = form.value.team;
     const permission = form.value.permission;
     if (id) {
-      this.submitValue.emit({ firstName, lastName, email, permission, id })
+      this.submitValue.emit({ firstName, lastName, email, permission, id, photo});
     } else {
-      this.submitValue.emit({firstName, lastName, email, password, team, permission});
+      this.submitValue.emit({firstName, lastName, email, password, team, permission, photo});
     }
   }
 
@@ -50,4 +60,5 @@ export class UserModalComponent implements OnInit {
          this.teams = results;
      });
   }
+
 }

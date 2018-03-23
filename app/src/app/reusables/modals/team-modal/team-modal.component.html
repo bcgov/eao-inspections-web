@@ -3,7 +3,7 @@
 </div>
 <div *ngIf="modal.edit; then edit else add"></div>
 <ng-template #edit>
-  <form (ngSubmit)="onSubmit(f, team.id); close();" #f="ngForm">
+  <form (ngSubmit)="onSubmit(f, team.id ? team.id : team.objectId); close();" #f="ngForm">
     <div class="form-group row">
       <label class="col-sm-4 col-form-label">Team Name
         <span>*</span>
@@ -32,8 +32,9 @@
     <div class="form-group">
       <label class="col-sm-2 col-form-label">Badge</label>
       <div id="upload">
-        <img class="form-upload__img" src="../../assets/avatar@2x.png" />
-        <button class="dashboard-upload__btn">Upload</button>
+        <input style="display: none" type="file" id="photo" name="photo" class="form-control" #photoInput ngModel (change)="getPhoto($event)">
+        <img class="form-upload__img" src={{selectedPhoto}} />
+        <button class="dashboard-upload__btn" (click)="photoInput.click(); false">Upload</button>
       </div>
     </div>
     <div class="dashboard__buttons">
@@ -75,8 +76,9 @@
     <div class="form-group">
       <label class="col-sm-2 col-form-label" for="inputAddress">Badge</label>
       <div id="upload">
-        <img class="form-upload__img" src="../../assets/avatar@2x.png" />
-        <button class="dashboard-upload__btn">Upload</button>
+        <input style="display: none" type="file" id="photo" name="photo" class="form-control" #photoInput ngModel (change)="getPhoto($event)">
+        <img class="form-upload__img" src={{selectedPhoto}} />
+        <button class="dashboard-upload__btn" (click)="photoInput.click(); false">Upload</button>
       </div>
     </div>
     <div class="dashboard__buttons">
