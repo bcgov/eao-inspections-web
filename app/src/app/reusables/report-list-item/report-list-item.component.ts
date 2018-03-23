@@ -39,6 +39,7 @@ export class ReportListItemComponent implements OnInit {
   ngOnInit() {
     const userData = this.profileService.user;
     this.user = parseUserToModel(userData);
+    console.log(this.user);
   }
   
   onSetPermission(report) {
