@@ -21,8 +21,10 @@ describe('ArchivedUsersComponent', () => {
         return {
           objectId: "1",
           isActive: true,
-          isAdmin: false,
-          isSuperAdmin: false,
+          access: {
+            isAdmin: false,
+            isSuperAdmin: false
+          },
         };
       }),
       unArchiveUser: jasmine.createSpy('unArchiveUser').and.callFake(() => {

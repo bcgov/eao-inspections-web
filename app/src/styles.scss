@@ -265,6 +265,7 @@ body {
         .table-row-item {
             flex: 3;
             font-size: 13px;
+            overflow: overlay;
             overflow-wrap: break-word;
             padding: 5px;
             font-weight: 300;
@@ -321,6 +322,7 @@ body {
                 width: none;
                 height: 40px;
                 font-size: 13px;
+                overflow: unset;
                 text-align: right !important;
                 display: list-item;
                 list-style: none;

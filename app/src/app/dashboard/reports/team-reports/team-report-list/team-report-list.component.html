@@ -1,12 +1,12 @@
+<div class="dashboard">
+    <p class="dashboard__title" *ngIf="team">
+      <img width="30px" [src]="team.badge || '../../../assets/team-logo.png'" /> {{team.name}}
+    </p>
 <div *ngIf="data?.length<=0; then noContent else content"></div>
 <ng-template #noContent>
     <no-content [emptyContent]="emptyContent"></no-content>
 </ng-template>
-<ng-template #content>
-    <div class="dashboard">
-        <p class="dashboard__title" *ngIf="team">
-            <img width="30px" [src]="team.badge || '../../../assets/team-logo.png'" /> {{team.name}}
-        </p>
+    <ng-template #content>
         <div class="table">
             <div class="table-row table-header">
                 <div class="table-row-item">Title</div>
@@ -16,8 +16,8 @@
                 <div class="table-row-item">Action</div>
             </div>
             <span *ngFor="let data of data | orderBy : {property: column, direction: direction}">
-                    <report-list-item [data]="data" [fields]="fields" [actions]="actions"></report-list-item>
-                </span>
+                <report-list-item [data]="data" [fields]="fields" [actions]="actions"></report-list-item>
+            </span>
         </div>
-    </div>
-</ng-template>
+    </ng-template>
+</div>

@@ -21,8 +21,10 @@ describe('UserListComponent', () => {
         return {
           objectId: "1",
           isActive: true,
-          isAdmin: false,
-          isSuperAdmin: false,
+          access: {
+            isAdmin: false,
+            isSuperAdmin: false
+          },
         };
       }),
       createUser: jasmine.createSpy('createUser').and.callFake(() => {

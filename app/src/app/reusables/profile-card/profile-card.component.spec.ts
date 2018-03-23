@@ -27,7 +27,10 @@ describe('ProfileCardComponent', () => {
       team: "Team 2",
       email: "clara12@email.com",
       image: "users.png",
-      isAdmin: false
+      access: {
+        isAdmin: false,
+        
+      }
     };
     component.profile = profileInfo;
     fixture.detectChanges();
@@ -45,7 +48,7 @@ describe('ProfileCardComponent', () => {
   });
   
   it("should allow users to update their own profile images ", () => {
-    expect(component.profile.isAdmin).toBeFalsy();
+    expect(component.profile.access.isAdmin).toBeFalsy();
     uploadDe = fixture.debugElement.query(By.css('.profile__card--photo__upload'));
     expect(uploadDe).not.toBeNull();
   });

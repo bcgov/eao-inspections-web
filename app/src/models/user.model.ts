@@ -8,14 +8,13 @@ export class BasicUser {
   public teams: Team[];
   public email: string;
   public image: string;
-  public isAdmin: boolean;
-  public isSuperAdmin: boolean;
   public permission: string;
+  public access: object;
   
 
   constructor(
     id: string, firstName: string, lastName: string, name: string, teams: Team[], 
-    email: string, image: string, isAdmin: boolean, isSuperAdmin: boolean, permission: string = null) {
+    email: string, image: string, permission: string = null, access: object) {
     this.id = id;
     this.firstName = firstName;
     this.lastName = lastName;
@@ -23,8 +22,7 @@ export class BasicUser {
     this.teams = teams;
     this.email = email;
     this.image = image;
-    this.isAdmin = isAdmin;
-    this.isSuperAdmin = isSuperAdmin;
     this.permission = permission;
+    this.access = access;
   }
 }

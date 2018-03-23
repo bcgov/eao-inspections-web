@@ -5,6 +5,7 @@ import { Team } from '../models/team.model';
 import { Inspection } from '../models/inspection.model';
 import { parseInspectionToModel, parseUserToModel, parseTeamToModel } from './parse.service';
 import { BasicUser } from '../models/user.model';
+import * as Access from '../constants/accessRights';
 
 let Parse: any = require('parse');
 
@@ -107,12 +108,38 @@ export class AdminService {
     });
   }
 
-  getSuperAdminStatus(permission: string) {
-    return permission === 'superadmin';
+  // get correct access Object based on permission value
+  getAppAccess(permission: string) {
+    switch (permission) {
+      case "superadmin":
+        return Access.SUPERADMIN;
+      case "admin":
+        return Access.ADMIN;
+      case "inspector(view)":
+        return Access.VIEW_INSPECTOR;
+      case "manager":
+        return Access.MANAGER;
+      default:
+        return Access.INSPECTOR;
+    }
   }
 
-  getAdminStatus(permission: string) {
-    return permission === 'admin';
+  // based on permission set one of 3 roles.
+  getCorrectRole(permission: string) {
+    switch (permission) {
+      case "superadmin":
+        return "superadmin";
+      case "admin":
+        return "admin";
+      case "inspector(view)":
+        return "inspector";
+      case "manager":
+        return "inspector";
+      case "inspector":
+        return "inspector";
+      default:
+        return "inspector";
+    }
   }
 
   createUser(firstName: string,
@@ -123,12 +150,13 @@ export class AdminService {
              permission: string): Promise<any> {
     return new Promise((resolve, reject) => {
       const promises = [];
+      const role = this.getCorrectRole(permission);
+      const access = this.getAppAccess(permission);
       const query = new Parse.Query(Parse.Role);
       const queryTeam = new Parse.Query('Team');
       const user = new Parse.User();
       user.set('isActive', true);
-      user.set('isAdmin', this.getAdminStatus(permission));
-      user.set('isSuperAdmin', this.getSuperAdminStatus(permission));
+      user.set('access', access);
       user.set('firstName', firstName);
       user.set('username', email);
       user.set('lastName', lastName);
@@ -142,7 +170,7 @@ export class AdminService {
             teamObject.relation('users').add(results);
             promises.push(teamObject.save());
           });
-          query.equalTo('name', permission);
+          query.equalTo('name', role);
           query.first().then((roleObject) => {
             roleObject.getUsers().add(results);
             promises.push(roleObject.save(null, {useMasterKey: true}));
@@ -168,12 +196,11 @@ export class AdminService {
              permission: string): Promise<any> {
     return new Promise((resolve, reject) => {
       const query = new Parse.Query(Parse.User);
-      const isAdmin = this.getAdminStatus(permission);
-      const isSuperAdmin = this.getSuperAdminStatus(permission);
+      const role = this.getCorrectRole(permission);
+      const access = this.getAppAccess(permission);
       query.get(userId, {
         success: function (user) {
-          user.set('isAdmin', isAdmin);
-          user.set('isSuperAdmin', isSuperAdmin);
+          user.set('access', access);
           user.set('firstName', firstName);
           user.set('lastName', lastName);
           user.set('email', email);
@@ -432,7 +459,7 @@ export class AdminService {
     return new Promise((resolve, reject) => {
       const query = new Parse.Query('Inspection');
       const reports = [];
-      if (!this.user.get('isSuperAdmin')) {
+      if (!this.user.get('access').isSuperAdmin) {
         query.equalTo('adminId', this.user.id);
       }
       query.equalTo('isActive', false);
