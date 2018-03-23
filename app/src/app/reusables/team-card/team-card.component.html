@@ -1,6 +1,6 @@
 <div [ngStyle]="{ 'border-left': '10px solid' + team.color }" class="team__card">
     <div class="team__card--photo">
-        <img class="team__card--photo__img" [src]="team.badge" (error)="setDefaultPic()" />
+        <img class="team__card--photo__img" [src]="team.badge || '../../assets/team-logo@2x.png'" />
     </div>
     <div class="team__card--details">
         <h4>{{team.name}}</h4>

@@ -1,6 +1,7 @@
 import { ADD_MEMBER } from './../../../../../constants/strings';
 import { Component, OnInit } from '@angular/core';
 import * as String from '../../../../../constants/strings';
+import * as Route from '../../../../../constants/routes';
 import { ModalService } from './../../../../../services/modal.service';
 import { TeamService } from '../../../../../services/team.service';
 import { ActivatedRoute } from '@angular/router';
@@ -17,7 +18,7 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class ManageTeamsViewComponent implements OnInit {
   title = 'Users';
-  link = '/admin/team-details';
+  link = '/' + Route.DASHBOARD + '/' + Route.ADMIN_TEAMS;
   emptyContent = {
     image: '../../assets/team-lg.png',
     message: String.EMPTY_TEAM_MEMBER,

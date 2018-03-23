@@ -1,21 +1,16 @@
 import { Injectable} from '@angular/core';
-
+import { map } from 'rxjs/operators';
 import { environment } from '../environments/environment';
 import { parseUserToModel } from './parse.service';
 
-const Parse: any = require('parse');
-
-Parse.initialize(environment.parseId, environment.parseKey);
-Parse.serverURL = environment.parseURL;
-Parse.masterKey = environment.parseMasterKey;
+let Parse: any = require('parse');
 
 @Injectable()
 export class AuthService {
 
-  user = new Parse.User();
+  user: any;
 
   constructor() {
-    this.user = Parse.User.current();
   }
 
   logIn(username: string, password: string) {
