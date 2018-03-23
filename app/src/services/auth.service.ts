@@ -80,10 +80,12 @@ export class AuthService {
   }
 
   isAdmin() {
-    return Parse.User.current().get('access').isAdmin;
+    const access = Parse.User.current().get('access');
+    return (access && access.hasOwnProperty('isAdmin')) ? access.isAdmin : false;
   }
 
   isSuperAdmin() {
-    return Parse.User.current().get('access').isSuperAdmin;
+    const access = Parse.User.current().get('access');
+    return (access && access.hasOwnProperty('isSuperAdmin')) ? access.isSuperAdmin : false;
   }
 }
