@@ -35,10 +35,6 @@ export class UserCardComponent {
 
   constructor(private modalService: ModalService) { }
 
-  setDefaultPic() {
-    this.user.image = '../../assets/team-logo@2x.png';
-  }
-
   onEditMember(value) {
     this.editMember.emit(value);
    }

@@ -62,11 +62,7 @@ export class MenuComponent implements OnInit{
   isAdmin() {
     return (this.authService.isAdmin() || this.authService.isSuperAdmin());
   }
-
-  setDefaultPic() {
-    this.user.image = '../../assets/avatar.png';
-  }
-
+  
   ngOnInit() {
       const userData = this.profileService.user;
       this.user = parseUserToModel(userData);

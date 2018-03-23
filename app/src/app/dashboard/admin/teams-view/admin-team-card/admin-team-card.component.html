@@ -1,6 +1,6 @@
 <div [ngStyle]="{ 'border-left': '10px solid' + team.color }" class="team__card">
     <div class="team__card--photo">
-        <img class="team__card--photo__img" [src]="team.badge" (error)="setDefaultPic()" />
+        <img class="team__card--photo__img" [src]="team.badge || '../../assets/team-logo@2x.png'" />
     </div>
     <div class="team__card--details">
         <a routerLink="manage-team/{{team.id}}">
@@ -37,12 +37,7 @@
 
 <!-- edit user modal -->
 <ng-template #editTeam let-c="close" class="modal">
-  <team-modal 
-    [closeValue]="this.c" 
-    [modal]="modal"
-    (submitValue)="onEdit($event)"
-    [team]="team"
-    >
+    <team-modal [closeValue]="this.c" [modal]="modal" (submitValue)="onEdit($event)" [team]="team">
     </team-modal>
 </ng-template>
 
