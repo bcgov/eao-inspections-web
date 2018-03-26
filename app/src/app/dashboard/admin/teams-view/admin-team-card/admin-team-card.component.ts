@@ -26,12 +26,11 @@ export class AdminTeamCardComponent implements OnInit {
     message: String.ARCHIVE_MESSAGE,
     confirmationYes: String.OK_BUTTON,
     confirmationNo: String.CANCEL_BUTTON,
-  }
-  
+  };
 
   constructor(
-    private modalService: ModalService, 
-    private adminService: AdminService, 
+    private modalService: ModalService,
+    private adminService: AdminService,
     private toast: ToastrService
   ) { }
 
@@ -40,11 +39,11 @@ export class AdminTeamCardComponent implements OnInit {
   }
 
   onEdit(value) {
-    this.adminService.updateTeam(value.id, value.teamName, value.color, value.teamAdmin).then((object) => {
+    this.adminService.updateTeam(value.id, value.teamName, value.color, value.teamAdmin, value.photo).then((object) => {
       this.toast.success('Successfully updated ' + object.get('name'));
     }, (error) => {
       this.toast.error(error.message || String.GENERAL_ERROR);
-    });;
+    });
   }
 
   onUnarchive(value) {

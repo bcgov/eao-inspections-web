@@ -35,9 +35,9 @@ export class ManageTeamsViewComponent implements OnInit {
   };
 
   constructor(
-    private modalService: ModalService, 
-    private teamService: TeamService, 
-    private adminService: AdminService, 
+    private modalService: ModalService,
+    private teamService: TeamService,
+    private adminService: AdminService,
     private route: ActivatedRoute,
     private toast: ToastrService
   ) { }
@@ -63,7 +63,8 @@ export class ManageTeamsViewComponent implements OnInit {
       value.firstName,
       value.lastName,
       value.email,
-      value.permission)
+      value.permission,
+      value.photo)
       .then((object) => {
         this.toast.success('Successfully updated ' + object.get('firstName') + ' ' + object.get('lastName'));
       }, (error) => {

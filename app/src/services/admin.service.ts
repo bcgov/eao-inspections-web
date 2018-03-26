@@ -6,6 +6,7 @@ import { Inspection } from '../models/inspection.model';
 import { parseInspectionToModel, parseUserToModel, parseTeamToModel } from './parse.service';
 import { BasicUser } from '../models/user.model';
 import * as Access from '../constants/accessRights';
+import {Observable} from 'rxjs/Observable';
 
 let Parse: any = require('parse');
 
@@ -146,7 +147,8 @@ export class AdminService {
              lastName: string,
              email: string,
              password: string,
-             permission: string): Promise<any> {
+             permission: string,
+             photo: any): Promise<any> {
     return new Promise((resolve, reject) => {
       const promises = [];
       const role = this.getCorrectRole(permission);
@@ -165,6 +167,13 @@ export class AdminService {
       user.set('permission', permission);
       user.save(null, {
         success: function (results) {
+          if (photo) {
+            const parseFile = new Parse.File('profile_image_' + results.id, photo, photo.type);
+            promises.push(parseFile.save().then((objectFile) => {
+              results.set('profileImage', objectFile);
+              promises.push(results.save(null, {useMasterKey: true}));
+            }));
+          }
           query.equalTo('name', role);
           query.first().then((roleObject) => {
             roleObject.getUsers().add(results);
@@ -188,7 +197,8 @@ export class AdminService {
              firstName: string,
              lastName: string,
              email: string,
-             permission: string): Promise<any> {
+             permission: string,
+             photo: any): Promise<any> {
     return new Promise((resolve, reject) => {
       const promises = [];
       const query = new Parse.Query(Parse.User);
@@ -207,6 +217,13 @@ export class AdminService {
           user.set('publicEmail', email);
           user.save(null, { useMasterKey: true,
             success: function (results) {
+              if (photo) {
+                const parseFile = new Parse.File('profile_image_' + results.id, photo, photo.type);
+                promises.push(parseFile.save().then((objectFile) => {
+                  results.set('profileImage', objectFile);
+                  promises.push(results.save(null, { useMasterKey: true }));
+                }));
+              }
               q.equalTo('users', results);
               q.first().then((roleObject) => {
                 roleObject.getUsers().remove(results);
@@ -292,22 +309,74 @@ export class AdminService {
     });
   }
 
-  createTeam(teamName: string, color: string, adminID: string) {
+
+  // createTeam(teamName: string, color: string, adminID: string, image) {
+  //   return new Promise((resolve, reject) => {
+  //     const promises = [];
+  //     const team = new Parse.Object('Team');
+  //     team.set('name', teamName);
+  //     team.set('color', color);
+  //     team.set('isActive', true);
+  //     team.save(null, {
+  //       success: function (results) {
+  //         if (image) {
+  //           const parseFile = new Parse.File('profile_image_' + results.id, image, image.type);
+  //           promises.push(parseFile.save().then((objectFile) => {
+  //             results.set('image', objectFile);
+  //             const admin = new Parse.Query('User');
+  //             admin.get(adminID).then((adminObj) => {
+  //             results.set('teamAdmin', adminObj);
+  //             });
+  //             promises.push(results.save());
+  //           }));
+  //         }
+  //       },
+  //       error: function (object, error) {
+  //         reject(error);
+  //       }
+  //     }).then((teamObject) => {
+  //       Promise.all(promises).then(() => {
+  //         resolve(teamObject);
+  //       }, error => {
+  //         reject(error);
+  //       });
+  //     });
+  //   });
+  // }
+
+  createTeam(teamName: string, color: string, adminID: string, image) {
+    console.log(image);
     return new Promise((resolve, reject) => {
+      const promises = [];
       const team = new Parse.Object('Team');
       team.set('name', teamName);
       team.set('color', color);
       team.set('isActive', true);
-      team.save()
-      .then(result => {
-        const admin = new Parse.Query('User');
-        admin.get(adminID).then((adminObj) => {
-          result.set('teamAdmin', adminObj);
-          result.save();
+      team.save(null, {
+        success: function (results) {
+          const admin = new Parse.Query('User');
+          admin.get(adminID).then((adminObj) => {
+            results.set('teamAdmin', adminObj);
+            if (image) {
+              const parseFile = new Parse.File('profile_image_' + results.id, image, image.type);
+              promises.push(parseFile.save().then((objectFile) => {
+                results.set('image', objectFile);
+                promises.push(results.save());
+              }));
+            } else {
+              results.save();
+            }
+          });
+        },
+        error: function (object, error) {
+          reject(error);
+        }
+      }).then((teamObject) => {
+        Promise.all(promises).then(() => {
+          resolve(teamObject);
+        }, error => {
+          reject(error);
         });
-        resolve(result);
-      }, error => {
-        reject(error);
       });
     });
   }
@@ -315,28 +384,45 @@ export class AdminService {
   updateTeam(teamId: string,
     teamName: string,
     color: string,
-    adminId: string): Promise<any> {
+    adminId: string,
+    image): Promise<any> {
     return new Promise((resolve, reject) => {
+      const promises = [];
       const query = new Parse.Query('Team');
       query.get(teamId, {
         success: function (team) {
           team.set('name', teamName);
           team.set('color', color);
-          team.save(null, { useMasterKey: true })
-          .then((object) => {
-            const admin = new Parse.Query('User');
-            admin.get(adminId).then((adminObj) => {
-              object.set('teamAdmin', adminObj);
-              object.save();
-            });
-            resolve(object);
-          }, (error) => {
-            reject(error);
+          team.save(null, {
+            success: function (results) {
+              const admin = new Parse.Query('User');
+              admin.get(adminId).then((adminObj) => {
+                results.set('teamAdmin', adminObj);
+                if (image) {
+                  const parseFile = new Parse.File('profile_image_' + results.id, image, image.type);
+                  promises.push(parseFile.save().then((objectFile) => {
+                    results.set('image', objectFile);
+                    promises.push(results.save());
+                  }));
+                } else {
+                  results.save();
+                }
+              });
+            },
+            error: function (object, error) {
+              reject(error);
+            }
           });
         },
         error: function (object, error) {
           reject(error);
         }
+      }).then((teamObject) => {
+        Promise.all(promises).then(() => {
+          resolve(teamObject);
+        }, error => {
+          reject(error);
+        });
       });
     });
   }
@@ -353,12 +439,21 @@ export class AdminService {
             results = [results];
           }
           results.forEach((object) => {
-            const userRelation = object.relation('users');
-            userRelation.query().count().then((count) => {
-               const team = parseTeamToModel(object);
-               team.numUsers = count;
-               promises.push(teams.push(team));
-            });
+              const team = parseTeamToModel(object);
+              const userRelation = object.relation('users');
+              const inspectionQuery = new Parse.Query('Inspection');
+              inspectionQuery.equalTo('team', { '__type': 'Pointer', 'className': 'Team', 'objectId': team.id},);
+              userRelation.query().count().then((numUsers) => {
+                team.numUsers = numUsers;
+                inspectionQuery.count().then((numInspections) => {
+                  team.numInspections = numInspections;
+                  promises.push(
+                    teams.push(
+                      team
+                    )
+                  );
+                });
+             });
           });
         },
         error: function (error) {
@@ -384,15 +479,20 @@ export class AdminService {
             results = [results];
           }
           results.forEach((object) => {
+            const team = parseTeamToModel(object);
             const userRelation = object.relation('users');
-            userRelation.query().count().then((count) => {
-              const team = parseTeamToModel(object);
-              team.numUsers = count;
-              promises.push(
-                teams.push(
-                  team
-                )
-              );
+            const inspectionQuery = new Parse.Query('Inspection');
+            inspectionQuery.equalTo('team', { '__type': 'Pointer', 'className': 'Team', 'objectId': team.id},);
+            userRelation.query().count().then((numUsers) => {
+              team.numUsers = numUsers;
+              inspectionQuery.count().then((numInspections) => {
+                team.numInspections = numInspections;
+                promises.push(
+                  teams.push(
+                    team
+                  )
+                );
+              });
             });
           });
         },
@@ -610,6 +710,23 @@ export class AdminService {
         resolve(reportObject);
       }).catch((error) => {
         reject(error);
+      });
+    });
+  }
+
+  postFile(fileToUpload: File, results): Promise<boolean> {
+    console.log('Called this user:', results);
+    console.log('with this : ', fileToUpload.name);
+    return new Promise((resolve, reject) => {
+      console.log('Called this user:', results);
+      const parseFile = new Parse.File(fileToUpload.name, fileToUpload);
+      parseFile.save().then((file) => {
+        results.set('profileImage', file);
+        results.save().then(() => {
+          resolve(true);
+        });
+      }, error => {
+        reject(error.message);
       });
     });
   }

@@ -63,7 +63,8 @@ export class UserListComponent implements OnInit {
       value.firstName,
       value.lastName,
       value.email,
-      value.permission)
+      value.permission,
+      value.photo)
       .then((object) => {
         this.toast.success('Successfully updated ' + object.get('firstName') + ' ' + object.get('lastName'));
       }, (error) => {
@@ -85,8 +86,8 @@ export class UserListComponent implements OnInit {
       value.lastName,
       value.email,
       value.password,
-      value.permission
-    )
+      value.permission,
+      value.photo)
       .then((results) => {
         if (results) {
           this.toast.success('Successfully added ' + value.firstName + ' ' + value.lastName);

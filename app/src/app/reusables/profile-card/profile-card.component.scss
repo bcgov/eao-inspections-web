@@ -18,10 +18,13 @@
   }
 
   &--photo {
+    width:120px;
+    height:120px;
+    overflow:hidden;
+    border-radius: 50%;
     &__img {
       position: relative;
-      top: 5%;
-      width: 120px;	
+      height: 120px;
       border-style: none;
     }
 
@@ -60,22 +63,22 @@
     &--disclaimer {
       display: block;
       margin-top: 20px;
-      color: #8A8A8A;	
-      font-size: 16px; 
+      color: #8A8A8A;
+      font-size: 16px;
       font-weight: 300;
     }
   }
 
   h4 {
-    color: $font-dark-gray;	
-    font-size: 18px;	
-    font-weight: 600;	
+    color: $font-dark-gray;
+    font-size: 18px;
+    font-weight: 600;
     text-transform: uppercase;
   }
 
   p {
-    color: $font-black;	
-    font-size: 20px;	
+    color: $font-black;
+    font-size: 20px;
     font-weight: 300;
     line-height: 24px;
   }

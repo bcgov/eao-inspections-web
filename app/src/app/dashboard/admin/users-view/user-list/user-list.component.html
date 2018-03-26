@@ -21,8 +21,10 @@
     <span *ngFor="let user of users">
       <div class="table-row">
         <div class="table-row-item" data-header="Full Name">
-          <img *ngIf="user.image" class="table__img" src={{user.image}} />
-          <img *ngIf="!user.image" class="table__img" src="../../../assets/team-member.png" /> 
+          <span class="table__img-wrapper">
+            <img *ngIf="user.profileImage" class="table__img" src={{user.profileImage.url}} />
+          </span>
+          <img *ngIf="!user.profileImage" class="table__img" src="../../../assets/team-member.png" />
           {{user.firstName + " " + user.lastName}}
         </div>
         <div class="table-row-item" data-header="Email">
@@ -58,7 +60,7 @@
       <ng-template #archiveUser let-c="close" class="modal">
         <archive-modal [data]="user" (submitValue)="onArchive($event)" [closeValue]="this.c" [modal]="editModal">
         </archive-modal>
-      </ng-template>   
+      </ng-template>
       <ng-template #updatePassword let-c="close" class="modal">
         <password-modal [data]="user" (submitValue)="onPasswordChange($event)" [closeValue]="this.c" [modal]="modal">
         </password-modal>
