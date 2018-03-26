@@ -141,7 +141,8 @@ describe('Admin Testing', () => {
          'firstNameChanged',
          'lastNameChanged',
          'email@gmail.com',
-         'admin').then((object) => {
+         'admin',
+         null).then((object) => {
          console.log('Matching changed names...');
          test_user = object;
          expect(test_user.get('firstName') === 'firstNameChanged').toBeTruthy();

@@ -6,7 +6,7 @@
     display: inline-block;
     width: 35px !important;
     height: 20px;
-  
+
     & input {
       display: none;
     }
@@ -30,7 +30,6 @@
       width: 16px;
       top: 2px;
       left: 2px;
-      // bottom: 4px;
       background-color: $background-white;
       -webkit-transition: .4s;
       transition: .4s;
@@ -48,11 +47,11 @@
   input:checked + .admin-slider {
     background-color: $default-primary-color;
   }
-  
+
   input:focus + .admin-slider {
     box-shadow: 0 0 1px $default-primary-color;
   }
-  
+
   input:checked + .admin-slider:before {
     -webkit-transform: translateX(16px);
     -ms-transform: translateX(16px);
