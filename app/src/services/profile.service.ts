@@ -8,7 +8,7 @@ let Parse: any = require('parse');
 @Injectable()
 export class ProfileService {
   user = new Parse.User();
-  
+
   constructor() {
      this.user = Parse.User.current();
   }
@@ -92,7 +92,6 @@ export class ProfileService {
   }
   updateProfileImage(image): Promise<any> {
     return new Promise((resolve, reject) => {
-      console.log(image);
       console.log(this.user);
       const promises = [];
       const parseFile = new Parse.File('profile_image_' + this.user.id, image, image.type);

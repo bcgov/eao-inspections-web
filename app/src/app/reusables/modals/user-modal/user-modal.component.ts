@@ -78,8 +78,6 @@ export class UserModalComponent implements OnInit {
     .then((results) => {
          this.teams = results;
      });
-    console.log(this.user.profileImage);
-    console.log(this.user);
     this.selectedPhoto = this.user.profileImage ? this.user.profileImage.url : this.selectedPhoto;
   }
 
