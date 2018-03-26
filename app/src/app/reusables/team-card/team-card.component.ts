@@ -6,8 +6,8 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./team-card.component.scss']
 })
 export class TeamCardComponent implements OnInit {
-  @Input('team') team: any;
-  
+  @Input('team') team : any;
+  @Input('showMembers') showMembers : any;
   constructor() { }
 
   ngOnInit() {
