@@ -20,12 +20,6 @@ describe('UserModalComponent', () => {
   let userInfo: any;
 
   beforeEach(async(() => {
-    adminServiceStub = {
-      getActiveTeams: jasmine.createSpy('getActiveTeams').and.callFake(() => {
-        Promise.resolve();
-      })
-    };
-
     modalServiceStub = {
       open(): Observable<any> {
         return Observable.of(true);
@@ -36,8 +30,7 @@ describe('UserModalComponent', () => {
       declarations: [ UserModalComponent ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
       providers: [
-        { provide: ModalService, useValue: modalServiceStub },
-        { provide: AdminService, useValue: adminServiceStub }
+        { provide: ModalService, useValue: modalServiceStub }
       ],
       imports: [ FormsModule ]
     })
@@ -63,21 +56,12 @@ describe('UserModalComponent', () => {
       permission: "admin"
     }
 
-    teamsMock = ["team1"];
     component.modal = modalInfo;
-    component.teams = teamsMock;
     spyOn(component, 'ngOnInit');
     component.ngOnInit();
     fixture.detectChanges();
   });
   
-  it('should create with a list of available teams when adding a new ueser', () => {
-    expect(component).toBeTruthy();
-    adminServiceStub.getActiveTeams();
-    expect(adminServiceStub.getActiveTeams).toHaveBeenCalled();
-    expect(component.teams).toBeTruthy();
-    expect(component.user).toBeFalsy();
-  })
   
   it('should create with custom modal data to add new users', () => {
     expect(component.modal.header).toBe("mock header");

@@ -14,7 +14,6 @@ import {ToastrService} from 'ngx-toastr';
 })
 export class UserModalComponent implements OnInit {
   selectedPhoto = "../../assets/avatar@2x.png";
-  teams = [];
   permissions = ["superadmin", "admin", "manager", "inspector", "inspector(view)"];
   fileToUpload;
   imagePreview: string;
@@ -24,8 +23,8 @@ export class UserModalComponent implements OnInit {
   @Input('user') user: any;
   @Output() submitValue: EventEmitter<any> = new EventEmitter();
 
-  constructor(private adminService: AdminService, private toast: ToastrService, private ng2ImgMax: Ng2ImgMaxService) { }
 
+  constructor(private adminService: AdminService, private toast: ToastrService, private ng2ImgMax: Ng2ImgMaxService) { }
   getPhoto(event) {
     if (event.target.files && event.target.files[0]) {
       const reader = new FileReader();
@@ -60,12 +59,11 @@ export class UserModalComponent implements OnInit {
     const lastName = form.value.lastName;
     const email = form.value.email;
     const password = form.value.password;
-    const team = form.value.team;
     const permission = form.value.permission;
     if (id) {
       this.submitValue.emit({ firstName, lastName, email, permission, id, photo});
     } else {
-      this.submitValue.emit({firstName, lastName, email, password, team, permission, photo});
+      this.submitValue.emit({firstName, lastName, email, password, permission, photo});
     }
   }
 
@@ -74,10 +72,6 @@ export class UserModalComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.adminService.getActiveTeams()
-    .then((results) => {
-         this.teams = results;
-     });
     this.selectedPhoto = this.user.profileImage ? this.user.profileImage.url : this.selectedPhoto;
   }
 

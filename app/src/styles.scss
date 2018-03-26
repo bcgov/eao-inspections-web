@@ -225,6 +225,11 @@ body {
         }
         form {
             margin: 30px 30px;
+
+            // .form-group.row {
+            //     margin-bottom: 1.7rem;
+            // }
+
             label {
                 padding: 0;
                 text-transform: uppercase;
@@ -270,6 +275,8 @@ body {
             border-bottom: 1px solid $font-gray;
         }
         .table-row-item {
+            align-items: center;
+            display: flex;
             flex: 3;
             font-size: 13px;
             overflow: overlay;
@@ -283,6 +290,7 @@ body {
             flex: 5;
 
             @include xxl {
+                overflow: inherit;
                 flex: 3;
                 display: grid;
             }

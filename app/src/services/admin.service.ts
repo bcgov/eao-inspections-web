@@ -147,7 +147,6 @@ export class AdminService {
              lastName: string,
              email: string,
              password: string,
-             team: any,
              permission: string,
              photo: any): Promise<any> {
     return new Promise((resolve, reject) => {
@@ -175,10 +174,6 @@ export class AdminService {
               promises.push(results.save(null, {useMasterKey: true}));
             }));
           }
-          queryTeam.get(team).then((teamObject) => {
-            teamObject.relation('users').add(results);
-            promises.push(teamObject.save());
-          });
           query.equalTo('name', role);
           query.first().then((roleObject) => {
             roleObject.getUsers().add(results);
@@ -207,6 +202,8 @@ export class AdminService {
     return new Promise((resolve, reject) => {
       const promises = [];
       const query = new Parse.Query(Parse.User);
+      const q = new Parse.Query(Parse.Role);
+      const roleQuery = new Parse.Query(Parse.Role);
       const role = this.getCorrectRole(permission);
       const access = this.getAppAccess(permission);
       query.get(userId, {
@@ -218,31 +215,40 @@ export class AdminService {
           user.set('username', email);
           user.set('permission', permission);
           user.set('publicEmail', email);
-          user.save(null, {
-            useMasterKey: true,
+          user.save(null, { useMasterKey: true,
             success: function (results) {
               if (photo) {
                 const parseFile = new Parse.File('profile_image_' + results.id, photo, photo.type);
                 promises.push(parseFile.save().then((objectFile) => {
                   results.set('profileImage', objectFile);
-                  promises.push(results.save(null, {useMasterKey: true}));
+                  promises.push(results.save(null, { useMasterKey: true }));
                 }));
               }
+              q.equalTo('users', results);
+              q.first().then((roleObject) => {
+                roleObject.getUsers().remove(results);
+                roleObject.save(null, { useMasterKey: true });
+              });
+              roleQuery.equalTo('name', role);
+              roleQuery.first().then((roleObject) => {
+                roleObject.getUsers().add(results);
+                promises.push(roleObject.save(null, { useMasterKey: true }));
+              });
             },
             error: function (object, error) {
               reject(error);
-            }
-          }).then((userObject) => {
+            } 
+           }).then((userObject) => {
             Promise.all(promises).then(() => {
               resolve(userObject);
-            }, error => {
-              reject(error);
-            });
+          }, (error) => {
+            reject(error);
           });
-        },
-      });
+        });
+      }
     });
-  }
+  });
+}
 
   updatePassword(userId: string,
     password: string): Promise<any> {
@@ -303,7 +309,42 @@ export class AdminService {
     });
   }
 
-  createTeam(teamName: string, color: string, image) {
+
+  // createTeam(teamName: string, color: string, adminID: string, image) {
+  //   return new Promise((resolve, reject) => {
+  //     const promises = [];
+  //     const team = new Parse.Object('Team');
+  //     team.set('name', teamName);
+  //     team.set('color', color);
+  //     team.set('isActive', true);
+  //     team.save(null, {
+  //       success: function (results) {
+  //         if (image) {
+  //           const parseFile = new Parse.File('profile_image_' + results.id, image, image.type);
+  //           promises.push(parseFile.save().then((objectFile) => {
+  //             results.set('image', objectFile);
+  //             const admin = new Parse.Query('User');
+  //             admin.get(adminID).then((adminObj) => {
+  //             results.set('teamAdmin', adminObj);
+  //             });
+  //             promises.push(results.save());
+  //           }));
+  //         }
+  //       },
+  //       error: function (object, error) {
+  //         reject(error);
+  //       }
+  //     }).then((teamObject) => {
+  //       Promise.all(promises).then(() => {
+  //         resolve(teamObject);
+  //       }, error => {
+  //         reject(error);
+  //       });
+  //     });
+  //   });
+  // }
+
+  createTeam(teamName: string, color: string, adminID: string, image) {
     console.log(image);
     return new Promise((resolve, reject) => {
       const promises = [];
@@ -313,13 +354,19 @@ export class AdminService {
       team.set('isActive', true);
       team.save(null, {
         success: function (results) {
-          if (image) {
-            const parseFile = new Parse.File('profile_image_' + results.id, image, image.type);
-            promises.push(parseFile.save().then((objectFile) => {
-              results.set('image', objectFile);
-              promises.push(results.save());
-            }));
-          }
+          const admin = new Parse.Query('User');
+          admin.get(adminID).then((adminObj) => {
+            results.set('teamAdmin', adminObj);
+            if (image) {
+              const parseFile = new Parse.File('profile_image_' + results.id, image, image.type);
+              promises.push(parseFile.save().then((objectFile) => {
+                results.set('image', objectFile);
+                promises.push(results.save());
+              }));
+            } else {
+              results.save();
+            }
+          });
         },
         error: function (object, error) {
           reject(error);
@@ -335,9 +382,10 @@ export class AdminService {
   }
 
   updateTeam(teamId: string,
-             teamName: string,
-             color: string,
-             image): Promise<any> {
+    teamName: string,
+    color: string,
+    adminId: string,
+    image): Promise<any> {
     return new Promise((resolve, reject) => {
       const promises = [];
       const query = new Parse.Query('Team');
@@ -347,13 +395,19 @@ export class AdminService {
           team.set('color', color);
           team.save(null, {
             success: function (results) {
-              if (image) {
-                const parseFile = new Parse.File('profile_image_' + results.id, image, image.type);
-                promises.push(parseFile.save().then((objectFile) => {
-                  results.set('image', objectFile);
-                  promises.push(results.save());
-                }));
-              }
+              const admin = new Parse.Query('User');
+              admin.get(adminId).then((adminObj) => {
+                results.set('teamAdmin', adminObj);
+                if (image) {
+                  const parseFile = new Parse.File('profile_image_' + results.id, image, image.type);
+                  promises.push(parseFile.save().then((objectFile) => {
+                    results.set('image', objectFile);
+                    promises.push(results.save());
+                  }));
+                } else {
+                  results.save();
+                }
+              });
             },
             error: function (object, error) {
               reject(error);

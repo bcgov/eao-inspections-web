@@ -86,10 +86,8 @@ export class UserListComponent implements OnInit {
       value.lastName,
       value.email,
       value.password,
-      value.team,
       value.permission,
-      value.photo
-    )
+      value.photo)
       .then((results) => {
         if (results) {
           this.toast.success('Successfully added ' + value.firstName + ' ' + value.lastName);

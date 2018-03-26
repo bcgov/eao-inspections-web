@@ -66,7 +66,6 @@ export class ReportListItemComponent implements OnInit {
   }
 
   open(modal) {
-    console.log(this.user);
     this.modalService.open(modal, {backdrop: 'static', keyboard: false });
   }
 
