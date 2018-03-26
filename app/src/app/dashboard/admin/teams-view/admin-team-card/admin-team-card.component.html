@@ -6,6 +6,12 @@
         <a routerLink="manage-team/{{team.id}}">
             <h4>{{team.name}}</h4>
         </a>
+        <div *ngIf="team.numUsers<=0; then noMembers else members"></div>
+        <ng-template #noMembers><p>0 Members</p></ng-template>
+        <ng-template #members>
+            <p>{{team.numUsers}} Member</p>
+            <p *ngIf="team.numUsers>1">{{team.numUsers}} Members</p>
+        </ng-template>
         <div class="team__card--actions"></div>
         <div *ngIf="team.isActive; then archive else unarchive"></div>
         <ng-template #archive>

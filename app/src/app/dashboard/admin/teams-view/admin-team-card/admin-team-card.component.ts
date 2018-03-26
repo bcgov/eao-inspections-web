@@ -63,5 +63,6 @@ export class AdminTeamCardComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log(this.team);
   }
 }
