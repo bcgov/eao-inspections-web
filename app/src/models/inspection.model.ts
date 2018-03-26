@@ -48,4 +48,17 @@ export class Inspection {
     this.team = team;
     this.viewOnly = viewOnly;
   }
+
+  toText() {
+    let text = '';
+    text += 'Number : ' + (this.inspectionNumber || '')  + '\n';
+    text += 'Title : ' + (this.title || '')  + '\n';
+    text += 'Sub-Title : ' + (this.subtitle || '')  + '\n';
+    text += 'Start Date : ' + (this.startDate || '')  + '\n';
+    text += 'End Date : ' + (this.endDate || '')  + '\n';
+    text += 'Updated Date : ' + (this.updatedAt || '')  + '\n';
+    text += 'Requirements : ' + (this.requirement || '')  + '\n';
+
+    return text;
+  }
 }
