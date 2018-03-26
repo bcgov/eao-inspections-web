@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {ReportService} from '../../../services/report.service';
 import {ActivatedRoute} from '@angular/router';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-element-view',
@@ -20,7 +21,7 @@ export class ElementViewComponent implements OnInit {
   isPhotos;
   isVideo;
   isVoice;
-  constructor(private route: ActivatedRoute, private reportService: ReportService) {
+  constructor(private route: ActivatedRoute, private reportService: ReportService, private location: Location) {
     this.route.params.subscribe(params => this.routeParam = params);
   }
 
@@ -32,6 +33,10 @@ export class ElementViewComponent implements OnInit {
       this.media = object;
       this.getMediaAll();
     });
+  }
+
+  onLocationChange() {
+    this.location.back();
   }
 
   setInActive() {

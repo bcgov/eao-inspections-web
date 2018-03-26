@@ -1,3 +1,4 @@
+import { BasicUser } from './../../../../models/user.model';
 import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 import { async, fakeAsync, tick, TestBed, ComponentFixture } from '@angular/core/testing';
 
@@ -32,14 +33,16 @@ describe('TeamReportsComponent', () => {
   });
 
   it('should render correct title', () => {
-    expect(compiled.querySelector('.dashboard__title').textContent).toContain('Team Reports');
+    expect(compiled.querySelector('.dashboard__title').textContent).toContain('Team Inspections');
   });
 
   it('should render correct number of team cards', fakeAsync(() => {
     const profileService = fixture.debugElement.injector.get(ProfileService);
+    const admin = new BasicUser('123', 'mockFirstName', 'mockLastName', 'mockName', [],
+      'mockEmail', 'mockImage', null, {});
     const teams = [
-      new Team('team-1-id', 'team1', 'admin1', 'blue', true),
-      new Team('team-2-id', 'team2', 'admin1', 'red', true),
+      new Team('team-1-id', 'team1', admin, 'blue', true),
+      new Team('team-2-id', 'team2', admin, 'red', true),
     ];
     spyOn(profileService, 'getTeams').and.returnValue(Promise.resolve(teams));
     component.ngOnInit();

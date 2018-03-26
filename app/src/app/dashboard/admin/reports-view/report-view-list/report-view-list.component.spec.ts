@@ -5,6 +5,7 @@ import {Inspection} from '../../../../../models/inspection.model';
 import {CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA} from '@angular/core';
 import {OrderByPipe} from '../../../../directives/orderby.pipe';
 import {ActivatedRoute} from '@angular/router';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('ReportViewListComponent', () => {
   let component: ReportViewListComponent;
@@ -16,7 +17,8 @@ describe('ReportViewListComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ ReportViewListComponent, OrderByPipe ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
-      providers: [{provide : ActivatedRoute, useValue: {snapshot: {params: {'id': 'team-id-1'}}}}]
+      providers: [{provide : ActivatedRoute, useValue: {snapshot: {params: {'id': 'team-id-1'}}}}],
+      imports: [RouterTestingModule]
     })
     .compileComponents();
   }));

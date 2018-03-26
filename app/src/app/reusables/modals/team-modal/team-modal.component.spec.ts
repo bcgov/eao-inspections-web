@@ -1,3 +1,4 @@
+import { AdminService } from './../../../../services/admin.service';
 import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA, DebugElement } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
@@ -13,6 +14,7 @@ describe('TeamModalComponent', () => {
   let teamInfo: any;
   let buttonEl: DebugElement;
   let colorPickerStub: any;
+  let adminServiceStub;
 
   beforeEach(async(() => {
     colorPickerStub = {
@@ -20,11 +22,17 @@ describe('TeamModalComponent', () => {
         return Observable.of(true);
       }
     };
+    adminServiceStub = {
+      getUsersByRole: jasmine.createSpy('getUsersByRole').and.callFake(() => {
+        Promise.resolve(true);
+      }),
+    };
+
 
     TestBed.configureTestingModule({
       declarations: [ TeamModalComponent ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
-      providers: [{ provide: ColorPickerService, useValue: colorPickerStub}],
+      providers: [{ provide: ColorPickerService, useValue: colorPickerStub }, { provide: AdminService, useValue: adminServiceStub }],
       imports: [ FormsModule ]
     })
     .compileComponents();
@@ -47,6 +55,8 @@ describe('TeamModalComponent', () => {
       id: 1,
     }
     component.modal = modalInfo;
+    spyOn(component, 'ngOnInit');
+    component.ngOnInit();
     fixture.detectChanges();
   });
   

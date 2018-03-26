@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { Location } from '@angular/common';
 import {ActivatedRoute} from '@angular/router';
 import * as String from '../../../../../constants/strings';
 import {ReportService} from '../../../../../services/report.service';
@@ -27,9 +28,13 @@ export class TeamReportListComponent implements OnInit {
   fields: Array<any>;
   actions: Array<any>;
 
-  constructor(private reportService: ReportService, private teamService: TeamService, private route: ActivatedRoute) {
+  constructor(private reportService: ReportService, private teamService: TeamService, private route: ActivatedRoute, private location: Location) {
     this.fields = ['title', 'project', 'inspector', 'submitted', 'actions'];
     this.actions = ['download'];
+  }
+
+  onLocationChange() {
+    this.location.back();
   }
 
   ngOnInit() {

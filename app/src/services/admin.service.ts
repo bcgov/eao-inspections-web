@@ -549,7 +549,8 @@ export class AdminService {
     return new Promise((resolve, reject) => {
       const query = new Parse.Query('Inspection');
       const reports = [];
-      if (!this.user.get('access').isSuperAdmin) {
+      const access = this.user.get('access');
+      if (access && !access.hasOwnProperty('isSuperAdmin')) {
         query.equalTo('adminId', this.user.id);
       }
       query.equalTo('isActive', false);
