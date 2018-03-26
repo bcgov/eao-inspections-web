@@ -3,12 +3,6 @@ import { Team } from '../models/team.model';
 import { BasicUser } from '../models/user.model';
 import { Inspection } from '../models/inspection.model';
 
-// const Parse: any = require('parse');
-
-// Parse.initialize(environment.parseId, environment.parseKey);
-// Parse.serverURL = environment.parseURL;
-// Parse.masterKey = environment.parseMasterKey;
-
 export function parseToJSON(objectList) {
   const listJSON = [];
   if (objectList.length) {
