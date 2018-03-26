@@ -43,7 +43,7 @@ export class ManageTeamsViewComponent implements OnInit {
   ) { }
 
   open(modal) {
-    this.modalService.open(modal, { size: 'lg', backdrop: 'static', keyboard: false });
+    this.modalService.open(modal, { backdrop: 'static', keyboard: false });
   }
 
   onAddMember(selectedUsers) {

@@ -193,6 +193,7 @@ export class AdminService {
       const promises = [];
       const query = new Parse.Query(Parse.User);
       const q = new Parse.Query(Parse.Role);
+      const roleQuery = new Parse.Query(Parse.Role);
       const role = this.getCorrectRole(permission);
       const access = this.getAppAccess(permission);
       query.get(userId, {
@@ -206,8 +207,13 @@ export class AdminService {
           user.set('publicEmail', email);
           user.save(null, { useMasterKey: true,
             success: function (results) {
-              q.equalTo('name', role);
+              q.equalTo('users', results);
               q.first().then((roleObject) => {
+                roleObject.getUsers().remove(results);
+                roleObject.save(null, { useMasterKey: true });
+              });
+              roleQuery.equalTo('name', role);
+              roleQuery.first().then((roleObject) => {
                 roleObject.getUsers().add(results);
                 promises.push(roleObject.save(null, { useMasterKey: true }));
               });
@@ -286,11 +292,12 @@ export class AdminService {
     });
   }
 
-  createTeam(teamName: string, color: string) {
+  createTeam(teamName: string, color: string, adminID: string) {
     return new Promise((resolve, reject) => {
       const team = new Parse.Object('Team');
       team.set('name', teamName);
       team.set('color', color);
+      // team.set('teamAdmin', adminID)
       team.set('isActive', true);
       team.save()
       .then(result => {
@@ -303,12 +310,14 @@ export class AdminService {
 
   updateTeam(teamId: string,
     teamName: string,
+    adminId: string,
     color: string): Promise<any> {
     return new Promise((resolve, reject) => {
       const query = new Parse.Query('Team');
       query.get(teamId, {
         success: function (team) {
           team.set('name', teamName);
+          team.set('teamAdmin', adminId)
           team.set('color', color);
           team.save(null, { useMasterKey: true }).then((object) => {
             resolve(object);

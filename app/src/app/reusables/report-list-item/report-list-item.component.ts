@@ -39,7 +39,6 @@ export class ReportListItemComponent implements OnInit {
   ngOnInit() {
     const userData = this.profileService.user;
     this.user = parseUserToModel(userData);
-    console.log(this.user);
   }
   
   onSetPermission(report) {
@@ -67,7 +66,6 @@ export class ReportListItemComponent implements OnInit {
   }
 
   open(modal) {
-    console.log(this.user);
     this.modalService.open(modal, {backdrop: 'static', keyboard: false });
   }
 

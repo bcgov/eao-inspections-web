@@ -40,7 +40,7 @@ export class AdminTeamCardComponent implements OnInit {
   }
 
   onEdit(value) {
-    this.adminService.updateTeam(value.id, value.teamName, value.color).then((object) => {
+    this.adminService.updateTeam(value.id, value.teamName, value.color, value.teamAdmin).then((object) => {
       this.toast.success('Successfully updated ' + object.get('name'));
     }, (error) => {
       this.toast.error(error.message || String.GENERAL_ERROR);

@@ -24,19 +24,21 @@ export class TeamModalComponent implements OnInit {
 
   onSubmit(form: NgForm, id?: string) {
     const teamName = form.value.teamName;
+    const teamAdmin = form.value.admin;
+    console.log(teamAdmin);
     if (id) {
       const color = form.value.color;
-      this.submitValue.emit({teamName, color, id});
+      this.submitValue.emit({teamName, color, teamAdmin, id});
     } else {
       const color = this.color;
-      this.submitValue.emit({teamName, color});
+      this.submitValue.emit({teamName, teamAdmin, color});
     }
   }
 
   ngOnInit() {
-    // this.adminService.getUsersByRole('admin').then((results) => {
-    //   this.admins = results
-    // });
+    this.adminService.getUsersByRole('admin').then((results) => {
+      this.admins = results
+    });
   };
    
 }
