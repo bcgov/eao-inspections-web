@@ -54,6 +54,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { PasswordModalComponent } from './reusables/modals/password-modal/password-modal.component';
 import { ForgotPasswordModalComponent } from './reusables/modals/forgot-password-modal/forgot-password-modal.component';
 import {Ng2ImgMaxModule, Ng2ImgMaxService} from 'ng2-img-max';
+import { PasswordChangeComponent } from './login/password-change/password-change.component';
 
 @NgModule({
   declarations: [
@@ -96,7 +97,8 @@ import {Ng2ImgMaxModule, Ng2ImgMaxService} from 'ng2-img-max';
     DashboardComponent,
     PasswordModalComponent,
     EqualValidator,
-    ForgotPasswordModalComponent
+    ForgotPasswordModalComponent,
+    PasswordChangeComponent
   ],
   imports: [
     BrowserModule,
