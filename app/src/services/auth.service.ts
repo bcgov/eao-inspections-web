@@ -13,12 +13,12 @@ export class AuthService {
   constructor() {
   }
 
-  logIn(username: string, password: string) {
+  logIn(username: string, password: string): Promise<any> {
     return new Promise((resolve) => {
       Parse.User.logIn(username, password)
         .then((user) => {
             this.user = user;
-            resolve(true);
+            resolve(user);
           },
           () => {
             resolve(false);
@@ -69,6 +69,26 @@ export class AuthService {
         },
         error: function(error) {
           // Show the error message somewhere
+          reject(error);
+        }
+      });
+    });
+  }
+
+  firstTimePassword(pw: string) {
+    return new Promise((resolve, reject) => {
+      const currentUser = Parse.User.current();
+      currentUser.setPassword(pw);
+      currentUser.save(null, {
+        success: function(user) {
+          user.set('hasLoggedIn', true);
+          user.save().then(object => {
+            resolve(object);
+          }, error => {
+            reject(error.message);
+          });
+        },
+        error: function(user, error) {
           reject(error);
         }
       });
