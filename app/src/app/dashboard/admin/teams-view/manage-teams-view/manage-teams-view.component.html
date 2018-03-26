@@ -1,7 +1,7 @@
 <div class="dashboard">
-    <a routerLink="{{link}}">
+    <button (click)="onLocationChange()">
         <img src="../../../assets/back.png" />
-    </a>
+    </button>
     <div class="dashboard__header">
         <p class="dashboard__title">{{ team?.name || '-'}}</p>
         <div class="dashboard__buttons">

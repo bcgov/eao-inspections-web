@@ -3,6 +3,7 @@ import { Inspection } from '../../../../../models/inspection.model';
 import { ActivatedRoute } from '@angular/router';
 import * as String from '../../../../../constants/strings';
 import { AdminService } from '../../../../../services/admin.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-archived-inspections',
@@ -28,7 +29,7 @@ export class ArchivedInspectionsComponent implements OnInit {
   actions: Array<any>;
 
 
-  constructor(private adminService: AdminService) {
+  constructor(private adminService: AdminService, private location: Location) {
     this.fields = ['title', 'project', 'submitted', 'team', 'inspector', 'actions'];
     this.actions = ['unarchive'];
   }
@@ -39,6 +40,10 @@ export class ArchivedInspectionsComponent implements OnInit {
       .then((results) => {
         this.data = results;
       });
+  }
+
+  onLocationChange() {
+    this.location.back();
   }
 
   sort(property: string) {

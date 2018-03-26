@@ -5,6 +5,7 @@ import { ReportService } from '../../../../../services/report.service';
 import { TeamService } from '../../../../../services/team.service';
 import { ActivatedRoute } from '@angular/router';
 import * as String from '../../../../../constants/strings';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'report-view-list',
@@ -29,7 +30,7 @@ export class ReportViewListComponent implements OnInit {
   fields: Array<any>;
   actions: Array<any>;
 
-  constructor(private reportService: ReportService, private teamService: TeamService, private route: ActivatedRoute) {
+  constructor(private reportService: ReportService, private teamService: TeamService, private route: ActivatedRoute, private location: Location) {
     this.fields = ['title', 'project', 'submitted', 'inspector', 'view', 'actions'];
     this.actions = ['download', 'archive'];
   }
@@ -44,6 +45,10 @@ export class ReportViewListComponent implements OnInit {
       .then((results) => {
         this.data = results;
       });
+  }
+
+  onLocationChange() {
+    this.location.back();
   }
 
   setDefaultPic() {

@@ -9,6 +9,7 @@ import { Team } from '../../../../../models/team.model';
 import { AdminService } from '../../../../../services/admin.service';
 import { BasicUser } from '../../../../../models/user.model';
 import { ToastrService } from 'ngx-toastr';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'manage-teams-view',
@@ -39,11 +40,16 @@ export class ManageTeamsViewComponent implements OnInit {
     private teamService: TeamService,
     private adminService: AdminService,
     private route: ActivatedRoute,
-    private toast: ToastrService
+    private toast: ToastrService,
+    private location: Location
   ) { }
 
   open(modal) {
     this.modalService.open(modal, { backdrop: 'static', keyboard: false });
+  }
+
+  onLocationChange() {
+    this.location.back();
   }
 
   onAddMember(selectedUsers) {
