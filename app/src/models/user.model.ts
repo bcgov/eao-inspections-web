@@ -14,7 +14,7 @@ export class BasicUser {
 
   constructor(
     id: string, firstName: string, lastName: string, name: string, teams: Team[],
-    email: string, image: string, permission: string = null, access: object) {
+    email: string, profileImage: string, permission: string = null, access: object) {
     this.id = id;
     this.firstName = firstName;
     this.lastName = lastName;

@@ -1,22 +1,22 @@
 <div class="profile__card">
-    <div class="profile__card--photo">
-      <img *ngIf="profile.isAdmin === true" class="profile__card--photo__img" [src]="profile.profileImage ? profile.profileImage : defaultPic" (error)="setDefaultPic()" />
-      <div *ngIf="profile.isAdmin === false" id="upload">
-        <input style="display: none" type="file" id="photo" name="photo" class="form-control" #photoInput ngModel (change)="getPhotoAndUpload($event)">
-        <img class="profile__card--photo__img" src={{selectedPhoto}} />
-        <button class="profile__card--photo__upload" (click)="photoInput.click(); false">Upload</button>
-      </div>
-    </div>
-    <div class="profile__card__details">
-        <h4>Full Name</h4>
-        <p>{{profile.name}}</p>
-        <h4 *ngIf="profile.teams?.length>0">Teams</h4>
-        <p *ngFor="let team of profile.teams">{{team.name}}</p>
-    </div>
-    <div class="profile__card__contact">
-        <h4>Email</h4>
-        <a href="mailto:{{profile.email}}">{{profile.email}}</a>
-        <span *ngIf="!profile.access?.isAdmin && !profile.access?.isSuperAdmin" class="profile__card__contact--disclaimer"><i>*Contact Administration below to change personal information.</i></span>
-    </div>
+  <div class="profile__card--photo">
+    <img *ngIf="profile.access.isAdmin === true" class="profile__card--photo__img" [src]="profile.profileImage ? profile.profileImage : defaultPic" (error)="setDefaultPic()" />
+    <img *ngIf="profile.access.isAdmin === false" class="profile__card--photo__img" src="{{selectedPhoto}}" />
+  </div>
+  <div *ngIf="profile.access.isAdmin === false" id="upload">
+    <input style="display: none" type="file" id="photo" name="photo" class="form-control" #photoInput ngModel (change)="getPhotoAndUpload($event)">
+    <button class="profile__card--photo__upload" (click)="photoInput.click(); false">Upload</button>
+  </div>
+  <div class="profile__card__details">
+    <h4>Full Name</h4>
+    <p>{{profile.name}}</p>
+    <h4 *ngIf="profile.teams?.length>0">Teams</h4>
+    <p *ngFor="let team of profile.teams">{{team.name}}</p>
+  </div>
+  <div class="profile__card__contact">
+    <h4>Email</h4>
+    <a href="mailto:{{profile.email}}">{{profile.email}}</a>
+    <span *ngIf="!profile.access.isAdmin && !profile.access.isSuperAdmin" class="profile__card__contact--disclaimer"><i>*Contact Administration below to change personal information.</i></span>
+  </div>
 </div>
 

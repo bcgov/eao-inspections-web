@@ -193,7 +193,7 @@ body {
             }
         }
     }
-    // modal 
+    // modal
     .modal {
         min-height: 100% !important;
         height: 400px;
@@ -241,10 +241,17 @@ body {
             }
         }
         #upload {
-            display: inline-grid;
+          display: inline-grid;
+        }
+        .form-upload__img-wrapper {
+          overflow:hidden;
+          border-radius: 50%;
+          width: 80px;
+          height: 80px;
         }
         .form-upload__img {
-            width: 80px;
+          position: relative;
+          height: 80px;
         }
     }
     // Responsive Reports Table
@@ -297,9 +304,15 @@ body {
         }
     }
     .table__img {
-        width: 40px;
-        margin-right: 5px;
+      width: 40px;
+      height: 40px;
+      overflow: hidden;
+      margin-right: 5px;
+      border-radius: 50%;
     }
+  .table__image-wrapper {
+    height: 40px;
+  }
     @include xl {
         .table {
             display: block;

@@ -42,13 +42,9 @@ export function parseUserToModel(object): BasicUser {
       object.get('firstName') + ' ' + object.get('lastName'),
       [],
       object.get('publicEmail'),
-      object.get('profile_image'),
+      image_url,
       object.get('permission'),
       object.get('access'),
-      image_url,
-      object.get('isAdmin'),
-      object.get('isSuperAdmin'),
-      object.get('permission')
     );
   }
 }

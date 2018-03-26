@@ -5,10 +5,10 @@
   margin: $dashboard-team-margin;
   margin-top: $dashboard-content-margin;
   display: inline;
-  height: 97px;	
-  width: 256px;	
-  border-radius: 2px;	
-  background-color: $background-white;	
+  height: 97px;
+  width: 256px;
+  border-radius: 2px;
+  background-color: $background-white;
   box-shadow: 0 0 8px 0 rgba(0,0,0,0.2);
   border-left: 10px solid $border-yellow;
   @include flex;
@@ -20,8 +20,14 @@
       position: relative;
       top: 20%;
       left: 10px;
-      height: 64px;	
+      height: 64px;
       width: 64px;
+      overflow:hidden;
+      border-radius: 50%;
+      img {
+        position: relative;
+        height: 64px;
+      }
     }
   }
 

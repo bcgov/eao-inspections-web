@@ -16,13 +16,10 @@ export class ProfileCardComponent implements OnInit {
   defaultPic = '../../assets/avatar@2x.png';
   constructor(private profileService: ProfileService,
               private toast: ToastrService,
-              private ng2ImgMax: Ng2ImgMaxService,
-              public sanitizer: DomSanitizer) { }
+              private ng2ImgMax: Ng2ImgMaxService) { }
   selectedPhoto = '../../assets/avatar@2x.png';
   fileToUpload;
-  uploadedImage: File;
   imagePreview: string;
-
 
   setDefaultPic() {
     this.profile.image = this.defaultPic;
@@ -42,23 +39,16 @@ export class ProfileCardComponent implements OnInit {
 
       reader.readAsDataURL(event.target.files[0]);
     }
-    this.ng2ImgMax.resizeImage(event.target.files[0], 120, 120).subscribe(
+    this.ng2ImgMax.resizeImage(event.target.files[0], 10000, 120).subscribe(
       result => {
         this.fileToUpload = new File([result], result.name);
         this.getImagePreview(this.fileToUpload);
         this.uploadToParse(this.fileToUpload);
       },
       error => {
-        console.log('😢 Oh no!', error);
+        this.toast.error(error.message || String.GENERAL_ERROR);
       }
     );
-    // this.fileToUpload = event.target.files[0];
-    // this.profileService.updateProfileImage(event.target.files[0])
-    //   .then((object) => {
-    //     this.toast.success('Successfully updated ' + object.get('firstName') + ' ' + object.get('lastName'));
-    //   }, (error) => {
-    //     this.toast.error(error.message || String.GENERAL_ERROR);
-    //   });
   }
   getImagePreview(file: File) {
     const reader: FileReader = new FileReader();
@@ -70,7 +60,7 @@ export class ProfileCardComponent implements OnInit {
   uploadToParse(uploadFile) {
     this.profileService.updateProfileImage(uploadFile)
       .then((object) => {
-        this.toast.success('Successfully updated ' + object.get('firstName') + ' ' + object.get('lastName'));
+        this.toast.success('Successfully updated ');
       }, (error) => {
         this.toast.error(error.message || String.GENERAL_ERROR);
       });
