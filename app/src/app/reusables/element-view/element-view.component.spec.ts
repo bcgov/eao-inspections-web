@@ -6,6 +6,7 @@ import {Inspection} from '../../../models/inspection.model';
 import {Observable} from 'rxjs/Observable';
 import {CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA} from '@angular/core';
 import 'rxjs/add/observable/of';
+import { RouterTestingModule } from '@angular/router/testing';
 
 class MockActivatedRoute extends ActivatedRoute {
   constructor() {
@@ -34,7 +35,8 @@ describe('ElementViewComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ ElementViewComponent ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
-      providers: [{provide : ActivatedRoute, useClass: MockActivatedRoute}]
+      providers: [{provide : ActivatedRoute, useClass: MockActivatedRoute}],
+      imports: [RouterTestingModule]
     })
     .compileComponents();
   }));

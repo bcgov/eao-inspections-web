@@ -16,7 +16,6 @@ describe('InspectionViewComponent', () => {
   let compiled;
 
   beforeEach(async(() => {
-
      TestBed.configureTestingModule({
       declarations: [ InspectionViewComponent, OrderByPipe],
       providers: [{provide : ActivatedRoute, useValue: {snapshot: {params: {'id': 'inspection-id-1'}}}}],

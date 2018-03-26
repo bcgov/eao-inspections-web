@@ -179,7 +179,7 @@ describe('Admin Testing', () => {
 
   it('should create team', () => {
     console.log('Testing create team in functionality');
-    service.createTeam('test_team', 'team_color').then((object) => {
+    service.createTeam('test_team', 'team_color', test_user).then((object) => {
       test_team = object;
       const query = new Parse.Query('Team');
       query.get(test_team.id).then((result) => {
@@ -194,7 +194,7 @@ describe('Admin Testing', () => {
     query.get(test_team.id).then((result) => {
       test_team.id = result.id;
       console.log('Testing updating team in functionality: ' + test_team.id);
-      service.updateTeam(test_team.id, 'mockName', '#00000').then((object) => {
+      service.updateTeam(test_team.id, 'mockName', '#00000', test.user).then((object) => {
         test_team = object;
         expect(test_team.get('name') === 'mockName').toBeTruthy();
       });

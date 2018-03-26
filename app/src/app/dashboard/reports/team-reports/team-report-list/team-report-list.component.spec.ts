@@ -8,6 +8,7 @@ import { OrderByPipe } from '../../../../directives/orderby.pipe';
 import { ActivatedRoute } from '@angular/router';
 import { ReportService } from '../../../../../services/report.service';
 import { Inspection } from '../../../../../models/inspection.model';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('TeamReportListComponent', () => {
   let component: TeamReportListComponent;
@@ -23,7 +24,8 @@ describe('TeamReportListComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ TeamReportListComponent, OrderByPipe ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
-      providers: [{provide : ActivatedRoute, useValue: {snapshot: {params: {'id': 'team-id-1'}}}}]
+      providers: [{provide : ActivatedRoute, useValue: {snapshot: {params: {'id': 'team-id-1'}}}}],
+      imports: [RouterTestingModule]
     })
     .compileComponents();
   }));
