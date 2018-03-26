@@ -36,6 +36,7 @@ export class TeamModalComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log(this.team);
     this.adminService.getUsersByRole('admin').then((results) => {
       this.admins = results
     });

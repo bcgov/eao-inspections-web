@@ -1,7 +1,9 @@
+import { BasicUser } from "./user.model";
+
 export class Team {
   public id: string;
   public name: string;
-  public admin: string;
+  public admin: BasicUser;
   public color: string;
   public isActive: boolean;
   public badge: string;
@@ -10,7 +12,7 @@ export class Team {
   constructor(
     id: string, 
     name: string, 
-    admin: string, 
+    admin: BasicUser, 
     color: string, 
     isActive: boolean, 
     badge: string = null, 

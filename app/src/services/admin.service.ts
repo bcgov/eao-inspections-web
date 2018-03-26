@@ -297,10 +297,14 @@ export class AdminService {
       const team = new Parse.Object('Team');
       team.set('name', teamName);
       team.set('color', color);
-      // team.set('teamAdmin', adminID)
       team.set('isActive', true);
       team.save()
       .then(result => {
+        const admin = new Parse.Query('User');
+        admin.get(adminID).then((adminObj) => {
+          result.set('teamAdmin', adminObj);
+          result.save();
+        });
         resolve(result);
       }, error => {
         reject(error);
@@ -310,16 +314,21 @@ export class AdminService {
 
   updateTeam(teamId: string,
     teamName: string,
-    adminId: string,
-    color: string): Promise<any> {
+    color: string,
+    adminId: string): Promise<any> {
     return new Promise((resolve, reject) => {
       const query = new Parse.Query('Team');
       query.get(teamId, {
         success: function (team) {
           team.set('name', teamName);
-          team.set('teamAdmin', adminId)
           team.set('color', color);
-          team.save(null, { useMasterKey: true }).then((object) => {
+          team.save(null, { useMasterKey: true })
+          .then((object) => {
+            const admin = new Parse.Query('User');
+            admin.get(adminId).then((adminObj) => {
+              object.set('teamAdmin', adminObj);
+              object.save();
+            });
             resolve(object);
           }, (error) => {
             reject(error);
