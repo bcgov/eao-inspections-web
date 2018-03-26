@@ -15,6 +15,7 @@ export class AdminService {
   user = new Parse.User();
 
   constructor(private router: Router) {
+    this.user = Parse.User.current();
   }
 
 

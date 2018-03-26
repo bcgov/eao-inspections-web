@@ -22,4 +22,19 @@ export class Observation {
     this.media = media;
     this.createdAt = createdAt;
   }
+
+  toText() {
+    let text = '';
+    const coordinate = (this.coordinate)
+    ? '(' + this.coordinate['_latitude'] + ', ' + this.coordinate['_longitude'] + ')'
+    : '';
+
+    text += 'Title : ' + (this.title || '')  + '\n';
+    text += 'Description : ' + (this.description || '')  + '\n';
+    text += 'Requirements : ' + (this.requirement || '')  + '\n'; 
+    text += 'Coordinate : ' + coordinate + '\n'; 
+    text += 'Created Date : ' + (this.createdAt || '')  + '\n';
+
+    return text;
+  }
 }

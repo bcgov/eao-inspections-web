@@ -2,6 +2,10 @@ import { environment } from '../environments/environment';
 import { Team } from '../models/team.model';
 import { BasicUser } from '../models/user.model';
 import { Inspection } from '../models/inspection.model';
+import { Observation } from '../models/observation.model';
+import { Media } from '../models/media.model';
+
+const Parse: any = require('parse');
 
 export function parseToJSON(objectList) {
   const listJSON = [];
@@ -21,14 +25,13 @@ export function getObject(userObject) {
 
 export function parseUserToModel(object): BasicUser {
   if (object) {
-    let image_url;
-    if (object.get('profileImage')) {
-      image_url = object.get('profileImage').url();
-    } else {
-      object.fetch().then(
-        image_url = object.get('profileImage') ? object.get('profileImage').url() : null
-      );
+    let profileImage = object.get('profileImage');
+    if (profileImage) {
+      const url = profileImage.url();
+      const n = url.indexOf('/parse/');
+      profileImage = Parse.serverURL + url.substring(n + 6);
     }
+
     return new BasicUser(
       object.id,
       object.get('firstName'),
@@ -36,7 +39,7 @@ export function parseUserToModel(object): BasicUser {
       object.get('firstName') + ' ' + object.get('lastName'),
       [],
       object.get('publicEmail'),
-      image_url,
+      profileImage,
       object.get('permission'),
       object.get('access'),
     );
@@ -44,17 +47,20 @@ export function parseUserToModel(object): BasicUser {
 }
 
 export function parseTeamToModel(object) {
-  let image_url;
-  if (object.get('image')) {
-    image_url = object.get('image').url();
+  let badge = object.get('badge');
+  if (badge) {
+    const url = badge.url();
+    const n = url.indexOf('/parse/');
+    badge = Parse.serverURL + url.substring(n + 6);
   }
+
   return new Team (
     object.id,
     object.get('name'),
     object.get('teamAdmin'),
     object.get('color'),
     object.get('isActive'),
-    image_url
+    badge
   );
 }
 
@@ -65,8 +71,10 @@ export function parseInspectionToModel(object) {
     team = parseTeamToModel(team);
   }
 
+  const id = (object.get('id')) ? object.get('id') : object.id;
+
   return new Inspection(
-    object.id,
+    id,
     object.get('title'),
     object.get('subtitle'),
     object.get('inspectionNumber'),
@@ -80,5 +88,36 @@ export function parseInspectionToModel(object) {
     object.get('isActive'),
     team,
     object.get('viewOnly')
+  );
+}
+
+export function parseObservationToModel(object) {
+  const id = (object.get('id')) ? object.get('id') : object.id;
+
+  return new Observation(
+    id,
+    object.get('title'),
+    object.get('observationDescription'),
+    object.get('requirement'),
+    object.get('coordinate'),
+    object.get('media'),
+    object.get('createdAt')
+  );
+}
+
+export function parseMediaToModel(object, type = 'img') {
+  const url = object.get('file').url();
+  const n = url.indexOf('/parse/');
+  const newUrl = Parse.serverURL + url.substring(n + 6);
+
+  return new Media(
+    object.id,
+    type,
+    object.get('caption'),
+    object.get('observationId'),
+    object.get('coordinate'),
+    newUrl,
+    object.get('file').name(),
+    object.get('createdAt'),
   );
 }

@@ -11,6 +11,8 @@ export class AuthService {
   user: any;
 
   constructor() {
+    this.user = Parse.User.current();
+
   }
 
   logIn(username: string, password: string): Promise<any> {
