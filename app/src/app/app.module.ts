@@ -55,6 +55,8 @@ import { PasswordModalComponent } from './reusables/modals/password-modal/passwo
 import { ForgotPasswordModalComponent } from './reusables/modals/forgot-password-modal/forgot-password-modal.component';
 import {Ng2ImgMaxModule, Ng2ImgMaxService} from 'ng2-img-max';
 import { PasswordChangeComponent } from './login/password-change/password-change.component';
+import {FirstTimePasswordGuardService} from '../services/first-time-password-guard.service';
+import {ProfileService} from '../services/profile.service';
 
 @NgModule({
   declarations: [
@@ -110,7 +112,7 @@ import { PasswordChangeComponent } from './login/password-change/password-change
     ColorPickerModule,
     Ng2ImgMaxModule
   ],
-  providers: [AuthService, AuthGuardService, RoleGuardService, ModalService, ObservableService, Ng2ImgMaxService],
+  providers: [AuthService, AuthGuardService, FirstTimePasswordGuardService, RoleGuardService, ModalService, ObservableService, ProfileService, Ng2ImgMaxService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
