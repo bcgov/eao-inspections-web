@@ -3,6 +3,7 @@ import {ActivatedRoute} from '@angular/router';
 import {ReportService} from '../../../services/report.service';
 import { ProfileService } from '../../../services/profile.service';
 import { parseUserToModel } from '../../../services/parse.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'inspection-view',
@@ -15,7 +16,6 @@ export class InspectionViewComponent implements OnInit {
   elements;
   title = 'Inspection';
   subTitle = 'Observation Elements';
-  link = '/team-reports/team/id';
   routeParam;
   message: string;
 
@@ -26,7 +26,7 @@ export class InspectionViewComponent implements OnInit {
   column: string;
 
 
-  constructor(private route: ActivatedRoute, private reportService: ReportService, private profileService: ProfileService) {
+  constructor(private route: ActivatedRoute, private reportService: ReportService, private profileService: ProfileService, private location: Location) {
     this.routeParam = this.route.snapshot.params;
   }
 
@@ -45,6 +45,10 @@ export class InspectionViewComponent implements OnInit {
     });
     const userData = this.profileService.user;
     this.user = parseUserToModel(userData);
+  }
+
+  onLocationChange() {
+    this.location.back();
   }
 
   sort(property: string) {

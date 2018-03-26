@@ -1,4 +1,7 @@
 <div class="dashboard">
+    <button (click)="onLocationChange()">
+        <img src="../../../assets/back.png" />
+    </button>
     <p class="dashboard__title" *ngIf="team">
       <img width="30px" [src]="team.badge || '../../../assets/team-logo.png'" /> {{team.name}}
     </p>
