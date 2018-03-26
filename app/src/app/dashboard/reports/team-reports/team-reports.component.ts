@@ -10,7 +10,7 @@ import { Team } from '../../../../models/team.model';
   providers: [ProfileService]
 })
 export class TeamReportsComponent implements OnInit {
-  title = 'Team Reports';
+  title = 'Team Inspections';
   teams: Array<Team>;
 
 

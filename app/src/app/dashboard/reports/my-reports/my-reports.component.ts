@@ -10,7 +10,7 @@ import {Inspection} from '../../../../models/inspection.model';
   providers: [ReportService]
 })
 export class MyReportsComponent implements OnInit {
-  title: 'My Reports';
+  title = 'My Inspections';
   data: Array<Inspection>;
 
   constructor(private reportService: ReportService) { }
