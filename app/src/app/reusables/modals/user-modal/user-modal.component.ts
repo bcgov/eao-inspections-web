@@ -5,7 +5,6 @@ import * as String from '../../../../constants/strings';
 import { parseToJSON } from '../../../../services/parse.service';
 import {Ng2ImgMaxService} from 'ng2-img-max';
 import {ToastrService} from 'ngx-toastr';
-import { AdminService } from '../../../../services/admin.service';
 
 @Component({
   selector: 'user-modal',
