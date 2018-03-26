@@ -9,6 +9,8 @@ export const PROFILE = 'profile';
 export const SETTINGS = 'settings';
 export const SEARCH = 'search';
 
+export const CHANGE = '/change';
+
 // all admin routes
 export const ADMIN_USERS = 'admin/user-details';
 export const ADMIN_TEAMS = 'admin/team-details';
