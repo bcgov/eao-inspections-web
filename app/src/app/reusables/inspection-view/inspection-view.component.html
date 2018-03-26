@@ -11,7 +11,7 @@
                         VIEW-ONLY
                 </label>
             </div>
-            <button class="dashboard__btn" [disabled]="((data?.viewOnly || user.access.isViewOnly) && !user?.access.isAdmin && !user?.access.isSuperAdmin)">
+            <button class="dashboard__btn" [disabled]="((data?.viewOnly || user.access.isViewOnly) && !user?.access.isAdmin && !user?.access.isSuperAdmin)" (click)="onDownload(data)">
             <img class="dashboard__header__btn__img" *ngIf="((data?.viewOnly || user.access.isViewOnly) && !user?.access.isAdmin && !user?.access.isSuperAdmin); else CanDownload"  src="../../assets/add-inactive.png" />
             <ng-template #CanDownload><img class="dashboard__header__btn__img" src="../../assets/add-active.png" />
             </ng-template>

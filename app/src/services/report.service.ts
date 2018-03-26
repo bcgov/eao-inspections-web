@@ -6,15 +6,20 @@ import { Inspection } from '../models/inspection.model';
 import {Observation} from '../models/observation.model';
 import {Media} from '../models/media.model';
 import { BasicUser } from '../models/user.model';
-import { parseUserToModel, parseInspectionToModel } from './parse.service';
+import { parseUserToModel, parseInspectionToModel, parseObservationToModel, parseMediaToModel } from './parse.service';
+import * as JSZip from 'jszip';
+import * as JSZipUtils from 'jszip-utils';
 
-let Parse: any = require('parse');
+const FileSaver = require('file-saver');
+const Parse: any = require('parse');
+
 
 @Injectable()
 export class ReportService {
   user = new Parse.User();
 
   constructor() {
+    this.user = Parse.User.current();
   }
 
   getInspector(inspectorId: string): Promise<any> {
@@ -38,6 +43,8 @@ export class ReportService {
       const reports = [];
       let resultList;
       const query = new Parse.Query('Inspection');
+      console.log(this.user.id);
+
       query.equalTo('userId', this.user.id);
       query.ascending('createdAt');
       query.find({
@@ -45,6 +52,7 @@ export class ReportService {
           if (!Array.isArray(results)) {
             results = [results];
           }
+          console.log(results);
           resultList = results;
         },
         error: function (error) {
@@ -108,10 +116,17 @@ export class ReportService {
 
   getInspection(inspectionId: string): Promise<any> {
     return new Promise((resolve, reject) => {
-      const query = new Parse.Query('Inspection');
-      query.get(inspectionId).then((object) => {
+      const query1 = new Parse.Query('Inspection');
+      query1.equalTo('objectId', inspectionId);
+      const query2 = new Parse.Query('Inspection');
+      query2.equalTo('id', inspectionId);
+      const orQuery = new Parse.Query.or(query1, query2);
+
+      orQuery.first().then((object) => {
+        console.log("getInsepction", object);
         this.getInspector(object.get('userId'))
         .then((inspector) => {
+          console.log(inspector);
             const inspection = parseInspectionToModel(object);
             inspection.inspector = inspector;
             resolve(inspection);
@@ -140,15 +155,7 @@ export class ReportService {
         }
       }).then(() => {
         elementList.forEach((object) => {
-          elements.push(new Observation(
-            object.id,
-            object.get('title'),
-            object.get('observationDescription'),
-            object.get('requirement'),
-            object.get('coordinate'),
-            object.get('media'),
-            object.get('createdAt')
-          ));
+          elements.push(parseObservationToModel(object));
         });
       }).then(() => {
         resolve(elements);
@@ -158,19 +165,14 @@ export class ReportService {
 
   getObservation(observationId: string): Promise<any> {
     return new Promise((resolve, reject) => {
-      const query = new Parse.Query('Observation');
-      query.get(observationId).then((object) => {
-        resolve(
-          new Observation(
-            object.id,
-            object.get('title'),
-            object.get('observationDescription'),
-            object.get('requirement'),
-            object.get('coordinate'),
-            object.get('media'),
-            object.get('createdAt')
-          )
-        );
+      const query1 = new Parse.Query('Observation');
+      query1.equalTo('objectId', observationId);
+      const query2 = new Parse.Query('Observation');
+      query2.equalTo('id', observationId);
+      const orQuery = new Parse.Query.or(query1, query2);
+
+      orQuery.first().then((object) => {
+        resolve(parseObservationToModel(object));
       }, (error) => {
         reject(error.messsage);
       });
@@ -195,20 +197,75 @@ export class ReportService {
         }
       }).then(() => {
         photoList.forEach((object) => {
-          photos.push(new Media(
-            object.id,
-            'img',
-            object.get('caption'),
-            object.get('observationId'),
-            object.get('coordinate'),
-            object.get('file').url(),
-            object.get('createdAt')
-          ));
+          photos.push(parseMediaToModel(object));
         });
       }).then(() => {
         resolve(photos);
       });
     });
   }
-}
 
+  download(report: Inspection) {
+    return new Promise((resolve, reject) => {
+      let promises = [];
+      const observationFolders = {};
+      const medias = [];
+
+      const zip = new JSZip();
+      const reportFolder = zip.folder(report.title);
+      reportFolder.file('report.txt', report.toText());
+      console.log(report.toText());
+      this.getObservations(report.id).then((observations) => {
+        observations.forEach(observation => {
+          const observationFolder = reportFolder.folder(observation.title);
+          observationFolders[observation.id] = observationFolder;
+          observationFolder.file('info.txt', observation.toText());
+
+          promises.push(this.getPhotos(observation.id));
+        });
+      })
+      .then(() => Promise.all(promises))
+      .then((results) => {
+        promises = [];
+        results.forEach((res) => {
+          res.forEach(media => {
+            medias.push(media);
+          });
+        });
+      })
+      .then(() => {
+        let count = 0;
+        if (medias.length == 0) {
+          zip.generateAsync({type:'blob'})
+          .then(function(content) {
+              FileSaver.saveAs(content, report.title + '.zip');
+              resolve(true);
+          });
+        } else {
+          medias.forEach((media) => {
+            const folder = observationFolders[media.observationId];
+            const mediaFoler = folder.folder(media.id);
+
+            mediaFoler.file('info.txt', media.toText());
+
+            JSZipUtils.getBinaryContent(media.fileURL, function (err, data) {
+              mediaFoler.file(media.fileName, data, {binary:true});
+
+              count++;
+              if (count === medias.length) {
+                zip.generateAsync({type:'blob'})
+                .then(function(content) {
+                    FileSaver.saveAs(content, report.title + '.zip');
+                    resolve(true);
+                });
+              }
+            });
+          });
+        }
+      })
+      .catch((error) => {
+        reject(error);
+      });
+    });
+  }
+}

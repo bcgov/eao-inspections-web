@@ -11,7 +11,7 @@ const Parse: any = require('parse');
 
 const init = () => {
   platformBrowserDynamic().bootstrapModule(AppModule).catch(err => console.log(err));
-}
+};
 
 
 fetch('/env').then((res) => {
