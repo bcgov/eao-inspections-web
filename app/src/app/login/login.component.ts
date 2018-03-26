@@ -42,7 +42,7 @@ export class LoginComponent implements OnInit {
     const username = form.value.email;
     const password = form.value.password;
     this.authService.logIn(username, password).then((results) => {
-      if (results.get('hasLoggedIn')) {
+      if (results.hasLoggedIn) {
         this.router.navigate([Route.DASHBOARD + '/' + Route.MY_REPORTS]);
       } else {
         this.router.navigate([Route.LOGIN + Route.CHANGE]);

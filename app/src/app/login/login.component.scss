@@ -6,7 +6,7 @@
   text-align: center;
 
   &__header {
-      height: 400px;	
+      height: 400px;
       background-color: $default-primary-color;
 
       &__img {
@@ -21,39 +21,39 @@
 
       &__label {
         display: block;
-        font-size: 18px;	
+        font-size: 18px;
       }
 
       &__input {
         background-color: $background-white;
-        height: 48px;	
-        width: 320px;	
-        border: 1px solid rgba(198,198,198,0.3);	
-        border-radius: 4px;	
+        height: 48px;
+        width: 320px;
+        border: 1px solid rgba(198,198,198,0.3);
+        border-radius: 4px;
 
       }
     }
 
-    // validation erros
+    // validation errors
     .login__body__form__input.ng-touched.ng-invalid {
       border: 2px solid red;
     }
 
     &__btn {
       margin: 10px;
-      height: 48px;	
-      width: 320px;	
+      height: 48px;
+      width: 320px;
       color: $font-white;
-      background-color: $default-primary-color;		
-      font-size: 18px;	
-      font-weight: bold;	
-      line-height: 23px;	
+      background-color: $default-primary-color;
+      font-size: 18px;
+      font-weight: bold;
+      line-height: 23px;
       text-align: center;
     }
 
     &__link {
       color: $default-link-color;
-      font-size: 16px;	
+      font-size: 16px;
     }
   }
 }

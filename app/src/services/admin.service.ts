@@ -237,7 +237,7 @@ export class AdminService {
             },
             error: function (object, error) {
               reject(error);
-            } 
+            }
            }).then((userObject) => {
             Promise.all(promises).then(() => {
               resolve(userObject);
@@ -308,41 +308,6 @@ export class AdminService {
       });
     });
   }
-
-
-  // createTeam(teamName: string, color: string, adminID: string, image) {
-  //   return new Promise((resolve, reject) => {
-  //     const promises = [];
-  //     const team = new Parse.Object('Team');
-  //     team.set('name', teamName);
-  //     team.set('color', color);
-  //     team.set('isActive', true);
-  //     team.save(null, {
-  //       success: function (results) {
-  //         if (image) {
-  //           const parseFile = new Parse.File('profile_image_' + results.id, image, image.type);
-  //           promises.push(parseFile.save().then((objectFile) => {
-  //             results.set('image', objectFile);
-  //             const admin = new Parse.Query('User');
-  //             admin.get(adminID).then((adminObj) => {
-  //             results.set('teamAdmin', adminObj);
-  //             });
-  //             promises.push(results.save());
-  //           }));
-  //         }
-  //       },
-  //       error: function (object, error) {
-  //         reject(error);
-  //       }
-  //     }).then((teamObject) => {
-  //       Promise.all(promises).then(() => {
-  //         resolve(teamObject);
-  //       }, error => {
-  //         reject(error);
-  //       });
-  //     });
-  //   });
-  // }
 
   createTeam(teamName: string, color: string, adminID: string, image) {
     console.log(image);
