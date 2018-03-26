@@ -22,7 +22,7 @@
       <div class="table-row">
         <div class="table-row-item" data-header="Full Name">
           <span class="table__img-wrapper">
-            <img *ngIf="user.profileImage" class="table__img" src={{user.profileImage.url}} />
+            <img *ngIf="user.profileImage" class="table__img" src={{user.profileImage}} />
           </span>
           <img *ngIf="!user.profileImage" class="table__img" src="../../../assets/team-member.png" />
           {{user.firstName + " " + user.lastName}}
@@ -31,9 +31,11 @@
            {{user.publicEmail}}
         </div>
         <div class="table-row-item" data-header="Team">
-          <img *ngIf="user.teamImage" class="table__img" src={{user.teamImage}} />
-          <img *ngIf="!user.teamImage" class="table__img" src="../../../assets/team-lg.png" />
-          {{user.team}}
+          <div *ngFor="let team of user.teams">
+            <img *ngIf="team.badge" class="table__img" src={{team.badge}} />
+            <img *ngIf="!team.badge" class="table__img" src="../../../assets/team-lg.png" />
+            {{ team.name }}
+          </div>
         </div>
         <div class="table-row-item" data-header="Permission">
            {{user.permission}}
