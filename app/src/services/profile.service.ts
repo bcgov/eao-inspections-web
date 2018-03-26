@@ -8,7 +8,7 @@ let Parse: any = require('parse');
 @Injectable()
 export class ProfileService {
   user = new Parse.User();
-  
+
   constructor() {
      this.user = Parse.User.current();
   }
@@ -63,7 +63,6 @@ export class ProfileService {
       query.equalTo('users', this.user);
       query.find({
         success: function(results) {
-          console.log(results);
           if (!Array.isArray(results)) {
             results = [results];
           }
@@ -87,6 +86,23 @@ export class ProfileService {
       }).then(() => {
         Promise.all(promises).then(() => {
           resolve(admins);
+        });
+      });
+    });
+  }
+  updateProfileImage(image): Promise<any> {
+    return new Promise((resolve, reject) => {
+      console.log(this.user);
+      const promises = [];
+      const parseFile = new Parse.File('profile_image_' + this.user.id, image, image.type);
+      parseFile.save().then((objectFile) => {
+        this.user.set('profileImage', objectFile);
+        promises.push(this.user.save());
+      }).then(imageObject => {
+        Promise.all(promises).then(() => {
+          resolve(imageObject);
+        }, error => {
+          reject(error);
         });
       });
     });

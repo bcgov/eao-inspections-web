@@ -27,6 +27,14 @@ export function getObject(userObject) {
 
 export function parseUserToModel(object): BasicUser {
   if (object) {
+    let image_url;
+    if (object.get('profileImage')) {
+      image_url = object.get('profileImage').url();
+    } else {
+      object.fetch().then(
+        image_url = object.get('profileImage') ? object.get('profileImage').url() : null
+      );
+    }
     return new BasicUser(
       object.id,
       object.get('firstName'),
@@ -34,7 +42,7 @@ export function parseUserToModel(object): BasicUser {
       object.get('firstName') + ' ' + object.get('lastName'),
       [],
       object.get('publicEmail'),
-      object.get('profile_image'),
+      image_url,
       object.get('permission'),
       object.get('access'),
     );
@@ -42,13 +50,17 @@ export function parseUserToModel(object): BasicUser {
 }
 
 export function parseTeamToModel(object) {
+  let image_url;
+  if (object.get('image')) {
+    image_url = object.get('image').url();
+  }
   return new Team (
     object.id,
     object.get('name'),
     object.get('teamAdmin'),
     object.get('color'),
     object.get('isActive'),
-    object.get('badge')
+    image_url
   );
 }
 

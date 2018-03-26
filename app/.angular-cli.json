@@ -52,6 +52,9 @@
       "config": "./karma.conf.js"
     }
   },
+  "scripts": [
+    "../node_modules/blueimp-canvas-to-blob/js/canvas-to-blob.min.js"
+  ],
   "defaults": {
     "styleExt": "scss",
     "component": {}

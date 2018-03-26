@@ -38,8 +38,8 @@ export class MenuComponent implements OnInit{
   };
 
   constructor(
-    private authService: AuthService, 
-    public modalService: ModalService, 
+    private authService: AuthService,
+    public modalService: ModalService,
     private router: Router,
     private profileService: ProfileService
   ) {}
@@ -62,9 +62,13 @@ export class MenuComponent implements OnInit{
   isAdmin() {
     return (this.authService.isAdmin() || this.authService.isSuperAdmin());
   }
-  
+
+  setDefaultPic() {
+    this.user.profileImage = '../../assets/avatar.png';
+  }
+
   ngOnInit() {
       const userData = this.profileService.user;
       this.user = parseUserToModel(userData);
-  };
+  }
 }

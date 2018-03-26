@@ -39,7 +39,7 @@ export class TeamsViewComponent implements OnInit {
   }
 
   onSubmit(value) {
-    this.adminService.createTeam(value.teamName, value.color).then((object) => {
+    this.adminService.createTeam(value.teamName, value.color, value.photo).then((object) => {
       this.toast.success('Successfully added a new team');
     }, (error) => {
       this.toast.error(error.message || String.GENERAL_ERROR);

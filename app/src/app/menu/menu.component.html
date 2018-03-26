@@ -81,7 +81,9 @@
         <div class="mobile-menu__divider"></div>
         <div>
             <div class="mobile-menu__footer">
-                <img class="menu__profile__img" [src]="user?.image || '../../assets/avatar.png'" />
+              <div class="menu__profile__img">
+                <img [src]="user?.profileImage" (error)="setDefaultPic()" />
+              </div>
                 <div class="mobile-menu__footer__content">
                     <p>{{user?.firstName + " " + user?.lastName}}</p>
                     <button type="button" class="menu__profile__content__link" (click)="open(content)">Logout</button>
@@ -170,7 +172,9 @@
     </ul>
     <div class="menu__divider menu__divider--last"></div>
     <div class="menu__profile">
-        <img class="menu__profile__img" [src]="user?.image || '../../assets/avatar.png'" />
+        <div class="menu__profile__img">
+          <img  [src]="user?.profileImage" (error)="setDefaultPic()" />
+        </div>
         <div class="menu__profile__content">
             <p class="menu__profile__content__name">{{user?.firstName + " " + user?.lastName}}</p>
             <button type="button" class="menu__profile__content__link" (click)="open(content)">Logout</button>

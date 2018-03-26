@@ -10,7 +10,10 @@ import { NgForm } from '@angular/forms';
 })
 export class TeamModalComponent implements OnInit {
   admins = [];
-  color: string = "#FDB913";
+  selectedPhoto = '../../assets/avatar@2x.png';
+  color = '#FDB913';
+  fileToUpload;
+
   @Input('modal') modal: any;
   @Input('team') team: any;
   @Input() closeValue: any;
@@ -18,18 +21,32 @@ export class TeamModalComponent implements OnInit {
 
   constructor(private colorPicker: ColorPickerService, private adminService: AdminService) { }
 
+  getPhoto(event) {
+    if (event.target.files && event.target.files[0]) {
+      const reader = new FileReader();
+
+      reader.onload = (_event: any) => {
+        this.selectedPhoto = _event.target.result;
+      };
+
+      reader.readAsDataURL(event.target.files[0]);
+    }
+    this.fileToUpload = event.target.files[0];
+  }
+
   close() {
     this.closeValue();
-  } 
+  }
 
   onSubmit(form: NgForm, id?: string) {
+    const photo = this.fileToUpload;
     const teamName = form.value.teamName;
     if (id) {
       const color = form.value.color;
-      this.submitValue.emit({teamName, color, id});
+      this.submitValue.emit({teamName, color, id, photo});
     } else {
       const color = this.color;
-      this.submitValue.emit({teamName, color});
+      this.submitValue.emit({teamName, color, photo});
     }
   }
 
@@ -38,5 +55,5 @@ export class TeamModalComponent implements OnInit {
     //   this.admins = results
     // });
   };
-   
+
 }
