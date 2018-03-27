@@ -39,10 +39,11 @@
                     type="email"
                     class="form-control"
                     id="email"
-                    pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" name="email"
+                    pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" 
+                    name="email"
                     required
                     #email="ngModel"
-                    [(ngModel)]="user.publicEmail"
+                    [(ngModel)]="user.email"
                 >
                 <div class="error" *ngIf="email.touched && !email.valid">*Must be in valid email format</div>
             </div>

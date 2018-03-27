@@ -53,6 +53,7 @@ export class UserModalComponent implements OnInit {
       this.imagePreview = reader.result;
     };
   }
+
   onSubmit(form: NgForm, id?: string) {
     const photo = this.fileToUpload;
     const firstName = form.value.firstName;
@@ -72,7 +73,9 @@ export class UserModalComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log(this.user);
     this.selectedPhoto = this.user.profileImage ? this.user.profileImage.url : this.selectedPhoto;
   }
+
 
 }
