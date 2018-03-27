@@ -1,8 +1,8 @@
-import {Injectable} from '@angular/core';
 import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from '@angular/router';
+import {Injectable} from '@angular/core';
 
-import * as Route from '../constants/routes';
 import {ProfileService} from './profile.service';
+import * as Route from '../constants/routes';
 
 @Injectable()
 export class FirstTimePasswordGuardService implements CanActivate {

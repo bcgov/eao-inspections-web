@@ -1,7 +1,7 @@
-import { environment } from '../environments/environment';
 import { Injectable} from '@angular/core';
-import {Team} from '../models/team.model';
+
 import { parseTeamToModel } from './parse.service';
+import { Team } from '../models/team.model';
 
 let Parse: any = require('parse');
 

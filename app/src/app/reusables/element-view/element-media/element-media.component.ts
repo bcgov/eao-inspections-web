@@ -6,10 +6,18 @@ import {Component, Input, OnInit} from '@angular/core';
   styleUrls: ['./element-media.component.scss']
 })
 export class ElementMediaComponent implements OnInit {
-  @Input('mediaSelected') mediaSelected: any;
+  @Input('item') item: any;
+  defaultPic = '../../assets/placeholder-voice.jpg';
+  thumbnailImage = '../../assets/placeholder-voice.jpg';
+  audioImage = '../../assets/placeholder-voice.jpg';
+  type;
   constructor() { }
 
   ngOnInit() {
+    this.thumbnailImage = this.item.fileURL;
   }
 
+  setDefaultPic() {
+    this.thumbnailImage = this.defaultPic;
+  }
 }
