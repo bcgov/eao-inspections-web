@@ -111,7 +111,7 @@ export class UserListComponent implements OnInit {
     this.adminService.getActiveUsers()
     .then((results) => {
       if (results instanceof Array) {
-        this.users = parseToJSON(results);
+        this.users = results;
       }
     });
   }

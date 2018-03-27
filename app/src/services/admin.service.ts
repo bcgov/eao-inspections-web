@@ -97,15 +97,29 @@ export class AdminService {
 
   getActiveUsers() {
     return new Promise((resolve, reject) => {
-      const query = new Parse.Query('User');
+      const users = [];
+      const query = new Parse.Query(Parse.User);
       query.equalTo('isActive', true);
       query.find({
         success: function (results) {
-          resolve(results);
+          results.forEach(objectUser => {
+            const user = parseUserToModel(objectUser);
+            const query = new Parse.Query('Team');
+            query.equalTo('users', objectUser);
+            query.find().then((objectTeams) => {
+              objectTeams.forEach((team) => {
+                user.teams.push(parseTeamToModel(team));
+              })
+            }).then(() => {
+              users.push(user)
+            });
+          });
         },
         error: function (error) {
           reject(error);
         }
+      }).then(() => {
+        resolve(users);
       });
     });
   }
@@ -681,20 +695,4 @@ export class AdminService {
     });
   }
 
-  postFile(fileToUpload: File, results): Promise<boolean> {
-    console.log('Called this user:', results);
-    console.log('with this : ', fileToUpload.name);
-    return new Promise((resolve, reject) => {
-      console.log('Called this user:', results);
-      const parseFile = new Parse.File(fileToUpload.name, fileToUpload);
-      parseFile.save().then((file) => {
-        results.set('profileImage', file);
-        results.save().then(() => {
-          resolve(true);
-        });
-      }, error => {
-        reject(error.message);
-      });
-    });
-  }
 }
