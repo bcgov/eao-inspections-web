@@ -111,7 +111,7 @@ import {ProfileService} from '../services/profile.service';
     ColorPickerModule,
     Ng2ImgMaxModule
   ],
-  providers: [AuthService, AuthGuardService, FirstTimePasswordGuardService, RoleGuardService, ModalService, ObservableService, ProfileService, Ng2ImgMaxService],
+  providers: [AuthService, AuthGuardService, FirstTimePasswordGuardService, RoleGuardService, ModalService, ProfileService, Ng2ImgMaxService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

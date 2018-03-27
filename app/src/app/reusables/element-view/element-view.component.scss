@@ -9,6 +9,7 @@
     width: $dashboard-content-width;
     background-color: #FFFFFF;
     box-shadow: 0 0 8px 0 rgba(0,0,0,0.2);
+    padding: 10px;
     .nav-pills {
       justify-content: center;
       padding: 20px;
@@ -78,9 +79,6 @@
         font-size: 16px;
         text-transform: uppercase;
       }
-    }
-    .thumbnail {
-      width:200px;
     }
   }
 }

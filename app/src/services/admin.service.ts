@@ -317,7 +317,7 @@ export class AdminService {
             if (image) {
               const parseFile = new Parse.File('profile_image_' + results.id, image, image.type);
               promises.push(parseFile.save().then((objectFile) => {
-                results.set('image', objectFile);
+                results.set('badge', objectFile);
                 promises.push(results.save());
               }));
             } else {
@@ -358,7 +358,7 @@ export class AdminService {
                 if (image) {
                   const parseFile = new Parse.File('profile_image_' + results.id, image, image.type);
                   promises.push(parseFile.save().then((objectFile) => {
-                    results.set('image', objectFile);
+                    results.set('badge', objectFile);
                     promises.push(results.save());
                   }));
                 } else {

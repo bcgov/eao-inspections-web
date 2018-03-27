@@ -98,11 +98,13 @@ export function parseObservationToModel(object) {
   );
 }
 
-export function parseMediaToModel(object, type = 'img') {
+export function parseMediaToModel(object, type = 'bin') {
   const url = object.get('file').url();
   const n = url.indexOf('/parse/');
   const newUrl = Parse.serverURL + url.substring(n + 6);
-
+  if (object.get('type')) {
+    type = object.get('type');
+  }
   return new Media(
     object.id,
     type,

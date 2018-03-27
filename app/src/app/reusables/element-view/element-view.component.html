@@ -43,7 +43,14 @@
           <a class="flex-sm-fill text-sm-center nav-link" (click)="getVideo()" [ngClass]="{'active': isVideo}">Video</a>
           <a class="flex-sm-fill text-sm-center nav-link" (click)="getVoice()" [ngClass]="{'active': isVoice}">Voice</a>
         </nav>
-        <app-element-media [mediaSelected]="mediaSelected"></app-element-media>
+        <div class="container-fluid">
+          <div class="row">
+            <ng-container *ngFor="let item of mediaSelected">
+              <app-element-media [item]="item"></app-element-media>
+            </ng-container>
+          </div>
+        </div>
+
       </div>
     </div>
   </div>
