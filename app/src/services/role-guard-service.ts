@@ -9,7 +9,9 @@ export class RoleGuardService implements CanActivate {
   canActivate(route: ActivatedRouteSnapshot): Promise<boolean> {
     return new Promise((resolve, reject) => {
       const expectedRole = route.data['expectedRole'];
+      // console.log(expectedRole);
       this.authService.getRole(expectedRole).then((val) => {
+        // console.log(val);
         if (val) {
           resolve(true);
         } else {

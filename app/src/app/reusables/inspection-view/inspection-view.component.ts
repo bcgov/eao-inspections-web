@@ -43,7 +43,6 @@ export class InspectionViewComponent implements OnInit {
     this.sort('createdAt');
 
     this.reportService.getInspection(this.routeParam.id).then(object => {
-      console.log(object);
       this.data = object;
     }).catch((error) => {
       this.toast.error(error.message || String.GENERAL_ERROR);

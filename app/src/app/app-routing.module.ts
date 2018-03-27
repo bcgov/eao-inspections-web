@@ -27,10 +27,11 @@ import { ReportViewListComponent } from './dashboard/admin/reports-view/report-v
 import { DashboardComponent } from './dashboard/dashboard.component';
 import {PasswordChangeComponent} from './login/password-change/password-change.component';
 import {FirstTimePasswordGuardService} from '../services/first-time-password-guard.service';
+import { LoggedInGuardService } from '../services/logged-in-guard.service';
 
 const routes: Routes = [
   // unauthenticated routes
-  { path: Route.LOGIN, component:  LoginComponent },
+  { path: Route.LOGIN, component: LoginComponent, canActivate: [LoggedInGuardService] },
   { path: Route.LOGIN + Route.CHANGE, component:  PasswordChangeComponent, canActivate: [AuthGuardService, FirstTimePasswordGuardService] },
   { path: '', redirectTo: Route.DASHBOARD + '/' + Route.PROFILE, pathMatch: 'full', canActivate: [AuthGuardService] },
 
