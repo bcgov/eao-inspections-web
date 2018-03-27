@@ -1,18 +1,13 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
 import { FormsModule } from '@angular/forms';
+import { RouterTestingModule } from '@angular/router/testing';
 
-import { LoginComponent } from '../app/login/login.component';
 import { AuthService } from './auth.service';
-import { environment } from '../environments/environment';
 import { AdminService } from './admin.service';
 import {createInspection, deleteInspections, deleteTeam, deleteUser, randomKey} from './testing.service';
+import { LoginComponent } from '../app/login/login.component';
 
-const Parse = require('parse');
-
-Parse.initialize(environment.parseId, environment.parseKey);
-Parse.serverURL = environment.parseURL;
-Parse.masterKey = environment.parseMasterKey;
+const Parse: any = require('parse');
 
 describe('Admin Testing', () => {
   let component: LoginComponent;
@@ -179,7 +174,7 @@ describe('Admin Testing', () => {
 
   it('should create team', () => {
     console.log('Testing create team in functionality');
-    service.createTeam('test_team', 'team_color', test_user).then((object) => {
+    service.createTeam('test_team', 'team_color', test_user, null).then((object) => {
       test_team = object;
       const query = new Parse.Query('Team');
       query.get(test_team.id).then((result) => {
@@ -194,7 +189,7 @@ describe('Admin Testing', () => {
     query.get(test_team.id).then((result) => {
       test_team.id = result.id;
       console.log('Testing updating team in functionality: ' + test_team.id);
-      service.updateTeam(test_team.id, 'mockName', '#00000', test.user).then((object) => {
+      service.updateTeam(test_team.id, 'mockName', '#00000', test_user, null).then((object) => {
         test_team = object;
         expect(test_team.get('name') === 'mockName').toBeTruthy();
       });

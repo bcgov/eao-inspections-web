@@ -1,12 +1,10 @@
-import { environment } from '../environments/environment';
-import { Router } from '@angular/router';
 import { Injectable } from '@angular/core';
-import { Team } from '../models/team.model';
+
+import * as Access from '../constants/accessRights';
+import { BasicUser } from '../models/user.model';
 import { Inspection } from '../models/inspection.model';
 import { parseInspectionToModel, parseUserToModel, parseTeamToModel } from './parse.service';
-import { BasicUser } from '../models/user.model';
-import * as Access from '../constants/accessRights';
-import {Observable} from 'rxjs/Observable';
+import { Team } from '../models/team.model';
 
 let Parse: any = require('parse');
 
@@ -14,10 +12,9 @@ let Parse: any = require('parse');
 export class AdminService {
   user = new Parse.User();
 
-  constructor(private router: Router) {
+  constructor() {
     this.user = Parse.User.current();
   }
-
 
   getUsers() {
     return new Promise((resolve, reject) => {
@@ -28,26 +25,6 @@ export class AdminService {
       q.matchesKeyInQuery('teamId', 'teamId', teamQuery, {
         success: function (results) {
           resolve(results);
-        },
-        error: function (error) {
-          reject(error);
-        }
-      });
-    });
-  }
-
-  getAllUsers(): Promise<BasicUser[]> {
-    return new Promise((resolve, reject) => {
-      const userQuery = new Parse.Query('User');
-      const users = [];
-      userQuery.find({
-        success: function (results) {
-          results.forEach((user) => {
-              users.push(
-                parseUserToModel(user)
-              );
-          });
-          resolve(users);
         },
         error: function (error) {
           reject(error);

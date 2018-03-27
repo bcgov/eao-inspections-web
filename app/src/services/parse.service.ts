@@ -1,9 +1,8 @@
-import { environment } from '../environments/environment';
-import { Team } from '../models/team.model';
 import { BasicUser } from '../models/user.model';
 import { Inspection } from '../models/inspection.model';
-import { Observation } from '../models/observation.model';
 import { Media } from '../models/media.model';
+import { Observation } from '../models/observation.model';
+import { Team } from '../models/team.model';
 
 const Parse: any = require('parse');
 
@@ -15,12 +14,6 @@ export function parseToJSON(objectList) {
     });
   }
   return listJSON;
-}
-
-export function getObject(userObject) {
-  return new Promise((resolve, reject) => {
-    userObject.fetch().then((obj) => {resolve(obj); });
-  });
 }
 
 export function parseUserToModel(object): BasicUser {

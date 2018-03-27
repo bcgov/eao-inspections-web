@@ -4,12 +4,8 @@ import { FormsModule } from '@angular/forms';
 
 import { LoginComponent } from '../app/login/login.component';
 import { AuthService } from './auth.service';
-import { environment } from '../environments/environment';
-const Parse = require('parse');
 
-Parse.initialize(environment.parseId, environment.parseKey);
-Parse.serverURL = environment.parseURL;
-Parse.masterKey = environment.parseMasterKey;
+const Parse: any = require('parse');
 
 describe('Authentication and Authorization Testing', () => {
   let component: LoginComponent;

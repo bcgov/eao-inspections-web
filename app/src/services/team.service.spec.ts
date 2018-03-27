@@ -1,16 +1,9 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
-import { FormsModule } from '@angular/forms';
+import { async, TestBed } from '@angular/core/testing';
 
-import { AuthService } from './auth.service';
-import { environment } from '../environments/environment';
 import { createTeam, deleteTeam } from './testing.service';
 import { TeamService } from './team.service';
-const Parse = require('parse');
 
-Parse.initialize(environment.parseId, environment.parseKey);
-Parse.serverURL = environment.parseURL;
-Parse.masterKey = environment.parseMasterKey;
+const Parse: any = require('parse');
 
 describe('Team Service Testing', () => {
   let service: TeamService;

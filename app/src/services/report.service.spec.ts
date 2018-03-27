@@ -1,18 +1,13 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing'
 import { FormsModule } from '@angular/forms';
+import { RouterTestingModule } from '@angular/router/testing';
 
-import { LoginComponent } from '../app/login/login.component';
 import { AuthService } from './auth.service';
-import { environment } from '../environments/environment';
+import { createInspection, createObservation, createTeam, deleteInspections, deleteObservations, deleteTeam } from './testing.service';
+import { LoginComponent } from '../app/login/login.component';
 import { ReportService } from './report.service';
-import {createInspection, createObservation, createTeam, deleteInspections, deleteObservations, deleteTeam} from './testing.service';
 
-const Parse = require('parse');
-
-Parse.initialize(environment.parseId, environment.parseKey);
-Parse.serverURL = environment.parseURL;
-Parse.masterKey = environment.parseMasterKey;
+const Parse: any = require('parse');
 
 describe('Report Testing', () => {
   let component: LoginComponent;
