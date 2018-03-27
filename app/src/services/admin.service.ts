@@ -14,7 +14,8 @@ let self;
 @Injectable()
 export class AdminService {
   user = new Parse.User();
-
+  page = 0;
+  displayLimit = 5;
   constructor(private loadingService: LoadingService) {
     self = this;
     this.user = Parse.User.current();
@@ -94,14 +95,18 @@ export class AdminService {
     });
   }
 
-  getActiveUsers(): Promise<Array<BasicUser>> {
+  getActiveUsers(page = 0): Promise<Array<BasicUser>> {
     const key = randomKey();
     self.loadingService.showLoading(true, key);
+    this.page = page;
     return new Promise((resolve, reject) => {
       const users = [];
       const query = new Parse.Query(Parse.User);
 
       query.equalTo('isActive', true);
+      query.skip(page * this.displayLimit);
+      query.limit(this.displayLimit);
+      query.ascending('createdAt');
       query.find({
         success: function (results) {
           results.forEach(objectUser => {
@@ -112,7 +117,7 @@ export class AdminService {
               objectTeams.forEach((team) => {
                 user.teams.push(parseTeamToModel(team));
               });
-              users.push(user)
+              users.push(user);
               self.loadingService.showLoading(false, key);
               resolve(users);
             });

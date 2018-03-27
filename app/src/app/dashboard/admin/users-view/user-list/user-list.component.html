@@ -67,6 +67,10 @@
     </ng-template>
     </span>
     </div>
+  <hr>
+  <div class="d-flex justify-content-center">
+    <app-pagination [page]="adminService.page" (changePage)="onChangePage($event)"></app-pagination>
+  </div>
 </ng-template>
 
 
