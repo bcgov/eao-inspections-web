@@ -5,8 +5,8 @@
 
 export const environment = {
   production: false,
-  parseId: '<parseId>',
-  parseKey: '<parseKey>',
-  parseURL: '<parseURL>',
-  parseMasterKey: '<parseMasterkKey>'
+  parseId: 'abc123',
+  parseKey: '',
+  parseURL: 'https://test.projects.eao.gov.bc.ca/parse',
+  parseMasterKey: 'abc123'
 };
