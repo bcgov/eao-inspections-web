@@ -56,6 +56,7 @@ import {Ng2ImgMaxModule, Ng2ImgMaxService} from 'ng2-img-max';
 import { PasswordChangeComponent } from './login/password-change/password-change.component';
 import {FirstTimePasswordGuardService} from '../services/first-time-password-guard.service';
 import {ProfileService} from '../services/profile.service';
+import { LoggedInGuardService } from '../services/logged-in-guard.service';
 
 @NgModule({
   declarations: [
@@ -111,7 +112,7 @@ import {ProfileService} from '../services/profile.service';
     ColorPickerModule,
     Ng2ImgMaxModule
   ],
-  providers: [AuthService, AuthGuardService, FirstTimePasswordGuardService, RoleGuardService, ModalService, ProfileService, Ng2ImgMaxService],
+  providers: [AuthService, AuthGuardService, FirstTimePasswordGuardService, RoleGuardService, ModalService, ProfileService, Ng2ImgMaxService, LoggedInGuardService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

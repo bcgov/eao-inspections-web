@@ -249,6 +249,7 @@ export class AdminService {
       query.get(userId, {
         success: function (user) {
           user.set('password', password);
+          user.set('hasLoggedIn', false);
           user.save(null, { useMasterKey: true }).then((object) => {
             resolve(object);
           }, (error) => {

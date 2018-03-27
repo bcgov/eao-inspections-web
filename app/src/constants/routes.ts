@@ -1,6 +1,14 @@
-
 export const DASHBOARD = 'dashboard';
 
+
+// return default URL if isAdmin/isSuperAdmin == true;
+export function HOME(bool: boolean){
+  if (bool) {
+    return '/dashboard/admin/user-details';
+  } else {
+    return '/dashboard/my-inspections';
+  }
+}
 // menu links
 export const LOGIN = 'login';
 export const MY_REPORTS = 'my-inspections';
