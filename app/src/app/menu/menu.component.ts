@@ -1,18 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { ModalService } from './../../services/modal.service';
-import * as Parsevar from '../../constants/parse';
 import { AuthService } from '../../services/auth.service';
 import * as Route from '../../constants/routes';
 import * as String from '../../constants/strings';
 import { ProfileService } from '../../services/profile.service';
-import { parseToJSON, parseUserToModel } from '../../services/parse.service';
+import { parseUserToModel } from '../../services/parse.service';
 import { BasicUser } from '../../models/user.model';
-import { Subscription } from 'rxjs/Subscription';
-import { ObservableService } from '../../services/observable.service';
-import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
+
 
 @Component({
   selector: 'menu',

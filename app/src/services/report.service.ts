@@ -1,18 +1,15 @@
 import { Injectable} from '@angular/core';
 
-import { environment } from '../environments/environment';
-import { Team } from '../models/team.model';
-import { Inspection } from '../models/inspection.model';
-import {Observation} from '../models/observation.model';
-import {Media} from '../models/media.model';
-import { BasicUser } from '../models/user.model';
-import { parseUserToModel, parseInspectionToModel, parseObservationToModel, parseMediaToModel } from './parse.service';
 import * as JSZip from 'jszip';
 import * as JSZipUtils from 'jszip-utils';
 
+import { Inspection } from '../models/inspection.model';
+import { Observation } from '../models/observation.model';
+import { Team } from '../models/team.model';
+import { parseUserToModel, parseInspectionToModel, parseObservationToModel, parseMediaToModel } from './parse.service';
+
 const FileSaver = require('file-saver');
 const Parse: any = require('parse');
-
 
 @Injectable()
 export class ReportService {

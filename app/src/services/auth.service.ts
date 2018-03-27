@@ -1,7 +1,4 @@
 import { Injectable} from '@angular/core';
-import { map } from 'rxjs/operators';
-import { environment } from '../environments/environment';
-import { parseUserToModel } from './parse.service';
 
 let Parse: any = require('parse');
 
