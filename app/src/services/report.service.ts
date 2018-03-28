@@ -2,6 +2,7 @@ import { Injectable} from '@angular/core';
 
 import * as JSZip from 'jszip';
 import * as JSZipUtils from 'jszip-utils';
+import { LoadingService } from './loading.service';
 
 import { Inspection } from '../models/inspection.model';
 import { Observation } from '../models/observation.model';
@@ -10,37 +11,42 @@ import { parseUserToModel, parseInspectionToModel, parseObservationToModel, pars
 
 const FileSaver = require('file-saver');
 const Parse: any = require('parse');
+let self;
 
 @Injectable()
 export class ReportService {
   user = new Parse.User();
 
-  constructor() {
+  constructor(private loadingService: LoadingService) {
+    self = this;
     this.user = Parse.User.current();
   }
 
   getInspector(inspectorId: string): Promise<any> {
+    self.loadingService.showLoading(true);
     return new Promise((resolve, reject) => {
       const userQuery = new Parse.Query('User');
       userQuery.equalTo('objectId', inspectorId);
       userQuery.first({
         success: function(result) {
           const inspector = parseUserToModel(result);
-          resolve (inspector);
+           self.loadingService.showLoading(false);
+           resolve (inspector);
         },
         error: function(error) {
-          reject (error.message);
+          self.loadingService.showLoading(false);
+          reject (error);
         }
       });
     });
   }
 
   getMyReports(): Promise<any[]> {
+    self.loadingService.showLoading(true);
     return new Promise((resolve, reject) => {
       const reports = [];
       let resultList;
       const query = new Parse.Query('Inspection');
-      console.log(this.user.id);
 
       query.equalTo('userId', this.user.id);
       query.ascending('createdAt');
@@ -49,10 +55,10 @@ export class ReportService {
           if (!Array.isArray(results)) {
             results = [results];
           }
-          console.log(results);
           resultList = results;
         },
         error: function (error) {
+          self.loadingService.showLoading(false);
           reject(error.message);
         }
       }).then(() => {
@@ -65,12 +71,14 @@ export class ReportService {
           });
         });
       }).then(() => {
+        self.loadingService.showLoading(false);
         resolve(reports);
       });
     });
   }
 
   getTeamReports(teamId: string): Promise<any[]> {
+    self.loadingService.showLoading(true);
     return new Promise((resolve, reject) => {
       const promises = [];
       const reports = [];
@@ -85,12 +93,18 @@ export class ReportService {
               reports.push(inspection);
             });
           });
+          self.loadingService.showLoading(false);
           resolve(reports);
+      }).catch((error) => {
+        self.loadingService.showLoading(false);
+        console.log(error);
+        reject(error);
       });
     });
   }
 
   getActiveTeamReports(teamId: string): Promise<any[]> {
+    self.loadingService.showLoading(true);
     return new Promise((resolve, reject) => {
       const promises = [];
       const reports = [];
@@ -98,20 +112,29 @@ export class ReportService {
       q.equalTo('team', { '__type': 'Pointer', 'className': 'Team', 'objectId': teamId },);
       q.equalTo('isActive', true);
       q.find().then((results) => {
+        console.log(results);
         results.forEach((object) => {
+          console.log(object);
           this.getInspector(object.get('userId'))
             .then((inspector) => {
+              console.log(results);
               const inspection = parseInspectionToModel(object);
               inspection.inspector = inspector;
               reports.push(inspection);
             });
         });
+        self.loadingService.showLoading(false);
         resolve(reports);
+      }).catch((error) => {
+        console.log(error);
+        self.loadingService.showLoading(false);
+        reject(error);
       });
     });
   }
 
   getInspection(inspectionId: string): Promise<any> {
+    self.loadingService.showLoading(true);
     return new Promise((resolve, reject) => {
       const query1 = new Parse.Query('Inspection');
       query1.equalTo('objectId', inspectionId);
@@ -126,15 +149,18 @@ export class ReportService {
           console.log(inspector);
             const inspection = parseInspectionToModel(object);
             inspection.inspector = inspector;
+            self.loadingService.showLoading(false);
             resolve(inspection);
         });
       }, (error) => {
+        self.loadingService.showLoading(false);
         reject(error.message);
       });
     });
   }
 
   getObservations(inspectionId: string): Promise<any[]> {
+    self.loadingService.showLoading(true);
     return new Promise((resolve, reject) => {
       const elements = [];
       let elementList;
@@ -148,6 +174,7 @@ export class ReportService {
           elementList = results;
         },
         error: function(error) {
+          self.loadingService.showLoading(false);
           reject (error.message);
         }
       }).then(() => {
@@ -155,12 +182,14 @@ export class ReportService {
           elements.push(parseObservationToModel(object));
         });
       }).then(() => {
+        self.loadingService.showLoading(false);
         resolve(elements);
       });
     });
   }
 
   getObservation(observationId: string): Promise<any> {
+    self.loadingService.showLoading(true);
     return new Promise((resolve, reject) => {
       const query1 = new Parse.Query('Observation');
       query1.equalTo('objectId', observationId);
@@ -169,14 +198,17 @@ export class ReportService {
       const orQuery = new Parse.Query.or(query1, query2);
 
       orQuery.first().then((object) => {
+        self.loadingService.showLoading(false);
         resolve(parseObservationToModel(object));
       }, (error) => {
+        self.loadingService.showLoading(false);
         reject(error.messsage);
       });
     });
   }
 
   getPhotos(observationId: string): Promise<any[]> {
+    self.loadingService.showLoading(true);
     const photos = [];
     let photoList;
     return new Promise((resolve, reject) => {
@@ -190,6 +222,7 @@ export class ReportService {
           photoList = results;
         },
         error: function(error) {
+          self.loadingService.showLoading(false);
           reject (error.message);
         }
       }).then(() => {
@@ -197,12 +230,14 @@ export class ReportService {
           photos.push(parseMediaToModel(object));
         });
       }).then(() => {
+        self.loadingService.showLoading(false);
         resolve(photos);
       });
     });
   }
 
   download(report: Inspection) {
+    self.loadingService.showLoading(true);
     return new Promise((resolve, reject) => {
       let promises = [];
       const observationFolders = {};
@@ -236,6 +271,7 @@ export class ReportService {
           zip.generateAsync({type:'blob'})
           .then(function(content) {
               FileSaver.saveAs(content, report.title + '.zip');
+              self.loadingService.showLoading(false);
               resolve(true);
           });
         } else {
@@ -253,6 +289,7 @@ export class ReportService {
                 zip.generateAsync({type:'blob'})
                 .then(function(content) {
                     FileSaver.saveAs(content, report.title + '.zip');
+                    self.loadingService.showLoading(false);
                     resolve(true);
                 });
               }
@@ -261,6 +298,7 @@ export class ReportService {
         }
       })
       .catch((error) => {
+        self.loadingService.showLoading(false);
         reject(error);
       });
     });

@@ -1,15 +1,17 @@
 import { Injectable} from '@angular/core';
 
 import { parseTeamToModel } from './parse.service';
-import { Team } from '../models/team.model';
+import { LoadingService } from './loading.service';
 
 const Parse: any = require('parse');
+let self;
 
 @Injectable()
 export class ProfileService {
   user = new Parse.User();
 
-  constructor() {
+  constructor(private loadingService: LoadingService) {
+     self = this;
      this.user = Parse.User.current();
   }
 
@@ -20,6 +22,7 @@ export class ProfileService {
   }
 
   getTeams(): Promise<any[]> {
+    self.loadingService.showLoading(true);
     return new Promise((resolve, reject) => {
       const promises = [];
       const teams = [];
@@ -45,10 +48,12 @@ export class ProfileService {
           });
         },
         error: function(error) {
+          self.loadingService.showLoading(false);
           reject (error.message);
         }
       }).then(() => {
         Promise.all(promises).then(() => {
+          self.loadingService.showLoading(false);
           resolve(teams);
         });
       });
@@ -56,6 +61,7 @@ export class ProfileService {
   }
 
   getTeamAdminInfo(): Promise<any> {
+    self.loadingService.showLoading(true);
     return new Promise((resolve, reject) => {
       const admins = [];
       const promises = [];
@@ -81,16 +87,19 @@ export class ProfileService {
           });
         },
         error: function(error) {
+          self.loadingService.showLoading(false);
           reject (error.message);
         }
       }).then(() => {
         Promise.all(promises).then(() => {
+          self.loadingService.showLoading(false);
           resolve(admins);
         });
       });
     });
   }
   updateProfileImage(image): Promise<any> {
+    self.loadingService.showLoading(true);
     return new Promise((resolve, reject) => {
       const promises = [];
       const parseFile = new Parse.File('profile_image_' + this.user.id, image, image.type);
@@ -99,8 +108,10 @@ export class ProfileService {
         promises.push(this.user.save());
       }).then(imageObject => {
         Promise.all(promises).then(() => {
+          self.loadingService.showLoading(false);
           resolve(imageObject);
         }, error => {
+          self.loadingService.showLoading(false);
           reject(error);
         });
       });
