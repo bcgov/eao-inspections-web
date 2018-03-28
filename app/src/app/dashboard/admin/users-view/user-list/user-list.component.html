@@ -30,10 +30,8 @@
         <div class="table-row-item" data-header="Email">
            {{user.publicEmail}}
         </div>
-        <div class="table-row-item" data-header="Team">
+        <div class="table-row-item teams" data-header="Team">
           <div *ngFor="let team of user.teams">
-            <img *ngIf="team.badge" class="table__img" src={{team.badge}} />
-            <img *ngIf="!team.badge" class="table__img" src="../../../assets/team-lg.png" />
             {{ team.name }}
           </div>
         </div>

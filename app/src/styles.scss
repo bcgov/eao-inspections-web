@@ -300,6 +300,14 @@ body {
                 flex: 2;
             }
 
+        .table-row-item.teams {
+            display: inline-grid;
+
+            @include xl {
+                display: block;
+            }
+        }
+
         .table-row.table-header {
             background-color: #EAEEF0;
             color: $font-dark-gray;

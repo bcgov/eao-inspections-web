@@ -50,10 +50,15 @@ export class LoginComponent implements OnInit {
     const password = form.value.password;
     this.authService.logIn(username, password).then((results) => {
       this.user = parseUserToModel(results);
-      if (this.user.hasLoggedIn) {
-        this.router.navigate([Route.HOME(this.isAdmin())]);
+      if (this.user.isActive) {
+        if (this.user.hasLoggedIn) {
+          this.router.navigate([Route.HOME(this.isAdmin())]);
+        } else {
+          this.router.navigate([Route.LOGIN + Route.CHANGE]);
+        }
       } else {
-        this.router.navigate([Route.LOGIN + Route.CHANGE]);
+        this.authService.logOut();
+        this.toast.error(String.INACTIVE_USER);
       }
     });
   }

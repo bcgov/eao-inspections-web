@@ -1,4 +1,6 @@
 import { Injectable} from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
+import * as String from '../constants/strings';
 
 let Parse: any = require('parse');
 
@@ -7,7 +9,7 @@ export class AuthService {
 
   user: any;
 
-  constructor() {
+  constructor(private toast: ToastrService) {
     this.user = Parse.User.current();
 
   }
@@ -20,6 +22,7 @@ export class AuthService {
             resolve(user);
           },
           () => {
+            this.toast.error(String.GENERAL_ERROR);
             resolve(false);
           });
     });
