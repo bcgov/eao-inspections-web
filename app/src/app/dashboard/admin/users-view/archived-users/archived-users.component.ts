@@ -7,6 +7,7 @@ import { parseToJSON } from './../../../../../services/parse.service';
 import * as String from '../../../../../constants/strings';
 import * as Route from '../../../../../constants/routes';
 import { ToastrService } from 'ngx-toastr';
+import { BasicUser } from '../../../../../models/user.model';
 
 @Component({
   selector: 'app-archived-users',
@@ -31,7 +32,7 @@ export class ArchivedUsersComponent implements OnInit {
     confirmationNo: String.CANCEL_BUTTON,
   };
 
-  users = [];
+  users: Array<BasicUser> = undefined;
 
 
   constructor(private adminService: AdminService, private toast: ToastrService, private modalService: ModalService ) { }
@@ -51,9 +52,7 @@ export class ArchivedUsersComponent implements OnInit {
   ngOnInit() {
     this.adminService.getArchivedUsers()
       .then((results) => {
-        if (results instanceof Array) {
-          this.users = parseToJSON(results);
-        }
+        this.users = results;
       });
   }
 }

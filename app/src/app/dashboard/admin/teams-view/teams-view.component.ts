@@ -16,7 +16,8 @@ import { Team } from '../../../../models/team.model';
 export class TeamsViewComponent implements OnInit {
   title = 'Teams';
   archivedLink = '/' + Route.DASHBOARD + '/' + Route.ARCHIVED_TEAMS;
-  teams: Array<Team> = [];
+  teams: Array<Team> = undefined;
+  isEmpty = false;
 
   modal = {
     edit: false,
@@ -50,6 +51,7 @@ export class TeamsViewComponent implements OnInit {
     this.adminService.getActiveTeams()
     .then((results) => {
         this.teams = results;
+        this.isEmpty = (this.teams.length <= 0) ? true : false;
     });
   }
 }

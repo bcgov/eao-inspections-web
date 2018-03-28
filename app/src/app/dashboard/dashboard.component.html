@@ -1,4 +1,4 @@
 <menu></menu>
-<loading *ngIf="isLoading;"></loading>
+<loading [hidden]="!isLoading"></loading>
 <router-outlet>
 </router-outlet>

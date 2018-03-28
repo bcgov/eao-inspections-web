@@ -8,6 +8,7 @@ import { Inspection } from '../models/inspection.model';
 import { Observation } from '../models/observation.model';
 import { Team } from '../models/team.model';
 import { parseUserToModel, parseInspectionToModel, parseObservationToModel, parseMediaToModel } from './parse.service';
+import { randomKey } from './testing.service';
 
 const FileSaver = require('file-saver');
 const Parse: any = require('parse');
@@ -23,18 +24,20 @@ export class ReportService {
   }
 
   getInspector(inspectorId: string): Promise<any> {
-    self.loadingService.showLoading(true);
+    const key = randomKey();
+    self.loadingService.showLoading(true, key);
     return new Promise((resolve, reject) => {
       const userQuery = new Parse.Query('User');
       userQuery.equalTo('objectId', inspectorId);
       userQuery.first({
         success: function(result) {
+          console.log(result);
           const inspector = parseUserToModel(result);
-           self.loadingService.showLoading(false);
+           self.loadingService.showLoading(false, key);
            resolve (inspector);
         },
         error: function(error) {
-          self.loadingService.showLoading(false);
+          self.loadingService.showLoading(false, key);
           reject (error);
         }
       });
@@ -42,99 +45,113 @@ export class ReportService {
   }
 
   getMyReports(): Promise<any[]> {
-    self.loadingService.showLoading(true);
+    const key = randomKey();
+    self.loadingService.showLoading(true, key);
     return new Promise((resolve, reject) => {
       const reports = [];
-      let resultList;
+      const promises = [];
       const query = new Parse.Query('Inspection');
 
       query.equalTo('userId', this.user.id);
       query.ascending('createdAt');
-      query.find({
-        success: function (results) {
-          if (!Array.isArray(results)) {
-            results = [results];
-          }
-          resultList = results;
-        },
-        error: function (error) {
-          self.loadingService.showLoading(false);
-          reject(error.message);
+      query.find()
+      .then((results) => {
+        if (!Array.isArray(results)) {
+          results = [results];
         }
-      }).then(() => {
-        resultList.forEach((object) => {
-          this.getInspector(object.get('userId'))
-          .then((inspector) => {
-            const inspection = parseInspectionToModel(object);
-            inspection.inspector = inspector;
-            reports.push(inspection);
-          });
-        });
-      }).then(() => {
-        self.loadingService.showLoading(false);
-        resolve(reports);
-      });
-    });
-  }
 
-  getTeamReports(teamId: string): Promise<any[]> {
-    self.loadingService.showLoading(true);
-    return new Promise((resolve, reject) => {
-      const promises = [];
-      const reports = [];
-      const q = new Parse.Query('Inspection');
-      q.equalTo('team', {'__type': 'Pointer', 'className': 'Team', 'objectId': teamId });
-      q.find().then((results) => {
-          results.forEach((object) => {
-            this.getInspector(object.get('userId'))
-            .then((inspector) => {
-              const inspection = parseInspectionToModel(object);
-              inspection.inspector = inspector;
-              reports.push(inspection);
-            });
-          });
-          self.loadingService.showLoading(false);
-          resolve(reports);
-      }).catch((error) => {
-        self.loadingService.showLoading(false);
-        console.log(error);
+        results.forEach((object) => {
+          reports.push(parseInspectionToModel(object));
+          promises.push(this.getInspector(object.get('userId')));
+        });
+      })
+      .then(() => Promise.all(promises)) 
+      .then((results) => {
+        results.map((inspector, index) => {
+          reports[index].inspector = inspector;
+        });
+        self.loadingService.showLoading(false, key);
+        resolve(reports);
+      })
+      .catch((error) => {
+        self.loadingService.showLoading(false, key);
         reject(error);
       });
     });
   }
 
+  getTeamReports(teamId: string): Promise<any[]> {
+    const key = randomKey();
+    self.loadingService.showLoading(true, key);
+    return new Promise((resolve, reject) => {
+      const promises = [];
+      const reports = [];
+      const q = new Parse.Query('Inspection');
+      q.equalTo('team', {'__type': 'Pointer', 'className': 'Team', 'objectId': teamId });
+      q.find()
+        .then((results) => {
+          if (!Array.isArray(results)) {
+            results = [results]
+          }
+
+          results.forEach((object) => {
+            reports.push(parseInspectionToModel(object));
+            promises.push(this.getInspector(object.get('userId')));
+          });
+        })
+        .then(() => Promise.all(promises)) 
+        .then((results) => {
+          results.map((inspector, index) => {
+            reports[index].inspector = inspector;
+          });
+          self.loadingService.showLoading(false, key);
+          resolve(reports);
+        })
+        .catch((error) => {
+          self.loadingService.showLoading(false, key);
+          reject(error);
+        });
+    });
+  }
+
   getActiveTeamReports(teamId: string): Promise<any[]> {
-    self.loadingService.showLoading(true);
+    const key = randomKey();
+    self.loadingService.showLoading(true, key);
     return new Promise((resolve, reject) => {
       const promises = [];
       const reports = [];
       const q = new Parse.Query('Inspection');
       q.equalTo('team', { '__type': 'Pointer', 'className': 'Team', 'objectId': teamId },);
       q.equalTo('isActive', true);
-      q.find().then((results) => {
-        console.log(results);
-        results.forEach((object) => {
-          console.log(object);
-          this.getInspector(object.get('userId'))
-            .then((inspector) => {
-              console.log(results);
-              const inspection = parseInspectionToModel(object);
-              inspection.inspector = inspector;
-              reports.push(inspection);
-            });
+      q.find()
+        .then((results) => {
+          if (!Array.isArray(results)) {
+            results = [results]
+          }
+
+          results.forEach((object) => {
+            reports.push(parseInspectionToModel(object));
+            promises.push(this.getInspector(object.get('userId')));
+          });
+        })
+        .then(() => Promise.all(promises)) 
+        .then((results) => {
+          results.map((inspector, index) => {
+            reports[index].inspector = inspector;
+          });
+          self.loadingService.showLoading(false, key);
+          resolve(reports);
+        })
+        .catch((error) => {
+          self.loadingService.showLoading(false, key);
+          reject(error);
         });
-        self.loadingService.showLoading(false);
-        resolve(reports);
-      }).catch((error) => {
-        console.log(error);
-        self.loadingService.showLoading(false);
-        reject(error);
-      });
     });
   }
 
   getInspection(inspectionId: string): Promise<any> {
-    self.loadingService.showLoading(true);
+    const key = randomKey();
+    self.loadingService.showLoading(true, key);
     return new Promise((resolve, reject) => {
       const query1 = new Parse.Query('Inspection');
       query1.equalTo('objectId', inspectionId);
@@ -143,24 +160,24 @@ export class ReportService {
       const orQuery = new Parse.Query.or(query1, query2);
 
       orQuery.first().then((object) => {
-        console.log("getInsepction", object);
         this.getInspector(object.get('userId'))
         .then((inspector) => {
-          console.log(inspector);
             const inspection = parseInspectionToModel(object);
             inspection.inspector = inspector;
-            self.loadingService.showLoading(false);
+            self.loadingService.showLoading(false, key);
             resolve(inspection);
         });
-      }, (error) => {
-        self.loadingService.showLoading(false);
-        reject(error.message);
+      })
+      .catch((error) => {
+        self.loadingService.showLoading(false, key);
+        reject(error);
       });
     });
   }
 
   getObservations(inspectionId: string): Promise<any[]> {
-    self.loadingService.showLoading(true);
+    const key = randomKey();
+    self.loadingService.showLoading(true, key);
     return new Promise((resolve, reject) => {
       const elements = [];
       let elementList;
@@ -175,43 +192,43 @@ export class ReportService {
             results = [results];
           }
           elementList = results;
+          elementList.forEach((object) => {
+            elements.push(parseObservationToModel(object));
+          });
+          self.loadingService.showLoading(false, key);
+          resolve(elements);
         },
         error: function(error) {
-          self.loadingService.showLoading(false);
-          reject (error.message);
+          self.loadingService.showLoading(false, key);
+          reject (error);
         }
-      }).then(() => {
-        elementList.forEach((object) => {
-          elements.push(parseObservationToModel(object));
-        });
-      }).then(() => {
-        self.loadingService.showLoading(false);
-        resolve(elements);
       });
     });
   }
 
   getObservation(observationId: string): Promise<any> {
-    self.loadingService.showLoading(true);
+    const key = randomKey();
+    self.loadingService.showLoading(true, key);
     return new Promise((resolve, reject) => {
       const query = new Parse.Query('Observation');
       query.equalTo('objectId', observationId);
       query.first().then((object) => {
-        self.loadingService.showLoading(false);
+        self.loadingService.showLoading(false, key);
         resolve(parseObservationToModel(object));
       }, (error) => {
-        self.loadingService.showLoading(false);
-        reject(error.messsage);
+        self.loadingService.showLoading(false, key);
+        reject(error);
       });
     });
   }
 
   getMedia(observationId: string, type='Photo'): Promise<any[]> {
-    self.loadingService.showLoading(true);
+    const key = randomKey();
+    self.loadingService.showLoading(true, key);
     const photos = [];
     let photoList;
-    const Observation = new Parse.Object.extend('Observation');
-    const tempObservation = new Observation();
+    const observatinoQuery = new Parse.Object.extend('Observation');
+    const tempObservation = new observatinoQuery();
     tempObservation.id = observationId;
 
     return new Promise((resolve, reject) => {
@@ -223,24 +240,23 @@ export class ReportService {
             results = [results];
           }
           photoList = results;
+          photoList.forEach((object) => {
+            photos.push(parseMediaToModel(object, type));
+          });
+          self.loadingService.showLoading(false, key);
+          resolve(photos);
         },
         error: function(error) {
-          self.loadingService.showLoading(false);
-          reject (error.message);
+          self.loadingService.showLoading(false, key);
+          reject (error);
         }
-      }).then(() => {
-        photoList.forEach((object) => {
-          photos.push(parseMediaToModel(object, type));
-        });
-      }).then(() => {
-        self.loadingService.showLoading(false);
-        resolve(photos);
       });
     });
   }
 
   download(report: Inspection) {
-    self.loadingService.showLoading(true);
+    const key = randomKey();
+    self.loadingService.showLoading(true, key);
     return new Promise((resolve, reject) => {
       let promises = [];
       const observationFolders = {};
@@ -249,14 +265,15 @@ export class ReportService {
       const zip = new JSZip();
       const reportFolder = zip.folder(report.title);
       reportFolder.file('report.txt', report.toText());
-      console.log(report.toText());
       this.getObservations(report.id).then((observations) => {
         observations.forEach(observation => {
           const observationFolder = reportFolder.folder(observation.title);
           observationFolders[observation.id] = observationFolder;
           observationFolder.file('info.txt', observation.toText());
 
-          promises.push(this.getMedia(observation.id));
+          promises.push(this.getMedia(observation.id, 'Photo'));
+          promises.push(this.getMedia(observation.id, 'Video'));
+          promises.push(this.getMedia(observation.id, 'Audio'));
         });
       })
       .then(() => Promise.all(promises))
@@ -269,30 +286,35 @@ export class ReportService {
         });
       })
       .then(() => {
-        let count = 0;
         if (medias.length == 0) {
           zip.generateAsync({type:'blob'})
           .then(function(content) {
               FileSaver.saveAs(content, report.title + '.zip');
-              self.loadingService.showLoading(false);
+              self.loadingService.showLoading(false, key);
               resolve(true);
           });
         } else {
+          let count = 0;
           medias.forEach((media) => {
+            console.log(media);
             const folder = observationFolders[media.observationId];
             const mediaFoler = folder.folder(media.id);
 
             mediaFoler.file('info.txt', media.toText());
 
             JSZipUtils.getBinaryContent(media.fileURL, function (err, data) {
-              mediaFoler.file(media.fileName, data, {binary:true});
+              mediaFoler.file(media.fileName, data, {binary: true});
+
+              if(err) {
+                reject(err);
+              }
 
               count++;
               if (count === medias.length) {
-                zip.generateAsync({type:'blob'})
+                zip.generateAsync({type: 'blob'})
                 .then(function(content) {
                     FileSaver.saveAs(content, report.title + '.zip');
-                    self.loadingService.showLoading(false);
+                    self.loadingService.showLoading(false, key);
                     resolve(true);
                 });
               }
@@ -301,7 +323,7 @@ export class ReportService {
         }
       })
       .catch((error) => {
-        self.loadingService.showLoading(false);
+        self.loadingService.showLoading(false, key);
         reject(error);
       });
     });

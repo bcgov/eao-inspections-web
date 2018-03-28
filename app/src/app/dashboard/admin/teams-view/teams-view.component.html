@@ -9,7 +9,7 @@
             <a routerLink={{archivedLink}}><button class="dashboard__btn">Archived Teams</button></a>
         </div>
     </div>
-    <div *ngIf="teams?.length<=0; then noContent else content"></div>
+    <div *ngIf="teams !== undefined && teams?.length <= 0; then noContent else content"></div>
     <ng-template #noContent>
         <no-content [emptyContent]="emptyContent"></no-content>
     </ng-template>

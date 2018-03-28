@@ -17,7 +17,7 @@ export class ReportsViewComponent implements OnInit {
     message: String.EMPTY_INSPECTIONS,
   };
 
-  teams: Array<Team>;
+  teams: Array<Team> = undefined;
 
   constructor(private adminService: AdminService) { }
 
