@@ -52,14 +52,18 @@ export class ManageTeamsViewComponent implements OnInit {
     this.location.back();
   }
 
+  refresh() {
+    this.adminService.getTeamMembers(this.team.id).then((members) => {
+      this.members = members;
+      this.adminService.getUsersByRole('inspector').then((users) => {
+        this.modal.users = users.filter(o1 => !this.members.some(o2 => o1.id === o2.id));
+      });
+    });
+  }
+
   onAddMember(selectedUsers) {
     this.adminService.addUsersToTeam(this.team.id, selectedUsers).then((team) => {
-      this.adminService.getTeamMembers(this.team.id).then((members) => {
-        this.members = members;
-        this.adminService.getUsersByRole('inspector').then((users) => {
-          this.modal.users = users.filter(o1 => !this.members.some(o2 => o1.id === o2.id));
-        });
-      });
+      this.refresh();
     });
   }
 
@@ -73,6 +77,7 @@ export class ManageTeamsViewComponent implements OnInit {
       value.photo)
       .then((object) => {
         this.toast.success('Successfully updated ' + object.get('firstName') + ' ' + object.get('lastName'));
+        this.refresh();
       }, (error) => {
         this.toast.error(error.message || String.GENERAL_ERROR);
       });
@@ -80,12 +85,7 @@ export class ManageTeamsViewComponent implements OnInit {
 
   onRemoveMember(user) {
     this.adminService.removeMemberFromTeam(this.team.id, user.id).then(() => {
-      this.adminService.getTeamMembers(this.team.id).then((members) => {
-        this.members = members;
-        this.adminService.getUsersByRole('inspector').then((users) => {
-          this.modal.users = users.filter(o1 => !this.members.some(o2 => o1.id === o2.id));
-        });
-      });
+      this.refresh();
     });
   }
 

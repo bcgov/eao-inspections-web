@@ -24,8 +24,7 @@
             {{user.publicEmail}}
           </div>
           <div class="table-row-item" data-header="Team">
-            <img *ngIf="user.teamImage" class="table__img" src={{user.teamImage}} />
-            <img *ngIf="!user.teamImage" class="table__img" src="../../../assets/team-lg.png" /> {{user.team}}
+             {{user.team}}
           </div>
           <div class="table-row-item" data-header="Permission">
             {{user.permission}}

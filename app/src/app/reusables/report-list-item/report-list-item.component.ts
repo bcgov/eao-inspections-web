@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { AuthService } from '../../../services/auth.service';
 import * as String from '../../../constants/strings';
 import { ModalService } from '../../../services/modal.service';
@@ -18,6 +18,7 @@ export class ReportListItemComponent implements OnInit {
   @Input('data') data: any;
   @Input('fields') fields: Array<any>;
   @Input('actions') actions: Array<any>;
+  @Output() refresh: EventEmitter<any> = new EventEmitter();
 
   user: any;
 
@@ -45,6 +46,7 @@ export class ReportListItemComponent implements OnInit {
   onSetPermission(report) {
     this.adminService.updateReportPermission(report.id, report.viewOnly).then((result) => {
       this.toast.success('Successfully updated ' + report.title);
+      // this.refresh.emit();
     }, (error) => {
       this.toast.error(error.message || String.GENERAL_ERROR);
     });
@@ -53,6 +55,7 @@ export class ReportListItemComponent implements OnInit {
   onArchive(id) {
     this.adminService.archiveReport(id).then((result) => {
       this.toast.success('Successfully Archived Inspection');
+      // this.refresh.emit();
     }, (error) => {
       this.toast.error(error.message || String.GENERAL_ERROR);
     });
@@ -61,6 +64,7 @@ export class ReportListItemComponent implements OnInit {
   onUnArchive(id) {
     this.adminService.unArchiveReport(id).then((result) => {
       this.toast.success('Successfully Unarchived Inspection');
+      // this.refresh.emit();
     }, (error) => {
       this.toast.error(error.message || String.GENERAL_ERROR);
     });

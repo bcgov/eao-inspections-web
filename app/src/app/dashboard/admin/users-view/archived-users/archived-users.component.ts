@@ -44,6 +44,10 @@ export class ArchivedUsersComponent implements OnInit {
   onUnarchive(value) {
     this.adminService.unArchiveUser(value).then((object) => {
       this.toast.success('Successfully unarchived ' + object.get('firstName') + ' ' + object.get('lastName'));
+      this.adminService.getArchivedUsers()
+        .then((results) => {
+          this.users = results;
+        });
     }, (error) => {
       this.toast.error(error.message || String.GENERAL_ERROR);
     });

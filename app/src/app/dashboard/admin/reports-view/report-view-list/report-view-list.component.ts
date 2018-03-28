@@ -35,16 +35,19 @@ export class ReportViewListComponent implements OnInit {
     this.actions = ['download', 'archive'];
   }
 
-  ngOnInit() {
+  refresh() {
     this.sort('updatedAt');
     const teamId = this.route.snapshot.params['id'];
     this.teamService.getTeam(teamId).then((team) => {
       this.team = team;
       this.reportService.getActiveTeamReports(teamId)
-      .then((results) => {
-        this.data = results;
-      });
+        .then((results) => {
+          this.data = results;
+        });
     });
+  }
+  ngOnInit() {
+   this.refresh();
   }
 
   onLocationChange() {

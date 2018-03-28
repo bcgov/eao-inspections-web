@@ -38,9 +38,17 @@ export class TeamsViewComponent implements OnInit {
     this.modalService.open(modal, { backdrop: 'static', keyboard: false });
   }
 
+  refresh() {
+    this.adminService.getActiveTeams()
+      .then((results) => {
+        this.teams = results;
+      });
+  }
+
   onSubmit(value) {
-    this.adminService.createTeam(value.teamName, value.color, value.teamAdmin, value.photo).then((object) => {
-      this.toast.success('Successfully added a new team');
+    this.adminService.createTeam(value.teamName, value.color, value.teamAdmin, value.photo).then((object: any) => {
+      this.toast.success('Successfully added ' + object.get('name'));
+      this.refresh();
     }, (error) => {
       this.toast.error(error.message || String.GENERAL_ERROR);
     });

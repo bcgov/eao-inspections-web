@@ -125,7 +125,7 @@
                     required 
                     ngModel 
                     #first="ngModel"
-                    pattern="^[a-zA-Z]+$"
+                    pattern="^[a-zA-Z\s]*$"
                     maxlength="25" 
                     minlength="2"
                 >
@@ -147,7 +147,7 @@
                     required 
                     ngModel 
                     #last="ngModel"
-                    pattern="/^[a-zA-Z\s]*$/" 
+                    pattern="^[a-zA-Z\s]*$" 
                     maxlength="25" 
                     minlength="2"
                 >

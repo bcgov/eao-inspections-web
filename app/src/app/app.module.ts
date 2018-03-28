@@ -1,3 +1,4 @@
+import { TeamService } from './../services/team.service';
 import { EqualValidator } from './directives/equal-validator.directive';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -108,7 +109,7 @@ import { LoggedInGuardService } from '../services/logged-in-guard.service';
     AppRoutingModule,
     FormsModule,
     NgbModule.forRoot(),
-    ToastrModule.forRoot({ timeOut: 100000, progressBar: true, tapToDismiss: true, progressAnimation: 'decreasing'}),
+    ToastrModule.forRoot({ timeOut: 10000, tapToDismiss: true}),
     BrowserAnimationsModule,
     ColorPickerModule,
     Ng2ImgMaxModule,
@@ -122,7 +123,8 @@ import { LoggedInGuardService } from '../services/logged-in-guard.service';
     ProfileService, 
     Ng2ImgMaxService,
     LoggedInGuardService,
-    LoadingService
+    LoadingService,
+    TeamService
   ],
   bootstrap: [AppComponent]
 })

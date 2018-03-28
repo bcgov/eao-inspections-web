@@ -5,7 +5,7 @@
   margin: $dashboard-team-margin;
   display: inline;
   height: 110px;
-  width: 270px;
+  width: 250px;
   border-radius: 2px;
   background-color: $background-white;
   box-shadow: 0 0 8px 0 rgba(0,0,0,0.2);
@@ -48,7 +48,7 @@
       margin-bottom: 0;
     }
 
-    a h4 {
+    a h4, h4 {
       width: 90%;
       text-transform: capitalize;
       overflow-wrap: break-word;
