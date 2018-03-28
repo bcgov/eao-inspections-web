@@ -18,24 +18,33 @@
   }
 
   &--photo {
-    width:120px;
-    height:120px;
     overflow:hidden;
-    border-radius: 50%;
+    
     &__img {
+      width:120px;
+      height:120px;
       position: relative;
-      height: 120px;
+      border-radius: 50%;
       border-style: none;
     }
 
-    &__upload {
-      display: block;
-      color: $default-link-color;
-      margin-left: 15px;
+    &__container {
+      text-align: center;
+      &__upload {
+        display: block;
+        color: $default-link-color;
+        margin-top: 5px;
+        margin-left: 30%;
+        margin-bottom: 10px;
+  
+        @include large {
+          margin-left: 44%;
+        }
 
-      @include large {
-        margin-left: 0;
-      }
+        @include mobile {
+          margin-left: 41%;
+        }
+    }
 
       &:hover {
         cursor: pointer;
