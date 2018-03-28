@@ -7,6 +7,7 @@ import { ModalService } from './../../../../../services/modal.service';
 import { parseToJSON } from './../../../../../services/parse.service';
 import * as String from '../../../../../constants/strings';
 import * as Route from '../../../../../constants/routes';
+import { BasicUser } from '../../../../../models/user.model';
 
 @Component({
   selector: 'user-list',
@@ -17,7 +18,7 @@ import * as Route from '../../../../../constants/routes';
 export class UserListComponent implements OnInit {
   title = 'Users';
   archivedLink = '/' + Route.DASHBOARD + '/' + Route.ARCHIVED_USERS;
-  users = [];
+  users: Array<BasicUser> = undefined;
 
   modal = {
     edit: false,
@@ -110,9 +111,7 @@ export class UserListComponent implements OnInit {
   ngOnInit() {
     this.adminService.getActiveUsers()
     .then((results) => {
-      if (results instanceof Array) {
         this.users = results;
-      }
     });
   }
 

@@ -3,12 +3,12 @@
         <img src="../../../assets/back.png" />
     </button>
     <p class="dashboard__title" *ngIf="team">
-      <img width="30px" [src]="team.badge || '../../../assets/team-logo.png'" /> {{team.name}}
+        <img width="30px" [src]="team.badge || '../../../assets/team-logo.png'" /> {{team.name}}
     </p>
-<div *ngIf="data?.length<=0; then noContent else content"></div>
-<ng-template #noContent>
-    <no-content [emptyContent]="emptyContent"></no-content>
-</ng-template>
+    <div *ngIf="data !== undefined && data?.length<=0; then noContent else content"></div>
+    <ng-template #noContent>
+        <no-content [emptyContent]="emptyContent"></no-content>
+    </ng-template>
     <ng-template #content>
         <div class="table">
             <div class="table-row table-header">

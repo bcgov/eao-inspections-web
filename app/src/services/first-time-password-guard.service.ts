@@ -14,10 +14,10 @@ export class FirstTimePasswordGuardService implements CanActivate {
         const isAdmin = (this.authService.isSuperAdmin() || this.authService.isAdmin()) ? true : false;
         this.router.navigate([Route.HOME(isAdmin)]);
       } else {
-        return true
+        return true;
       }
     } else {
-      return true
+      return true;
     }
   }
 }
