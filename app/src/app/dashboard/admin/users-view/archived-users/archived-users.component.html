@@ -43,6 +43,10 @@
         </ng-template>
       </span>
         </div>
+      <br>
+      <div class="d-flex justify-content-center">
+        <app-pagination [page]="adminService.page" [totalPages]="adminService.totalPages" (changePage)="onChangePage($event)"></app-pagination>
+      </div>
     </ng-template>
 </div>
 

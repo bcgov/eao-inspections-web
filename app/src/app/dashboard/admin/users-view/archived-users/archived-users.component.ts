@@ -55,4 +55,13 @@ export class ArchivedUsersComponent implements OnInit {
         this.users = results;
       });
   }
+
+  onChangePage(value) {
+    this.adminService.getArchivedUsers(value)
+      .then((results) => {
+        if (results instanceof Array) {
+          this.users = results;
+        }
+      });
+  }
 }

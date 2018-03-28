@@ -7,7 +7,7 @@
             <div class="inspection__title">
                 <h1 class="dashboard__title" id="title">{{title}}</h1>
                 <label for="title" class="view-only-btn" *ngIf="((data?.viewOnly || user.access.isViewOnly) && !user?.access.isAdmin && !user?.access.isSuperAdmin)">
-                        <img class="dashboard__header__btn__img" src="../../assets/view-only.png"/> 
+                        <img class="dashboard__header__btn__img" src="../../assets/view-only.png"/>
                         VIEW-ONLY
                 </label>
             </div>
@@ -65,6 +65,11 @@
                     <p>{{ element.createdAt | date : "MMM d y" || '-' }}</p>
                 </div>
             </div>
+            <br>
+            <div class="d-flex justify-content-center">
+              <app-pagination [page]="reportService.page" [totalPages]="reportService.totalPages" (changePage)="onChangePage($event)"></app-pagination>
+            </div>
         </div>
+
     </div>
 </div>

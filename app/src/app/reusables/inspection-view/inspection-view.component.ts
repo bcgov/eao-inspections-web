@@ -30,10 +30,10 @@ export class InspectionViewComponent implements OnInit {
 
 
   constructor(
-    private route: ActivatedRoute, 
-    private reportService: ReportService, 
-    private profileService: ProfileService, 
-    private location: Location, 
+    private route: ActivatedRoute,
+    private reportService: ReportService,
+    private profileService: ProfileService,
+    private location: Location,
     private toast: ToastrService
   ) {
     this.routeParam = this.route.snapshot.params;
@@ -77,5 +77,15 @@ export class InspectionViewComponent implements OnInit {
     }).catch((error) => {
       this.toast.error(error.message || String.GENERAL_ERROR);
     });
+  }
+  onChangePage(value) {
+    this.reportService.getObservations(this.routeParam.id, value)
+      .then((results) => {
+        if (results instanceof Array) {
+          this.elements = results;
+        } else {
+          this.elements = [results];
+        }
+      });
   }
 }

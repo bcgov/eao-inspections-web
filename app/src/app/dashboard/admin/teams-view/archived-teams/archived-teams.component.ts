@@ -31,4 +31,12 @@ export class ArchivedTeamsComponent implements OnInit {
         this.teams = results;
       });
   }
+  onChangePage(value) {
+    this.adminService.getArchivedTeams(value)
+      .then((results) => {
+        if (results instanceof Array) {
+          this.teams = results;
+        }
+      });
+  }
 }

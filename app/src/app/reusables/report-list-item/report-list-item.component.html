@@ -9,7 +9,7 @@
         {{ data.team?.name || '-' }}
     </div>
     <div class="table-row-item" data-header="Inspector" *ngIf="fields.indexOf('inspector') >= 0">
-        <img width="40px" [src]="data.inspector.image || '../../assets/team-member.png'" /> {{data.inspector.name || '-'}}
+        <img width="40px" [src]="data.inspector?.image || '../../assets/team-member.png'" /> {{data.inspector?.name || '-'}}
     </div>
     <div class="table-row-item" data-header="Submitted" *ngIf="fields.indexOf('submitted') >= 0">
         {{data.updatedAt | date : "MMM d y" }}

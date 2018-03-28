@@ -1,0 +1,15 @@
+@import '../../../scss/_variables';
+@import '../../../scss/_mixins';
+
+.btn-pagination {
+  background-color: #fff;
+  color: $default-secondary-color;
+}
+.btn-pagination-num {
+  background-color: $default-background;
+  color: $default-secondary-color;
+  &.active {
+    background-color: $default-secondary-color;
+    color: #fff;
+  }
+}

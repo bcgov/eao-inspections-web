@@ -1,10 +1,8 @@
-import { CHANGE_PASSWORD } from './../../../../../constants/strings';
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 
 import { AdminService } from './../../../../../services/admin.service';
 import { ModalService } from './../../../../../services/modal.service';
-import { parseToJSON } from './../../../../../services/parse.service';
 import * as String from '../../../../../constants/strings';
 import * as Route from '../../../../../constants/routes';
 import { BasicUser } from '../../../../../models/user.model';
@@ -114,7 +112,6 @@ export class UserListComponent implements OnInit {
       .then((results) => {
         if (results instanceof Array) {
           this.users = results;
-          console.log(value);
         }
       });
   }
@@ -124,7 +121,6 @@ export class UserListComponent implements OnInit {
     .then((results) => {
         this.users = results;
     });
-    this.page = this.adminService.page;
   }
 
 }

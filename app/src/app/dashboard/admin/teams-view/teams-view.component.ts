@@ -52,4 +52,13 @@ export class TeamsViewComponent implements OnInit {
         this.teams = results;
     });
   }
+
+  onChangePage(value) {
+    this.adminService.getActiveTeams(value)
+      .then((results) => {
+        if (results instanceof Array) {
+          this.teams = results;
+        }
+      });
+  }
 }

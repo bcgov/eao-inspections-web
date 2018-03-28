@@ -25,6 +25,7 @@ export class ReportViewListComponent implements OnInit {
   direction: number;
   column: string;
 
+  teamId: string;
   team: Team;
   data: Array<Inspection> = undefined;
   fields: Array<any>;
@@ -33,17 +34,17 @@ export class ReportViewListComponent implements OnInit {
   constructor(private reportService: ReportService, private teamService: TeamService, private route: ActivatedRoute, private location: Location) {
     this.fields = ['title', 'project', 'submitted', 'inspector', 'view', 'actions'];
     this.actions = ['download', 'archive'];
+    this.teamId = this.route.snapshot.params['id'];
   }
 
   ngOnInit() {
     this.sort('updatedAt');
-    const teamId = this.route.snapshot.params['id'];
-    this.teamService.getTeam(teamId).then((team) => {
+    this.teamService.getTeam(this.teamId).then((team) => {
       this.team = team;
-      this.reportService.getActiveTeamReports(teamId)
-      .then((results) => {
-        this.data = results;
-      });
+      this.reportService.getActiveTeamReports(this.teamId)
+        .then((results) => {
+          this.data = results;
+        });
     });
   }
 
@@ -59,5 +60,14 @@ export class ReportViewListComponent implements OnInit {
     this.isDesc = !this.isDesc;
     this.column = property;
     this.direction = this.isDesc ? 1 : -1;
+  }
+
+  onChangePage(value) {
+    this.reportService.getActiveTeamReports(this.teamId, value)
+      .then((results) => {
+        if (results instanceof Array) {
+          this.data = results;
+        }
+      });
   }
 }

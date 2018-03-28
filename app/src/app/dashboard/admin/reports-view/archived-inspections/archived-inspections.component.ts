@@ -15,7 +15,7 @@ export class ArchivedInspectionsComponent implements OnInit {
   title = 'Archived Inspections';
 
   emptyContent = {
-    image: '../../assets/inspections.png',    
+    image: '../../assets/inspections.png',
     message: String.EMPTY_ARCHIVED_INSPECTIONS,
   };
 
@@ -50,5 +50,14 @@ export class ArchivedInspectionsComponent implements OnInit {
     this.isDesc = !this.isDesc;
     this.column = property;
     this.direction = this.isDesc ? 1 : -1;
+  }
+
+  onChangePage(value) {
+    this.adminService.getArchivedReport(value)
+      .then((results) => {
+        if (results instanceof Array) {
+          this.data = results;
+        }
+      });
   }
 }

@@ -1,14 +1,9 @@
 <nav>
   <ul class="pager">
-    <!--<a class="button btn-info btn-sm" [class.disabled]="page === 0" (click) ="prev()">-->
-      <!--Previous-->
-    <!--</a>-->
-    <button *ngIf="page>0" type="button" class="dashboard__btn--dark" (click) ="prev()">Previous</button>
-    <span class="">Page {{ page + 1 }}</span>
-    <button type="button" class="dashboard__btn--dark" (click) ="next()">Next</button>
-
-    <!--<a class="button btn-info btn-sm" (click) ="next()">-->
-      <!--Next-->
-    <!--</a>-->
+    <button [disabled]="page<1" type="button" class="btn btn-sm btn-pagination" (click) ="prev()"><</button>
+    <span *ngFor="let pageNum of pageArray">
+      <button [ngClass]="{'active': page + 1 === pageNum}" type="button" class="btn btn-sm btn-default btn-pagination-num" (click) = "goToPage(pageNum)">{{ pageNum }}</button>
+    </span>
+    <button [disabled]="checkDisableNext()" type="button" class="btn btn-sm btn-pagination" (click) ="next()">></button>
   </ul>
 </nav>
