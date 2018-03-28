@@ -32,7 +32,7 @@
                     minlength="2"
                 >
                 <div class="error" *ngIf="first.touched && !first.valid">
-                    <div *ngIf="first.errors.pattern">*Numbers and special characters are not valid inputs.</div>
+                    <div *ngIf="first.errors.pattern">*Numbers or special characters are not valid inputs.</div>
                 </div>
             </div>
         </div>
@@ -54,7 +54,7 @@
                 minlength="2"
                 >
                 <div class="error" *ngIf="last.touched && !last.valid">
-                    <div *ngIf="last.errors.pattern">*Numbers and special characters are not valid inputs.</div>
+                    <div *ngIf="last.errors.pattern">*Numbers or special characters are not valid inputs.</div>
                 </div>
             </div>
         </div>
@@ -103,10 +103,12 @@
 <ng-template #add>
     <form (ngSubmit)="onSubmit(f); close();" #f="ngForm">
         <div class="form-group">
+            <div class="form-upload__img-wrapper">
+                <img class="form-upload__img" src={{selectedPhoto}} />
+            </div>
             <label class="col-sm-2 col-form-label">Profile</label>
             <div id="upload">
                 <input style="display: none" type="file" id="photo" name="photo" class="form-control" #photoInput ngModel (change)="getPhoto($event)">
-                <img class="form-upload__img" src={{selectedPhoto}} />
                 <button class="dashboard-upload__btn" (click)="photoInput.click(); false">Upload</button>
             </div>
         </div>

@@ -3,7 +3,11 @@
         <img src="../../../assets/back.png" />
     </button>
     <div class="dashboard__header">
-        <p class="dashboard__title">{{ team?.name || '-'}}</p>
+        <p class="dashboard__title">
+            <img class="dashboard__title--img" [src]="team.badge || '../../../assets/team-lg.png'" />
+            {{ team?.name || '-'}}
+            <span *ngIf="team?.admin" class="dashboard__title--admin">Team Administrator: {{team.admin.name}}</span>
+        </p>
         <div class="dashboard__buttons">
             <button type="button" class="dashboard__btn" (click)="open(addMember)">
         <img class="dashboard__header__btn__img" src="../../assets/add-active.png" />

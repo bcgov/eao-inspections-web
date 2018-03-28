@@ -13,15 +13,15 @@ import {ToastrService} from 'ngx-toastr';
   providers: [Ng2ImgMaxService]
 })
 export class UserModalComponent implements OnInit {
+  @Input('user') user: any;
+  @Input('modal') modal: any;
+  @Input() closeValue: any;
+  @Output() submitValue: EventEmitter<any> = new EventEmitter();
   selectedPhoto = "../../assets/avatar@2x.png";
   permissions = ["superadmin", "admin", "manager", "inspector", "inspector(view)"];
   fileToUpload;
   imagePreview: string;
 
-  @Input('modal') modal: any;
-  @Input() closeValue: any;
-  @Input('user') user: any;
-  @Output() submitValue: EventEmitter<any> = new EventEmitter();
 
 
   constructor(private adminService: AdminService, private toast: ToastrService, private ng2ImgMax: Ng2ImgMaxService) { }
@@ -73,7 +73,7 @@ export class UserModalComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.selectedPhoto = this.user.profileImage ? this.user.profileImage.url : this.selectedPhoto;
+    this.selectedPhoto = (this.user && this.user.profileImage) ? this.user.profileImage : this.selectedPhoto;
   }
 
 

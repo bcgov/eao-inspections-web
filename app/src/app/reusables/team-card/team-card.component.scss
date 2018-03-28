@@ -3,14 +3,13 @@
 
 .team__card {
   margin: $dashboard-team-margin;
-  margin-top: $dashboard-content-margin;
   display: inline;
-  height: 97px;
-  width: 256px;
+  height: 110px;
+  width: 270px;
   border-radius: 2px;
   background-color: $background-white;
   box-shadow: 0 0 8px 0 rgba(0,0,0,0.2);
-  border-left: 10px solid $border-yellow;
+  border-left: 12px solid $border-yellow;
   @include flex;
 
   &--photo {
@@ -33,17 +32,21 @@
 
   &--details {
     position: relative;
-    top: 20%;
+    top: 25%;
     flex: 2;
 
     p {
       color: $font-dark-gray;
+      font-size: 14px;
     }
 
     h4 {
+      width: 90%;
+      text-transform: capitalize;
       overflow-wrap: break-word;
       color: $default-secondary-color;
-      font-size: 18px;
+      font-size: 16px;
+      margin: 0;
     }
   }
 }

@@ -52,10 +52,10 @@ export class TeamModalComponent implements OnInit {
 }
 
   ngOnInit() {
-    console.log(this.team);
     this.adminService.getUsersByRole('admin').then((results) => {
       this.admins = results
     });
+    this.selectedPhoto = (this.team && this.team.badge) ? this.team.badge : this.selectedPhoto;
   };
 
 }

@@ -17,7 +17,7 @@ export class ReportViewListComponent implements OnInit {
   title = '';
 
   emptyContent = {
-    image: '../../assets/team-lg.png',
+    image: '../../assets/inspections.png',
     message: String.EMPTY_INSPECTIONS,
   };
 
@@ -40,11 +40,12 @@ export class ReportViewListComponent implements OnInit {
     const teamId = this.route.snapshot.params['id'];
     this.teamService.getTeam(teamId).then((team) => {
       this.team = team;
+      console.log(this.team);
     });
     this.reportService.getActiveTeamReports(teamId)
-      .then((results) => {
-        this.data = results;
-      });
+    .then((results) => {
+      this.data = results;
+    });
   }
 
   onLocationChange() {
@@ -52,7 +53,7 @@ export class ReportViewListComponent implements OnInit {
   }
 
   setDefaultPic() {
-    this.team.badge = '../../../assets/team-logo.png';
+    this.team.badge = '../../../assets/team-lg.png';
   }
 
   sort(property: string) {

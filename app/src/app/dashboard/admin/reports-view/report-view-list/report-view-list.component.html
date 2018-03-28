@@ -4,7 +4,9 @@
     </button>
     <div class="dashboard__header">
         <p class="dashboard__title" *ngIf="team">
-            <img width="60px" [src]="team.badge || '../../../assets/team-logo.png'" /> {{team.name}}
+            <img class="dashboard__title--img" [src]="team.badge || '../../../assets/team-lg.png'" /> 
+            {{team.name}}
+            <span class="dashboard__title--admin">Team Administrator: {{team.admin.name}}</span>
         </p>
         <div class="dashboard__buttons">
             <a routerLink='../archived-inspections'><button class="dashboard__btn dashboard__btn--lg">Archived Inspections</button></a>

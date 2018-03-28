@@ -7,6 +7,10 @@
     margin: 30px 30px 0;
     padding: 20px;
     border-radius: 2px;
+    
+    &__body:last-child {
+        border-bottom: none;
+    }
 
     &__body {
         color: $font-dark-gray;
@@ -22,14 +26,17 @@
         }
         span {
             color: $font-dark-gray;
-            margin: 9px 10px 0 0;
+            margin: 15px;
             display: inline-table;
             font-size: 16px;
-            font-weight: 600;
+            font-weight: 300;
             text-transform: uppercase;
         }
         &__img {
             margin-right: 5px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
         }
     }
 }

@@ -1,6 +1,6 @@
-<div [ngStyle]="{ 'border-left': '10px solid' + team.color }" class="team__card">
+<div [ngStyle]="{ 'border-left': '12px solid' + team.color }" class="team__card">
     <div class="team__card--photo">
-        <img class="team__card--photo__img" [src]="team.badge || '../../assets/team-logo@2x.png'" />
+        <img class="team__card--photo__img" [src]="team.badge || '../../assets/team-lg.png'" />
     </div>
     <div class="team__card--details">
         <a routerLink="manage-team/{{team.id}}">
@@ -12,36 +12,37 @@
             <p *ngIf="team.numUsers>1">{{team.numUsers}} Members</p>
             <p *ngIf="team.numUsers<=1">{{team.numUsers}} Member</p>
         </ng-template>
-        <div class="team__card--actions"></div>
-        <div *ngIf="team.isActive; then archive else unarchive"></div>
-        <ng-template #archive>
-            <div *ngIf="team.numUsers<=0; then canArchive else cantArchive"></div>
-            <ng-template #canArchive>
-                <button type="button" class="dashboard--actions" (click)="open(editTeam)">
-                    Edit
-                </button>
-                <button type="button" class="dashboard--actions" (click)="open(archiveTeam)">
-                    Archive
+        <div class="team__card--details--actions">
+            <div *ngIf="team.isActive; then archive else unarchive"></div>
+            <ng-template #archive>
+                <div *ngIf="team.numUsers<=0; then canArchive else cantArchive"></div>
+                <ng-template #canArchive>
+                    <button type="button" class="dashboard--actions" (click)="open(editTeam)">
+                        Edit
+                    </button>
+                    <button type="button" class="dashboard--actions" (click)="open(archiveTeam)">
+                        Archive
+                    </button>
+                </ng-template>
+                <ng-template #cantArchive>
+                    <button type="button" class="dashboard--actions" (click)="open(editTeam)">
+                        Edit
+                    </button>
+                    <button type="button" class="dashboard--actions" (click)="open(cantArchiveTeam)">
+                        Archive
+                    </button>
+                </ng-template>
+            </ng-template>
+            <ng-template #unarchive>
+                <button type="button" class="dashboard--actions" (click)="open(unarchiveTeam)">
+                    Unarchive
                 </button>
             </ng-template>
-            <ng-template #cantArchive>
-                <button type="button" class="dashboard--actions" (click)="open(editTeam)">
-                    Edit
-                </button>
-                <button type="button" class="dashboard--actions" (click)="open(cantArchiveTeam)">
-                    Archive
-                </button>
-            </ng-template>
-        </ng-template>
-        <ng-template #unarchive>
-            <button type="button" class="dashboard--actions" (click)="open(unarchiveTeam)">
-        Unarchive
-      </button>
-        </ng-template>
+        </div>
     </div>
 </div>
-
-<!-- edit user modal -->
+    
+    <!-- edit user modal -->
 <ng-template #editTeam let-c="close" class="modal">
     <team-modal [closeValue]="this.c" [modal]="modal" (submitValue)="onEdit($event)" [team]="team">
     </team-modal>

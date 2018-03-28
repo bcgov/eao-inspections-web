@@ -22,7 +22,7 @@
           minlength="2"
         >
         <div class="error" *ngIf="name.touched && !name.valid">
-          <div *ngIf="name.errors.pattern">*Numbers and special characters are not valid inputs.</div>
+          <div *ngIf="name.errors.pattern">*Numbers or special characters are not valid inputs.</div>
         </div>
       </div>
     </div>
@@ -39,7 +39,7 @@
     <div class="form-group row">
       <label class="col-sm-4 col-form-label">Team color</label>
       <div class="col-sm-8">
-        <input [(ngModel)]="team.color" name="color" class="color-picker" [colorPicker]="team.color" (colorPickerChange)="team.color=$event" [style.background]="team.color"
+        <input ngModel name="color" class="color-picker" [colorPicker]="team.color" (colorPickerChange)="team.color=$event" [style.background]="team.color"
         [cpPosition]="'bottom'" />
       </div>
     </div>
@@ -80,7 +80,7 @@
           minlength="2" 
          >
         <div class="error" *ngIf="name.touched && !name.valid">
-          <div *ngIf="name.errors.pattern">*Numbers and special characters are not valid inputs.</div>
+          <div *ngIf="name.errors.pattern">*Numbers or special characters are not valid inputs.</div>
         </div>
       </div>
     </div>

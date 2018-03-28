@@ -5,8 +5,8 @@
   margin: $dashboard-team-margin;
   margin-top: $dashboard-content-margin;
   display: inline;
-  height: 96px;	
-  width: 248px;	
+  height: 100px;	
+  width: 260px;	
   border-radius: 2px;	
   background-color: $background-white;	
   box-shadow: 0 0 8px 0 rgba(0,0,0,0.2);
@@ -28,16 +28,17 @@
       }
     }
 
+    &--actions {
+      position: absolute;
+      bottom: 40px;
+      display: inline-flex;
+    }
     
     &--details {
-      padding-top: 10px;
-      padding-left: 10px;
+      padding-top: 5px;
+      padding-left: 15px;
       text-align: left;
       flex: 3;
-      
-      &--actions {
-        display: inline-flex;
-      }
       
       h4 {
         overflow-wrap: break-word;

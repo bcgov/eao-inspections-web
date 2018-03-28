@@ -42,6 +42,12 @@ export function parseUserToModel(object): BasicUser {
 }
 
 export function parseTeamToModel(object) {
+  let teamAdmin = object.get('teamAdmin');
+
+  if (teamAdmin) {
+    teamAdmin = parseUserToModel(teamAdmin);
+  }
+
   let badge = object.get('badge');
   if (badge) {
     const url = badge.url();
@@ -52,7 +58,7 @@ export function parseTeamToModel(object) {
   return new Team (
     object.id,
     object.get('name'),
-    object.get('teamAdmin'),
+    teamAdmin,
     object.get('color'),
     object.get('isActive'),
     badge
