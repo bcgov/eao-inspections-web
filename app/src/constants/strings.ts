@@ -58,4 +58,5 @@ export const EMPTY_INSPECTIONS = "There are no inspections yet.";
 
 // error messages
 export const GENERAL_ERROR = "Error has occured. Please try again.";
+export const INACTIVE_USER = "Cannot log in at this time. Please contact your administrator.";
 

@@ -24,20 +24,20 @@
           <span class="table__img-wrapper">
             <img *ngIf="user.profileImage" class="table__img" src={{user.profileImage}} />
           </span>
-        <img *ngIf="!user.profileImage" class="table__img" src="../../../assets/team-member.png" /> {{user.firstName + " " + user.lastName}}
-    </div>
-    <div class="table-row-item" data-header="Email">
-        {{user.publicEmail}}
-    </div>
-    <div class="table-row-item" data-header="Team">
-        <div *ngFor="let team of user.teams">
-            <img *ngIf="team.badge" class="table__img" src={{team.badge}} />
-            <img *ngIf="!team.badge" class="table__img" src="../../../assets/team-lg.png" /> {{ team.name }}
+          <img *ngIf="!user.profileImage" class="table__img" src="../../../assets/team-member.png" />
+          {{user.firstName + " " + user.lastName}}
         </div>
-    </div>
-    <div class="table-row-item" data-header="Permission">
-        {{user.permission}}
-    </div>
+        <div class="table-row-item" data-header="Email">
+           {{user.publicEmail}}
+        </div>
+        <div class="table-row-item teams" data-header="Team">
+          <div *ngFor="let team of user.teams">
+            {{ team.name }}
+          </div>
+        </div>
+        <div class="table-row-item" data-header="Permission">
+           {{user.permission}}
+        </div>
     <div class="table-row-item" data-header="Action">
         <button (click)="openLg(editUser)" class="dashboard--actions dashboard--actions--sm">
             <img class="dashboard--actions--sm__img" src="../../assets/edit.png" /> Edit

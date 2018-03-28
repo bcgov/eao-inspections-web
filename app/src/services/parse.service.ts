@@ -36,6 +36,7 @@ export function parseUserToModel(object): BasicUser {
       object.get('permission'),
       object.get('access'),
       object.get('hasLoggedIn'),
+      object.get('isActive'),
     );
   }
 }

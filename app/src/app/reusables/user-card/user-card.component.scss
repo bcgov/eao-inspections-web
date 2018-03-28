@@ -11,36 +11,39 @@
   background-color: $background-white;	
   box-shadow: 0 0 8px 0 rgba(0,0,0,0.2);
   @include flex;
-
-  &--photo {
-    flex: 1;
-
-    &__img {
-      position: relative;
-      top: 20%;
-      left: 10px;
-      height: 64px;	
-      width: 64px;
-    }
-  }
-
-  &--actions {
-    display: inline-flex;
-    position: relative;
-    top: 60%;
-    right: 30%;
-  }
-
-  &--details {
+  
+  &__content {
     position: relative;
     top: 20%;
-    left: 30px;
-    flex: 2;
+    left: 5%;
+    @include flex;
 
-    h4 {
-      width: max-content;
-      color: $font-black;	
-      font-size: 18px;
+    &--photo {
+      flex: 1;
+
+      &__img {
+        height: 64px;	
+        width: 64px;
+        border-radius: 50%;
+      }
+    }
+
+    
+    &--details {
+      padding-top: 10px;
+      padding-left: 10px;
+      text-align: left;
+      flex: 3;
+      
+      &--actions {
+        display: inline-flex;
+      }
+      
+      h4 {
+        overflow-wrap: break-word;
+        color: $font-black;	
+        font-size: 16px;
+      }
     }
   }
 }

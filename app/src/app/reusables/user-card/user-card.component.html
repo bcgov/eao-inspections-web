@@ -1,17 +1,19 @@
 <div class="user__card">
-    <div class="user__card--photo">
-        <img class="user__card--photo__img" [src]="user.image || '../../assets/team-logo@2x.png'" />
-    </div>
-    <div class="user__card--details">
-        <h4>{{user.name}}</h4>
-    </div>
-    <div class="user__card--actions">
-        <button type="button" class="dashboard--actions" (click)="openEdit(editUser)">
-      Edit
-    </button>
-        <button type="button" class="dashboard--actions" (click)="openRemove(deleteUser)">
-      Remove
-    </button>
+    <div class="user__card__content">
+        <div class="user__card__content--photo">
+            <img class="user__card__content--photo__img" [src]="user.profileImage || '../../assets/team-member.png'" />
+        </div>
+        <div class="user__card__content--details">
+            <h4>{{user.name}}</h4>
+            <div class="user__card__content--actions">
+                <button type="button" class="dashboard--actions" (click)="openEdit(editUser)">
+                    Edit
+                </button>
+                <button type="button" class="dashboard--actions" (click)="openRemove(deleteUser)">
+                    Remove
+                </button>
+            </div>
+        </div>
     </div>
 </div>
 

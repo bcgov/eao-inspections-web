@@ -11,11 +11,12 @@ export class BasicUser {
   public permission: string;
   public access: object;
   public hasLoggedIn: boolean;
+  public isActive: boolean;
 
 
   constructor(
     id: string, firstName: string, lastName: string, name: string, teams: Team[],
-    email: string, profileImage: string, permission: string = null, access: object, hasLoggedIn: boolean) {
+    email: string, profileImage: string, permission: string = null, access: object, hasLoggedIn: boolean, isActive: boolean) {
     this.id = id;
     this.firstName = firstName;
     this.lastName = lastName;
@@ -26,5 +27,6 @@ export class BasicUser {
     this.permission = permission;
     this.access = access;
     this.hasLoggedIn = hasLoggedIn;
+    this.isActive = isActive;
   }
 }
