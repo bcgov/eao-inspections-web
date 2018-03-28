@@ -73,7 +73,6 @@ export class UserModalComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.user);
     this.selectedPhoto = this.user.profileImage ? this.user.profileImage.url : this.selectedPhoto;
   }
 
