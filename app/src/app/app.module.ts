@@ -56,6 +56,7 @@ import {Ng2ImgMaxModule, Ng2ImgMaxService} from 'ng2-img-max';
 import { PasswordChangeComponent } from './login/password-change/password-change.component';
 import {FirstTimePasswordGuardService} from '../services/first-time-password-guard.service';
 import {ProfileService} from '../services/profile.service';
+import { LoadingService } from '../services/loading.service';
 import { LoggedInGuardService } from '../services/logged-in-guard.service';
 
 @NgModule({
@@ -110,9 +111,19 @@ import { LoggedInGuardService } from '../services/logged-in-guard.service';
     ToastrModule.forRoot({ timeOut: 100000, progressBar: true, tapToDismiss: true, progressAnimation: 'decreasing'}),
     BrowserAnimationsModule,
     ColorPickerModule,
-    Ng2ImgMaxModule
+    Ng2ImgMaxModule,
   ],
-  providers: [AuthService, AuthGuardService, FirstTimePasswordGuardService, RoleGuardService, ModalService, ProfileService, Ng2ImgMaxService, LoggedInGuardService],
+  providers: [
+    AuthService, 
+    AuthGuardService, 
+    FirstTimePasswordGuardService, 
+    RoleGuardService, 
+    ModalService, 
+    ProfileService, 
+    Ng2ImgMaxService,
+    LoggedInGuardService,
+    LoadingService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

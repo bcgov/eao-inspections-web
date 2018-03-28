@@ -18,9 +18,8 @@ export class PasswordModalComponent implements OnInit {
     this.closeValue();
   }
 
-  onSubmit(form: NgForm) {
+  onSubmit(form: NgForm, id: string) {
      const password = form.value.password;
-     const id = this.data.id;
     this.submitValue.emit({ id, password });
   }
 
