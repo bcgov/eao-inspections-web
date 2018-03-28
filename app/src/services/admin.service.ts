@@ -72,19 +72,12 @@ export class AdminService {
     });
   }
 
-<<<<<<< HEAD
-  getArchivedUsers(): Promise<Array<BasicUser>> {
+  getArchivedUsers(page=0): Promise<Array<BasicUser>> {
     const key = randomKey();
     self.loadingService.showLoading(true, key);
     return new Promise((resolve, reject) => {
       const query = new Parse.Query('User');
       const users = [];
-
-=======
-  getArchivedUsers(page=0) {
-    self.loadingService.showLoading(true);
-    return new Promise((resolve, reject) => {
-      const query = new Parse.Query('User');
       const queryCount = new Parse.Query(Parse.User);
       queryCount.equalTo('isActive',false);
       if (this.page === 0) {
@@ -93,7 +86,6 @@ export class AdminService {
         });
       }
       this.page = page;
->>>>>>> adding of pagination to superadmin
       query.equalTo('isActive', false);
       query.skip(page * this.displayLimit);
       query.limit(this.displayLimit);
@@ -114,15 +106,9 @@ export class AdminService {
     });
   }
 
-<<<<<<< HEAD
   getActiveUsers(page = 0): Promise<Array<BasicUser>> {
     const key = randomKey();
     self.loadingService.showLoading(true, key);
-    this.page = page;
-=======
-  getActiveUsers(page = 0) {
-    self.loadingService.showLoading(true);
->>>>>>> adding of pagination to superadmin
     return new Promise((resolve, reject) => {
       const users = [];
       const query = new Parse.Query(Parse.User);
@@ -484,14 +470,9 @@ export class AdminService {
     });
   }
 
-<<<<<<< HEAD
-  getArchivedTeams(): Promise<Team[]> {
+  getArchivedTeams(page=0): Promise<Team[]> {
     const key = randomKey();
     self.loadingService.showLoading(true, key);
-=======
-  getArchivedTeams(page=0): Promise<Team[]> {
-    self.loadingService.showLoading(true);
->>>>>>> adding of pagination to superadmin
     return new Promise((resolve, reject) => {
       const query = new Parse.Query('Team');
       const promises1 = [];
@@ -546,14 +527,9 @@ export class AdminService {
     });
   }
 
-<<<<<<< HEAD
-  getActiveTeams(): Promise<Array<Team>> {
+  getActiveTeams(page=0): Promise<Array<Team>> {
     const key = randomKey();
     self.loadingService.showLoading(true, key);
-=======
-  getActiveTeams(page=0): Promise<Team[]> {
-    self.loadingService.showLoading(true);
->>>>>>> adding of pagination to superadmin
     return new Promise((resolve, reject) => {
       const query = new Parse.Query('Team');
       const promises1 = [];
@@ -570,41 +546,13 @@ export class AdminService {
       }
       this.page = page;
       query.equalTo('isActive', true);
-<<<<<<< HEAD
-      query.find().then((results) => {
-        if (!Array.isArray(results)) {
-          results = [results];
-=======
+
       query.skip(page * this.displayLimit);
       query.limit(this.displayLimit);
       query.descending('createdAt');
-      query.find({
-        success: function (results) {
-          if (!Array.isArray(results)) {
-            results = [results];
-          }
-          results.forEach((object) => {
-            const team = parseTeamToModel(object);
-            const userRelation = object.relation('users');
-            const inspectionQuery = new Parse.Query('Inspection');
-            inspectionQuery.equalTo('team', { '__type': 'Pointer', 'className': 'Team', 'objectId': team.id},);
-            userRelation.query().count().then((numUsers) => {
-              team.numUsers = numUsers;
-              inspectionQuery.count().then((numInspections) => {
-                team.numInspections = numInspections;
-                promises.push(
-                  teams.push(
-                    team
-                  )
-                );
-              });
-            });
-          });
-        },
-        error: function (error) {
-          self.loadingService.showLoading(false);
-          reject(error);
->>>>>>> adding of pagination to superadmin
+      query.find().then((results) => {
+        if (!Array.isArray(results)) {
+          results = [results];
         }
         results.forEach((object) => {
           const team = parseTeamToModel(object);
@@ -729,14 +677,10 @@ export class AdminService {
     });
   }
 
-<<<<<<< HEAD
-  getArchivedReport(): Promise<Inspection[]> {
+  getArchivedReport(page=0): Promise<Inspection[]> {
     const key = randomKey();
     self.loadingService.showLoading(true, key);
-=======
-  getArchivedReport(page=0): Promise<Inspection[]> {
-    self.loadingService.showLoading(true);
->>>>>>> adding of pagination to superadmin
+
     return new Promise((resolve, reject) => {
       const query = new Parse.Query('Inspection');
       const queryCount = new Parse.Query('Inspection');
