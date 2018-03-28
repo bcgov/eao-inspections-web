@@ -1,19 +1,20 @@
 <div class="elements-details-media-block" *ngIf="item.fileURL">
   <div class="element-details-media">
     <div class="thumbnail">
-      <span *ngIf="item.type === 'aud'">
+      <a class="thumbnail-link" href="{{ item.fileURL }}">
+      <span *ngIf="item.type === 'Audio'">
         <img class="thumbnail-link-image" [src]="this.audioImage">
       </span>
-      <span *ngIf="item.type === 'img'">
+      <span *ngIf="item.type === 'Photo'">
         <img class="thumbnail-link-image" [src]="this.thumbnailImage" (error)="setDefaultPic()">
       </span>
-      <span *ngIf="item.type === 'vid'">
+      <span *ngIf="item.type === 'Video'">
         <img class="thumbnail-link-image" [src]="this.defaultPic">
       </span>
-      <span *ngIf="item.type === 'bin'">
+      <span *ngIf="item.type === 'undefined'">
         <img class="thumbnail-link-image" [src]="this.thumbnailImage" (error)="setDefaultPic()">
       </span>
-      <a class="thumbnail-link" href="{{ item.fileURL }}"></a>
+      </a>
     </div>
   </div>
 </div>
