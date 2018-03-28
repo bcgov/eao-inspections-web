@@ -4,8 +4,6 @@ import * as Access from '../constants/accessRights';
 import { BasicUser } from '../models/user.model';
 import { Inspection } from '../models/inspection.model';
 import { parseInspectionToModel, parseUserToModel, parseTeamToModel } from './parse.service';
-import {Observable} from 'rxjs/Observable';
-import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 import { LoadingService } from './loading.service';
 import { Team } from '../models/team.model';
 
@@ -32,30 +30,6 @@ export class AdminService {
         success: function (results) {
           self.loadingService.showLoading(false);
           resolve(results);
-        },
-        error: function (error) {
-          self.loadingService.showLoading(false);
-          reject(error);
-        }
-      });
-    });
-  }
-
-  getAllUsers(): Promise<BasicUser[]> {
-    self.loadingService.showLoading(true);
-    return new Promise((resolve, reject) => {
-      const userQuery = new Parse.Query('User');
-      const users = [];
-
-      userQuery.find({
-        success: function (results) {
-          results.forEach((user) => {
-              users.push(
-                parseUserToModel(user)
-              );
-          });
-          self.loadingService.showLoading(false);
-          resolve(users);
         },
         error: function (error) {
           self.loadingService.showLoading(false);
@@ -193,7 +167,7 @@ export class AdminService {
       const query = new Parse.Query(Parse.Role);
       const queryTeam = new Parse.Query('Team');
       const user = new Parse.User();
-      
+
       user.set('isActive', true);
       user.set('access', access);
       user.set('firstName', firstName);
