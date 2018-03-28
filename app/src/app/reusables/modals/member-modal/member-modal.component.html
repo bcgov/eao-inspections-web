@@ -7,7 +7,7 @@
         <div class="form-check form-check-inline">
             <input class="form-check-input" type="checkbox" id="{{user.id}}" (change)="onChangeCheckbox(user.id, $event.target.checked)">
         </div>
-        <img class=" member-modal__content__body__img " src="../../assets/team-logo.png " />
+        <img class=" member-modal__content__body__img "[src]="user.profileImage || '../../assets/team-lg.png'" />
         <span>{{ user.name }}</span>
         <!-- <div class="member-modal__content__body-options form-check form-check-inline ">
             <input class="form-check-input" type="radio" name="{{user.id}} " id="inspector" value="inspector">

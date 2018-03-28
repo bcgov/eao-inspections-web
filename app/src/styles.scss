@@ -111,12 +111,25 @@ body {
             }
         }
         &__title {
-            margin: 30px;
+            margin: 0 20px;
             height: 40px;
             color: $font-black;
             font-size: 36px;
             font-weight: bold;
             line-height: 34px;
+
+            &--img {
+                width: 65px;
+                height: 64px;
+                border-radius: 50%;
+            }
+
+            &--admin {
+                display: inherit;
+                font-weight: 300;
+                font-size: 14px;
+                color: $font-gray;
+            }
             @include mobile {
                 margin: 50px 10px;
             }
@@ -226,10 +239,6 @@ body {
         form {
             margin: 30px 30px;
 
-            // .form-group.row {
-            //     margin-bottom: 1.7rem;
-            // }
-
             label {
                 padding: 0;
                 text-transform: uppercase;
@@ -248,23 +257,32 @@ body {
         #upload {
           display: inline-grid;
         }
+        // profile image on user modal
         .form-upload__img-wrapper {
-          overflow:hidden;
-          border-radius: 50%;
-          width: 80px;
-          height: 80px;
+            margin-left: 15%;
+            margin-bottom: 20px;
+
+            .form-upload__img {
+                border-radius: 50%;
+                width: 80px;
+                height: 80px;
+                position: relative;
+            }
         }
+        // profile image on teams modal
         .form-upload__img {
-          position: relative;
-          height: 80px;
-        }
+                border-radius: 50%;
+                width: 80px;
+                height: 80px;
+                position: relative;
+            }
     }
     // Responsive Reports Table
     .table {
-        width: 100%;
+        width: calc(100% - 20px);;
         background-color: #FFFFFF;
         box-shadow: $default-box-shadow;
-        margin: 0;
+        margin: 10px;
         padding: 0;
         border-collapse: collapse;
         table-layout: fixed;
@@ -291,7 +309,7 @@ body {
 
             @include xxl {
                 overflow: inherit;
-                flex: 3;
+                flex: 2;
                 display: grid;
             }
         }
@@ -300,11 +318,12 @@ body {
                 flex: 2;
             }
 
+
         .table-row-item.teams {
             display: inline-grid;
 
             @include xl {
-                display: block;
+                display: inline;
             }
         }
 
@@ -368,6 +387,9 @@ body {
                 color: $font-dark-gray;
                 font-size: 12px;
                 text-transform: uppercase;
+            }
+            .table-row-item.teams:before {
+                margin-left: 5px;
             }
         }
     }
