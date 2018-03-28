@@ -165,7 +165,10 @@ export class ReportService {
       const elements = [];
       let elementList;
       const query = new Parse.Query('Observation');
-      query.equalTo('inspectionId', inspectionId);
+      const inspection = new Parse.Object.extend('Inspection');
+      const tempInspection = new inspection();
+      tempInspection.id = inspectionId;
+      query.equalTo('inspection', tempInspection);
       query.find({
         success: function(results) {
           if (!Array.isArray(results)) {
@@ -191,13 +194,9 @@ export class ReportService {
   getObservation(observationId: string): Promise<any> {
     self.loadingService.showLoading(true);
     return new Promise((resolve, reject) => {
-      const query1 = new Parse.Query('Observation');
-      query1.equalTo('objectId', observationId);
-      const query2 = new Parse.Query('Observation');
-      query2.equalTo('id', observationId);
-      const orQuery = new Parse.Query.or(query1, query2);
-
-      orQuery.first().then((object) => {
+      const query = new Parse.Query('Observation');
+      query.equalTo('objectId', observationId);
+      query.first().then((object) => {
         self.loadingService.showLoading(false);
         resolve(parseObservationToModel(object));
       }, (error) => {
@@ -207,13 +206,17 @@ export class ReportService {
     });
   }
 
-  getPhotos(observationId: string): Promise<any[]> {
+  getMedia(observationId: string, type='Photo'): Promise<any[]> {
     self.loadingService.showLoading(true);
     const photos = [];
     let photoList;
+    const Observation = new Parse.Object.extend('Observation');
+    const tempObservation = new Observation();
+    tempObservation.id = observationId;
+
     return new Promise((resolve, reject) => {
-      const query = new Parse.Query('Photo');
-      query.equalTo('observationId', observationId);
+      const query = new Parse.Query(type);
+      query.equalTo('observation', tempObservation);
       query.find({
         success: function(results) {
           if (!Array.isArray(results)) {
@@ -227,7 +230,7 @@ export class ReportService {
         }
       }).then(() => {
         photoList.forEach((object) => {
-          photos.push(parseMediaToModel(object));
+          photos.push(parseMediaToModel(object, type));
         });
       }).then(() => {
         self.loadingService.showLoading(false);
@@ -253,7 +256,7 @@ export class ReportService {
           observationFolders[observation.id] = observationFolder;
           observationFolder.file('info.txt', observation.toText());
 
-          promises.push(this.getPhotos(observation.id));
+          promises.push(this.getMedia(observation.id));
         });
       })
       .then(() => Promise.all(promises))

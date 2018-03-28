@@ -5,14 +5,16 @@
   padding:5px;
   width: 120px;
   height:120px;
+  overflow:hidden;
   .thumbnail {
     height:100%;
     border-radius: 5px;
     &-link {
       margin:auto;
-    }
-    &-image {
-      margin:auto;
+      &-image {
+        margin:auto;
+        height: 120px;
+      }
     }
   }
 }
