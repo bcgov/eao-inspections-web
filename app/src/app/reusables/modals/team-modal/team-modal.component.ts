@@ -42,7 +42,6 @@ export class TeamModalComponent implements OnInit {
     const photo = this.fileToUpload;
     const teamName = form.value.teamName;
     const teamAdmin = form.value.admin;
-    console.log(teamAdmin);
     if (id) {
       const color = form.value.color;
       this.submitValue.emit({teamName, color, teamAdmin, id, photo});

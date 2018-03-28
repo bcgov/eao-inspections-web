@@ -100,7 +100,7 @@ export function parseObservationToModel(object) {
   );
 }
 
-export function parseMediaToModel(object, type = 'bin') {
+export function parseMediaToModel(object, type = 'Photo') {
   const url = object.get('file').url();
   const n = url.indexOf('/parse/');
   const newUrl = Parse.serverURL + url.substring(n + 6);

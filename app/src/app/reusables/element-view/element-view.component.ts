@@ -16,7 +16,10 @@ export class ElementViewComponent implements OnInit {
   link = '/inspection-details';
   routeParam;
   data;
-  media;
+  media = [];
+  photos = [{}];
+  audio = [{}];
+  videos = [{}];
   mediaSelected;
   isAll;
   isPhotos;
@@ -30,10 +33,25 @@ export class ElementViewComponent implements OnInit {
     this.reportService.getObservation(this.routeParam.id).then(object => {
       this.data = object;
     });
-    this.reportService.getPhotos(this.routeParam.id).then(object => {
-      this.media = object;
-      this.getMediaAll();
+    this.reportService.getMedia(this.routeParam.id, 'Photo').then(object => {
+      object.forEach(obj => {
+        this.photos.push(obj);
+        this.media.push(obj);
+      });
     });
+    this.reportService.getMedia(this.routeParam.id, 'Video').then(object => {
+      object.forEach(obj => {
+        this.videos.push(obj);
+        this.media.push(obj);
+      });
+    });
+    this.reportService.getMedia(this.routeParam.id, 'Audio').then(object => {
+      object.forEach(obj => {
+        this.audio.push(obj);
+        this.media.push(obj);
+      });
+    });
+    this.getMediaAll();
   }
 
   onLocationChange() {
@@ -48,47 +66,27 @@ export class ElementViewComponent implements OnInit {
   }
 
   getMediaAll() {
-    const tempList = [{}];
     this.setInActive();
     this.isAll = true;
-    this.media.forEach((object) => {
-      tempList.push(object);
-    });
-    this.mediaSelected = tempList;
-
+    this.mediaSelected = this.media;
   }
 
   getPhotos() {
-    const tempList = [{}];
     this.setInActive();
     this.isPhotos = true;
-    this.media.forEach((object) => {
-      if (object.type === 'img') {
-        tempList.push(object);
-      }
-    });
-    this.mediaSelected = tempList;
+    this.mediaSelected = this.photos;
   }
+
   getVideo() {
-    const tempList = [{}];
     this.setInActive();
     this.isVideo = true;
-    this.media.forEach((object) => {
-      if (object.type === 'vid') {
-        tempList.push(object);
-      }
-    });
-    this.mediaSelected = tempList;
+    this.mediaSelected = this.videos;
   }
+
   getVoice() {
-    const tempList = [{}];
     this.setInActive();
     this.isVoice = true;
-    this.media.forEach((object) => {
-      if (object.type === 'aud') {
-        tempList.push(object);
-      }
-    });
-    this.mediaSelected = tempList;  }
+    this.mediaSelected = this.audio;
+  }
 
 }
