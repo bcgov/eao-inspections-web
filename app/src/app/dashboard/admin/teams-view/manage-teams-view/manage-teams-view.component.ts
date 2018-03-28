@@ -27,7 +27,7 @@ export class ManageTeamsViewComponent implements OnInit {
 
   team: Team;
 
-  memebers: Array<BasicUser> = [];
+  members: Array<BasicUser> = undefined;
 
   modal = {
     header: String.ADD_MEMBER,
@@ -54,10 +54,10 @@ export class ManageTeamsViewComponent implements OnInit {
 
   onAddMember(selectedUsers) {
     this.adminService.addUsersToTeam(this.team.id, selectedUsers).then((team) => {
-      this.adminService.getTeamMemebers(this.team.id).then((memebers) => {
-        this.memebers = memebers;
+      this.adminService.getTeamMembers(this.team.id).then((members) => {
+        this.members = members;
         this.adminService.getUsersByRole('inspector').then((users) => {
-          this.modal.users = users.filter(o1 => !this.memebers.some(o2 => o1.id === o2.id));
+          this.modal.users = users.filter(o1 => !this.members.some(o2 => o1.id === o2.id));
         });
       });
     });
@@ -80,10 +80,10 @@ export class ManageTeamsViewComponent implements OnInit {
 
   onRemoveMember(user) {
     this.adminService.removeMemberFromTeam(this.team.id, user.id).then(() => {
-      this.adminService.getTeamMemebers(this.team.id).then((memebers) => {
-        this.memebers = memebers;
+      this.adminService.getTeamMembers(this.team.id).then((members) => {
+        this.members = members;
         this.adminService.getUsersByRole('inspector').then((users) => {
-          this.modal.users = users.filter(o1 => !this.memebers.some(o2 => o1.id === o2.id));
+          this.modal.users = users.filter(o1 => !this.members.some(o2 => o1.id === o2.id));
         });
       });
     });
@@ -93,13 +93,14 @@ export class ManageTeamsViewComponent implements OnInit {
     const teamId = this.route.snapshot.params['id'];
     this.teamService.getTeam(teamId).then((team) => {
       this.team = team;
-    });
-    this.adminService.getTeamMemebers(teamId).then((memebers) => {
-      this.memebers = memebers;
-      this.adminService.getUsersByRole('inspector').then((users) => {
-        this.modal.users = users.filter(o1 => !this.memebers.some(o2 => o1.id === o2.id));
+      this.adminService.getTeamMembers(teamId).then((members) => {
+        this.members = members;
+        this.adminService.getUsersByRole('inspector').then((users) => {
+          this.modal.users = users.filter(o1 => !this.members.some(o2 => o1.id === o2.id));
+        });
       });
     });
+
 
   }
 

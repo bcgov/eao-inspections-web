@@ -5,7 +5,7 @@
     <div class="dashboard__header">
         <p class="dashboard__title">{{title}}</p>
     </div>
-    <div *ngIf="data.length <=0; then noContent else content"></div>
+    <div *ngIf="data !== undefined && data?.length <=0; then noContent else content"></div>
     <ng-template #noContent>
         <no-content [emptyContent]="emptyContent"></no-content>
     </ng-template>

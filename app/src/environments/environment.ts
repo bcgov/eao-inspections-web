@@ -4,9 +4,9 @@
 // The list of which env maps to which file can be found in `.angular-cli.json`.
 
 export const environment = {
-  production: false,
+  production: true,
   parseId: 'abc123',
-  parseKey: '',
+  parseKey: 'mciE0uOj6JifeEsTc1Fl28bhwuG1XWij9gW5Det2',
   parseURL: 'https://test.projects.eao.gov.bc.ca/parse',
-  parseMasterKey: 'abc123'
+  parseMasterKey: 'abc'
 };

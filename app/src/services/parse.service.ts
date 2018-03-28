@@ -107,20 +107,19 @@ export function parseObservationToModel(object) {
 }
 
 export function parseMediaToModel(object, type = 'Photo') {
-  const url = object.get('file').url();
+  const file = object.get('file');
+  const url = file.url();
   const n = url.indexOf('/parse/');
   const newUrl = Parse.serverURL + url.substring(n + 6);
-  if (object.get('type')) {
-    type = object.get('type');
-  }
+
   return new Media(
     object.id,
     type,
     object.get('caption'),
-    object.get('observationId'),
+    object.get('observation').id,
     object.get('coordinate'),
     newUrl,
-    object.get('file').name(),
+    file.name(),
     object.get('createdAt'),
   );
 }

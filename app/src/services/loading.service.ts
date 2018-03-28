@@ -7,7 +7,8 @@ import { Subject } from 'rxjs';
 export class LoadingService {
 
   private _loading: Subject<boolean>;
-  private timeoutId;
+  private id;
+
 
   constructor() {
     this._loading = new Subject<boolean>();
@@ -17,15 +18,14 @@ export class LoadingService {
       return this._loading.asObservable();
   }
 
-  showLoading(bool): void {
-    if (!bool) {
-      clearTimeout(this.timeoutId);
-      this.timeoutId = setTimeout(() => {
-        this._loading.next(bool);
-      }, 1000);
+  showLoading(bool, id): void {
+    if (bool) {
+      this.id = id;
       this._loading.next(bool);
     } else {
-      this._loading.next(bool);
+      if (this.id === id) {
+        this._loading.next(bool);
+      }
     }
   }
 }

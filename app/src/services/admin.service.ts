@@ -6,6 +6,7 @@ import { Inspection } from '../models/inspection.model';
 import { parseInspectionToModel, parseUserToModel, parseTeamToModel } from './parse.service';
 import { LoadingService } from './loading.service';
 import { Team } from '../models/team.model';
+import { randomKey } from './testing.service';
 
 const Parse: any = require('parse');
 let self;
@@ -20,7 +21,8 @@ export class AdminService {
   }
 
   getUsers() {
-    self.loadingService.showLoading(true);
+    const key = randomKey();
+    self.loadingService.showLoading(true, key);
     return new Promise((resolve, reject) => {
       const teamQuery = new Parse.Query('Team');
       teamQuery.equalTo('userId', this.user.userId);
@@ -28,11 +30,11 @@ export class AdminService {
       const q = new Parse.Query('User');
       q.matchesKeyInQuery('teamId', 'teamId', teamQuery, {
         success: function (results) {
-          self.loadingService.showLoading(false);
+          self.loadingService.showLoading(false, key);
           resolve(results);
         },
         error: function (error) {
-          self.loadingService.showLoading(false);
+          self.loadingService.showLoading(false, key);
           reject(error);
         }
       });
@@ -40,7 +42,8 @@ export class AdminService {
   }
 
   getUsersByRole(_role: string): Promise<BasicUser[]> {
-    self.loadingService.showLoading(true);
+    const key = randomKey();
+    self.loadingService.showLoading(true, key);
     return new Promise((resolve, reject) => {
       const roleQuery = new Parse.Query(Parse.Role);
       const users = [];
@@ -55,11 +58,11 @@ export class AdminService {
                     parseUserToModel(user)
                   );
               });
-              self.loadingService.showLoading(false);
+              self.loadingService.showLoading(false, key);
               resolve(users);
             },
             error: (error) => {
-              self.loadingService.showLoading(false);
+              self.loadingService.showLoading(false, key);
               reject(error);
             }
         });
@@ -67,27 +70,33 @@ export class AdminService {
     });
   }
 
-  getArchivedUsers() {
-    self.loadingService.showLoading(true);
+  getArchivedUsers(): Promise<Array<BasicUser>> {
+    const key = randomKey();
+    self.loadingService.showLoading(true, key);
     return new Promise((resolve, reject) => {
       const query = new Parse.Query('User');
+      const users = [];
 
       query.equalTo('isActive', false);
       query.find({
         success: function (results) {
-          self.loadingService.showLoading(false);
-          resolve(results);
+          self.loadingService.showLoading(false, key);
+          results.forEach((user) => {
+            users.push(parseUserToModel(user));
+          });
+          resolve(users);
         },
         error: function (error) {
-          self.loadingService.showLoading(false);
+          self.loadingService.showLoading(false, key);
           reject(error);
         }
       });
     });
   }
 
-  getActiveUsers() {
-    self.loadingService.showLoading(true);
+  getActiveUsers(): Promise<Array<BasicUser>> {
+    const key = randomKey();
+    self.loadingService.showLoading(true, key);
     return new Promise((resolve, reject) => {
       const users = [];
       const query = new Parse.Query(Parse.User);
@@ -97,24 +106,22 @@ export class AdminService {
         success: function (results) {
           results.forEach(objectUser => {
             const user = parseUserToModel(objectUser);
-            const query = new Parse.Query('Team');
-            query.equalTo('users', objectUser);
-            query.find().then((objectTeams) => {
+            const query2 = new Parse.Query('Team');
+            query2.equalTo('users', objectUser);
+            query2.find().then((objectTeams) => {
               objectTeams.forEach((team) => {
                 user.teams.push(parseTeamToModel(team));
-              })
-            }).then(() => {
+              });
               users.push(user)
+              self.loadingService.showLoading(false, key);
+              resolve(users);
             });
           });
         },
         error: function (error) {
-          self.loadingService.showLoading(false);
+          self.loadingService.showLoading(false, key);
           reject(error);
         }
-      }).then(() => {
-        self.loadingService.showLoading(false);
-        resolve(users);
       });
     });
   }
@@ -159,7 +166,8 @@ export class AdminService {
              password: string,
              permission: string,
              photo: any): Promise<any> {
-    self.loadingService.showLoading(true);
+    const key = randomKey();
+    self.loadingService.showLoading(true, key);
     return new Promise((resolve, reject) => {
       const promises = [];
       const role = this.getCorrectRole(permission);
@@ -193,15 +201,15 @@ export class AdminService {
           });
         },
         error: function (object, error) {
-           self.loadingService.showLoading(false);
+           self.loadingService.showLoading(false, key);
            reject(error);
         }
       }).then((userObject) => {
         Promise.all(promises).then(() => {
-          self.loadingService.showLoading(false);
+          self.loadingService.showLoading(false, key);
           resolve(userObject);
         }, error => {
-          self.loadingService.showLoading(false);
+          self.loadingService.showLoading(false, key);
           reject(error);
         });
       });
@@ -214,7 +222,8 @@ export class AdminService {
              email: string,
              permission: string,
              photo: any): Promise<any> {
-    self.loadingService.showLoading(true);
+    const key = randomKey();
+    self.loadingService.showLoading(true, key);
     return new Promise((resolve, reject) => {
       const promises = [];
       const query = new Parse.Query(Parse.User);
@@ -252,15 +261,15 @@ export class AdminService {
               });
             },
             error: function (object, error) {
-              self.loadingService.showLoading(false);
+              self.loadingService.showLoading(false, key);
               reject(error);
             }
            }).then((userObject) => {
             Promise.all(promises).then(() => {
-              self.loadingService.showLoading(false);
+              self.loadingService.showLoading(false, key);
               resolve(userObject);
           }, (error) => {
-            self.loadingService.showLoading(false);
+            self.loadingService.showLoading(false, key);
             reject(error);
           });
         });
@@ -271,7 +280,8 @@ export class AdminService {
 
   updatePassword(userId: string,
     password: string): Promise<any> {
-    self.loadingService.showLoading(true);
+    const key = randomKey();
+    self.loadingService.showLoading(true, key);
     return new Promise((resolve, reject) => {
       const query = new Parse.Query(Parse.User);
       query.get(userId, {
@@ -279,17 +289,17 @@ export class AdminService {
           user.set('password', password);
           user.set('hasLoggedIn', false);
           user.save(null, { useMasterKey: true }).then((object) => {
-            self.loadingService.showLoading(false);
+            self.loadingService.showLoading(false, key);
             resolve(object);
           }, (error) => {
-            self.loadingService.showLoading(false);
+            self.loadingService.showLoading(false, key);
             reject(error);
           });
-          self.loadingService.showLoading(false);
+          self.loadingService.showLoading(false, key);
           resolve(user);
         },
         error: function (object, error) {
-          self.loadingService.showLoading(false);
+          self.loadingService.showLoading(false, key);
           reject(error);
         }
       });
@@ -297,22 +307,23 @@ export class AdminService {
   }
 
   archiveUser(userId: string): Promise<any> {
-    self.loadingService.showLoading(true);
+    const key = randomKey();
+    self.loadingService.showLoading(true, key);
     return new Promise((resolve, reject) => {
       const query = new Parse.Query(Parse.User);
       query.get(userId, {
         success: function (user) {
           user.set('isActive', false);
           user.save(null, {useMasterKey: true}).then(object => {
-            self.loadingService.showLoading(false);
+            self.loadingService.showLoading(false, key);
             resolve(object);
           }, error => {
-            self.loadingService.showLoading(false);
+            self.loadingService.showLoading(false, key);
             reject(error);
           });
         },
         error: function (object, error) {
-          self.loadingService.showLoading(false);
+          self.loadingService.showLoading(false, key);
           reject(error);
         }
       });
@@ -320,22 +331,23 @@ export class AdminService {
   }
 
   unArchiveUser(userId: string): Promise<any> {
-    self.loadingService.showLoading(true);
+    const key = randomKey();
+    self.loadingService.showLoading(true, key);
     return new Promise((resolve, reject) => {
       const query = new Parse.Query('User');
       query.get(userId, {
         success: function (user) {
           user.set('isActive', true);
           user.save(null, {useMasterKey: true}).then(object => {
-            self.loadingService.showLoading(false);
+            self.loadingService.showLoading(false, key);
             resolve(object);
           }, error => {
-            self.loadingService.showLoading(false);
+            self.loadingService.showLoading(false, key);
             reject(error);
           });
         },
         error: function (object, error) {
-          self.loadingService.showLoading(false);
+          self.loadingService.showLoading(false, key);
           reject(error);
         }
       });
@@ -343,7 +355,8 @@ export class AdminService {
   }
 
   createTeam(teamName: string, color: string, adminID: string, image) {
-    self.loadingService.showLoading(true);
+    const key = randomKey();
+    self.loadingService.showLoading(true, key);
     return new Promise((resolve, reject) => {
       const promises = [];
       const team = new Parse.Object('Team');
@@ -367,15 +380,15 @@ export class AdminService {
           });
         },
         error: function (object, error) {
-          self.loadingService.showLoading(false);
+          self.loadingService.showLoading(false, key);
           reject(error);
         }
       }).then((teamObject) => {
         Promise.all(promises).then(() => {
-          self.loadingService.showLoading(false);
+          self.loadingService.showLoading(false, key);
           resolve(teamObject);
         }, error => {
-          self.loadingService.showLoading(false);
+          self.loadingService.showLoading(false, key);
           reject(error);
         });
       });
@@ -387,7 +400,8 @@ export class AdminService {
     color: string,
     adminId: string,
     image): Promise<any> {
-    self.loadingService.showLoading(true);
+    const key = randomKey();
+    self.loadingService.showLoading(true, key);
     return new Promise((resolve, reject) => {
       const promises = [];
       const query = new Parse.Query('Team');
@@ -412,21 +426,21 @@ export class AdminService {
               });
             },
             error: function (object, error) {
-          self.loadingService.showLoading(false);
+          self.loadingService.showLoading(false, key);
               reject(error);
             }
           });
         },
         error: function (object, error) {
-          self.loadingService.showLoading(false);
+          self.loadingService.showLoading(false, key);
           reject(error);
         }
       }).then((teamObject) => {
         Promise.all(promises).then(() => {
-          self.loadingService.showLoading(false);
+          self.loadingService.showLoading(false, key);
           resolve(teamObject);
         }, error => {
-          self.loadingService.showLoading(false);
+          self.loadingService.showLoading(false, key);
           reject(error);
         });
       });
@@ -434,108 +448,113 @@ export class AdminService {
   }
 
   getArchivedTeams(): Promise<Team[]> {
-    self.loadingService.showLoading(true);
+    const key = randomKey();
+    self.loadingService.showLoading(true, key);
     return new Promise((resolve, reject) => {
       const query = new Parse.Query('Team');
-      const promises = [];
+      const promises1 = [];
+      const promises2 = [];
       const teams = [];
       query.equalTo('isActive', false);
-      query.find({
-        success: function (results) {
-          if (!Array.isArray(results)) {
-            results = [results];
-          }
-          results.forEach((object) => {
-              const team = parseTeamToModel(object);
-              const userRelation = object.relation('users');
-              const inspectionQuery = new Parse.Query('Inspection');
-              inspectionQuery.equalTo('team', { '__type': 'Pointer', 'className': 'Team', 'objectId': team.id},);
-              userRelation.query().count().then((numUsers) => {
-                team.numUsers = numUsers;
-                inspectionQuery.count().then((numInspections) => {
-                  team.numInspections = numInspections;
-                  promises.push(
-                    teams.push(
-                      team
-                    )
-                  );
-                });
-             });
-          });
-        },
-        error: function (error) {
-          self.loadingService.showLoading(false);
-          reject(error);
+      query.find().then((results) => {
+        if (!Array.isArray(results)) {
+          results = [results];
         }
-      }).then(() => {
-        Promise.all(promises).then(() => {
-          self.loadingService.showLoading(false);
-          resolve(teams);
+        results.forEach((object) => {
+          const team = parseTeamToModel(object);
+          const userRelation = object.relation('users');
+          const inspectionQuery = new Parse.Query('Inspection');
+          inspectionQuery.equalTo('team', { '__type': 'Pointer', 'className': 'Team', 'objectId': team.id},);
+          promises1.push(userRelation.query().count());
+          promises2.push(inspectionQuery.count());
+          teams.push(team);
         });
+      })
+      .then(() => Promise.all(promises1))
+      .then((results) => {
+        results.map((numUsers, index) => {
+          teams[index].numUsers = numUsers;
+        });
+        return Promise.all(promises2);
+      })
+      .then((results) => {
+        results.map((numInspections, index) => {
+          teams[index].numInspections = numInspections;
+        });
+        self.loadingService.showLoading(false, key);
+        resolve(teams);
+      })
+      .catch((error) => {
+        self.loadingService.showLoading(false, key);
+        reject(error);
       });
     });
   }
 
-  getActiveTeams(): Promise<Team[]> {
-    self.loadingService.showLoading(true);
+  getActiveTeams(): Promise<Array<Team>> {
+    const key = randomKey();
+    self.loadingService.showLoading(true, key);
     return new Promise((resolve, reject) => {
       const query = new Parse.Query('Team');
-      const promises = [];
+      const promises1 = [];
+      const promises2 = [];
+
       const teams = [];
       query.equalTo('isActive', true);
-      query.find({
-        success: function (results) {
-          if (!Array.isArray(results)) {
-            results = [results];
-          }
-          results.forEach((object) => {
-            const team = parseTeamToModel(object);
-            const userRelation = object.relation('users');
-            const inspectionQuery = new Parse.Query('Inspection');
-            inspectionQuery.equalTo('team', { '__type': 'Pointer', 'className': 'Team', 'objectId': team.id},);
-            userRelation.query().count().then((numUsers) => {
-              team.numUsers = numUsers;
-              inspectionQuery.count().then((numInspections) => {
-                team.numInspections = numInspections;
-                promises.push(
-                  teams.push(
-                    team
-                  )
-                );
-              });
-            });
-          });
-        },
-        error: function (error) {
-          self.loadingService.showLoading(false);
-          reject(error);
+      query.find().then((results) => {
+        if (!Array.isArray(results)) {
+          results = [results];
         }
-      }).then(() => {
-        Promise.all(promises).then(() => {
-          self.loadingService.showLoading(false);
-          resolve(teams);
+        results.forEach((object) => {
+          const team = parseTeamToModel(object);
+          const userRelation = object.relation('users');
+          const inspectionQuery = new Parse.Query('Inspection');
+          inspectionQuery.equalTo('team', { '__type': 'Pointer', 'className': 'Team', 'objectId': team.id},);
+          promises1.push(userRelation.query().count());
+          promises2.push(inspectionQuery.count());
+          teams.push(team);
         });
+      })
+      .then(() => Promise.all(promises1))
+      .then((results) => {
+        results.map((numUsers, index) => {
+          teams[index].numUsers = numUsers;
+        });
+        return Promise.all(promises2);
+      })
+      .then((results) => {
+        results.map((numInspections, index) => {
+          teams[index].numInspections = numInspections;
+        });
+        self.loadingService.showLoading(false, key);
+        resolve(teams);
+      })
+      .catch((error) => {
+        self.loadingService.showLoading(false, key);
+        reject(error);
       });
     });
   }
 
   archiveTeam(teamId: string): Promise<any> {
-    self.loadingService.showLoading(true);
+    const key = randomKey();
+    self.loadingService.showLoading(true, key);
     return new Promise((resolve, reject) => {
       const query = new Parse.Query('Team');
       query.get(teamId, {
         success: function (team) {
           team.set('isActive', false);
           team.save(null, { useMasterKey: true }).then(object => {
-          self.loadingService.showLoading(false);
+            self.loadingService.showLoading(false, key);
             resolve(object);
-          }, error => {
-          self.loadingService.showLoading(false);
+          })
+          .catch((error) => {
+            self.loadingService.showLoading(false, key);
             reject(error);
           });
         },
         error: function (object, error) {
-          self.loadingService.showLoading(false);
+          self.loadingService.showLoading(false, key);
           reject(error);
         }
       });
@@ -543,31 +562,33 @@ export class AdminService {
   }
 
   unArchiveTeam(teamId: string): Promise<any> {
-    self.loadingService.showLoading(true);
+    const key = randomKey();
+    self.loadingService.showLoading(true, key);
     return new Promise((resolve, reject) => {
       const query = new Parse.Query('Team');
       query.get(teamId, {
         success: function (team) {
           team.set('isActive', true);
           team.save(null, { useMasterKey: true }).then(object => {
-          self.loadingService.showLoading(false);
+            self.loadingService.showLoading(false, key);
             resolve(object);
-          }, error => {
-          self.loadingService.showLoading(false);
+          })
+          .catch((error) => {
+            self.loadingService.showLoading(false, key);
             reject(error);
           });
         },
         error: function (object, error) {
-          self.loadingService.showLoading(false);
+          self.loadingService.showLoading(false, key);
           reject(error);
         }
-      }).then(()=>{}, error=>{     self.loadingService.showLoading(true);
- reject(error)});
+      });
     });
   }
 
   getReports() {
-    self.loadingService.showLoading(true);
+    const key = randomKey();
+    self.loadingService.showLoading(true, key);
     return new Promise((resolve, reject) => {
       const query = new Parse.Query('Inspection');
       query.equalTo('adminId', this.user.id);
@@ -576,11 +597,11 @@ export class AdminService {
           if (!results.length) {
             results = [results];
           }
-          self.loadingService.showLoading(false);
+          self.loadingService.showLoading(false, key);
           resolve (results);
         },
         error: function(error) {
-          self.loadingService.showLoading(false);
+          self.loadingService.showLoading(false, key);
           reject (error);
         }
       });
@@ -588,18 +609,19 @@ export class AdminService {
   }
 
   getInspector(inspectorId: string): Promise<any> {
-    self.loadingService.showLoading(true);
+    const key = randomKey();
+    self.loadingService.showLoading(true, key);
     return new Promise((resolve, reject) => {
       const userQuery = new Parse.Query('User')
       userQuery.equalTo('objectId', inspectorId);
       userQuery.first({
         success: function(result) {
           const inspector = parseUserToModel(result);
-          self.loadingService.showLoading(false);
+          self.loadingService.showLoading(false, key);
           resolve (inspector);
         },
         error: function(error) {
-          self.loadingService.showLoading(false);
+          self.loadingService.showLoading(false, key);
           reject (error);
         }
       });
@@ -607,10 +629,13 @@ export class AdminService {
   }
 
   getArchivedReport(): Promise<Inspection[]> {
-    self.loadingService.showLoading(true);
+    const key = randomKey();
+    self.loadingService.showLoading(true, key);
     return new Promise((resolve, reject) => {
       const query = new Parse.Query('Inspection');
       const reports = [];
+      const promises = [];
+      const inspections = [];
       const access = this.user.get('access');
       if (access && !access.hasOwnProperty('isSuperAdmin')) {
         query.equalTo('adminId', this.user.id);
@@ -618,37 +643,39 @@ export class AdminService {
       query.equalTo('isActive', false);
       query.find().then((results) => {
           results.forEach((object) => {
-            this.getInspector(object.get('userId'))
-            .then((inspector) => {
-              const inspection = parseInspectionToModel(object);
-              inspection.inspector = inspector;
-              reports.push(
-                inspection
-              );
-            });
+            inspections.push(parseInspectionToModel(object));
+            promises.push(this.getInspector(object.get('userId')));
           });
-          self.loadingService.showLoading(false);
+        })
+        .then(() => Promise.all(promises))
+        .then((results) => {
+          results.map((inspector, index) => {
+            inspections[index].inspector = inspector;
+          });
+          self.loadingService.showLoading(false, key);
           resolve(reports);
-        }).catch((error) => {
-          self.loadingService.showLoading(false);
+        })
+        .catch((error) => {
+          self.loadingService.showLoading(false, key);
           reject(error);
         });
     });
   }
 
   archiveReport(reportId) {
-    self.loadingService.showLoading(true);
+    const key = randomKey();
+    self.loadingService.showLoading(true, key);
     return new Promise((resolve, reject) => {
       const query = new Parse.Query('Inspection');
       query.get(reportId, {
         success: function (report) {
           report.set('isActive', false);
           report.save();
-          self.loadingService.showLoading(false);
+          self.loadingService.showLoading(false, key);
           resolve(report);
         },
         error: function (object, error) {
-          self.loadingService.showLoading(false);
+          self.loadingService.showLoading(false, key);
           resolve(error);
         }
       });
@@ -656,18 +683,19 @@ export class AdminService {
   }
 
   unArchiveReport(reportId) {
-    self.loadingService.showLoading(true);
+    const key = randomKey();
+    self.loadingService.showLoading(true, key);
     return new Promise((resolve, reject) => {
       const query = new Parse.Query('Inspection');
       query.get(reportId, {
         success: function (report) {
           report.set('isActive', true);
           report.save();
-          self.loadingService.showLoading(false);
+          self.loadingService.showLoading(false, key);
           resolve(report);
         },
         error: function (object, error) {
-          self.loadingService.showLoading(false);
+          self.loadingService.showLoading(false, key);
           resolve(error);
         }
       });
@@ -675,34 +703,36 @@ export class AdminService {
   }
 
 
-  getTeamMemebers(teamId: string): Promise<any> {
-    self.loadingService.showLoading(true);
+  getTeamMembers(teamId: string): Promise<any> {
+    const key = randomKey();
+    self.loadingService.showLoading(true, key);
     return new Promise((resolve, reject) => {
         const query = new Parse.Query('Team');
         const users: Array<BasicUser> = [];
+        const promises = [];
         query.equalTo('objectId', teamId);
-        query.first({
-            success: function(object) {
-              object.get('users').query().find().then((results) => {
-                results.forEach((user) => {
-                    users.push(
-                      parseUserToModel(user)
-                    );
-                 });
-                 self.loadingService.showLoading(false);
-                resolve(users);
-              });
-            },
-            error: function(error) {
-              self.loadingService.showLoading(false);
-                reject (error);
-            }
+        query.first()
+        .then((team) => {
+          team.get('users').query().find().then((results) => {
+             results.forEach((user) => {
+                users.push(
+                  parseUserToModel(user)
+                );
+             });
+             self.loadingService.showLoading(false, key);
+             resolve(users);
+          });
+        })
+        .catch((error) => {
+          self.loadingService.showLoading(false, key);
+          reject (error);
         });
     });
   }
 
   addUsersToTeam(teamId: string, usersIds: Array<string>) {
-    self.loadingService.showLoading(true);
+    const key = randomKey();
+    self.loadingService.showLoading(true, key);
     return new Promise((resolve, reject) => {
       const query = new Parse.Query('Team');
       query.equalTo('objectId', teamId);
@@ -715,11 +745,11 @@ export class AdminService {
               relation.add(userObject);
             });
             obj.save();
-            self.loadingService.showLoading(false);
+            self.loadingService.showLoading(false, key);
             resolve(obj);
           },
           error: function(error) {
-            self.loadingService.showLoading(false);
+            self.loadingService.showLoading(false, key);
               reject (error);
           }
       });
@@ -727,7 +757,8 @@ export class AdminService {
   }
 
   removeMemberFromTeam(teamId: string, userId: string) {
-    self.loadingService.showLoading(true);
+    const key = randomKey();
+    self.loadingService.showLoading(true, key);
     return new Promise((resolve, reject) => {
       const query = new Parse.Query('Team');
       query.equalTo('objectId', teamId);
@@ -738,11 +769,11 @@ export class AdminService {
             const userObject = user.createWithoutData(userId);
             relation.remove(userObject);
             obj.save();
-            self.loadingService.showLoading(false);
+            self.loadingService.showLoading(false, key);
             resolve(obj);
           },
           error: function(error) {
-            self.loadingService.showLoading(false);
+            self.loadingService.showLoading(false, key);
               reject (error);
           }
       });
@@ -750,16 +781,17 @@ export class AdminService {
   }
 
   updateReportPermission(reportId: string, permission: boolean) {
-    self.loadingService.showLoading(true);
+    const key = randomKey();
+    self.loadingService.showLoading(true, key);
     return new Promise((resolve, reject) => {
       const report = Parse.Object.extend('Inspection');
       const reportObject = report.createWithoutData(reportId);
       reportObject.set('viewOnly', permission);
       reportObject.save().then(() => {
-        self.loadingService.showLoading(false);
+        self.loadingService.showLoading(false, key);
         resolve(reportObject);
       }).catch((error) => {
-        self.loadingService.showLoading(false);
+        self.loadingService.showLoading(false, key);
         reject(error);
       });
     });

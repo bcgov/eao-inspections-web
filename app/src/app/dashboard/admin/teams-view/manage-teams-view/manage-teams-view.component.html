@@ -6,7 +6,6 @@
         <p class="dashboard__title">
             <img class="dashboard__title--img" [src]="team.badge || '../../../assets/team-lg.png'" />
             {{ team?.name || '-'}}
-            <span *ngIf="team?.admin" class="dashboard__title--admin">Team Administrator: {{team.admin.name}}</span>
         </p>
         <div class="dashboard__buttons">
             <button type="button" class="dashboard__btn" (click)="open(addMember)">
@@ -15,13 +14,13 @@
       </button>
         </div>
     </div>
-    <div *ngIf="memebers.length <= 0; then noContent else content"></div>
+    <div *ngIf="members!== undefined && members?.length <= 0; then noContent else content"></div>
     <ng-template #noContent>
         <no-content [emptyContent]="emptyContent"></no-content>
     </ng-template>
     <ng-template #content>
-        <div class="dashboard-card__container" *ngFor="let memeber of memebers">
-            <user-card [user]="memeber" [team]="team" (removeMember)="onRemoveMember($event)" (editMember)="onEditMember($event)"></user-card>
+        <div class="dashboard-card__container" *ngFor="let member of members">
+            <user-card [user]="member" [team]="team" (removeMember)="onRemoveMember($event)" (editMember)="onEditMember($event)"></user-card>
         </div>
     </ng-template>
 </div>

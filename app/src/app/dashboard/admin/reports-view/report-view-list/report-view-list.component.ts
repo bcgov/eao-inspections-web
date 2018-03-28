@@ -26,7 +26,7 @@ export class ReportViewListComponent implements OnInit {
   column: string;
 
   team: Team;
-  data: Array<Inspection> = [];
+  data: Array<Inspection> = undefined;
   fields: Array<any>;
   actions: Array<any>;
 
@@ -40,11 +40,10 @@ export class ReportViewListComponent implements OnInit {
     const teamId = this.route.snapshot.params['id'];
     this.teamService.getTeam(teamId).then((team) => {
       this.team = team;
-      console.log(this.team);
-    });
-    this.reportService.getActiveTeamReports(teamId)
-    .then((results) => {
-      this.data = results;
+      this.reportService.getActiveTeamReports(teamId)
+      .then((results) => {
+        this.data = results;
+      });
     });
   }
 

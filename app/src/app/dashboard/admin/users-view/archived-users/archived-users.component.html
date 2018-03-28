@@ -4,7 +4,7 @@
         <p class="dashboard__title">{{title}}</p>
     </div>
 
-    <div *ngIf="users?.length<=0; then noContent else content"></div>
+    <div *ngIf="users !== undefined && users?.length<=0; then noContent else content"></div>
     <ng-template #content>
         <div class="table">
             <div class="table-row table-header">
