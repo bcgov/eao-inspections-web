@@ -28,6 +28,8 @@ export class InspectionViewComponent implements OnInit {
   direction: number;
   column: string;
 
+  page = 0;
+  totalPages = 0;
 
   constructor(
     private route: ActivatedRoute,
@@ -44,19 +46,17 @@ export class InspectionViewComponent implements OnInit {
 
     this.reportService.getInspection(this.routeParam.id).then(object => {
       this.data = object;
-    }).catch((error) => {
-      this.toast.error(error.message || String.GENERAL_ERROR);
-    });
-    this.reportService.getObservations(this.routeParam.id)
+      this.reportService.getObservations(this.routeParam.id)
       .then((results) => {
-        if (results instanceof Array) {
-          this.elements = results;
-        } else {
-          this.elements = [results];
-        }
+        this.elements = results;
+        this.totalPages = this.reportService.totalPages;
+      }).catch((error) => {
+        this.toast.error(error.message || String.GENERAL_ERROR);
+      });
     }).catch((error) => {
       this.toast.error(error.message || String.GENERAL_ERROR);
     });
+
     const userData = this.profileService.user;
     this.user = parseUserToModel(userData);
   }
@@ -79,13 +79,10 @@ export class InspectionViewComponent implements OnInit {
     });
   }
   onChangePage(value) {
+    this.page = value;
     this.reportService.getObservations(this.routeParam.id, value)
       .then((results) => {
-        if (results instanceof Array) {
           this.elements = results;
-        } else {
-          this.elements = [results];
-        }
       });
   }
 }

@@ -34,6 +34,8 @@ export class ArchivedUsersComponent implements OnInit {
 
   users: Array<BasicUser> = undefined;
 
+  page = 0;
+  totalPages = 0;
 
   constructor(private adminService: AdminService, private toast: ToastrService, private modalService: ModalService ) { }
 
@@ -53,15 +55,15 @@ export class ArchivedUsersComponent implements OnInit {
     this.adminService.getArchivedUsers()
       .then((results) => {
         this.users = results;
+        this.totalPages = this.adminService.totalPages;
       });
   }
 
   onChangePage(value) {
+    this.page = value;
     this.adminService.getArchivedUsers(value)
       .then((results) => {
-        if (results instanceof Array) {
           this.users = results;
-        }
       });
   }
 }

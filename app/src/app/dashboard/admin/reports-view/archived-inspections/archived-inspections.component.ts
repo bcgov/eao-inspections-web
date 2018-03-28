@@ -28,6 +28,9 @@ export class ArchivedInspectionsComponent implements OnInit {
   fields: Array<any>;
   actions: Array<any>;
 
+  page = 0;
+  totalPages = 0;
+
 
   constructor(private adminService: AdminService, private location: Location) {
     this.fields = ['title', 'project', 'submitted', 'team', 'inspector', 'actions'];
@@ -39,6 +42,7 @@ export class ArchivedInspectionsComponent implements OnInit {
     this.adminService.getArchivedReport()
       .then((results) => {
         this.data = results;
+        this.totalPages = this.adminService.totalPages;
       });
   }
 
@@ -53,11 +57,10 @@ export class ArchivedInspectionsComponent implements OnInit {
   }
 
   onChangePage(value) {
+    this.page = value;
     this.adminService.getArchivedReport(value)
       .then((results) => {
-        if (results instanceof Array) {
-          this.data = results;
-        }
+        this.data = results;
       });
   }
 }

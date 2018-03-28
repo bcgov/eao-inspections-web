@@ -18,6 +18,7 @@ export class UserListComponent implements OnInit {
   archivedLink = '/' + Route.DASHBOARD + '/' + Route.ARCHIVED_USERS;
   users: Array<BasicUser> = undefined;
   page = 0;
+  totalPages = 0;
 
   modal = {
     edit: false,
@@ -108,18 +109,18 @@ export class UserListComponent implements OnInit {
   }
 
   onChangePage(value) {
+    this.page = value;
     this.adminService.getActiveUsers(value)
       .then((results) => {
-        if (results instanceof Array) {
           this.users = results;
-        }
-      });
+       });
   }
 
   ngOnInit() {
     this.adminService.getActiveUsers()
     .then((results) => {
         this.users = results;
+        this.totalPages = this.adminService.totalPages;
     });
   }
 

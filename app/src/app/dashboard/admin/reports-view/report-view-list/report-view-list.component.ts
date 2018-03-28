@@ -31,6 +31,9 @@ export class ReportViewListComponent implements OnInit {
   fields: Array<any>;
   actions: Array<any>;
 
+  page = 0;
+  totalPages = 0;
+
   constructor(private reportService: ReportService, private teamService: TeamService, private route: ActivatedRoute, private location: Location) {
     this.fields = ['title', 'project', 'submitted', 'inspector', 'view', 'actions'];
     this.actions = ['download', 'archive'];
@@ -44,6 +47,7 @@ export class ReportViewListComponent implements OnInit {
       this.reportService.getActiveTeamReports(this.teamId)
         .then((results) => {
           this.data = results;
+          this.totalPages = this.reportService.totalPages;
         });
     });
   }
@@ -63,11 +67,10 @@ export class ReportViewListComponent implements OnInit {
   }
 
   onChangePage(value) {
+    this.page = value;
     this.reportService.getActiveTeamReports(this.teamId, value)
       .then((results) => {
-        if (results instanceof Array) {
           this.data = results;
-        }
       });
   }
 }

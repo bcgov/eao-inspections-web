@@ -6,11 +6,19 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
   styleUrls: ['./pagination.component.scss']
 })
 export class PaginationComponent implements OnInit {
-
+  _totalPages = 0;
   @Input()
   private page: number = 0;
+
   @Input()
-  private totalPages: number = 0;
+  set totalPages(totalPages: number) {
+      this.pageArray = Array(totalPages).fill(1).map((x,i) => i + 1);
+      this._totalPages = totalPages;
+  }
+  get totalPages() {
+    return this._totalPages;
+  }
+
   @Output()
   changePage: EventEmitter<number> = new EventEmitter<number>();
   pageArray: Array<number>;
@@ -18,7 +26,7 @@ export class PaginationComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.pageArray = Array(this.totalPages).fill(1).map((x,i) => i + 1);
+     this.pageArray = Array(this.totalPages).fill(1).map((x,i) => i + 1);
   }
 
   next() {
@@ -30,10 +38,10 @@ export class PaginationComponent implements OnInit {
   }
 
   goToPage(pageNum) {
-    this.changePage.emit(pageNum - 1)
+    this.changePage.emit(pageNum - 1);
   }
 
   checkDisableNext() {
-    return ((this.page + 1) === this.totalPages);
+    return ((this.page + 1) === this._totalPages);
   }
 }

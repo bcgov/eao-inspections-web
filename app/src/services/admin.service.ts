@@ -111,40 +111,47 @@ export class AdminService {
     self.loadingService.showLoading(true, key);
     return new Promise((resolve, reject) => {
       const users = [];
+      const promises = [];
       const query = new Parse.Query(Parse.User);
-      const queryCount = new Parse.Query(Parse.User);
-      queryCount.equalTo('isActive',true);
-      if (this.page === 0) {
-        queryCount.count().then((count) => {
-          this.totalPages = Math.ceil(count / this.displayLimit);
-          console.log(count);
-        });
-      }
-      this.page = page;
+
       query.equalTo('isActive', true);
       query.skip(page * this.displayLimit);
       query.limit(this.displayLimit);
       query.descending('createdAt');
-      query.find({
-        success: function (results) {
+      query.find()
+      .then((results) => {
           results.forEach(objectUser => {
             const user = parseUserToModel(objectUser);
             const query2 = new Parse.Query('Team');
             query2.equalTo('users', objectUser);
-            query2.find().then((objectTeams) => {
-              objectTeams.forEach((team) => {
-                user.teams.push(parseTeamToModel(team));
-              });
-              users.push(user);
-              self.loadingService.showLoading(false, key);
-              resolve(users);
-            });
+            promises.push(query2.find());
+            users.push(user);
           });
-        },
-        error: function (error) {
+      })
+      .then(() => Promise.all(promises))
+      .then((results) => {
+        results.map((objectTeams, index) => {
+          objectTeams.forEach((team) => {
+            users[index].teams.push(parseTeamToModel(team));
+          });
           self.loadingService.showLoading(false, key);
-          reject(error);
+        });
+
+        const queryCount = new Parse.Query(Parse.User);
+        queryCount.equalTo('isActive', true);
+        if (this.page === 0) {
+          queryCount.count().then((count) => {
+            this.totalPages = Math.ceil(count / this.displayLimit);
+            console.log(this.totalPages);
+            resolve(users);
+          });
+        } else {
+          resolve(users);
         }
+       })
+      .catch((error) => {
+        self.loadingService.showLoading(false, key);
+        reject(error);
       });
     });
   }
@@ -479,7 +486,7 @@ export class AdminService {
       const promises2 = [];
       const teams = [];
       const queryCount = new Parse.Query('Team');
-      queryCount.equalTo('isActive',true);
+      queryCount.equalTo('isActive', false);
       if (this.page === 0) {
         queryCount.count().then((count) => {
           this.totalPages = Math.ceil(count / this.displayLimit);
@@ -703,7 +710,7 @@ export class AdminService {
           this.totalPages = Math.ceil(count / this.displayLimit);
         });
       }
-      this.page = page;
+
       query.find().then((results) => {
           results.forEach((object) => {
             inspections.push(parseInspectionToModel(object));

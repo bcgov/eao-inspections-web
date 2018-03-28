@@ -24,14 +24,13 @@
           <span class="table__img-wrapper">
             <img *ngIf="user.profileImage" class="table__img" src={{user.profileImage}} />
           </span>
-          <img *ngIf="!user.profileImage" class="table__img" src="../../../assets/team-member.png" />
-          {{user.firstName + " " + user.lastName}}
-        </div>
-        <div class="table-row-item" data-header="Email">
-           {{user.email}}
-        </div>
-        <div class="table-row-item teams" data-header="Team">
-          <div *ngFor="let team of user.teams">
+        <img *ngIf="!user.profileImage" class="table__img" src="../../../assets/team-member.png" /> {{user.firstName + " " + user.lastName}}
+    </div>
+    <div class="table-row-item" data-header="Email">
+        {{user.email}}
+    </div>
+    <div class="table-row-item teams" data-header="Team">
+        <div *ngFor="let team of user.teams">
             {{ team.name }}
         </div>
     </div>
@@ -67,10 +66,10 @@
     </ng-template>
     </span>
     </div>
-  <br>
-  <div class="d-flex justify-content-center">
-    <app-pagination [page]="adminService.page" [totalPages]="adminService.totalPages" (changePage)="onChangePage($event)"></app-pagination>
-  </div>
+    <br>
+    <div class="d-flex justify-content-center">
+        <app-pagination [page]="page" [totalPages]="totalPages" (changePage)="onChangePage($event)"></app-pagination>
+    </div>
 </ng-template>
 
 

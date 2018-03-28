@@ -118,10 +118,10 @@ export class ReportService {
 
   getActiveTeamReports(teamId: string, page=0): Promise<any[]> {
     const key = randomKey();
-    const promises = [];
     self.loadingService.showLoading(true, key);
     return new Promise((resolve, reject) => {
       const reports = [];
+      const promises = [];
       const queryCount = new Parse.Query('Inspection');
       queryCount.equalTo('isActive',true);
       queryCount.equalTo('team', { '__type': 'Pointer', 'className': 'Team', 'objectId': teamId },);
@@ -146,6 +146,7 @@ export class ReportService {
 
           results.forEach((object) => {
             reports.push(parseInspectionToModel(object));
+            console.log(object.get('userId'));
             promises.push(this.getInspector(object.get('userId')));
           });
         })

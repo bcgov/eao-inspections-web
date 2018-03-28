@@ -15,5 +15,8 @@
                 <team-card [team]="team"></team-card>
             </a>
         </div>
+        <div class="d-flex justify-content-center">
+            <app-pagination [page]="page" [totalPages]="totalPages" (changePage)="onChangePage($event)"></app-pagination>
+        </div>
     </ng-template>
 </div>
