@@ -1,14 +1,13 @@
-import { environment } from '../environments/environment';
-import { Router } from '@angular/router';
 import { Injectable } from '@angular/core';
-import { Team } from '../models/team.model';
+
+import * as Access from '../constants/accessRights';
+import { BasicUser } from '../models/user.model';
 import { Inspection } from '../models/inspection.model';
 import { parseInspectionToModel, parseUserToModel, parseTeamToModel } from './parse.service';
-import { BasicUser } from '../models/user.model';
-import * as Access from '../constants/accessRights';
 import {Observable} from 'rxjs/Observable';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 import { LoadingService } from './loading.service';
+import { Team } from '../models/team.model';
 
 const Parse: any = require('parse');
 let self;
@@ -17,11 +16,10 @@ let self;
 export class AdminService {
   user = new Parse.User();
 
-  constructor(private router: Router, private loadingService: LoadingService) {
+  constructor(private loadingService: LoadingService) {
     self = this;
     this.user = Parse.User.current();
   }
-
 
   getUsers() {
     self.loadingService.showLoading(true);
@@ -305,6 +303,7 @@ export class AdminService {
       query.get(userId, {
         success: function (user) {
           user.set('password', password);
+          user.set('hasLoggedIn', false);
           user.save(null, { useMasterKey: true }).then((object) => {
             self.loadingService.showLoading(false);
             resolve(object);
@@ -385,7 +384,7 @@ export class AdminService {
             if (image) {
               const parseFile = new Parse.File('profile_image_' + results.id, image, image.type);
               promises.push(parseFile.save().then((objectFile) => {
-                results.set('image', objectFile);
+                results.set('badge', objectFile);
                 promises.push(results.save());
               }));
             } else {
@@ -430,7 +429,7 @@ export class AdminService {
                 if (image) {
                   const parseFile = new Parse.File('profile_image_' + results.id, image, image.type);
                   promises.push(parseFile.save().then((objectFile) => {
-                    results.set('image', objectFile);
+                    results.set('badge', objectFile);
                     promises.push(results.save());
                   }));
                 } else {

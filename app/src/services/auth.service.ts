@@ -1,7 +1,4 @@
 import { Injectable} from '@angular/core';
-import { map } from 'rxjs/operators';
-import { environment } from '../environments/environment';
-import { parseUserToModel } from './parse.service';
 
 let Parse: any = require('parse');
 
@@ -45,8 +42,8 @@ export class AuthService {
       let isRole = false;
       const currentUser = Parse.User.current();
       const query = new Parse.Query('Role');
-      query.get('name', role);
-      query.get('users', currentUser);
+      query.equalTo('name', role);
+      query.equalTo('users', currentUser);
       query.find({
         success: function(object) {
           if (object) {

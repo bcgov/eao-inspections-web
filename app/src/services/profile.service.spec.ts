@@ -1,17 +1,12 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
 import { FormsModule } from '@angular/forms';
+import { RouterTestingModule } from '@angular/router/testing';
 
-import { LoginComponent } from '../app/login/login.component';
 import { AuthService } from './auth.service';
-import { environment } from '../environments/environment';
-import {ProfileService} from './profile.service';
-import {createInspection, createObservation, createTeam} from './testing.service';
-const Parse = require('parse');
+import { LoginComponent } from '../app/login/login.component';
+import { ProfileService } from './profile.service';
 
-Parse.initialize(environment.parseId, environment.parseKey);
-Parse.serverURL = environment.parseURL;
-Parse.masterKey = environment.parseMasterKey;
+const Parse: any = require('parse');
 
 describe('Authentication and Authorization Testing', () => {
   let component: LoginComponent;

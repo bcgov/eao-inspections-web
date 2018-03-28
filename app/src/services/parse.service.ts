@@ -1,9 +1,8 @@
-import { environment } from '../environments/environment';
-import { Team } from '../models/team.model';
 import { BasicUser } from '../models/user.model';
 import { Inspection } from '../models/inspection.model';
-import { Observation } from '../models/observation.model';
 import { Media } from '../models/media.model';
+import { Observation } from '../models/observation.model';
+import { Team } from '../models/team.model';
 
 const Parse: any = require('parse');
 
@@ -15,12 +14,6 @@ export function parseToJSON(objectList) {
     });
   }
   return listJSON;
-}
-
-export function getObject(userObject) {
-  return new Promise((resolve, reject) => {
-    userObject.fetch().then((obj) => {resolve(obj); });
-  });
 }
 
 export function parseUserToModel(object): BasicUser {
@@ -42,6 +35,7 @@ export function parseUserToModel(object): BasicUser {
       profileImage,
       object.get('permission'),
       object.get('access'),
+      object.get('hasLoggedIn'),
     );
   }
 }
@@ -105,11 +99,13 @@ export function parseObservationToModel(object) {
   );
 }
 
-export function parseMediaToModel(object, type = 'img') {
+export function parseMediaToModel(object, type = 'bin') {
   const url = object.get('file').url();
   const n = url.indexOf('/parse/');
   const newUrl = Parse.serverURL + url.substring(n + 6);
-
+  if (object.get('type')) {
+    type = object.get('type');
+  }
   return new Media(
     object.id,
     type,

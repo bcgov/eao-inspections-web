@@ -1,13 +1,12 @@
-import { NgbModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+
+import { NgbModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
 
 export interface NgbModalOptions {
     backdrop?: boolean | 'static';
     keyboard?: boolean;
     size?: 'sm' | 'lg';
 }
-
 
 @Injectable()
 export class ModalService {

@@ -14,13 +14,17 @@ export class PasswordChangeComponent implements OnInit {
 
   constructor(private authService: AuthService, private router: Router) { }
 
+  isAdmin() {
+    return (this.authService.isAdmin() || this.authService.isSuperAdmin());
+  }
+
   ngOnInit() {
   }
 
   onPasswordChange(form: NgForm) {
     const password = form.value.password;
     this.authService.firstTimePassword(password).then((results) => {
-      this.router.navigate([Route.DASHBOARD + '/' + Route.MY_REPORTS]);
+      this.router.navigate([Route.HOME(this.isAdmin())]);
     });
   }
 }

@@ -1,6 +1,5 @@
-import { environment } from '../environments/environment';
 import { Injectable} from '@angular/core';
-import {Team} from '../models/team.model';
+
 import { parseTeamToModel } from './parse.service';
 import { LoadingService } from './loading.service';
 

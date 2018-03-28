@@ -7,6 +7,8 @@ import * as Route from '../../constants/routes';
 import { ModalService } from '../../services/modal.service';
 import * as String from '../../constants/strings';
 import { ToastrService } from 'ngx-toastr';
+import { BasicUser } from '../../models/user.model';
+import { parseUserToModel } from '../../services/parse.service';
 
 @Component({
   selector: 'app-login',
@@ -15,6 +17,7 @@ import { ToastrService } from 'ngx-toastr';
   providers: [AuthService]
 })
 export class LoginComponent implements OnInit {
+   user: BasicUser;
 
   forgotPasswordModal = {
     message: String.FORGOT_PASSWORD_MESSAGE,
@@ -38,12 +41,17 @@ export class LoginComponent implements OnInit {
     });
    }
 
+  isAdmin() {
+    return (this.authService.isAdmin() || this.authService.isSuperAdmin());
+  }
+
   onLogin(form: NgForm) {
     const username = form.value.email;
     const password = form.value.password;
     this.authService.logIn(username, password).then((results) => {
-      if (results.hasLoggedIn) {
-        this.router.navigate([Route.DASHBOARD + '/' + Route.MY_REPORTS]);
+      this.user = parseUserToModel(results);
+      if (this.user.hasLoggedIn) {
+        this.router.navigate([Route.HOME(this.isAdmin())]);
       } else {
         this.router.navigate([Route.LOGIN + Route.CHANGE]);
       }

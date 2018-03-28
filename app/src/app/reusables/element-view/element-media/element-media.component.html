@@ -1,11 +1,19 @@
-<div class="container-fluid">
-  <div class="row">
-    <ng-container *ngFor="let item of mediaSelected">
-      <div class="elements-details-media-block" *ngIf="item.fileURL">
-        <div class="element-details-media">
-          <img class="thumbnail" src="{{ item.fileURL }}">
-        </div>
-      </div>
-    </ng-container>
+<div class="elements-details-media-block" *ngIf="item.fileURL">
+  <div class="element-details-media">
+    <div class="thumbnail">
+      <span *ngIf="item.type === 'aud'">
+        <img class="thumbnail-link-image" [src]="this.audioImage">
+      </span>
+      <span *ngIf="item.type === 'img'">
+        <img class="thumbnail-link-image" [src]="this.thumbnailImage" (error)="setDefaultPic()">
+      </span>
+      <span *ngIf="item.type === 'vid'">
+        <img class="thumbnail-link-image" [src]="this.defaultPic">
+      </span>
+      <span *ngIf="item.type === 'bin'">
+        <img class="thumbnail-link-image" [src]="this.thumbnailImage" (error)="setDefaultPic()">
+      </span>
+      <a class="thumbnail-link" href="{{ item.fileURL }}"></a>
+    </div>
   </div>
 </div>

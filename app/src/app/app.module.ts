@@ -49,7 +49,6 @@ import { MemberModalComponent } from './reusables/modals/member-modal/member-mod
 import { ReportViewListComponent } from './dashboard/admin/reports-view/report-view-list/report-view-list.component';
 import { ElementMediaComponent } from './reusables/element-view/element-media/element-media.component';
 import { LoadingComponent } from './reusables/loading/loading.component';
-import { ObservableService } from '../services/observable.service';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { PasswordModalComponent } from './reusables/modals/password-modal/password-modal.component';
 import { ForgotPasswordModalComponent } from './reusables/modals/forgot-password-modal/forgot-password-modal.component';
@@ -58,6 +57,7 @@ import { PasswordChangeComponent } from './login/password-change/password-change
 import {FirstTimePasswordGuardService} from '../services/first-time-password-guard.service';
 import {ProfileService} from '../services/profile.service';
 import { LoadingService } from '../services/loading.service';
+import { LoggedInGuardService } from '../services/logged-in-guard.service';
 
 @NgModule({
   declarations: [
@@ -119,9 +119,9 @@ import { LoadingService } from '../services/loading.service';
     FirstTimePasswordGuardService, 
     RoleGuardService, 
     ModalService, 
-    ObservableService, 
     ProfileService, 
     Ng2ImgMaxService,
+    LoggedInGuardService,
     LoadingService
   ],
   bootstrap: [AppComponent]

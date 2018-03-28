@@ -9,6 +9,7 @@ import { Location } from '@angular/common';
   styleUrls: ['./element-view.component.scss'],
   providers: [ReportService]
 })
+
 export class ElementViewComponent implements OnInit {
   title = 'Element 1';
   subTitle = 'Attached Media';
