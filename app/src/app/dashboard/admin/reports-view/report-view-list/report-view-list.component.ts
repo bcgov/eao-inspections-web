@@ -40,7 +40,7 @@ export class ReportViewListComponent implements OnInit {
     this.teamId = this.route.snapshot.params['id'];
   }
 
-  ngOnInit() {
+  refresh() {
     this.sort('updatedAt');
     this.teamService.getTeam(this.teamId).then((team) => {
       this.team = team;
@@ -50,6 +50,10 @@ export class ReportViewListComponent implements OnInit {
           this.totalPages = this.reportService.totalPages;
         });
     });
+  }
+  
+  ngOnInit() {
+   this.refresh();
   }
 
   onLocationChange() {

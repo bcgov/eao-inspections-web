@@ -28,6 +28,13 @@ export class ArchivedTeamsComponent implements OnInit {
 
   constructor(private adminService: AdminService) { }
 
+  refresh() {
+    this.adminService.getArchivedTeams()
+      .then((results) => {
+        this.teams = results;
+      });
+  }
+
   ngOnInit() {
     this.adminService.getArchivedTeams()
       .then((results) => {
