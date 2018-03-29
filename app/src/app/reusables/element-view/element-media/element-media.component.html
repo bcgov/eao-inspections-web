@@ -3,13 +3,13 @@
     <div class="thumbnail">
       <a class="thumbnail-link" href="{{ item.fileURL }}">
       <span *ngIf="item.type === 'Audio'">
-        <img class="thumbnail-link-image" [src]="this.audioImage">
+        <img class="thumbnail-link-image" [src]="this.audioImage" (error)="setDefaultPic('audio')">
       </span>
       <span *ngIf="item.type === 'Photo'">
         <img class="thumbnail-link-image" [src]="this.thumbnailImage" (error)="setDefaultPic()">
       </span>
       <span *ngIf="item.type === 'Video'">
-        <img class="thumbnail-link-image" [src]="this.defaultPic">
+        <img class="thumbnail-link-image" [src]="this.videoImage" (error)="setDefaultPic('video')">
       </span>
       <span *ngIf="item.type === 'undefined'">
         <img class="thumbnail-link-image" [src]="this.thumbnailImage" (error)="setDefaultPic()">
