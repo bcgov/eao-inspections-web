@@ -22,6 +22,9 @@ export class ArchivedTeamsComponent implements OnInit {
     message: String.EMPTY_ARCHIVED_TEAMS,
   };
 
+  page = 0;
+  totalPages = 0;
+
 
   constructor(private adminService: AdminService) { }
 
@@ -29,6 +32,14 @@ export class ArchivedTeamsComponent implements OnInit {
     this.adminService.getArchivedTeams()
       .then((results) => {
         this.teams = results;
+        this.totalPages = this.adminService.totalPages;
       });
+  }
+  onChangePage(value) {
+    this.page = value;
+    this.adminService.getArchivedTeams(value)
+      .then((results) => {
+          this.teams = results;
+       });
   }
 }

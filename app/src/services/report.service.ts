@@ -17,7 +17,9 @@ let self;
 @Injectable()
 export class ReportService {
   user = new Parse.User();
-
+  page = 0;
+  totalPages = 0;
+  displayLimit = 5;
   constructor(private loadingService: LoadingService) {
     self = this;
     this.user = Parse.User.current();
@@ -65,7 +67,7 @@ export class ReportService {
           promises.push(this.getInspector(object.get('userId')));
         });
       })
-      .then(() => Promise.all(promises)) 
+      .then(() => Promise.all(promises))
       .then((results) => {
         results.map((inspector, index) => {
           reports[index].inspector = inspector;
@@ -99,7 +101,7 @@ export class ReportService {
             promises.push(this.getInspector(object.get('userId')));
           });
         })
-        .then(() => Promise.all(promises)) 
+        .then(() => Promise.all(promises))
         .then((results) => {
           results.map((inspector, index) => {
             reports[index].inspector = inspector;
@@ -114,15 +116,28 @@ export class ReportService {
     });
   }
 
-  getActiveTeamReports(teamId: string): Promise<any[]> {
+  getActiveTeamReports(teamId: string, page=0): Promise<any[]> {
     const key = randomKey();
     self.loadingService.showLoading(true, key);
     return new Promise((resolve, reject) => {
-      const promises = [];
       const reports = [];
+      const promises = [];
+      const queryCount = new Parse.Query('Inspection');
+      queryCount.equalTo('isActive',true);
+      queryCount.equalTo('team', { '__type': 'Pointer', 'className': 'Team', 'objectId': teamId },);
+      if (this.page === 0) {
+        queryCount.count().then((count) => {
+          this.totalPages = Math.ceil(count / this.displayLimit);
+          console.log(count);
+        });
+      }
+      this.page = page;
       const q = new Parse.Query('Inspection');
       q.equalTo('team', { '__type': 'Pointer', 'className': 'Team', 'objectId': teamId },);
       q.equalTo('isActive', true);
+      q.skip(page * this.displayLimit);
+      q.limit(this.displayLimit);
+      q.descending('createdAt');
       q.find()
         .then((results) => {
           if (!Array.isArray(results)) {
@@ -131,10 +146,11 @@ export class ReportService {
 
           results.forEach((object) => {
             reports.push(parseInspectionToModel(object));
+            console.log(object.get('userId'));
             promises.push(this.getInspector(object.get('userId')));
           });
         })
-        .then(() => Promise.all(promises)) 
+        .then(() => Promise.all(promises))
         .then((results) => {
           results.map((inspector, index) => {
             reports[index].inspector = inspector;
@@ -175,17 +191,30 @@ export class ReportService {
     });
   }
 
-  getObservations(inspectionId: string): Promise<any[]> {
+  getObservations(inspectionId: string, page = 0): Promise<any[]> {
     const key = randomKey();
     self.loadingService.showLoading(true, key);
     return new Promise((resolve, reject) => {
       const elements = [];
       let elementList;
-      const query = new Parse.Query('Observation');
       const inspection = new Parse.Object.extend('Inspection');
       const tempInspection = new inspection();
       tempInspection.id = inspectionId;
+      const queryCount = new Parse.Query('Observation');
+      queryCount.equalTo('inspection', tempInspection);
+      if (this.page === 0) {
+        queryCount.count().then((count) => {
+          this.totalPages = Math.ceil(count / this.displayLimit);
+          console.log(count);
+        });
+      }
+      this.page = page;
+      const query = new Parse.Query('Observation');
+
       query.equalTo('inspection', tempInspection);
+      query.skip(page * this.displayLimit);
+      query.limit(this.displayLimit);
+      query.descending('createdAt');
       query.find({
         success: function(results) {
           if (!Array.isArray(results)) {
