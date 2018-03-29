@@ -28,6 +28,9 @@ export class TeamsViewComponent implements OnInit {
     message: String.EMPTY_TEAM,
   };
 
+  page = 0;
+  totalPages = 0;
+
   constructor(
     private modalService: ModalService,
     private adminService: AdminService,
@@ -58,6 +61,15 @@ export class TeamsViewComponent implements OnInit {
     this.adminService.getActiveTeams()
     .then((results) => {
         this.teams = results;
+        this.totalPages = this.adminService.totalPages;
     });
+  }
+
+  onChangePage(value) {
+    this.page = value;
+    this.adminService.getActiveTeams(value)
+      .then((results) => {
+          this.teams = results;
+      });
   }
 }

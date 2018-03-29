@@ -12,7 +12,7 @@ import { ReportService } from '../../../services/report.service';
   selector: 'report-list-item',
   templateUrl: './report-list-item.component.html',
   styleUrls: ['./report-list-item.component.scss'],
-  providers: [AdminService, ProfileService]
+  providers: [AdminService, ProfileService, ReportService]
 })
 export class ReportListItemComponent implements OnInit {
   @Input('data') data: any;
@@ -35,14 +35,14 @@ export class ReportListItemComponent implements OnInit {
     userButton: String.UPDATE_BUTTON,
   };
 
-  constructor(private profileService: ProfileService, private modalService: ModalService, 
+  constructor(private profileService: ProfileService, private modalService: ModalService,
     private adminService: AdminService, private reportService: ReportService, private toast: ToastrService) { }
 
   ngOnInit() {
     const userData = this.profileService.user;
     this.user = parseUserToModel(userData);
   }
-  
+
   onSetPermission(report) {
     this.adminService.updateReportPermission(report.id, report.viewOnly).then((result) => {
       this.toast.success('Successfully updated ' + report.title);

@@ -44,7 +44,7 @@ describe('TeamReportListComponent', () => {
   it('should render correct team name', fakeAsync(() => {
     component.data = reports;
     const teamService = fixture.debugElement.injector.get(TeamService);
-    const team = new Team('team-1-id', 'team1', 'admin1', 'testColor1', true, 'testBadge');
+    const team = new Team('team-1-id', 'team1', null, 'testColor1', true, 'testBadge');
     spyOn(teamService, 'getTeam').and.returnValue(Promise.resolve(team));
     component.ngOnInit();
     tick();

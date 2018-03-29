@@ -14,5 +14,8 @@
         <div class="dashboard-card__container" *ngFor="let team of teams">
             <admin-team-card (refresh)="refresh($event)" [team]="team"></admin-team-card>
         </div>
+        <div class="d-flex justify-content-center">
+            <app-pagination [page]="page" [totalPages]="totalPages" (changePage)="onChangePage($event)"></app-pagination>
+        </div>
     </ng-template>
 </div>

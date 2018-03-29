@@ -1,10 +1,8 @@
-import { CHANGE_PASSWORD } from './../../../../../constants/strings';
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 
 import { AdminService } from './../../../../../services/admin.service';
 import { ModalService } from './../../../../../services/modal.service';
-import { parseToJSON } from './../../../../../services/parse.service';
 import * as String from '../../../../../constants/strings';
 import * as Route from '../../../../../constants/routes';
 import { BasicUser } from '../../../../../models/user.model';
@@ -19,6 +17,8 @@ export class UserListComponent implements OnInit {
   title = 'Users';
   archivedLink = '/' + Route.DASHBOARD + '/' + Route.ARCHIVED_USERS;
   users: Array<BasicUser> = undefined;
+  page = 0;
+  totalPages = 0;
 
   modal = {
     edit: false,
@@ -120,10 +120,19 @@ export class UserListComponent implements OnInit {
     });
   }
 
+  onChangePage(value) {
+    this.page = value;
+    this.adminService.getActiveUsers(value)
+      .then((results) => {
+          this.users = results;
+       });
+  }
+
   ngOnInit() {
     this.adminService.getActiveUsers()
     .then((results) => {
         this.users = results;
+        this.totalPages = this.adminService.totalPages;
     });
   }
 

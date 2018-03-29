@@ -19,12 +19,24 @@ export class ReportsViewComponent implements OnInit {
 
   teams: Array<Team> = undefined;
 
+  page = 0;
+  totalPages = 0;
+
   constructor(private adminService: AdminService) { }
 
   ngOnInit() {
     this.adminService.getActiveTeams()
       .then((results) => {
-        this.teams = (results instanceof Array) ? results : [results];
+        this.teams = results;
+        this.totalPages = this.adminService.totalPages;
+      });
+  }
+
+  onChangePage(value) {
+    this.page = value;
+    this.adminService.getActiveTeams(value)
+      .then((results) => {
+          this.teams = results;
       });
   }
 

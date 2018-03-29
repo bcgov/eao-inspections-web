@@ -59,6 +59,7 @@ import {FirstTimePasswordGuardService} from '../services/first-time-password-gua
 import {ProfileService} from '../services/profile.service';
 import { LoadingService } from '../services/loading.service';
 import { LoggedInGuardService } from '../services/logged-in-guard.service';
+import { PaginationComponent } from './reusables/pagination/pagination.component';
 
 @NgModule({
   declarations: [
@@ -102,7 +103,8 @@ import { LoggedInGuardService } from '../services/logged-in-guard.service';
     PasswordModalComponent,
     EqualValidator,
     ForgotPasswordModalComponent,
-    PasswordChangeComponent
+    PasswordChangeComponent,
+    PaginationComponent
   ],
   imports: [
     BrowserModule,
@@ -115,12 +117,12 @@ import { LoggedInGuardService } from '../services/logged-in-guard.service';
     Ng2ImgMaxModule,
   ],
   providers: [
-    AuthService, 
-    AuthGuardService, 
-    FirstTimePasswordGuardService, 
-    RoleGuardService, 
-    ModalService, 
-    ProfileService, 
+    AuthService,
+    AuthGuardService,
+    FirstTimePasswordGuardService,
+    RoleGuardService,
+    ModalService,
+    ProfileService,
     Ng2ImgMaxService,
     LoggedInGuardService,
     LoadingService,

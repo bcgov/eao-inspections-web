@@ -88,5 +88,4 @@ export class ElementViewComponent implements OnInit {
     this.isVoice = true;
     this.mediaSelected = this.audio;
   }
-
 }

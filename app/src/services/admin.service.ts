@@ -14,7 +14,9 @@ let self;
 @Injectable()
 export class AdminService {
   user = new Parse.User();
-
+  page = 0;
+  totalPages = 0;
+  displayLimit = 5;
   constructor(private loadingService: LoadingService) {
     self = this;
     this.user = Parse.User.current();
@@ -70,14 +72,24 @@ export class AdminService {
     });
   }
 
-  getArchivedUsers(): Promise<Array<BasicUser>> {
+  getArchivedUsers(page=0): Promise<Array<BasicUser>> {
     const key = randomKey();
     self.loadingService.showLoading(true, key);
     return new Promise((resolve, reject) => {
       const query = new Parse.Query('User');
       const users = [];
-
+      const queryCount = new Parse.Query(Parse.User);
+      queryCount.equalTo('isActive',false);
+      if (this.page === 0) {
+        queryCount.count().then((count) => {
+          this.totalPages = Math.ceil(count / this.displayLimit);
+        });
+      }
+      this.page = page;
       query.equalTo('isActive', false);
+      query.skip(page * this.displayLimit);
+      query.limit(this.displayLimit);
+      query.descending('createdAt');
       query.find({
         success: function (results) {
           self.loadingService.showLoading(false, key);
@@ -94,34 +106,52 @@ export class AdminService {
     });
   }
 
-  getActiveUsers(): Promise<Array<BasicUser>> {
+  getActiveUsers(page = 0): Promise<Array<BasicUser>> {
     const key = randomKey();
     self.loadingService.showLoading(true, key);
     return new Promise((resolve, reject) => {
       const users = [];
+      const promises = [];
       const query = new Parse.Query(Parse.User);
 
       query.equalTo('isActive', true);
-      query.find({
-        success: function (results) {
+      query.skip(page * this.displayLimit);
+      query.limit(this.displayLimit);
+      query.descending('createdAt');
+      query.find()
+      .then((results) => {
           results.forEach(objectUser => {
             const user = parseUserToModel(objectUser);
             const query2 = new Parse.Query('Team');
             query2.equalTo('users', objectUser);
-            query2.find().then((objectTeams) => {
-              objectTeams.forEach((team) => {
-                user.teams.push(parseTeamToModel(team));
-              });
-              users.push(user)
-              self.loadingService.showLoading(false, key);
-              resolve(users);
-            });
+            promises.push(query2.find());
+            users.push(user);
           });
-        },
-        error: function (error) {
+      })
+      .then(() => Promise.all(promises))
+      .then((results) => {
+        results.map((objectTeams, index) => {
+          objectTeams.forEach((team) => {
+            users[index].teams.push(parseTeamToModel(team));
+          });
           self.loadingService.showLoading(false, key);
-          reject(error);
+        });
+
+        const queryCount = new Parse.Query(Parse.User);
+        queryCount.equalTo('isActive', true);
+        if (this.page === 0) {
+          queryCount.count().then((count) => {
+            this.totalPages = Math.ceil(count / this.displayLimit);
+            console.log(this.totalPages);
+            resolve(users);
+          });
+        } else {
+          resolve(users);
         }
+       })
+      .catch((error) => {
+        self.loadingService.showLoading(false, key);
+        reject(error);
       });
     });
   }
@@ -447,7 +477,7 @@ export class AdminService {
     });
   }
 
-  getArchivedTeams(): Promise<Team[]> {
+  getArchivedTeams(page=0): Promise<Team[]> {
     const key = randomKey();
     self.loadingService.showLoading(true, key);
     return new Promise((resolve, reject) => {
@@ -455,6 +485,19 @@ export class AdminService {
       const promises1 = [];
       const promises2 = [];
       const teams = [];
+      const queryCount = new Parse.Query('Team');
+      queryCount.equalTo('isActive', false);
+      if (this.page === 0) {
+        queryCount.count().then((count) => {
+          this.totalPages = Math.ceil(count / this.displayLimit);
+          console.log(count);
+        });
+      }
+      this.page = page;
+      query.equalTo('isActive', false);
+      query.skip(page * this.displayLimit);
+      query.limit(this.displayLimit);
+      query.descending('createdAt');
       query.equalTo('isActive', false);
       query.find().then((results) => {
         if (!Array.isArray(results)) {
@@ -491,7 +534,7 @@ export class AdminService {
     });
   }
 
-  getActiveTeams(): Promise<Array<Team>> {
+  getActiveTeams(page=0): Promise<Array<Team>> {
     const key = randomKey();
     self.loadingService.showLoading(true, key);
     return new Promise((resolve, reject) => {
@@ -500,7 +543,20 @@ export class AdminService {
       const promises2 = [];
 
       const teams = [];
+      const queryCount = new Parse.Query('Team');
+      queryCount.equalTo('isActive',true);
+      if (this.page === 0) {
+        queryCount.count().then((count) => {
+          this.totalPages = Math.ceil(count / this.displayLimit);
+          console.log(count);
+        });
+      }
+      this.page = page;
       query.equalTo('isActive', true);
+
+      query.skip(page * this.displayLimit);
+      query.limit(this.displayLimit);
+      query.descending('createdAt');
       query.find().then((results) => {
         if (!Array.isArray(results)) {
           results = [results];
@@ -628,19 +684,33 @@ export class AdminService {
     });
   }
 
-  getArchivedReport(): Promise<Inspection[]> {
+  getArchivedReport(page=0): Promise<Inspection[]> {
     const key = randomKey();
     self.loadingService.showLoading(true, key);
+
     return new Promise((resolve, reject) => {
       const query = new Parse.Query('Inspection');
+      const queryCount = new Parse.Query('Inspection');
+
       const reports = [];
       const promises = [];
       const inspections = [];
       const access = this.user.get('access');
       if (access && !access.hasOwnProperty('isSuperAdmin')) {
         query.equalTo('adminId', this.user.id);
+        queryCount.equalTo('adminId', this.user.id);
       }
+      queryCount.equalTo('isActive',false);
       query.equalTo('isActive', false);
+      query.skip(page * this.displayLimit);
+      query.limit(this.displayLimit);
+      query.descending('createdAt');
+      if (this.page === 0) {
+        queryCount.count().then((count) => {
+          this.totalPages = Math.ceil(count / this.displayLimit);
+        });
+      }
+
       query.find().then((results) => {
           results.forEach((object) => {
             inspections.push(parseInspectionToModel(object));
