@@ -10,7 +10,6 @@
             <div class="table-row table-header">
                 <div class="table-row-item">Full Name</div>
                 <div class="table-row-item">Email</div>
-                <div class="table-row-item">Team</div>
                 <div class="table-row-item">Permission</div>
                 <div class="table-row-item">Action</div>
             </div>
@@ -21,10 +20,7 @@
             <img *ngIf="!user.image" class="table__img" src="../../../assets/team-member.png" /> {{user.firstName + " " + user.lastName}}
           </div>
           <div class="table-row-item" data-header="Email">
-            {{user.publicEmail}}
-          </div>
-          <div class="table-row-item" data-header="Team">
-             {{user.team}}
+            {{user.email}}
           </div>
           <div class="table-row-item" data-header="Permission">
             {{user.permission}}

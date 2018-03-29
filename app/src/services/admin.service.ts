@@ -7,6 +7,7 @@ import { parseInspectionToModel, parseUserToModel, parseTeamToModel } from './pa
 import { LoadingService } from './loading.service';
 import { Team } from '../models/team.model';
 import { randomKey } from './testing.service';
+import { ToastrService } from 'ngx-toastr';
 
 const Parse: any = require('parse');
 let self;
@@ -17,7 +18,7 @@ export class AdminService {
   page = 0;
   totalPages = 0;
   displayLimit = 5;
-  constructor(private loadingService: LoadingService) {
+  constructor(private loadingService: LoadingService, private toast: ToastrService) {
     self = this;
     this.user = Parse.User.current();
   }
@@ -336,36 +337,63 @@ export class AdminService {
     });
   }
 
-  archiveUser(userId: string): Promise<any> {
+// remove members from teams when they are archived
+  removeFromTeam(user){
+    const teamId = [];
+    user.teams.map(team => {
+      teamId.push(team.id);
+    });
+    teamId.map(id => {
+      this.removeMemberFromTeam(id, user.id);
+    })
+  }
+
+  archiveUser(user): Promise<any> {
+    let teams = [];
+    if(!user.access.isAdmin || !user.access.isSuperAdmin) {
+      this.removeFromTeam(user);
+    } 
+
     const key = randomKey();
     self.loadingService.showLoading(true, key);
     return new Promise((resolve, reject) => {
       const query = new Parse.Query(Parse.User);
-      query.get(userId, {
-        success: function (user) {
-          user.set('isActive', false);
-          user.save(null, {useMasterKey: true}).then(object => {
-            self.loadingService.showLoading(false, key);
-            resolve(object);
-          }, error => {
-            self.loadingService.showLoading(false, key);
-            reject(error);
+      const teamQuery = new Parse.Query('Team');
+      const tempUser = new Parse.User();
+      tempUser.id = user.id
+      teamQuery.equalTo('teamAdmin', tempUser);
+      teamQuery.find().then((adminObject) => {
+        if(adminObject.length == 0){
+          query.get(user.id, {
+            success: function (user) {
+              user.set('isActive', false);
+              user.save(null, {useMasterKey: true}).then(object => {
+                self.loadingService.showLoading(false, key);
+                resolve(object);
+              }, error => {
+                self.loadingService.showLoading(false, key);
+                reject(error);
+              });
+            },
+            error: function (object, error) {
+              self.loadingService.showLoading(false, key);
+              reject(error);
+            }
           });
-        },
-        error: function (object, error) {
+        } else {
           self.loadingService.showLoading(false, key);
-          reject(error);
+          this.toast.error("Cannot Archive " + user.name + ". Please remove them as a team Administrator")
         }
       });
     });
   }
 
-  unArchiveUser(userId: string): Promise<any> {
+  unArchiveUser(user): Promise<any> {
     const key = randomKey();
     self.loadingService.showLoading(true, key);
     return new Promise((resolve, reject) => {
       const query = new Parse.Query('User');
-      query.get(userId, {
+      query.get(user.id, {
         success: function (user) {
           user.set('isActive', true);
           user.save(null, {useMasterKey: true}).then(object => {
@@ -592,12 +620,12 @@ export class AdminService {
     });
   }
 
-  archiveTeam(teamId: string): Promise<any> {
+  archiveTeam(team): Promise<any> {
     const key = randomKey();
     self.loadingService.showLoading(true, key);
     return new Promise((resolve, reject) => {
       const query = new Parse.Query('Team');
-      query.get(teamId, {
+      query.get(team.id, {
         success: function (team) {
           team.set('isActive', false);
           team.save(null, { useMasterKey: true }).then(object => {
@@ -617,12 +645,12 @@ export class AdminService {
     });
   }
 
-  unArchiveTeam(teamId: string): Promise<any> {
+  unArchiveTeam(team): Promise<any> {
     const key = randomKey();
     self.loadingService.showLoading(true, key);
     return new Promise((resolve, reject) => {
       const query = new Parse.Query('Team');
-      query.get(teamId, {
+      query.get(team.id, {
         success: function (team) {
           team.set('isActive', true);
           team.save(null, { useMasterKey: true }).then(object => {
@@ -732,12 +760,12 @@ export class AdminService {
     });
   }
 
-  archiveReport(reportId) {
+  archiveReport(report) {
     const key = randomKey();
     self.loadingService.showLoading(true, key);
     return new Promise((resolve, reject) => {
       const query = new Parse.Query('Inspection');
-      query.get(reportId, {
+      query.get(report.id, {
         success: function (report) {
           report.set('isActive', false);
           report.save();
@@ -752,12 +780,12 @@ export class AdminService {
     });
   }
 
-  unArchiveReport(reportId) {
+  unArchiveReport(report) {
     const key = randomKey();
     self.loadingService.showLoading(true, key);
     return new Promise((resolve, reject) => {
       const query = new Parse.Query('Inspection');
-      query.get(reportId, {
+      query.get(report.id, {
         success: function (report) {
           report.set('isActive', true);
           report.save();
