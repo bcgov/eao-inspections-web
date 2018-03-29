@@ -16,6 +16,8 @@ import * as String from '../../../../../constants/strings';
 
 export class MyReportListComponent implements OnInit {
   @Input('data') data: any;
+  @Input('page') page: number;
+  @Input('totalPages') totalPages: number;
   title = 'Team 1';
   link = '/team-reports';
   emptyContent = {
@@ -32,18 +34,26 @@ export class MyReportListComponent implements OnInit {
   direction: number;
   column: string;
 
-  constructor() {
+  constructor(private reportService:ReportService) {
     this.fields = ['title', 'project', 'submitted', 'team', 'actions'];
     this.actions = ['download'];
   }
 
   ngOnInit() {
+
   }
 
   sort(property: string) {
     this.isDesc = !this.isDesc;
     this.column = property;
     this.direction = this.isDesc ? 1 : -1;
+  }
+  onChangePage(value) {
+    this.page = value;
+    this.reportService.getMyReports(value)
+      .then((results) => {
+        this.data = (results instanceof Array) ? results : [results];
+      });
   }
 }
 

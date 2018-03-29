@@ -46,16 +46,26 @@ export class ReportService {
     });
   }
 
-  getMyReports(): Promise<any[]> {
+  getMyReports(page=0): Promise<any[]> {
     const key = randomKey();
     self.loadingService.showLoading(true, key);
     return new Promise((resolve, reject) => {
       const reports = [];
       const promises = [];
+      const queryCount = new Parse.Query('Inspection');
+      queryCount.equalTo('userId', this.user.id);
+      if (this.page === 0) {
+        queryCount.count().then((count) => {
+          this.totalPages = Math.ceil(count / this.displayLimit);
+          console.log(count);
+        });
+      }
+      this.page = page;
       const query = new Parse.Query('Inspection');
-
       query.equalTo('userId', this.user.id);
-      query.ascending('createdAt');
+      query.skip(page * this.displayLimit);
+      query.limit(this.displayLimit);
+      query.descending('createdAt');
       query.find()
       .then((results) => {
         if (!Array.isArray(results)) {
@@ -82,14 +92,26 @@ export class ReportService {
     });
   }
 
-  getTeamReports(teamId: string): Promise<any[]> {
+  getTeamReports(teamId: string, page=0): Promise<any[]> {
     const key = randomKey();
     self.loadingService.showLoading(true, key);
     return new Promise((resolve, reject) => {
       const promises = [];
       const reports = [];
+      const queryCount = new Parse.Query('Inspection');
+      queryCount.equalTo('team', {'__type': 'Pointer', 'className': 'Team', 'objectId': teamId });
+      if (this.page === 0) {
+        queryCount.count().then((count) => {
+          this.totalPages = Math.ceil(count / this.displayLimit);
+          console.log(count);
+        });
+      }
+      this.page = page;
       const q = new Parse.Query('Inspection');
       q.equalTo('team', {'__type': 'Pointer', 'className': 'Team', 'objectId': teamId });
+      q.skip(page * this.displayLimit);
+      q.limit(this.displayLimit);
+      q.descending('createdAt');
       q.find()
         .then((results) => {
           if (!Array.isArray(results)) {

@@ -15,4 +15,8 @@
         <report-list-item [data]="data" [fields]="fields" [actions]="actions"></report-list-item>
     </span>
     </div>
+  <br>
+  <div class="d-flex justify-content-center">
+    <app-pagination [page]="page" [totalPages]="totalPages" (changePage)="onChangePage($event)"></app-pagination>
+  </div>
 </ng-template>
