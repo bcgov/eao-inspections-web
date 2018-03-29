@@ -94,7 +94,7 @@ export function parseInspectionToModel(object) {
 
 export function parseObservationToModel(object) {
   const id = (object.get('id')) ? object.get('id') : object.id;
-
+  const inspection = object.get('inspection');
   return new Observation(
     id,
     object.get('title'),
@@ -102,7 +102,8 @@ export function parseObservationToModel(object) {
     object.get('requirement'),
     object.get('coordinate'),
     object.get('media'),
-    object.get('createdAt')
+    object.get('createdAt'),
+    inspection ? inspection.get('viewOnly') : false
   );
 }
 
