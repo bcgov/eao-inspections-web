@@ -60,7 +60,7 @@
                     <h4>Name</h4>
                     <h4 class="pointer" (click)="sort('createdAt')">Submitted</h4>
                 </div>
-                <div class="inspection-details-content" *ngFor="let element of elements | orderBy : {property: column, direction: direction}">
+                <div class="inspection-details-content-elements" *ngFor="let element of elements | orderBy : {property: column, direction: direction}">
                     <a [routerLink]="['element', element.id]">{{ element.title || '-'  }}</a>
                     <p>{{ element.createdAt | date : "MMM d y" || '-' }}</p>
                 </div>
