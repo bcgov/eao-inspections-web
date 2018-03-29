@@ -8,7 +8,7 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 export class PaginationComponent implements OnInit {
   _totalPages = 0;
   @Input()
-  private page: number = 0;
+  page: number = 0;
 
   @Input()
   set totalPages(totalPages: number) {
