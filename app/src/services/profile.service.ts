@@ -12,7 +12,7 @@ export class ProfileService {
   user = new Parse.User();
   page = 0;
   totalPages = 0;
-  displayLimit = 5;
+  displayLimit = 25;
   constructor(private loadingService: LoadingService) {
      self = this;
      this.user = Parse.User.current();
