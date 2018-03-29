@@ -27,6 +27,10 @@ export class TeamReportListComponent implements OnInit {
   data: Array<Inspection> = undefined;
   fields: Array<any>;
   actions: Array<any>;
+  teamId: string;
+
+  page = 0;
+  totalPages = 0;
 
   constructor(private reportService: ReportService, private teamService: TeamService, private route: ActivatedRoute, private location: Location) {
     this.fields = ['title', 'project', 'inspector', 'submitted', 'actions'];
@@ -38,21 +42,30 @@ export class TeamReportListComponent implements OnInit {
   }
 
   ngOnInit() {
-     this.sort('updatedAt');
-    const teamId = this.route.snapshot.params['id'];
-    this.teamService.getTeam(teamId).then((team) => {
+    this.sort('updatedAt');
+    this.teamId = this.route.snapshot.params['id'];
+    this.teamService.getTeam(this.teamId).then((team) => {
       this.team = team;
-      this.reportService.getTeamReports(teamId)
+      this.reportService.getTeamReports(this.teamId)
       .then((results) => {
           this.data = results;
+          this.totalPages = this.reportService.totalPages;
       });
     });
 
   }
-  
+
   sort(property: string) {
     this.isDesc = !this.isDesc;
     this.column = property;
     this.direction = this.isDesc ? 1 : -1;
+  }
+
+  onChangePage(value) {
+    this.page = value;
+    this.reportService.getTeamReports(this.teamId, value)
+      .then((results) => {
+        this.data = results;
+      });
   }
 }
