@@ -19,7 +19,7 @@ export class ReportService {
   user = new Parse.User();
   page = 0;
   totalPages = 0;
-  displayLimit = 5;
+  displayLimit = 25;
   constructor(private loadingService: LoadingService) {
     self = this;
     this.user = Parse.User.current();
@@ -33,7 +33,6 @@ export class ReportService {
       userQuery.equalTo('objectId', inspectorId);
       userQuery.first({
         success: function(result) {
-          console.log(result);
           const inspector = parseUserToModel(result);
            self.loadingService.showLoading(false, key);
            resolve (inspector);
@@ -57,7 +56,6 @@ export class ReportService {
       if (this.page === 0) {
         queryCount.count().then((count) => {
           this.totalPages = Math.ceil(count / this.displayLimit);
-          console.log(count);
         });
       }
       this.page = page;
@@ -103,7 +101,6 @@ export class ReportService {
       if (this.page === 0) {
         queryCount.count().then((count) => {
           this.totalPages = Math.ceil(count / this.displayLimit);
-          console.log(count);
         });
       }
       this.page = page;
@@ -150,7 +147,6 @@ export class ReportService {
       if (this.page === 0) {
         queryCount.count().then((count) => {
           this.totalPages = Math.ceil(count / this.displayLimit);
-          console.log(count);
         });
       }
       this.page = page;
@@ -168,7 +164,6 @@ export class ReportService {
 
           results.forEach((object) => {
             reports.push(parseInspectionToModel(object));
-            console.log(object.get('userId'));
             promises.push(this.getInspector(object.get('userId')));
           });
         })
@@ -227,7 +222,6 @@ export class ReportService {
       if (this.page === 0) {
         queryCount.count().then((count) => {
           this.totalPages = Math.ceil(count / this.displayLimit);
-          console.log(count);
         });
       }
       this.page = page;

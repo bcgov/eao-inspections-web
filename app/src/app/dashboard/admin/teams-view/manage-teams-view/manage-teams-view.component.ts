@@ -29,6 +29,9 @@ export class ManageTeamsViewComponent implements OnInit {
 
   members: Array<BasicUser> = undefined;
 
+  page = 0;
+  totalPages = 0;
+
   modal = {
     header: String.ADD_MEMBER,
     userButton: String.ADD_MEMBER_BUTTON,
@@ -94,6 +97,7 @@ export class ManageTeamsViewComponent implements OnInit {
     this.teamService.getTeam(teamId).then((team) => {
       this.team = team;
       this.adminService.getTeamMembers(teamId).then((members) => {
+        this.totalPages = this.adminService.totalPages;
         this.members = members;
         this.adminService.getUsersByRole('inspector').then((users) => {
           const activeUsers = users.filter(o1 => !this.members.some(o2 => o1.id === o2.id));
@@ -101,8 +105,16 @@ export class ManageTeamsViewComponent implements OnInit {
         });
       });
     });
+  }
 
-
+  onChangePage(value) {
+    this.page = value;
+    this.adminService.getTeamMembers(this.team.id, value).then((members) => {
+      this.members = members;
+      this.adminService.getUsersByRole('inspector').then((users) => {
+        this.modal.users = users.filter(o1 => !this.members.some(o2 => o1.id === o2.id));
+      });
+    });
   }
 
 }
