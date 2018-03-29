@@ -12,6 +12,8 @@ import {Inspection} from '../../../../models/inspection.model';
 export class MyReportsComponent implements OnInit {
   title = 'My Inspections';
   data: Array<Inspection>;
+  page = 0;
+  totalPages = 0;
 
   constructor(private reportService: ReportService) { }
 
@@ -19,6 +21,8 @@ export class MyReportsComponent implements OnInit {
     this.reportService.getMyReports()
       .then((results) => {
         this.data = (results instanceof Array) ? results : [results];
+        this.totalPages = this.reportService.totalPages;
       });
   }
+  
 }

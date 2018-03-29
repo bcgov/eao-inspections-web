@@ -12,7 +12,8 @@ import { Team } from '../../../../models/team.model';
 export class TeamReportsComponent implements OnInit {
   title = 'Team Inspections';
   teams: Array<Team>;
-
+  page = 0;
+  totalPages = 0;
 
   constructor(private profileService: ProfileService) { }
 
@@ -20,7 +21,14 @@ export class TeamReportsComponent implements OnInit {
     this.profileService.getTeams()
       .then((results) => {
         this.teams = (results instanceof Array) ? results : [results];
+        this.totalPages = this.profileService.totalPages;
       });
   }
-
+  onChangePage(value) {
+    this.page = value;
+    this.profileService.getTeams(value)
+      .then((results) => {
+        this.teams = (results instanceof Array) ? results : [results];
+      });
+  }
 }
