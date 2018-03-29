@@ -32,6 +32,7 @@ export class ProfileComponent implements OnInit {
       .then((teamAdminInfo) => {
         if (teamAdminInfo instanceof Array) {
           teamAdminInfo.forEach((object) => {
+            debugger
             const admin = parseUserToModel(object.admin);
             admin.teams = object.team;
             this.admin.push(
@@ -40,6 +41,7 @@ export class ProfileComponent implements OnInit {
           });
         }
     });
+    console.log(this.admin);
   }
 
 }
