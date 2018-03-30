@@ -25,6 +25,7 @@ export class ElementViewComponent implements OnInit {
   isPhotos;
   isVideo;
   isVoice;
+  viewOnly;
   constructor(private route: ActivatedRoute, private reportService: ReportService, private location: Location) {
     this.route.params.subscribe(params => this.routeParam = params);
   }
@@ -32,6 +33,7 @@ export class ElementViewComponent implements OnInit {
   ngOnInit() {
     this.reportService.getObservation(this.routeParam.id).then(object => {
       this.data = object;
+      this.viewOnly = object.viewOnly;
     });
     this.reportService.getMedia(this.routeParam.id, 'Photo').then(object => {
       object.forEach(obj => {

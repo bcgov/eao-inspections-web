@@ -6,6 +6,7 @@ export class Observation {
   public coordinate: Geolocation;
   public media: string;
   public createdAt: Date;
+  public viewOnly: boolean;
 
   constructor(id: string,
               title: string,
@@ -13,7 +14,8 @@ export class Observation {
               requirement: string,
               coordinate: Geolocation,
               media: string,
-              createdAt: Date) {
+              createdAt: Date,
+              viewOnly: boolean = false) {
     this.id = id;
     this.title = title;
     this.description = description;
@@ -21,6 +23,7 @@ export class Observation {
     this.coordinate = coordinate;
     this.media = media;
     this.createdAt = createdAt;
+    this.viewOnly = viewOnly;
   }
 
   toText() {
@@ -31,8 +34,8 @@ export class Observation {
 
     text += 'Title : ' + (this.title || '')  + '\n';
     text += 'Description : ' + (this.description || '')  + '\n';
-    text += 'Requirements : ' + (this.requirement || '')  + '\n'; 
-    text += 'Coordinate : ' + coordinate + '\n'; 
+    text += 'Requirements : ' + (this.requirement || '')  + '\n';
+    text += 'Coordinate : ' + coordinate + '\n';
     text += 'Created Date : ' + (this.createdAt || '')  + '\n';
 
     return text;

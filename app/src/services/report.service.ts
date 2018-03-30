@@ -256,14 +256,23 @@ export class ReportService {
     self.loadingService.showLoading(true, key);
     return new Promise((resolve, reject) => {
       const query = new Parse.Query('Observation');
+      let observationModelObj: Observation;
       query.equalTo('objectId', observationId);
       query.first().then((object) => {
-        self.loadingService.showLoading(false, key);
-        resolve(parseObservationToModel(object));
+        observationModelObj = parseObservationToModel(object);
+        object.get('inspection').fetch().then((inspObj) => {
+          observationModelObj.viewOnly = inspObj.get('viewOnly');
+        }, (error) => {
+          self.loadingService.showLoading(false, key);
+          reject(error);
+        }).then(() => {
+          self.loadingService.showLoading(false, key);
+          resolve(observationModelObj);
+        });
       }, (error) => {
         self.loadingService.showLoading(false, key);
         reject(error);
-      });
+      })
     });
   }
 
@@ -272,8 +281,8 @@ export class ReportService {
     self.loadingService.showLoading(true, key);
     const photos = [];
     let photoList;
-    const observatinoQuery = new Parse.Object.extend('Observation');
-    const tempObservation = new observatinoQuery();
+    const observationQuery = new Parse.Object.extend('Observation');
+    const tempObservation = new observationQuery();
     tempObservation.id = observationId;
 
     return new Promise((resolve, reject) => {
