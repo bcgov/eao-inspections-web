@@ -16,8 +16,14 @@ export class ProfileComponent implements OnInit {
   profile: BasicUser;
   teams;
   admin = [];
+  adminIds = [];
 
   constructor(private profileService: ProfileService) {}
+
+  removeDuplicateUsingSet(arr) {
+    let unique_array = Array.from(new Set(arr))
+    return unique_array
+  }
 
   ngOnInit() {
     const userData = this.profileService.user;
@@ -31,17 +37,21 @@ export class ProfileComponent implements OnInit {
     this.profileService.getTeamAdminInfo()
       .then((teamAdminInfo) => {
         if (teamAdminInfo instanceof Array) {
-          teamAdminInfo.forEach((object) => {
-            debugger
-            const admin = parseUserToModel(object.admin);
+          teamAdminInfo.forEach(object => {
+            let duplicate = false;
+            const admin = object.admin;
             admin.teams = object.team;
-            this.admin.push(
-              admin
-            );
-          });
-        }
+            this.admin.forEach(_obj => {
+              if (_obj.id === object.id) {
+                duplicate = true;
+              }
+            });
+            if (!duplicate) {
+              this.admin.push(admin);
+            }
+        });
+      };
     });
-    console.log(this.admin);
   }
 
 }

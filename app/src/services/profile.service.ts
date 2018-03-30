@@ -1,6 +1,6 @@
 import { Injectable} from '@angular/core';
 
-import { parseTeamToModel } from './parse.service';
+import { parseTeamToModel, parseUserToModel } from './parse.service';
 import { LoadingService } from './loading.service';
 import { randomKey } from './testing.service';
 
@@ -94,13 +94,13 @@ export class ProfileService {
         }
         results.forEach((object) => {
           promises.push(object.get('teamAdmin').fetch());
-          admins.push({'team' : parseTeamToModel(object)});
+          admins.push(parseTeamToModel(object));
         });
       })
       .then(() => Promise.all(promises))
       .then((results) => {
         results.map((admin, index) => {
-          admin[index]['admin'] = admin;
+          admins[index]['admin'] = parseUserToModel(admin);
         });
         self.loadingService.showLoading(false, key);
         resolve(admins);
@@ -111,6 +111,7 @@ export class ProfileService {
       });
     });
   }
+
   updateProfileImage(image): Promise<any> {
     const key = randomKey();
     self.loadingService.showLoading(true, key);

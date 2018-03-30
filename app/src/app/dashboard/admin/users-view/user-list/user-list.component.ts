@@ -127,7 +127,6 @@ export class UserListComponent implements OnInit {
     this.adminService.getActiveUsers(value)
       .then((results) => {
           this.users = results;
-          console.log(this.users);
        });
   }
 
