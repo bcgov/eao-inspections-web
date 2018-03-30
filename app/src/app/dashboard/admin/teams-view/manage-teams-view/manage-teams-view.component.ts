@@ -100,7 +100,8 @@ export class ManageTeamsViewComponent implements OnInit {
         this.totalPages = this.adminService.totalPages;
         this.members = members;
         this.adminService.getUsersByRole('inspector').then((users) => {
-          this.modal.users = users.filter(o1 => !this.members.some(o2 => o1.id === o2.id));
+          const activeUsers = users.filter(o1 => !this.members.some(o2 => o1.id === o2.id));
+          this.modal.users = activeUsers.filter(o1 => o1.isActive);
         });
       });
     });

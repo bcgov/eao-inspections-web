@@ -1,3 +1,4 @@
+import { TeamService } from './../../../../../services/team.service';
 import {Component, OnInit} from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 
@@ -47,7 +48,8 @@ export class UserListComponent implements OnInit {
   constructor(
     private modalService: ModalService,
     private adminService: AdminService,
-    private toast: ToastrService
+    private toast: ToastrService,
+    private teamService: TeamService
   ) { }
 
   openLg(modal) {
@@ -125,6 +127,7 @@ export class UserListComponent implements OnInit {
     this.adminService.getActiveUsers(value)
       .then((results) => {
           this.users = results;
+          console.log(this.users);
        });
   }
 

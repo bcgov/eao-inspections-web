@@ -118,6 +118,10 @@ body {
             font-weight: bold;
             line-height: 34px;
 
+            @include large {
+                    font-size: 20px;
+                }
+
             &--img {
                 width: 65px;
                 height: 64px;
@@ -129,6 +133,10 @@ body {
                 font-weight: 300;
                 font-size: 14px;
                 color: $font-gray;
+
+                @include xl {
+                    margin-bottom: 30px;
+                }
             }
             @include mobile {
                 margin: 50px 10px;
