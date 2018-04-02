@@ -29,7 +29,7 @@ export class ReportService {
     const key = randomKey();
     self.loadingService.showLoading(true, key);
     return new Promise((resolve, reject) => {
-      const userQuery = new Parse.Query('User');
+      const userQuery = new Parse.Query(Parse.User);
       userQuery.equalTo('objectId', inspectorId);
       userQuery.first({
         success: function(result) {

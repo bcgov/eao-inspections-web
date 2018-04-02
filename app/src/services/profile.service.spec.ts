@@ -5,8 +5,10 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { AuthService } from './auth.service';
 import { LoginComponent } from '../app/login/login.component';
 import { ProfileService } from './profile.service';
+import {parseInit} from './testing.service';
 
 const Parse: any = require('parse');
+parseInit();
 
 describe('Authentication and Authorization Testing', () => {
   let component: LoginComponent;

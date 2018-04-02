@@ -5,8 +5,7 @@ import { Inspection } from '../../../models/inspection.model';
 import { BasicUser } from '../../../models/user.model';
 import { ReportService } from '../../../services/report.service';
 import { OrderByPipe } from '../../directives/orderby.pipe';
-import { Params, ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs/Observable';
+import { ActivatedRoute } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Observation } from '../../../models/observation.model';
 
@@ -37,7 +36,7 @@ describe('InspectionViewComponent', () => {
 
   it('should render the correct inspection data', fakeAsync(() => {
     const reportService = fixture.debugElement.injector.get(ReportService);
-    const inspector = new BasicUser('testId', 'testFirstName', 'testLastName', 'testInspectorName', [], 'testEmail', 'testImage', "testPermission", {});
+    const inspector = new BasicUser('testId', 'testFirstName', 'testLastName', 'testInspectorName', [], 'testEmail', 'testImage', "testPermission", {}, null, null);
     const startDate = new Date();
     const endDate = new Date();
     const inspection =

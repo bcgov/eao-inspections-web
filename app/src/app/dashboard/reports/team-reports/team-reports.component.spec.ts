@@ -6,6 +6,9 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { TeamReportsComponent } from './team-reports.component';
 import { Team } from '../../../../models/team.model';
 import { ProfileService } from '../../../../services/profile.service';
+import {parseInit} from '../../../../services/testing.service';
+
+parseInit();
 
 describe('TeamReportsComponent', () => {
   let component: TeamReportsComponent;
@@ -39,7 +42,7 @@ describe('TeamReportsComponent', () => {
   it('should render correct number of team cards', fakeAsync(() => {
     const profileService = fixture.debugElement.injector.get(ProfileService);
     const admin = new BasicUser('123', 'mockFirstName', 'mockLastName', 'mockName', [],
-      'mockEmail', 'mockImage', null, {});
+      'mockEmail', 'mockImage', null, {}, null, null);
     const teams = [
       new Team('team-1-id', 'team1', admin, 'blue', true),
       new Team('team-2-id', 'team2', admin, 'red', true),

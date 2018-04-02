@@ -1,9 +1,10 @@
 import { async, TestBed } from '@angular/core/testing';
 
-import { createTeam, deleteTeam } from './testing.service';
+import {createTeam, deleteTeam, parseInit} from './testing.service';
 import { TeamService } from './team.service';
 
 const Parse: any = require('parse');
+parseInit();
 
 describe('Team Service Testing', () => {
   let service: TeamService;

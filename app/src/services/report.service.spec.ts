@@ -3,11 +3,15 @@ import { FormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 
 import { AuthService } from './auth.service';
-import { createInspection, createObservation, createTeam, deleteInspections, deleteObservations, deleteTeam } from './testing.service';
+import {
+  createInspection, createObservation, createTeam, deleteInspections, deleteObservations, deleteTeam,
+  parseInit
+} from './testing.service';
 import { LoginComponent } from '../app/login/login.component';
 import { ReportService } from './report.service';
 
 const Parse: any = require('parse');
+parseInit();
 
 describe('Report Testing', () => {
   let component: LoginComponent;
