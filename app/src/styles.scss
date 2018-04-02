@@ -33,7 +33,7 @@ body {
     .no-content {
         position: absolute;
         top: 40%;
-        left: 40%;
+        left: 35%;
         text-align: center;
         @include mobile {
             left: 10%;
@@ -225,11 +225,18 @@ body {
         }
     }
     // modal
+    .modal.modal--outside {
+        position: relative;
+        bottom: 30% !important;
+        left: 0 !important;
+        }
+
     .modal {
         min-height: 100% !important;
         height: 400px;
         bottom: 15%;
         left: 15%;
+
         &__header {
             background-color: $default-primary-color;
             height: 72px;

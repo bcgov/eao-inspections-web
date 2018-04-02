@@ -9,7 +9,7 @@
           <img class="thumbnail-link-image" [src]="this.thumbnailImage" (error)="setDefaultPic()">
         </span>
         <span *ngIf="item.type === 'Video'">
-          <img class="thumbnail-link-image" [src]="this.videoImage" (error)="setDefaultPic('video')">
+          <img [src]="this.videoImage" (error)="setDefaultPic('video')">
         </span>
         <span *ngIf="item.type === 'undefined'">
           <img class="thumbnail-link-image" [src]="this.thumbnailImage" (error)="setDefaultPic()">
@@ -17,13 +17,13 @@
       </a>
       <div class="thumbnail-link" *ngIf="_viewOnly">
         <span *ngIf="item.type === 'Audio'">
-          <img class="thumbnail-link-image" [src]="this.audioImage" (error)="setDefaultPic('audio')">
+          <img [src]="this.audioImage" (error)="setDefaultPic('audio')">
         </span>
         <span *ngIf="item.type === 'Photo'">
           <img class="thumbnail-link-image" [src]="this.thumbnailImage" (error)="setDefaultPic()">
         </span>
         <span *ngIf="item.type === 'Video'">
-          <img class="thumbnail-link-image" [src]="this.videoImage" (error)="setDefaultPic('video')">
+          <img [src]="this.videoImage" (error)="setDefaultPic('video')">
         </span>
         <span *ngIf="item.type === 'undefined'">
           <img class="thumbnail-link-image" [src]="this.thumbnailImage" (error)="setDefaultPic()">

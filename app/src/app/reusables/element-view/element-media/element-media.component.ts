@@ -12,7 +12,7 @@ export class ElementMediaComponent implements OnInit {
   defaultPic = '../../assets/placeholder-image.jpg';
   thumbnailImage = '../../assets/placeholder-image.jpg';
   audioImage = '../../assets/placeholder-voice.jpg';
-  videoImage = '../../assets/placeholder-video.jpg';
+  videoImage = '../../assets/placeholder-video.png';
   type;
   url;
   @Input()
