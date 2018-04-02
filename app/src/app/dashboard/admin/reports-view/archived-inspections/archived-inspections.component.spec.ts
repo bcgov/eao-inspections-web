@@ -35,10 +35,13 @@ describe('ArchivedInspectionsComponent', () => {
         return Observable.of(true);
       }
     };
-    loadingServiceStub = {
-      loading(): Observable<any> {
-        return Observable.of(true);
-      },
+      loadingServiceStub = {
+        loading(): Observable<any> {
+          return Observable.of(true);
+        },
+        showLoading(): Observable<any> {
+          return Observable.of(true);
+        }
     };
     TestBed.configureTestingModule({
       declarations: [ ArchivedInspectionsComponent, OrderByPipe ],
@@ -47,7 +50,6 @@ describe('ArchivedInspectionsComponent', () => {
         { provide: AdminService, useValue: adminServiceStub },
         { provide: ToastrService, useValue: toastServiceStub },
         { provide: LoadingService, useValue: loadingServiceStub },
-        // Location,
         ],
       imports: [RouterTestingModule]
     })

@@ -1,3 +1,4 @@
+import { LoadingService } from './../../../../services/loading.service';
 import { BasicUser } from './../../../../models/user.model';
 import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 import { async, fakeAsync, tick, TestBed, ComponentFixture } from '@angular/core/testing';
@@ -7,6 +8,7 @@ import { TeamReportsComponent } from './team-reports.component';
 import { Team } from '../../../../models/team.model';
 import { ProfileService } from '../../../../services/profile.service';
 import {parseInit} from '../../../../services/testing.service';
+import { Observable } from 'rxjs/Observable';
 
 parseInit();
 
@@ -14,10 +16,23 @@ describe('TeamReportsComponent', () => {
   let component: TeamReportsComponent;
   let fixture: ComponentFixture<TeamReportsComponent>;
   let compiled;
+  let loadingServiceStub: any;
 
   beforeEach(async(() => {
+    loadingServiceStub = {
+      loading(): Observable<any> {
+        return Observable.of(true);
+      },
+      showLoading(): Observable<any> {
+        return Observable.of(true);
+      }
+    };
+
     TestBed.configureTestingModule({
       declarations: [ TeamReportsComponent ],
+      providers: [
+        { provide: LoadingService, useValue: loadingServiceStub },
+      ],
       schemas: [ CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA ],
       imports: [ RouterTestingModule ],
     })

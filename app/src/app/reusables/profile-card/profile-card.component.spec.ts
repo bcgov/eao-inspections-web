@@ -1,18 +1,43 @@
+import { ProfileService } from './../../../services/profile.service';
 import { By } from '@angular/platform-browser';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ProfileCardComponent } from './profile-card.component';
 import { DebugElement } from '@angular/core';
+import { Ng2ImgMaxService, Ng2ImgMaxModule } from 'ng2-img-max';
+import { Observable } from 'rxjs/Observable';
+import { ToastrService } from 'ngx-toastr';
 
 describe('ProfileCardComponent', () => {
   let component: ProfileCardComponent;
   let fixture: ComponentFixture<ProfileCardComponent>;
   let profileInfo: any;
   let uploadDe: DebugElement;
+  let profileServiceStub;
+  let toastServiceStub;
 
   beforeEach(async(() => {
+    toastServiceStub = {
+      success(): Observable<any> {
+        return Observable.of(true);
+      },
+      error(): Observable<any> {
+        return Observable.of(true);
+      }
+    };
+    profileServiceStub = {
+      updateProfileImage: jasmine.createSpy('updateProfileImage').and.callFake(() => {
+        return 
+      })
+    };
     TestBed.configureTestingModule({
-      declarations: [ ProfileCardComponent ]
+      declarations: [ ProfileCardComponent ],
+      providers: [
+        { provide: ProfileService, useVlaue: profileServiceStub},
+        { provide: ToastrService, useVlaue: toastServiceStub },
+        Ng2ImgMaxService
+      ],
+      imports: [Ng2ImgMaxModule]
     })
     .compileComponents();
   }));
@@ -49,7 +74,7 @@ describe('ProfileCardComponent', () => {
   
   it("should allow users to update their own profile images ", () => {
     expect(component.profile.access.isAdmin).toBeFalsy();
-    uploadDe = fixture.debugElement.query(By.css('.profile__card--photo__upload'));
-    expect(uploadDe).not.toBeNull();
+    uploadDe = fixture.debugElement.query(By.css('.profile__card--photo__container__upload'));
+    expect(uploadDe).toBeTruthy();
   });
 });

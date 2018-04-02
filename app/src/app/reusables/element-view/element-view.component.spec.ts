@@ -1,3 +1,4 @@
+import { LoadingService } from './../../../services/loading.service';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import {ActivatedRoute} from '@angular/router';
@@ -18,12 +19,21 @@ describe('ElementViewComponent', () => {
   let component: ElementViewComponent;
   let fixture: ComponentFixture<ElementViewComponent>;
   let reportServiceStub: any;
+  let loadingServiceStub: any;
   const reports = [
     new Inspection('test', 'test', 'test', 'test', null, 'test', null, null, null, 'test', true, null),
     new Inspection('test', 'test', 'test', 'test', null, 'test', null, null, null, 'test', true, null),
     new Inspection('test', 'test', 'test', 'test', null, 'test', null, null, null, 'test', true, null),
   ];
   beforeEach(async(() => {
+    loadingServiceStub = {
+      loading(): Observable<any> {
+        return Observable.of(true);
+      },
+      showLoading(): Observable<any> {
+        return Observable.of(true);
+      }
+    };
     reportServiceStub = {
       getMyReports: jasmine.createSpy('getMyReports').and.callFake(() => {
         return reports;
@@ -35,7 +45,10 @@ describe('ElementViewComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ ElementViewComponent ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
-      providers: [{provide : ActivatedRoute, useClass: MockActivatedRoute}],
+      providers: [
+        {provide : ActivatedRoute, useClass: MockActivatedRoute},
+        { provide: LoadingService, useValue: loadingServiceStub }
+      ],
       imports: [RouterTestingModule]
     })
     .compileComponents();

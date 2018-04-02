@@ -1,3 +1,4 @@
+import { LoadingService } from './../../../../../services/loading.service';
 import { AdminService } from './../../../../../services/admin.service';
 import { ModalService } from './../../../../../services/modal.service';
 import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
@@ -14,6 +15,8 @@ describe('ArchivedUsersComponent', () => {
   let adminServiceStub: any;
   let toastServiceStub;
   let modalServiceStub;
+  let loadingServiceStub;
+  let mockUsers: any;
 
   beforeEach(async(() => {
     adminServiceStub = {
@@ -46,6 +49,14 @@ describe('ArchivedUsersComponent', () => {
         return Observable.of(true);
       }
     };
+    loadingServiceStub = {
+      loading(): Observable<any> {
+        return Observable.of(true);
+      },
+      showLoading(): Observable<any> {
+        return Observable.of(true);
+      }
+    };
 
     TestBed.configureTestingModule({
       declarations: [ ArchivedUsersComponent ],
@@ -53,7 +64,9 @@ describe('ArchivedUsersComponent', () => {
       providers: [
         { provide: AdminService, useValue: adminServiceStub },
         { provide: ModalService, useValue: modalServiceStub },
-        { provide: ToastrService, useValue: toastServiceStub }],
+        { provide: ToastrService, useValue: toastServiceStub },
+        { provide: LoadingService, useValue: loadingServiceStub },
+      ],
       imports: [ RouterTestingModule ]
     })
     .compileComponents();
@@ -75,6 +88,8 @@ describe('ArchivedUsersComponent', () => {
   it('should fetch archived users on ngOnInit', () => {
     adminServiceStub.getArchivedUsers();
     expect(adminServiceStub.getArchivedUsers).toHaveBeenCalledTimes(1);
+    mockUsers = {}
+    component.users = mockUsers;
     expect(component.users).toBeTruthy();
   });
 

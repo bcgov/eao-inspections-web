@@ -1,23 +1,50 @@
+import { LoadingService } from './../../../../services/loading.service';
 import { BasicUser } from './../../../../models/user.model';
 import {async, ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
 import {CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA} from '@angular/core';
+import { Observable } from 'rxjs/Observable';
 
 import { ReportsViewComponent } from './reports-view.component';
 import {RouterTestingModule} from '@angular/router/testing';
 import {Team} from '../../../../models/team.model';
 import {AdminService} from '../../../../services/admin.service';
+import { ToastrService } from 'ngx-toastr';
 
 
 describe('ReportsViewComponent', () => {
   let component: ReportsViewComponent;
   let fixture: ComponentFixture<ReportsViewComponent>;
   let compiled;
+  let loadingServiceStub;
+  let toastServiceStub;
 
   beforeEach(async(() => {
+    toastServiceStub = {
+      success(): Observable<any> {
+        return Observable.of(true);
+      },
+      error(): Observable<any> {
+        return Observable.of(true);
+      }
+    };
+
+    loadingServiceStub = {
+      loading(): Observable<any> {
+        return Observable.of(true);
+      },
+      showLoading(): Observable<any> {
+        return Observable.of(true);
+      }
+    };
+
     TestBed.configureTestingModule({
       declarations: [ ReportsViewComponent ],
       imports: [ RouterTestingModule ],
-      schemas: [ CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA ]
+      schemas: [ CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA ],
+      providers: [
+        { provide: LoadingService, useValue: loadingServiceStub },
+        { provide: ToastrService, useValue: toastServiceStub }
+      ]
     })
     .compileComponents();
   }));

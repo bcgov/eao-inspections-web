@@ -48,8 +48,7 @@ export class UserListComponent implements OnInit {
   constructor(
     private modalService: ModalService,
     private adminService: AdminService,
-    private toast: ToastrService,
-    private teamService: TeamService
+    private toast: ToastrService
   ) { }
 
   openLg(modal) {

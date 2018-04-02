@@ -1,3 +1,4 @@
+import { LoadingService } from './../../../../../services/loading.service';
 import {async, ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
 
 import { ReportViewListComponent } from './report-view-list.component';
@@ -6,18 +7,31 @@ import {CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA} from '@angular/core';
 import {OrderByPipe} from '../../../../directives/orderby.pipe';
 import {ActivatedRoute} from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
+import { Observable } from 'rxjs/Observable';
 
 describe('ReportViewListComponent', () => {
   let component: ReportViewListComponent;
   let fixture: ComponentFixture<ReportViewListComponent>;
   let compiled;
+  let loadingServiceStub;
   let mockData: any;
 
   beforeEach(async(() => {
+    loadingServiceStub = {
+      loading(): Observable<any> {
+        return Observable.of(true);
+      },
+      showLoading(): Observable<any> {
+        return Observable.of(true);
+      }
+    };
+
     TestBed.configureTestingModule({
       declarations: [ ReportViewListComponent, OrderByPipe ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
-      providers: [{provide : ActivatedRoute, useValue: {snapshot: {params: {'id': 'team-id-1'}}}}],
+      providers: [{provide : ActivatedRoute, useValue: {snapshot: {params: {'id': 'team-id-1'}}}},
+        { provide: LoadingService, useValue: loadingServiceStub },
+      ],
       imports: [RouterTestingModule]
     })
     .compileComponents();
@@ -36,7 +50,10 @@ describe('ReportViewListComponent', () => {
 
   it('should not render table for no reports', () => {
     fixture.detectChanges();
-    expect(compiled.querySelector('no-content')).toBeTruthy();
+    mockData = [];
+    component.data = mockData;
+    expect(compiled.querySelectorAll('report-list-item').length).toBe(0)
+    // expect(compiled.querySelector('no-content')).toBeTruthy();
   });
 
   it('should render table for data', () => {

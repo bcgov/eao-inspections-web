@@ -1,3 +1,4 @@
+import { LoadingService } from './../../../../../services/loading.service';
 import { AdminService } from './../../../../../services/admin.service';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
@@ -14,6 +15,8 @@ describe('UserListComponent', () => {
   let adminServiceStub;
   let modalServiceStub;
   let toastServiceStub;
+  let loadingServiceStub;
+  let mockUsers: any;
 
   beforeEach(async(() => {
     adminServiceStub = {
@@ -51,7 +54,16 @@ describe('UserListComponent', () => {
       error(): Observable<any> {
         return Observable.of(true);
       }
-    }
+    };
+
+    loadingServiceStub = {
+      loading(): Observable<any> {
+        return Observable.of(true);
+      },
+      showLoading(): Observable<any> {
+        return Observable.of(true);
+      }
+    };
 
     TestBed.configureTestingModule({
       declarations: [ UserListComponent ],
@@ -60,7 +72,8 @@ describe('UserListComponent', () => {
       providers: [
         { provide: AdminService, useValue: adminServiceStub },
         { provide: ModalService, useValue: modalServiceStub },
-        { provide: ToastrService, useValue: toastServiceStub }
+        { provide: ToastrService, useValue: toastServiceStub },
+        { provide: LoadingService, useValue: loadingServiceStub },
       ],
     })
     .compileComponents();
@@ -82,6 +95,8 @@ describe('UserListComponent', () => {
   it('should fetch active users on ngOnInit', () => {
     adminServiceStub.getActiveUsers();
     expect(adminServiceStub.getActiveUsers).toHaveBeenCalledTimes(1);
+    mockUsers = {}
+    component.users = mockUsers;
     expect(component.users).toBeTruthy();
   });
 

@@ -1,3 +1,4 @@
+import { LoadingService } from './../../../../../services/loading.service';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 
@@ -14,6 +15,7 @@ describe('ManageTeamsViewComponent', () => {
   let modalServiceStub: any;
   let adminServiceStub: any;
   let toastServiceStub: any;
+  let loadingServiceStub: any;
 
   beforeEach(async(() => {
     adminServiceStub = {
@@ -42,6 +44,14 @@ describe('ManageTeamsViewComponent', () => {
         return Observable.of(true);
       }
     };
+    loadingServiceStub = {
+      loading(): Observable<any> {
+        return Observable.of(true);
+      },
+      showLoading(): Observable<any> {
+        return Observable.of(true);
+      }
+    };
 
     TestBed.configureTestingModule({
       declarations: [ ManageTeamsViewComponent ],
@@ -50,7 +60,8 @@ describe('ManageTeamsViewComponent', () => {
       providers: [
         { provide: ModalService, useValue: modalServiceStub },
         { provide: AdminService, useValue: adminServiceStub },
-        { provide: ToastrService, useValue: toastServiceStub }
+        { provide: ToastrService, useValue: toastServiceStub },
+        { provide: LoadingService, useValue: loadingServiceStub },
       ]
     })
     .compileComponents();
