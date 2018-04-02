@@ -6,16 +6,6 @@ import { Team } from '../models/team.model';
 
 const Parse: any = require('parse');
 
-export function parseToJSON(objectList) {
-  const listJSON = [];
-  if (objectList.length) {
-    objectList.forEach((object) => {
-      listJSON.push(object.toJSON());
-    });
-  }
-  return listJSON;
-}
-
 export function parseUserToModel(object): BasicUser {
   if (object) {
     let profileImage = object.get('profileImage');

@@ -2,7 +2,6 @@ import { AdminService } from './../../../../services/admin.service';
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import * as String from '../../../../constants/strings';
-import { parseToJSON } from '../../../../services/parse.service';
 import {Ng2ImgMaxService} from 'ng2-img-max';
 import {ToastrService} from 'ngx-toastr';
 

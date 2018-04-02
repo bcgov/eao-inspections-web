@@ -40,28 +40,6 @@ export class AuthService {
     });
   }
 
-  getRole(role: string) {
-    return new Promise((resolve, reject) => {
-      let isRole = false;
-      const currentUser = Parse.User.current();
-      const query = new Parse.Query('Role');
-      query.equalTo('name', role);
-      query.equalTo('users', currentUser);
-      query.find({
-        success: function(object) {
-          if (object) {
-            isRole = true;
-          }
-        },
-        error: function(error) {
-          reject(error.message);
-        }
-      }).then(() => {
-        resolve(isRole);
-      });
-    });
-  }
-
   sendResetPassword(email: string) {
     return new Promise((resolve, reject) => {
       Parse.User.requestPasswordReset(email, {
