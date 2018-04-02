@@ -1,3 +1,4 @@
+import { BasicUser } from './../../../../models/user.model';
 import {async, ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
 import {CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA} from '@angular/core';
 
@@ -39,8 +40,8 @@ describe('ReportsViewComponent', () => {
   it('should render correct number of team cards', fakeAsync(() => {
     const adminService = fixture.debugElement.injector.get(AdminService);
     const teams = [
-      new Team('team-1-id', 'team1', 'admin1', 'blue', true),
-      new Team('team-2-id', 'team2', 'admin1', 'red', true),
+      new Team('team-1-id', 'team1', null, 'blue', true),
+      new Team('team-2-id', 'team2', null, 'red', true),
     ];
     spyOn(adminService, 'getActiveTeams').and.returnValue(Promise.resolve(teams));
     component.ngOnInit();

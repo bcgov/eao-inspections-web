@@ -18,14 +18,14 @@ describe('NoContentComponent', () => {
     fixture = TestBed.createComponent(NoContentComponent);
     component = fixture.componentInstance;
     
-    mockData = { image: "mockImage.png", message: "Mock message"}
+    mockData = { image: "mockImage", message: "Mock message"}
     component.emptyContent = mockData;
     fixture.detectChanges();
   });
 
   it('should create with appropiate data', () => {
     expect(component).toBeTruthy();
-    expect(component.emptyContent.image).toBe("mockImage.png");
+    expect(component.emptyContent.image).toBe("mockImage");
     expect(component.emptyContent.message).toBeTruthy("Mock Message");
   });
 });
