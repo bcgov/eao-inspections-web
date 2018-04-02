@@ -5,12 +5,17 @@ import { NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { RouterTestingModule } from '@angular/router/testing';
 
 import { ArchivedInspectionsComponent } from './archived-inspections.component';
+import {Observable} from 'rxjs/Observable';
+import {ToastrService} from 'ngx-toastr';
+import {LoadingService} from '../../../../../services/loading.service';
 
 describe('ArchivedInspectionsComponent', () => {
   let component: ArchivedInspectionsComponent;
   let fixture: ComponentFixture<ArchivedInspectionsComponent>;
   let adminServiceStub: any;
   let mockPipe: OrderByPipe;
+  let toastServiceStub: any;
+  let loadingServiceStub: any;
 
   beforeEach(async(() => {
     mockPipe = new OrderByPipe();
@@ -22,11 +27,28 @@ describe('ArchivedInspectionsComponent', () => {
         };
       })
     };
-
+    toastServiceStub = {
+      success(): Observable<any> {
+        return Observable.of(true);
+      },
+      error(): Observable<any> {
+        return Observable.of(true);
+      }
+    };
+    loadingServiceStub = {
+      loading(): Observable<any> {
+        return Observable.of(true);
+      },
+    };
     TestBed.configureTestingModule({
       declarations: [ ArchivedInspectionsComponent, OrderByPipe ],
       schemas: [NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA],
-      providers: [{ provide: AdminService, useValue: adminServiceStub }],
+      providers: [
+        { provide: AdminService, useValue: adminServiceStub },
+        { provide: ToastrService, useValue: toastServiceStub },
+        { provide: LoadingService, useValue: loadingServiceStub },
+        // Location,
+        ],
       imports: [RouterTestingModule]
     })
     .compileComponents();

@@ -39,8 +39,8 @@ describe('ReportsViewComponent', () => {
   it('should render correct number of team cards', fakeAsync(() => {
     const adminService = fixture.debugElement.injector.get(AdminService);
     const teams = [
-      new Team('team-1-id', 'team1', 'admin1', 'blue', true),
-      new Team('team-2-id', 'team2', 'admin1', 'red', true),
+      new Team('team-1-id', 'team1', null, 'blue', true),
+      new Team('team-2-id', 'team2', null, 'red', true),
     ];
     spyOn(adminService, 'getActiveTeams').and.returnValue(Promise.resolve(teams));
     component.ngOnInit();

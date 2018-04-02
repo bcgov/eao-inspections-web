@@ -4,10 +4,11 @@ import { RouterTestingModule } from '@angular/router/testing';
 
 import { AuthService } from './auth.service';
 import { AdminService } from './admin.service';
-import {createInspection, deleteInspections, deleteTeam, deleteUser, randomKey} from './testing.service';
+import {createInspection, deleteInspections, deleteTeam, deleteUser, parseInit, randomKey} from './testing.service';
 import { LoginComponent } from '../app/login/login.component';
 
 const Parse: any = require('parse');
+parseInit();
 
 describe('Admin Testing', () => {
   let component: LoginComponent;
