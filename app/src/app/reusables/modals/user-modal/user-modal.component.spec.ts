@@ -4,7 +4,7 @@ import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core
 import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA, DebugElement } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
-import { Ng2ImgMaxService } from 'ng2-img-max';
+import { Ng2ImgMaxService, Ng2ImgMaxModule } from 'ng2-img-max';
 
 import { UserModalComponent } from './user-modal.component';
 import { Team } from '../../../../models/team.model';
@@ -34,7 +34,7 @@ describe('UserModalComponent', () => {
         { provide: ModalService, useValue: modalServiceStub },
         Ng2ImgMaxService
       ],
-      imports: [FormsModule]
+      imports: [FormsModule, Ng2ImgMaxModule]
     })
     .compileComponents();
   }));

@@ -13,7 +13,7 @@ import { Team } from '../../../../../models/team.model';
 export class ArchivedTeamsComponent implements OnInit {
   title = "Archived Teams";
   teamsLink = '/' + Route.DASHBOARD + '/' + Route.ADMIN_TEAMS;
-  teams: Array<Team> = undefined;
+  teams: Array<Team> = [];
 
   emptyContent = {
     image: "../../assets/team-lg.png",
@@ -40,6 +40,7 @@ export class ArchivedTeamsComponent implements OnInit {
         this.totalPages = this.adminService.totalPages;
       });
   }
+
   onChangePage(value) {
     this.page = value;
     this.adminService.getArchivedTeams(value)

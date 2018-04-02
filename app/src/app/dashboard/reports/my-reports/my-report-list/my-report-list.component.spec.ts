@@ -1,7 +1,9 @@
+import { LoadingService } from './../../../../../services/loading.service';
 import { ReportService } from './../../../../../services/report.service';
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import { NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { OrderByPipe } from '../../../../directives/orderby.pipe';
+import { Observable } from 'rxjs/Observable';
 
 import { MyReportListComponent } from './my-report-list.component';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -11,6 +13,7 @@ describe('MyReportListComponent', () => {
   let component: MyReportListComponent;
   let fixture: ComponentFixture<MyReportListComponent>;
   let reportServiceStub: any;
+  let loadingServiceStub;
   let compiled;
   let mockData: any;
 
@@ -27,10 +30,20 @@ describe('MyReportListComponent', () => {
       }),
     };
 
+    loadingServiceStub = {
+      loading(): Observable<any> {
+        return Observable.of(true);
+      },
+      showLoading(): Observable<any> {
+        return Observable.of(true);
+      }
+    };
+
     TestBed.configureTestingModule({
       declarations: [ MyReportListComponent, OrderByPipe ],
       providers: [
-        { provide: ReportService, useValue: reportServiceStub }
+        { provide: ReportService, useValue: reportServiceStub },
+        { provide: LoadingService, useValue: loadingServiceStub },
       ],
       schemas: [ CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA ],
       imports: [ RouterTestingModule ],
@@ -52,7 +65,10 @@ describe('MyReportListComponent', () => {
 
   it('should not render table for no reports', () => {
     fixture.detectChanges();
-    expect(compiled.querySelector('no-content')).toBeTruthy();
+    mockData = [];
+    component.data = mockData;
+    expect(compiled.querySelectorAll('report-list-item').length).toBe(0);
+    // expect(compiled.querySelector('no-content')).toBeTruthy();
   });
 
   it('should render table for data', () => {
