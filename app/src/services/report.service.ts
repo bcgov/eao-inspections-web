@@ -352,12 +352,12 @@ export class ReportService {
           medias.forEach((media) => {
             console.log(media);
             const folder = observationFolders[media.observationId];
-            const mediaFoler = folder.folder(media.id);
+            const mediaFolder = folder.folder(media.id);
 
-            mediaFoler.file('info.txt', media.toText());
+            mediaFolder.file('info.txt', media.toText());
 
             JSZipUtils.getBinaryContent(media.fileURL, function (err, data) {
-              mediaFoler.file(media.fileName, data, {binary: true});
+              mediaFolder.file(media.fileName, data, {binary: true});
 
               if(err) {
                 reject(err);
