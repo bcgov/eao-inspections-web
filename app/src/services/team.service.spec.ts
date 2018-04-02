@@ -23,7 +23,7 @@ describe('Team Service Testing', () => {
     originalTimeout = jasmine.DEFAULT_TIMEOUT_INTERVAL;
     jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
     const promises = [];
-    Parse.User.logIn('superadmin', 'superadmin').then((user) => {
+    Parse.User.logIn('superadmin@superadmin.com', 'password').then((user) => {
       console.log('Logged In as SuperAdmin');
       promises.push(createTeam('test_team1').then(object => {
         team1 = object;

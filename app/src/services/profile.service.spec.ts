@@ -30,7 +30,7 @@ describe('Authentication and Authorization Testing', () => {
   beforeAll((done) => {
     originalTimeout = jasmine.DEFAULT_TIMEOUT_INTERVAL;
     jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
-    Parse.User.logIn('superadmin', 'superadmin').then((user) => {
+    Parse.User.logIn('superadmin@superadmin.com', 'password').then((user) => {
       done();
     });
   });

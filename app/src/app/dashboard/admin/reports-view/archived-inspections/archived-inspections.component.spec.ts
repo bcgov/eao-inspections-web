@@ -13,8 +13,8 @@ describe('ArchivedInspectionsComponent', () => {
   let component: ArchivedInspectionsComponent;
   let fixture: ComponentFixture<ArchivedInspectionsComponent>;
   let adminServiceStub: any;
-  let mockPipe: OrderByPipe;
   let toastServiceStub: any;
+  let mockPipe: OrderByPipe;
   let loadingServiceStub: any;
 
   beforeEach(async(() => {
