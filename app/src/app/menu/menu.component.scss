@@ -236,6 +236,7 @@
 
     &__content {
       &__name {
+        text-transform: capitalize;
         color: $font-white;
         font-size: 18px;
         line-height: 23px;

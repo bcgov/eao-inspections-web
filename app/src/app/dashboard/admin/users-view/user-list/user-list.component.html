@@ -20,7 +20,7 @@
         </div>
         <span *ngFor="let user of users">
       <div class="table-row">
-        <div class="table-row-item" data-header="Full Name">
+        <div class="table-row-item name" data-header="Full Name">
           <span class="table__img-wrapper">
             <img *ngIf="user.profileImage" class="table__img" src={{user.profileImage}} />
           </span>
@@ -34,7 +34,7 @@
             {{ team.name }}
         </div>
     </div>
-    <div class="table-row-item" data-header="Permission">
+    <div class="table-row-item permission" data-header="Permission">
         {{user.permission}}
     </div>
     <div class="table-row-item" data-header="Action">

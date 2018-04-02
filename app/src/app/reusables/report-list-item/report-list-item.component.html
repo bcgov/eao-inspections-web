@@ -1,5 +1,5 @@
 <div class="table-row">
-    <div class="table-row-item" data-header="Title" *ngIf="fields.indexOf('title') >= 0">
+    <div class="table-row-item name" data-header="Title" *ngIf="fields.indexOf('title') >= 0">
         <a [routerLink]="['inspection-details', data.id]">{{data.title}}</a>
     </div>
     <div class="table-row-item" data-header="Linked Project" *ngIf="fields.indexOf('project') >= 0">

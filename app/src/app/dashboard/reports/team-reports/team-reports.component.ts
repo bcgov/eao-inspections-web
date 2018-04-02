@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import {ProfileService} from '../../../../services/profile.service';
 import { Team } from '../../../../models/team.model';
+import * as String from '../../../../constants/strings';
 
 @Component({
   selector: 'team-reports',
@@ -11,9 +12,14 @@ import { Team } from '../../../../models/team.model';
 })
 export class TeamReportsComponent implements OnInit {
   title = 'Team Inspections';
-  teams: Array<Team>;
+  teams: Array<Team> = undefined;
   page = 0;
   totalPages = 0;
+
+  emptyContent = {
+    image: '../../assets/team-lg.png',
+    message: String.NOT_TEAM_MEMBER,
+  };
 
   constructor(private profileService: ProfileService) { }
 
