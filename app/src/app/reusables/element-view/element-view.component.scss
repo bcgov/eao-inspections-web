@@ -15,6 +15,7 @@
       padding: 20px;
       cursor: pointer;
       .nav-link {
+        border-radius: 0;
         border: 1px solid $default-primary-color;
         &.active {
           background-color: $default-primary-color;
