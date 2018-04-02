@@ -18,12 +18,6 @@ export class ProfileService {
      this.user = Parse.User.current();
   }
 
-  getUser(): Promise<any> {
-    return new Promise((resolve) => {
-      resolve(this.user);
-    });
-  }
-
   getTeams(page=0): Promise<any[]> {
     const key = randomKey();
     self.loadingService.showLoading(true, key);

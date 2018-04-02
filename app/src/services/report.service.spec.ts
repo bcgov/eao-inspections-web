@@ -1,34 +1,38 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing'
-import { FormsModule } from '@angular/forms';
-import { RouterTestingModule } from '@angular/router/testing';
+import { async, TestBed } from '@angular/core/testing'
 
-import { AuthService } from './auth.service';
 import {
   createInspection, createObservation, createTeam, deleteInspections, deleteObservations, deleteTeam,
   parseInit
 } from './testing.service';
-import { LoginComponent } from '../app/login/login.component';
 import { ReportService } from './report.service';
+import {Observable} from 'rxjs/Observable';
+import {LoadingService} from './loading.service';
 
 const Parse: any = require('parse');
 parseInit();
 
 describe('Report Testing', () => {
-  let component: LoginComponent;
-  let fixture: ComponentFixture<LoginComponent>;
   let service: ReportService;
   let originalTimeout;
   let team1;
   let insp1, insp2;
   let obs1, obs2;
+  let loadingServiceStub: any;
 
   beforeEach(async(() => {
+    loadingServiceStub = {
+      loading(): Observable<any> {
+        return Observable.of(true);
+      },
+      showLoading():Observable<any> {
+        return Observable.of(true);
+      },
+    };
     TestBed.configureTestingModule({
-      imports: [FormsModule,
-        RouterTestingModule,
+      providers: [
+        { provide: LoadingService, useValue: loadingServiceStub },
+        ReportService
       ],
-      providers: [AuthService, ReportService],
-      declarations: [ LoginComponent ]
     })
       .compileComponents();
   }));
@@ -71,9 +75,6 @@ describe('Report Testing', () => {
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(LoginComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
     service = TestBed.get(ReportService);
   });
 
@@ -82,7 +83,6 @@ describe('Report Testing', () => {
     const promises = [];
 
     Parse.User.logOut().then(() => {
-      jasmine.DEFAULT_TIMEOUT_INTERVAL = originalTimeout;
       console.log('Start Destruction of dummy data...');
       promises.push(deleteInspections(insp1.get('title')));
       promises.push(deleteInspections(insp2.get('title')));
@@ -92,18 +92,14 @@ describe('Report Testing', () => {
     }).then(() => {
       Promise.all(promises).then(() => {
         console.log('Destruction Complete');
+      }).then(() => {
+        jasmine.DEFAULT_TIMEOUT_INTERVAL = originalTimeout;
         done();
       });
     });
   });
 
-  it('should create', () => {
-    console.log('Start Testing');
-    expect(component).toBeTruthy();
-  });
-
   it('should get My Reports', () => {
-    console.log('Testing get user in functionality');
     Parse.User.logIn('superadmin', 'superadmin').then((user) => {
       service.getMyReports().then((object) => {
         object.forEach((item) => {
@@ -114,9 +110,7 @@ describe('Report Testing', () => {
   });
 
   it('should get Team Reports', () => {
-    console.log('Testing get team reports functionality');
     service.getTeamReports(team1.get('id')).then((object) => {
-      console.log('Matching ids for reports');
       object.forEach((item) => {
         expect(item.get('id') === (insp1.id || insp2.id)).toBeTruthy();
       });
@@ -124,9 +118,7 @@ describe('Report Testing', () => {
   });
 
   it('should get Element of Report', () => {
-    console.log('Testing get team functionality');
     service.getObservation(insp1.id).then((object) => {
-      console.log('Matching ids for elements');
       object.forEach((item) => {
         expect(item.id === (obs1.id || obs2.id)).toBeTruthy();
       });
