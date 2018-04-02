@@ -1,9 +1,7 @@
 import { AdminService } from './../../../../../services/admin.service';
 import { Component, OnInit } from '@angular/core';
-import { ModalService } from '../../../../../services/modal.service';
 import * as String from '../../../../../constants/strings';
 import * as Route from '../../../../../constants/routes';
-import { parseToJSON } from '../../../../../services/parse.service';
 import { Team } from '../../../../../models/team.model';
 
 @Component({

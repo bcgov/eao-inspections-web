@@ -31,7 +31,7 @@ export class AdminService {
       const teamQuery = new Parse.Query('Team');
       teamQuery.equalTo('userId', this.user.userId);
 
-      const q = new Parse.Query('User');
+      const q = new Parse.Query(Parse.User);
       q.matchesKeyInQuery('teamId', 'teamId', teamQuery, {
         success: function (results) {
           self.loadingService.showLoading(false, key);
@@ -53,7 +53,7 @@ export class AdminService {
       const users = [];
 
       roleQuery.equalTo('name', _role).first().then((role) => {
-        const userQuery = new Parse.Query('User');
+        const userQuery = new Parse.Query(Parse.User);
         userQuery.matchesKeyInQuery('objectId', 'objectId', role.get('users').query())
           .find({
             success: (results) => {
@@ -78,8 +78,8 @@ export class AdminService {
     const key = randomKey();
     self.loadingService.showLoading(true, key);
     return new Promise((resolve, reject) => {
-      const query = new Parse.Query('User');
       const users = [];
+      const query = new Parse.Query(Parse.User);
       const queryCount = new Parse.Query(Parse.User);
       queryCount.equalTo('isActive',false);
       if (this.page === 0) {
@@ -204,7 +204,6 @@ export class AdminService {
       const role = this.getCorrectRole(permission);
       const access = this.getAppAccess(permission);
       const query = new Parse.Query(Parse.Role);
-      const queryTeam = new Parse.Query('Team');
       const user = new Parse.User();
 
       user.set('isActive', true);
@@ -349,18 +348,16 @@ export class AdminService {
   }
 
   archiveUser(user): Promise<any> {
-    let teams = [];
     if(!user.access.isAdmin || !user.access.isSuperAdmin) {
       this.removeFromTeam(user);
-    } 
-
+    }
     const key = randomKey();
     self.loadingService.showLoading(true, key);
     return new Promise((resolve, reject) => {
       const query = new Parse.Query(Parse.User);
       const teamQuery = new Parse.Query('Team');
       const tempUser = new Parse.User();
-      tempUser.id = user.id
+      tempUser.id = user.id;
       teamQuery.equalTo('teamAdmin', tempUser);
       teamQuery.find().then((adminObject) => {
         if(adminObject.length == 0){

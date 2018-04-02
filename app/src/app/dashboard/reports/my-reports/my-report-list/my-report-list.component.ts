@@ -1,9 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 
 import {ReportService} from '../../../../../services/report.service';
-import {parseToJSON} from '../../../../../services/parse.service';
 import {Team} from '../../../../../models/team.model';
-import {Inspection} from '../../../../../models/inspection.model';
 import * as String from '../../../../../constants/strings';
 
 

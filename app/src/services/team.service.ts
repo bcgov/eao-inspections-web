@@ -26,11 +26,11 @@ export class TeamService {
                 const team = parseTeamToModel(obj);
                 self.loadingService.showLoading(false, key);
                 const adminId = obj.get('teamAdmin').id;
-                const userQuery = new Parse.Query('User');
+                const userQuery = new Parse.Query(Parse.User);
                 userQuery.get(adminId).then((admin) => {
                     team.admin = parseUserToModel(admin);
                     resolve(team);
-                }).catch((error) => {
+                }).catch(() => {
                     resolve(team);
                 });
             },

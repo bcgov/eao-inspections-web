@@ -12,7 +12,7 @@ export class LoggedInGuardService implements CanActivate {
     if (!this.authService.isAuthenticated()) {
       return true;
     } else {
-      const isAdmin = (this.authService.isSuperAdmin() || this.authService.isAdmin()) ? true : false;
+      const isAdmin = (this.authService.isSuperAdmin() || this.authService.isAdmin());
       this.router.navigate([Route.HOME(isAdmin)]);
     }
     return false;
