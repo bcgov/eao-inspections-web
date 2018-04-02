@@ -23,7 +23,7 @@ export class ArchivedInspectionsComponent implements OnInit {
   direction: number;
   column: string;
 
-  data: Array<Inspection> = [];
+  data: Array<Inspection> = undefined;
 
   fields: Array<any>;
   actions: Array<any>;

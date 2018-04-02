@@ -20,6 +20,16 @@
 
 body {
     font-family: myriad-pro, sans-serif;
+
+    // container for pagination links (all other css in pagination.scss
+    .d-flex.justify-content-center {
+        margin-top: 20px; 
+
+        @include large {
+            margin-top: 40px;
+        }
+    }
+
     .no-content {
         position: absolute;
         top: 40%;
@@ -326,6 +336,9 @@ body {
                 flex: 2;
             }
 
+        .table-row-item.permission, .table-row-item.name {
+            text-transform: capitalize;
+        }
 
         .table-row-item.teams {
             display: inline-grid;

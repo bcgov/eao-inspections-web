@@ -8,6 +8,7 @@
         box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.2);
 
         &-content {
+            text-transform: capitalize;
             padding: 25px;
             margin: 20px;
             @include flex;
@@ -28,6 +29,7 @@
                 }
             }
             p {
+                text-transform: capitalize;
                 color: $font-black;
                 font-size: 18px;
                 font-weight: 300;
@@ -49,6 +51,7 @@
                 }
 
                a {
+                    text-transform: capitalize;
                     flex: 1;
                }
                p {

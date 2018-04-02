@@ -25,10 +25,6 @@
                     <p>{{ data.title || '-' }}</p>
                 </div>
                 <div>
-                    <h4>subtitle</h4>
-                    <p>{{ data.subtitle || '-' }}</p>
-                </div>
-                <div>
                     <h4>inspection number</h4>
                     <p>{{ data.inspectionNumber || '-' }}</p>
                 </div>
@@ -45,11 +41,11 @@
                 </div>
                 <div>
                     <h4>inspection start date</h4>
-                    <p>{{ data.startDate || '-' }}</p>
+                    <p>{{ data.startDate | date : "MMM d y" || '-' }}</p>
                 </div>
                 <div>
                     <h4>inspection end date</h4>
-                    <p>{{ data.endDate || '-' }}</p>
+                    <p>{{ data.endDate | date : "MMM d y" || '-' }}</p>
                 </div>
             </div>
         </div>
