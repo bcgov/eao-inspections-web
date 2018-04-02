@@ -5,16 +5,9 @@ import { NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { RouterTestingModule } from '@angular/router/testing';
 
 import { ArchivedInspectionsComponent } from './archived-inspections.component';
-<<<<<<< HEAD
-import { LoadingService } from '../../../../../services/loading.service';
-import { Location } from '@angular/common';
-import { ToastrService } from 'ngx-toastr';
-import { Observable } from 'rxjs/Observable';
-=======
 import {Observable} from 'rxjs/Observable';
 import {ToastrService} from 'ngx-toastr';
 import {LoadingService} from '../../../../../services/loading.service';
->>>>>>> 9c669eff444849e306c9d74a0d8216bad2aa070d
 
 describe('ArchivedInspectionsComponent', () => {
   let component: ArchivedInspectionsComponent;
@@ -22,10 +15,6 @@ describe('ArchivedInspectionsComponent', () => {
   let adminServiceStub: any;
   let toastServiceStub: any;
   let mockPipe: OrderByPipe;
-<<<<<<< HEAD
-=======
-  let toastServiceStub: any;
->>>>>>> 9c669eff444849e306c9d74a0d8216bad2aa070d
   let loadingServiceStub: any;
 
   beforeEach(async(() => {
@@ -38,10 +27,6 @@ describe('ArchivedInspectionsComponent', () => {
         };
       })
     };
-<<<<<<< HEAD
-
-=======
->>>>>>> 9c669eff444849e306c9d74a0d8216bad2aa070d
     toastServiceStub = {
       success(): Observable<any> {
         return Observable.of(true);
@@ -50,36 +35,20 @@ describe('ArchivedInspectionsComponent', () => {
         return Observable.of(true);
       }
     };
-<<<<<<< HEAD
-
-=======
->>>>>>> 9c669eff444849e306c9d74a0d8216bad2aa070d
     loadingServiceStub = {
       loading(): Observable<any> {
         return Observable.of(true);
       },
     };
-<<<<<<< HEAD
-
-=======
->>>>>>> 9c669eff444849e306c9d74a0d8216bad2aa070d
     TestBed.configureTestingModule({
       declarations: [ ArchivedInspectionsComponent, OrderByPipe ],
       schemas: [NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA],
       providers: [
-<<<<<<< HEAD
-        { provide: AdminService, useValue: adminServiceStub }, 
-        { provide: ToastrService, useValue: toastServiceStub },
-        { provide: LoadingService, useValue: loadingServiceStub },
-        Location
-      ],
-=======
         { provide: AdminService, useValue: adminServiceStub },
         { provide: ToastrService, useValue: toastServiceStub },
         { provide: LoadingService, useValue: loadingServiceStub },
         // Location,
         ],
->>>>>>> 9c669eff444849e306c9d74a0d8216bad2aa070d
       imports: [RouterTestingModule]
     })
     .compileComponents();
