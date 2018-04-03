@@ -110,7 +110,7 @@ describe('Report Testing', () => {
   });
 
   it('should get Team Reports', () => {
-    service.getTeamReports(team1.get('id')).then((object) => {
+    service.getActiveTeamReports(team1.get('id')).then((object) => {
       object.forEach((item) => {
         expect(item.get('id') === (insp1.id || insp2.id)).toBeTruthy();
       });

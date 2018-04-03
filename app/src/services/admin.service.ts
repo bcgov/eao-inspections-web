@@ -619,22 +619,25 @@ export class AdminService {
     self.loadingService.showLoading(true, key);
     return new Promise((resolve, reject) => {
       const query = new Parse.Query('Team');
-      query.get(team.id, {
-        success: function (team) {
-          team.set('isActive', false);
-          team.save(null, { useMasterKey: true }).then(object => {
+      const inspectionQuery = new Parse.Query('Inspection');
+      query.get(team.id).then((teamObj) => {
+        inspectionQuery.equalTo('team', teamObj);
+        inspectionQuery.find().then((inspectionObj) => {
+          inspectionObj.forEach((inspection) => {
+            inspection.set('isActive', false);
+            inspection.save();
+          });
+        }).then(() => {
+          teamObj.set('isActive', false);
+          teamObj.save(null, { useMasterKey: true }).then((teamSaveObj) => {
             self.loadingService.showLoading(false, key);
-            resolve(object);
-          })
-          .catch((error) => {
+            resolve(teamSaveObj);
+          },
+          (error) => {
             self.loadingService.showLoading(false, key);
             reject(error);
           });
-        },
-        error: function (object, error) {
-          self.loadingService.showLoading(false, key);
-          reject(error);
-        }
+        });
       });
     });
   }
