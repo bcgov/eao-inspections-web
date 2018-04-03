@@ -43,7 +43,7 @@ export class TeamReportListComponent implements OnInit {
   ngOnInit() {
     this.sort('updatedAt');
     this.teamId = this.route.snapshot.params['id'];
-    this.reportService.getTeamReports(this.teamId)
+    this.reportService.getActiveTeamReports(this.teamId)
     .then((results) => {
         this.data = results;
         this.totalPages = this.reportService.totalPages;
@@ -58,7 +58,7 @@ export class TeamReportListComponent implements OnInit {
 
   onChangePage(value) {
     this.page = value;
-    this.reportService.getTeamReports(this.teamId, value)
+    this.reportService.getActiveTeamReports(this.teamId, value)
       .then((results) => {
         this.data = results;
       });
