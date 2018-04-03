@@ -1,7 +1,9 @@
-import { AdminService } from './../../../../services/admin.service';
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { ColorPickerService } from 'ngx-color-picker';
+import { Component,EventEmitter, OnInit, Input, Output } from '@angular/core';
 import { NgForm } from '@angular/forms';
+
+import { ColorPickerService } from 'ngx-color-picker';
+
+import { AdminService } from './../../../../services/admin.service';
 
 @Component({
   selector: 'team-modal',
@@ -9,15 +11,14 @@ import { NgForm } from '@angular/forms';
   styleUrls: ['./team-modal.component.scss']
 })
 export class TeamModalComponent implements OnInit {
-  admins = [];
-  selectedPhoto = '../../assets/avatar@2x.png';
-  color = '#FDB913';
-  fileToUpload;
-
   @Input('modal') modal: any;
   @Input('team') team: any;
   @Input() closeValue: any;
   @Output() submitValue: EventEmitter<any> = new EventEmitter();
+  admins = [];
+  selectedPhoto = '../../assets/avatar@2x.png';
+  color = '#FDB913';
+  fileToUpload;
 
   constructor(private colorPicker: ColorPickerService, private adminService: AdminService) { }
 

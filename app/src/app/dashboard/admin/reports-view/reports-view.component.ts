@@ -1,7 +1,8 @@
-import * as String from './../../../../constants/strings';
 import { Component, OnInit } from '@angular/core';
-import { Team } from '../../../../models/team.model';
+
 import { AdminService } from '../../../../services/admin.service';
+import * as String from './../../../../constants/strings';
+import { Team } from '../../../../models/team.model';
 
 @Component({
   selector: 'app-reports-view',
@@ -18,7 +19,6 @@ export class ReportsViewComponent implements OnInit {
   };
 
   teams: Array<Team> = undefined;
-
   page = 0;
   totalPages = 0;
 

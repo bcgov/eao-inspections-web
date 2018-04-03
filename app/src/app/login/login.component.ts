@@ -2,13 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 
-import { AuthService } from '../../services/auth.service';
-import * as Route from '../../constants/routes';
-import { ModalService } from '../../services/modal.service';
-import * as String from '../../constants/strings';
 import { ToastrService } from 'ngx-toastr';
+
+import { AuthService } from '../../services/auth.service';
 import { BasicUser } from '../../models/user.model';
+import { ModalService } from '../../services/modal.service';
 import { parseUserToModel } from '../../services/parse.service';
+import * as Route from '../../constants/routes';
+import * as String from '../../constants/strings';
 
 @Component({
   selector: 'app-login',
@@ -17,14 +18,17 @@ import { parseUserToModel } from '../../services/parse.service';
   providers: [AuthService]
 })
 export class LoginComponent implements OnInit {
-   user: BasicUser;
-
   forgotPasswordModal = {
     message: String.FORGOT_PASSWORD_MESSAGE,
     userButton: String.SEND_BUTTON,
   };
+  user: BasicUser;
 
-  constructor(private authService: AuthService, private router: Router, private modalService: ModalService, private toast: ToastrService) { }
+  constructor(private authService: AuthService,
+              private router: Router,
+              private modalService: ModalService,
+              private toast: ToastrService) {
+  }
 
   ngOnInit() {
   }

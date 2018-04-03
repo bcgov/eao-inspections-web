@@ -1,11 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
 
-//  pass the following into this component
-//  emptyContent = {
-//    image: string,
-//    message: string,
-//  }
-
 @Component({
   selector: 'no-content',
   templateUrl: './no-content.component.html',

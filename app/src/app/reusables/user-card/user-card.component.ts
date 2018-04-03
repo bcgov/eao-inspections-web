@@ -1,7 +1,7 @@
-import { ModalService } from './../../../services/modal.service';
 import { Component, Input, Output,EventEmitter } from '@angular/core';
 
 import * as String from '../../../constants/strings';
+import { ModalService } from './../../../services/modal.service';
 
 @Component({
   selector: 'user-card',
@@ -9,12 +9,6 @@ import * as String from '../../../constants/strings';
   styleUrls: ['./user-card.component.scss']
 })
 export class UserCardComponent {
-  @Input('user') user: any;
-  @Input('team') team: any;
-  @Output() removeMember: EventEmitter<any> = new EventEmitter();
-  @Output() editMember: EventEmitter<any> = new EventEmitter();
-
-
   editModal = {
     message: String.ARCHIVE_USER,
     header: String.EDIT_USER,
@@ -23,7 +17,6 @@ export class UserCardComponent {
     confirmationNo: String.CANCEL_BUTTON,
     edit: true,
   };
-
   removeModal = {
     message: String.REMOVE_USER,
     header: String.REMOVE_USER,
@@ -31,7 +24,10 @@ export class UserCardComponent {
     confirmationYes: String.REMOVE_BUTTON,
     confirmationNo: String.CANCEL_BUTTON
   };
-
+  @Input('user') user: any;
+  @Input('team') team: any;
+  @Output() removeMember: EventEmitter<any> = new EventEmitter();
+  @Output() editMember: EventEmitter<any> = new EventEmitter();
 
   constructor(private modalService: ModalService) { }
 

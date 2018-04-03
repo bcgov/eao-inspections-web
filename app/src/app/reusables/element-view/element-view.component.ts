@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import {ReportService} from '../../../services/report.service';
 import {ActivatedRoute} from '@angular/router';
+import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
+
+import {ReportService} from '../../../services/report.service';
 
 @Component({
   selector: 'app-element-view',
@@ -9,7 +10,6 @@ import { Location } from '@angular/common';
   styleUrls: ['./element-view.component.scss'],
   providers: [ReportService]
 })
-
 export class ElementViewComponent implements OnInit {
   title = 'Element 1';
   subTitle = 'Attached Media';

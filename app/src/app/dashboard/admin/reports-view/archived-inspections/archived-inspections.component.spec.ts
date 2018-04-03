@@ -9,7 +9,7 @@ import {Observable} from 'rxjs/Observable';
 import {ToastrService} from 'ngx-toastr';
 import {LoadingService} from '../../../../../services/loading.service';
 
-fdescribe('ArchivedInspectionsComponent', () => {
+describe('ArchivedInspectionsComponent', () => {
   let component: ArchivedInspectionsComponent;
   let fixture: ComponentFixture<ArchivedInspectionsComponent>;
   let adminServiceStub: any;

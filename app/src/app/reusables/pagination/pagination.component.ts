@@ -6,10 +6,8 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
   styleUrls: ['./pagination.component.scss']
 })
 export class PaginationComponent implements OnInit {
+  @Input() page: number = 0;
   _totalPages = 0;
-  @Input()
-  page: number = 0;
-
   @Input()
   set totalPages(totalPages: number) {
       this.pageArray = Array(totalPages).fill(1).map((x,i) => i + 1);
@@ -18,10 +16,10 @@ export class PaginationComponent implements OnInit {
   get totalPages() {
     return this._totalPages;
   }
-
   @Output()
   changePage: EventEmitter<number> = new EventEmitter<number>();
   pageArray: Array<number>;
+
   constructor() {
   }
 

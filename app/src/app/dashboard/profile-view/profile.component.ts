@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+
+import {BasicUser} from '../../../models/user.model';
 import {ProfileService} from '../../../services/profile.service';
 import {parseUserToModel} from '../../../services/parse.service';
-import {BasicUser} from '../../../models/user.model';
 
 @Component({
   selector: 'profile',

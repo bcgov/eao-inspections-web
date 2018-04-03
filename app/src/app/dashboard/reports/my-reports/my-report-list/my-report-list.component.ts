@@ -4,7 +4,6 @@ import {ReportService} from '../../../../../services/report.service';
 import {Team} from '../../../../../models/team.model';
 import * as String from '../../../../../constants/strings';
 
-
 @Component({
   selector: 'my-report-list',
   templateUrl: './my-report-list.component.html',
@@ -13,21 +12,19 @@ import * as String from '../../../../../constants/strings';
 })
 
 export class MyReportListComponent implements OnInit {
+  emptyContent = {
+    image: "../../assets/inspections.png",
+    message: String.EMPTY_INSPECTIONS,
+  };
   @Input('data') data: any;
   @Input('page') page: number;
   @Input('totalPages') totalPages: number;
   title = 'Team 1';
   link = '/team-reports';
-  emptyContent = {
-    image: "../../assets/inspections.png",
-    message: String.EMPTY_INSPECTIONS,
-  };
-
   reports = [];
   team: Team;
   fields: Array<any>;
   actions: Array<any>;
-
   isDesc: Boolean = false;
   direction: number;
   column: string;
@@ -37,15 +34,14 @@ export class MyReportListComponent implements OnInit {
     this.actions = ['download'];
   }
 
-  ngOnInit() {
-
-  }
+  ngOnInit() { }
 
   sort(property: string) {
     this.isDesc = !this.isDesc;
     this.column = property;
     this.direction = this.isDesc ? 1 : -1;
   }
+
   onChangePage(value) {
     this.page = value;
     this.reportService.getMyReports(value)

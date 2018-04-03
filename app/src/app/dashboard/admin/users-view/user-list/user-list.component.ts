@@ -1,12 +1,12 @@
-import { TeamService } from './../../../../../services/team.service';
 import {Component, OnInit} from '@angular/core';
+
 import { ToastrService } from 'ngx-toastr';
 
 import { AdminService } from './../../../../../services/admin.service';
+import { BasicUser } from '../../../../../models/user.model';
 import { ModalService } from './../../../../../services/modal.service';
 import * as String from '../../../../../constants/strings';
 import * as Route from '../../../../../constants/routes';
-import { BasicUser } from '../../../../../models/user.model';
 
 @Component({
   selector: 'user-list',

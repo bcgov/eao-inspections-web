@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 
+import { ToastrService } from 'ngx-toastr';
+
 import { AdminService } from './../../../../../services/admin.service';
+import { BasicUser } from '../../../../../models/user.model';
 import { ModalService } from './../../../../../services/modal.service';
 import * as String from '../../../../../constants/strings';
 import * as Route from '../../../../../constants/routes';
-import { ToastrService } from 'ngx-toastr';
-import { BasicUser } from '../../../../../models/user.model';
 
 @Component({
   selector: 'app-archived-users',
@@ -13,11 +14,7 @@ import { BasicUser } from '../../../../../models/user.model';
   styleUrls: ['./archived-users.component.scss'],
   providers: [ AdminService ]
 })
-
 export class ArchivedUsersComponent implements OnInit {
-  title = "Archived Users";
-  link = '/' + Route.DASHBOARD + '/' + Route.ADMIN_USERS;
-
   emptyContent = {
     image: "../../assets/team-member.png",
     message: String.EMPTY_ARCHIVED_USERS,
@@ -29,13 +26,16 @@ export class ArchivedUsersComponent implements OnInit {
     secondaryYes: String.UNARCHIVE_BUTTON,
     confirmationNo: String.CANCEL_BUTTON,
   };
-
+  title = "Archived Users";
+  link = '/' + Route.DASHBOARD + '/' + Route.ADMIN_USERS;
   users: Array<BasicUser> = undefined;
-
   page = 0;
   totalPages = 0;
 
-  constructor(private adminService: AdminService, private toast: ToastrService, private modalService: ModalService ) { }
+  constructor(private adminService: AdminService,
+              private toast: ToastrService,
+              private modalService: ModalService) {
+  }
 
   open(modal) {
     this.modalService.open(modal, { backdrop: 'static', keyboard: false });
