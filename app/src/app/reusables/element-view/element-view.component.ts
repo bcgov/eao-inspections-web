@@ -26,12 +26,9 @@ export class ElementViewComponent implements OnInit {
   isPhotos;
   isVideo;
   isVoice;
-<<<<<<< HEAD
   googleStaticMapApiKey: string;
   coordination: string;
-=======
   viewOnly;
->>>>>>> bec7743f9952de394511cfdf52f523fdba3f8e56
   constructor(private route: ActivatedRoute, private reportService: ReportService, private location: Location) {
     this.route.params.subscribe(params => this.routeParam = params);
     this.googleStaticMapApiKey = environment.googleStaticMapApiKey;
@@ -40,11 +37,8 @@ export class ElementViewComponent implements OnInit {
   ngOnInit() {
     this.reportService.getObservation(this.routeParam.id).then(object => {
       this.data = object;
-<<<<<<< HEAD
       this.coordination = this.data.coordinate['_latitude'] + ', ' + this.data.coordinate['_longitude'];
-=======
       this.viewOnly = object.viewOnly;
->>>>>>> bec7743f9952de394511cfdf52f523fdba3f8e56
     });
     this.reportService.getMedia(this.routeParam.id, 'Photo').then(object => {
       object.forEach(obj => {
