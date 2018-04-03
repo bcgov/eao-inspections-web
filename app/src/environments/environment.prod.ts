@@ -3,5 +3,6 @@ export const environment = {
   parseId: '<parseId>',
   parseKey: '<parseKey>',
   parseURL: '<parseURL>',
-  parseMasterKey: '<parseMasterkKey>'
+  parseMasterKey: '<parseMasterkKey>',
+  googleStaticMapApiKey: '<googleStaticMapApiKey>'
 };

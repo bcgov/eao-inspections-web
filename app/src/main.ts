@@ -24,8 +24,13 @@ fetch('/env').then((res) => {
     enableProdMode();
   }
   Parse.initialize(env.parseId, env.parseKey);
-  Parse.serverURL = env.parseUrl;
+  Parse.serverURL = env.parseURL;
   Parse.masterKey = env.parseMasterKey;
+  environment.parseId = env.parseId;
+  environment.parseKey = env.parseKey; 
+  environment.parseURL = env.parseURL;
+  environment.parseMasterKey = env.parseMasterKey;
+  environment.googleStaticMapApiKey = env.googleStaticMapApiKey;
   init();
 }).catch((error) => {
   if (environment.production) {

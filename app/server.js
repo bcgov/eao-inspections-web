@@ -11,7 +11,8 @@ app.get("/env", function(req, res) {
         parseId: process.env.PARSE_ID,
         parseKey: process.env.PARSE_KEY,
         parseMasterKey: process.env.PARSE_MASTER_KEY,
-        parseUrl: process.env.PARSE_URL
+        parseURL: process.env.PARSE_URL,
+        googleStaticMapApiKey: process.env.GOOGLE_STATIC_MAP_API_KEY,
     });
 });
 
