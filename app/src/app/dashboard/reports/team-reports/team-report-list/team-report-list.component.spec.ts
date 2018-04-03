@@ -88,7 +88,7 @@ describe('TeamReportListComponent', () => {
   it('should render the correct number of report items', fakeAsync(() => {
     const reportService = fixture.debugElement.injector.get(ReportService);
 
-    spyOn(reportService, 'getTeamReports').and.returnValue(Promise.resolve(reports));
+    spyOn(reportService, 'getActiveTeamReports').and.returnValue(Promise.resolve(reports));
     component.ngOnInit();
     tick();
     fixture.detectChanges();

@@ -47,7 +47,7 @@ export class TeamReportListComponent implements OnInit {
     this.teamService.getTeam(this.teamId).then((team) => {
       this.team = team;
     });
-    this.reportService.getTeamReports(this.teamId)
+    this.reportService.getActiveTeamReports(this.teamId)
     .then((results) => {
         this.data = results;
         this.totalPages = this.reportService.totalPages;
@@ -62,7 +62,7 @@ export class TeamReportListComponent implements OnInit {
 
   onChangePage(value) {
     this.page = value;
-    this.reportService.getTeamReports(this.teamId, value)
+    this.reportService.getActiveTeamReports(this.teamId, value)
       .then((results) => {
         this.data = results;
       });

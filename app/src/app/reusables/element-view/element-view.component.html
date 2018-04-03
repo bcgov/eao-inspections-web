@@ -1,57 +1,58 @@
 <div class="dashboard">
-  <button (click)="onLocationChange()">
+    <button (click)="onLocationChange()">
     <img src="../../../assets/back.png" />
   </button>
-  <div class="element">
-    <h1 class="dashboard__title">{{title}}</h1>
-    <div class="element-details">
-      <div class="element-details-content" *ngIf="data">
-        <div class="row">
-          <div class="col">
-            <h4>title</h4>
-            <p>{{ data.title || '-' }}</p>
-          </div>
-          <div class="col">
-            <h4>requirement</h4>
-            <p>{{ data.requirement || '-' }}</p>
-          </div>
-          <div class="col">
-            <h4>gps coordinates</h4>
-            <p *ngIf="data.coordinate">Lat: {{ data.coordinate.latitude || '-' }} <br /> Long: {{ data.coordinate.longitude || '-' }}</p>
-          </div>
+    <div class="element">
+        <h1 class="dashboard__title">{{title}}</h1>
+        <div class="element-details">
+            <div class="element-details-content" *ngIf="data">
+                <div class="row">
+                    <div class="col">
+                        <h4>title</h4>
+                        <p>{{ data.title || '-' }}</p>
+                    </div>
+                    <div class="col">
+                        <h4>requirement</h4>
+                        <p>{{ data.requirement || '-' }}</p>
+                    </div>
+                    <div class="col">
+                        <h4>gps coordinates</h4>
+                        <p *ngIf="data.coordinate">Lat: {{ data.coordinate.latitude || '-' }} Lon: {{ data.coordinate.longitude || '-' }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="element-details-content" *ngIf="data">
+                <div class="row">
+                    <div class="col">
+                        <h4>description</h4>
+                        <textarea>{{ data.description || '-' }}</textarea>
+                    </div>
+                    <div class="col element-details-content-map">
+                        <a href="https://www.google.com/maps/place/{{coordination}}/">
+                            <img src="https://maps.googleapis.com/maps/api/staticmap?autoscale=1&size=265x176&maptype=roadmap&format=png&visual_refresh=true&markers=size:mid%7Ccolor:0x5475a7%7Clabel:%7C{{coordination}}&key={{googleStaticMapApiKey}}" alt="Google Map of {{coordination}}">
+                        </a>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-      <div class="element-details-content" *ngIf="data">
-        <div class="row">
-          <div class="col">
-            <h4>description</h4>
-            <textarea>{{ data.description || '-' }}</textarea>
-          </div>
-          <div class="col element-details-content-map">
-            <img src="../../../assets/map.png" />
-          </div>
-        </div>
-      </div>
-    </div>
-    <div *ngIf="mediaSelected?.length > 0">
-      <h1 class="dashboard__subtitle">{{subTitle}}</h1>
+        <div *ngIf="mediaSelected?.length > 0">
+            <h1 class="dashboard__subtitle">{{subTitle}}</h1>
 
-      <div class="element-details" >
-        <nav class="nav nav-pills flex-column flex-sm-row">
-          <a class="flex-sm-fill text-sm-center nav-link" (click)="getMediaAll()" [ngClass]="{'active': isAll}">All</a>
-          <a class="flex-sm-fill text-sm-center nav-link" (click)="getPhotos()" [ngClass]="{'active': isPhotos}">Photos</a>
-          <a class="flex-sm-fill text-sm-center nav-link" (click)="getVideo()" [ngClass]="{'active': isVideo}">Video</a>
-          <a class="flex-sm-fill text-sm-center nav-link" (click)="getVoice()" [ngClass]="{'active': isVoice}">Voice</a>
-        </nav>
-        <div class="container-fluid">
-          <div class="row">
-            <ng-container *ngFor="let item of mediaSelected">
-              <app-element-media [item]="item" [viewOnly]="viewOnly"></app-element-media>
-            </ng-container>
-          </div>
+            <div class="element-details">
+                <nav class="nav nav-pills flex-column flex-sm-row">
+                    <a class="flex-sm-fill text-sm-center nav-link" (click)="getMediaAll()" [ngClass]="{'active': isAll}">All</a>
+                    <a class="flex-sm-fill text-sm-center nav-link" (click)="getPhotos()" [ngClass]="{'active': isPhotos}">Photos</a>
+                    <a class="flex-sm-fill text-sm-center nav-link" (click)="getVideo()" [ngClass]="{'active': isVideo}">Video</a>
+                    <a class="flex-sm-fill text-sm-center nav-link" (click)="getVoice()" [ngClass]="{'active': isVoice}">Voice</a>
+                </nav>
+                <div class="container-fluid">
+                    <div class="row">
+                        <ng-container *ngFor="let item of mediaSelected">
+                            <app-element-media [item]="item" [viewOnly]="viewOnly"></app-element-media>
+                        </ng-container>
+                    </div>
+                </div>
+            </div>
         </div>
-
-      </div>
     </div>
-  </div>
 </div>

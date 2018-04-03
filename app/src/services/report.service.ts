@@ -52,6 +52,7 @@ export class ReportService {
       const reports = [];
       const promises = [];
       const queryCount = new Parse.Query('Inspection');
+      queryCount.equalTo('isActive', true);
       queryCount.equalTo('userId', this.user.id);
       if (this.page === 0) {
         queryCount.count().then((count) => {
@@ -60,6 +61,7 @@ export class ReportService {
       }
       this.page = page;
       const query = new Parse.Query('Inspection');
+      query.equalTo('isActive', true);
       query.equalTo('userId', this.user.id);
       query.skip(page * this.displayLimit);
       query.limit(this.displayLimit);
@@ -87,51 +89,6 @@ export class ReportService {
         self.loadingService.showLoading(false, key);
         reject(error);
       });
-    });
-  }
-
-  getTeamReports(teamId: string, page=0): Promise<any[]> {
-    const key = randomKey();
-    self.loadingService.showLoading(true, key);
-    return new Promise((resolve, reject) => {
-      const promises = [];
-      const reports = [];
-      const queryCount = new Parse.Query('Inspection');
-      queryCount.equalTo('team', {'__type': 'Pointer', 'className': 'Team', 'objectId': teamId });
-      if (this.page === 0) {
-        queryCount.count().then((count) => {
-          this.totalPages = Math.ceil(count / this.displayLimit);
-        });
-      }
-      this.page = page;
-      const q = new Parse.Query('Inspection');
-      q.equalTo('team', {'__type': 'Pointer', 'className': 'Team', 'objectId': teamId });
-      q.skip(page * this.displayLimit);
-      q.limit(this.displayLimit);
-      q.descending('createdAt');
-      q.find()
-        .then((results) => {
-          if (!Array.isArray(results)) {
-            results = [results]
-          }
-
-          results.forEach((object) => {
-            reports.push(parseInspectionToModel(object));
-            promises.push(this.getInspector(object.get('userId')));
-          });
-        })
-        .then(() => Promise.all(promises))
-        .then((results) => {
-          results.map((inspector, index) => {
-            reports[index].inspector = inspector;
-          });
-          self.loadingService.showLoading(false, key);
-          resolve(reports);
-        })
-        .catch((error) => {
-          self.loadingService.showLoading(false, key);
-          reject(error);
-        });
     });
   }
 
