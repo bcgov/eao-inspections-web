@@ -1,9 +1,11 @@
-import { AdminService } from './../../../../services/admin.service';
-import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import * as String from '../../../../constants/strings';
+
 import {Ng2ImgMaxService} from 'ng2-img-max';
 import {ToastrService} from 'ngx-toastr';
+
+import { AdminService } from './../../../../services/admin.service';
+import * as String from '../../../../constants/strings';
 
 @Component({
   selector: 'user-modal',
@@ -21,17 +23,13 @@ export class UserModalComponent implements OnInit {
   fileToUpload;
   imagePreview: string;
 
-
-
   constructor(private adminService: AdminService, private toast: ToastrService, private ng2ImgMax: Ng2ImgMaxService) { }
   getPhoto(event) {
     if (event.target.files && event.target.files[0]) {
       const reader = new FileReader();
-
       reader.onload = (_event: any) => {
         this.selectedPhoto = _event.target.result;
       };
-
       reader.readAsDataURL(event.target.files[0]);
     }
     this.fileToUpload = event.target.files[0];

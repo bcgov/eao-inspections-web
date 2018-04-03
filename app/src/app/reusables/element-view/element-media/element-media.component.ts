@@ -6,19 +6,20 @@ import {Component, Input, OnInit} from '@angular/core';
   styleUrls: ['./element-media.component.scss']
 })
 export class ElementMediaComponent implements OnInit {
-  _viewOnly = true;
   @Input('item') item: any;
   @Input('viewOnly') viewOnly: boolean;
-  defaultPic = '../../assets/placeholder-image.jpg';
-  thumbnailImage = '../../assets/placeholder-image.jpg';
-  audioImage = '../../assets/placeholder-voice.jpg';
-  videoImage = '../../assets/placeholder-video.png';
-  type;
-  url;
   @Input()
   set totalPages(viewOnly: boolean) {
     this._viewOnly = viewOnly;
   }
+  defaultPic = '../../assets/placeholder-image.jpg';
+  thumbnailImage = '../../assets/placeholder-image.jpg';
+  audioImage = '../../assets/placeholder-voice.jpg';
+  videoImage = '../../assets/placeholder-video.png';
+  _viewOnly = true;
+  type;
+  url;
+
   constructor() { }
 
   ngOnInit() {

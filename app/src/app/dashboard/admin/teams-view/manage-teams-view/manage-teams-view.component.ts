@@ -1,15 +1,16 @@
-import { ADD_MEMBER } from './../../../../../constants/strings';
-import { Component, OnInit } from '@angular/core';
-import * as String from '../../../../../constants/strings';
-import * as Route from '../../../../../constants/routes';
-import { ModalService } from './../../../../../services/modal.service';
-import { TeamService } from '../../../../../services/team.service';
 import { ActivatedRoute } from '@angular/router';
-import { Team } from '../../../../../models/team.model';
+import { Component, OnInit } from '@angular/core';
+import { Location } from '@angular/common';
+
+import { ToastrService } from 'ngx-toastr';
+
 import { AdminService } from '../../../../../services/admin.service';
 import { BasicUser } from '../../../../../models/user.model';
-import { ToastrService } from 'ngx-toastr';
-import { Location } from '@angular/common';
+import { ModalService } from './../../../../../services/modal.service';
+import { TeamService } from '../../../../../services/team.service';
+import { Team } from '../../../../../models/team.model';
+import * as Route from '../../../../../constants/routes';
+import * as String from '../../../../../constants/strings';
 
 @Component({
   selector: 'manage-teams-view',
@@ -18,34 +19,29 @@ import { Location } from '@angular/common';
   providers: [TeamService, AdminService]
 })
 export class ManageTeamsViewComponent implements OnInit {
-  title = 'Users';
-  link = '/' + Route.DASHBOARD + '/' + Route.ADMIN_TEAMS;
   emptyContent = {
     image: '../../assets/team-lg.png',
     message: String.EMPTY_TEAM_MEMBER,
   };
-
-  team: Team;
-
-  members: Array<BasicUser> = undefined;
-
-  page = 0;
-  totalPages = 0;
-
   modal = {
     header: String.ADD_MEMBER,
     userButton: String.ADD_MEMBER_BUTTON,
     users: []
   };
+  title = 'Users';
+  link = '/' + Route.DASHBOARD + '/' + Route.ADMIN_TEAMS;
+  team: Team;
+  members: Array<BasicUser> = undefined;
+  page = 0;
+  totalPages = 0;
 
-  constructor(
-    private modalService: ModalService,
-    private teamService: TeamService,
-    private adminService: AdminService,
-    private route: ActivatedRoute,
-    private toast: ToastrService,
-    private location: Location
-  ) { }
+  constructor(private modalService: ModalService,
+              private teamService: TeamService,
+              private adminService: AdminService,
+              private route: ActivatedRoute,
+              private toast: ToastrService,
+              private location: Location) {
+  }
 
   open(modal) {
     this.modalService.open(modal, { backdrop: 'static', keyboard: false });
@@ -65,7 +61,7 @@ export class ManageTeamsViewComponent implements OnInit {
   }
 
   onAddMember(selectedUsers) {
-    this.adminService.addUsersToTeam(this.team.id, selectedUsers).then((team) => {
+    this.adminService.addUsersToTeam(this.team.id, selectedUsers).then(() => {
       this.refresh();
     });
   }

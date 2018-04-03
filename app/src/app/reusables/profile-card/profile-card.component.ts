@@ -1,9 +1,10 @@
 import { Component, OnInit, Input } from '@angular/core';
-import * as String from '../../../constants/strings';
-import {ProfileService} from '../../../services/profile.service';
+
 import {ToastrService} from 'ngx-toastr';
 import {Ng2ImgMaxService} from 'ng2-img-max';
-import {DomSanitizer} from '@angular/platform-browser';
+
+import {ProfileService} from '../../../services/profile.service';
+import * as String from '../../../constants/strings';
 
 @Component({
   selector: 'profile-card',
@@ -50,6 +51,7 @@ export class ProfileCardComponent implements OnInit {
       }
     );
   }
+
   getImagePreview(file: File) {
     const reader: FileReader = new FileReader();
     reader.readAsDataURL(file);
@@ -57,6 +59,7 @@ export class ProfileCardComponent implements OnInit {
       this.imagePreview = reader.result;
     };
   }
+
   uploadToParse(uploadFile) {
     this.profileService.updateProfileImage(uploadFile)
       .then((object) => {

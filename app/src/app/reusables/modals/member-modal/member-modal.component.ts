@@ -1,5 +1,4 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { BasicUser } from '../../../../models/user.model';
 
 @Component({
   selector: 'member-modal',
@@ -11,7 +10,6 @@ export class MemberModalComponent {
   @Input('data') data: any;
   @Input() closeValue: any;
   @Output() submitValue: EventEmitter<any> = new EventEmitter();
-
   selectedUserIds: Array<any> = [];
 
   constructor() { }
