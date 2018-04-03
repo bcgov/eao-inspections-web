@@ -1,10 +1,10 @@
-import { TeamsViewComponent } from './../teams-view.component';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+
+import { ToastrService } from 'ngx-toastr';
+
 import { AdminService } from './../../../../../services/admin.service';
 import { ModalService } from './../../../../../services/modal.service';
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import * as String from '../../../../../constants/strings';
-import { ToastrService } from 'ngx-toastr';
-import { ArchivedTeamsComponent } from '../archived-teams/archived-teams.component';
 
 @Component({
   selector: 'admin-team-card',
@@ -32,11 +32,10 @@ export class AdminTeamCardComponent implements OnInit {
     confirmationNo: String.CANCEL_BUTTON,
   };
 
-  constructor(
-    private modalService: ModalService,
-    private adminService: AdminService,
-    private toast: ToastrService
-  ) { }
+  constructor(private modalService: ModalService,
+              private adminService: AdminService,
+              private toast: ToastrService) {
+  }
 
   open(modal) {
     this.modalService.open(modal, { backdrop: 'static', keyboard: false });

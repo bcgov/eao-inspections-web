@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
-import { ModalService } from './../../services/modal.service';
 import { AuthService } from '../../services/auth.service';
-import * as Route from '../../constants/routes';
-import * as String from '../../constants/strings';
+import { BasicUser } from '../../models/user.model';
+import { ModalService } from './../../services/modal.service';
 import { ProfileService } from '../../services/profile.service';
 import { parseUserToModel } from '../../services/parse.service';
-import { BasicUser } from '../../models/user.model';
-
+import * as Route from '../../constants/routes';
+import * as String from '../../constants/strings';
 
 @Component({
   selector: 'menu',
@@ -18,28 +18,25 @@ import { BasicUser } from '../../models/user.model';
   providers: [AuthService, NgbActiveModal, ProfileService]
 })
 export class MenuComponent implements OnInit{
-  myInspections = Route.MY_REPORTS;
-  teamInspections = Route.TEAM_REPORTS;
-  profile = Route.PROFILE;
-  settings = Route.SETTINGS;
-  search = Route.SEARCH;
-  adminUser = Route.ADMIN_USERS;
-  adminTeam = Route.ADMIN_TEAMS;
-  adminReport = Route.ADMIN_REPORTS;
-
-  user: BasicUser;
   modal = {
     message: String.LOGOUT_USER,
     confirmationYes: String.LOGOUT_BUTTON,
     confirmationNo: String.CANCEL_BUTTON
   };
+  myInspections = Route.MY_REPORTS;
+  teamInspections = Route.TEAM_REPORTS;
+  profile = Route.PROFILE;
+  settings = Route.SETTINGS;
+  adminUser = Route.ADMIN_USERS;
+  adminTeam = Route.ADMIN_TEAMS;
+  adminReport = Route.ADMIN_REPORTS;
+  user: BasicUser;
 
-  constructor(
-    private authService: AuthService,
-    public modalService: ModalService,
-    private router: Router,
-    private profileService: ProfileService
-  ) {}
+  constructor(private authService: AuthService,
+              public modalService: ModalService,
+              private router: Router,
+              private profileService: ProfileService) {
+  }
 
   open(content) {
     this.modalService.open(content, { backdrop: 'static', keyboard: false });
@@ -53,7 +50,6 @@ export class MenuComponent implements OnInit{
     this.authService.logOut().then(() => {
       this.router.navigate([Route.LOGIN]);
     });
-
   }
 
   isAdmin() {

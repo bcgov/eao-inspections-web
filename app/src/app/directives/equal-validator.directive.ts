@@ -1,5 +1,4 @@
 // checks if password and confirmPassword match, updates if string changes in either input field.
-
 import { Directive, forwardRef, Attribute } from '@angular/core';
 import { Validator, AbstractControl, NG_VALIDATORS } from '@angular/forms';
 
@@ -10,7 +9,7 @@ import { Validator, AbstractControl, NG_VALIDATORS } from '@angular/forms';
   ]
 })
 export class EqualValidator implements Validator {
-  constructor( 
+  constructor(
   @Attribute('validateEqual') public validateEqual: string,
   @Attribute('reverse') public reverse: boolean
 ){ }
