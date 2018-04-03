@@ -38,6 +38,6 @@ describe('ArchiveModalComponent', () => {
     buttonEl = fixture.debugElement.nativeElement.querySelector('.dashboard__btn--dark').click();
     tick();
     fixture.detectChanges();
-    expect(component.confirmation).toHaveBeenCalledWith("1");
+    expect(component.confirmation).toHaveBeenCalledWith(mockData);
     }));
 });

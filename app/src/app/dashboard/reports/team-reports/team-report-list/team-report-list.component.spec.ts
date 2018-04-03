@@ -12,7 +12,7 @@ import { Inspection } from '../../../../../models/inspection.model';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Observable } from 'rxjs/Observable';
 
-describe('TeamReportListComponent', () => {
+fdescribe('TeamReportListComponent', () => {
   let component: TeamReportListComponent;
   let fixture: ComponentFixture<TeamReportListComponent>;
   let compiled;

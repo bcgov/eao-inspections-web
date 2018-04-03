@@ -23,7 +23,7 @@ export class UserModalComponent implements OnInit {
 
 
 
-  constructor(private adminService: AdminService, private toast: ToastrService, private ng2ImgMax: Ng2ImgMaxService) { }
+  constructor(private toast: ToastrService, private ng2ImgMax: Ng2ImgMaxService) { }
   getPhoto(event) {
     if (event.target.files && event.target.files[0]) {
       const reader = new FileReader();

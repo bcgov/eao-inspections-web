@@ -16,6 +16,7 @@ describe('ManageTeamsViewComponent', () => {
   let adminServiceStub: any;
   let toastServiceStub: any;
   let loadingServiceStub: any;
+  let mockTeam: any;
 
   beforeEach(async(() => {
     adminServiceStub = {
@@ -70,10 +71,18 @@ describe('ManageTeamsViewComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(ManageTeamsViewComponent);
     component = fixture.componentInstance;
+    mockTeam = { name: "mockName", badge: "mockBadge", admin: {name: "mockAdmin"}}
+    component.team = mockTeam
     fixture.detectChanges();
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should create with correct team data', () => {
+    expect(component.team.badge).toBe("mockBadge");
+    expect(component.team.name).toBe("mockName");
+    expect(component.team.admin.name).toBe("mockAdmin");
   });
 });

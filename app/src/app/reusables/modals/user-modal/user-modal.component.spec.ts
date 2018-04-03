@@ -8,6 +8,7 @@ import { Ng2ImgMaxService, Ng2ImgMaxModule } from 'ng2-img-max';
 
 import { UserModalComponent } from './user-modal.component';
 import { Team } from '../../../../models/team.model';
+import { ToastrService } from 'ngx-toastr';
 
 describe('UserModalComponent', () => {
   let component: UserModalComponent;
@@ -15,7 +16,7 @@ describe('UserModalComponent', () => {
   let modalInfo: any;
   let closeValue: any;
   let buttonEl: DebugElement;
-  let adminServiceStub: any;
+  let toastServiceStub: any;
   let modalServiceStub: any;
   let teamsMock: any;
   let userInfo: any;
@@ -26,12 +27,18 @@ describe('UserModalComponent', () => {
         return Observable.of(true);
       }
     };
+    toastServiceStub = {
+      open(): Observable<any> {
+        return Observable.of(true);
+      }
+    };
 
     TestBed.configureTestingModule({
       declarations: [ UserModalComponent ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
       providers: [
         { provide: ModalService, useValue: modalServiceStub },
+        { provide: ToastrService, useValue: toastServiceStub },
         Ng2ImgMaxService
       ],
       imports: [FormsModule, Ng2ImgMaxModule]

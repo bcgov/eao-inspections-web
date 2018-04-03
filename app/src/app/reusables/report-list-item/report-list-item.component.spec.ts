@@ -12,6 +12,7 @@ describe('ReportListItemComponent', () => {
   let component: ReportListItemComponent;
   let fixture: ComponentFixture<ReportListItemComponent>;
   let reportInfo: any;
+  let mockUser;
   const date = Date();
   let modalServiceStub;
   let toastServiceStub;
@@ -54,13 +55,28 @@ describe('ReportListItemComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(ReportListItemComponent);
     component = fixture.componentInstance;
-    reportInfo = { title: 'mockTitle', image: 'mock-image.png', project: 'mockProjectName', team: 'mockTeam', updatedAt: date };
+    reportInfo = { 
+      title: 'mockTitle', 
+      image: 'mock-image.png', 
+      project: 'mockProjectName', 
+      team: 'mockTeam', 
+      updatedAt: date, 
+      viewOnly: false 
+    };
+    mockUser = {
+      access: {
+        isSuperAdmin: false,
+        isAdmin: false,
+        isViewOnly: false,
+      }
+    };
+    component.user = mockUser;
     component.data = reportInfo;
     component.fields = ['title', 'project', 'submitted', 'team', 'actions'];
     component.actions = ['download'];
     fixture.detectChanges();
   });
-
+  
   it('should create', () => {
     expect(component).toBeTruthy();
   });

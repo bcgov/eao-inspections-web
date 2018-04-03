@@ -9,13 +9,14 @@ import {Observable} from 'rxjs/Observable';
 import {ToastrService} from 'ngx-toastr';
 import {LoadingService} from '../../../../../services/loading.service';
 
-describe('ArchivedInspectionsComponent', () => {
+fdescribe('ArchivedInspectionsComponent', () => {
   let component: ArchivedInspectionsComponent;
   let fixture: ComponentFixture<ArchivedInspectionsComponent>;
   let adminServiceStub: any;
   let toastServiceStub: any;
   let mockPipe: OrderByPipe;
   let loadingServiceStub: any;
+  let mockData: any;
 
   beforeEach(async(() => {
     mockPipe = new OrderByPipe();
@@ -61,6 +62,11 @@ describe('ArchivedInspectionsComponent', () => {
     component = fixture.componentInstance;
     spyOn(component, 'ngOnInit');
     component.ngOnInit();
+    mockData = {
+      objectId: "1",
+      isActive: true,
+    };
+    component.data = mockData;
     fixture.detectChanges();
   });
 

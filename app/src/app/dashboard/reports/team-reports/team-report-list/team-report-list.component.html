@@ -2,6 +2,12 @@
     <button (click)="onLocationChange()">
         <img src="../../../assets/back.png" />
     </button>
+    <div class="dashboard__header header">
+        <p class="dashboard__title">
+            <img class="dashboard__title--img" [src]="team.badge || '../../../assets/team-lg.png'" /> {{ team?.name || '-'}}
+            <span class="dashboard__title--admin">Team Administrator: {{team.admin.name}}</span>
+        </p>
+    </div>
     <div *ngIf="data !== undefined && data?.length<=0; then noContent else content"></div>
     <ng-template #noContent>
         <no-content [emptyContent]="emptyContent"></no-content>
