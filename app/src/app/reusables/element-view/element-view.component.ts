@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {ReportService} from '../../../services/report.service';
 import {ActivatedRoute} from '@angular/router';
 import { Location } from '@angular/common';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-element-view',
@@ -25,13 +26,17 @@ export class ElementViewComponent implements OnInit {
   isPhotos;
   isVideo;
   isVoice;
+  googleStaticMapApiKey: string;
+  coordination: string;
   constructor(private route: ActivatedRoute, private reportService: ReportService, private location: Location) {
     this.route.params.subscribe(params => this.routeParam = params);
+    this.googleStaticMapApiKey = environment.googleStaticMapApiKey;
   }
 
   ngOnInit() {
     this.reportService.getObservation(this.routeParam.id).then(object => {
       this.data = object;
+      this.coordination = this.data.coordinate['_latitude'] + ', ' + this.data.coordinate['_longitude'];
     });
     this.reportService.getMedia(this.routeParam.id, 'Photo').then(object => {
       object.forEach(obj => {
