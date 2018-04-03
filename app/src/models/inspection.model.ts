@@ -53,11 +53,11 @@ export class Inspection {
     let text = '';
     text += 'Number : ' + (this.inspectionNumber || '')  + '\n';
     text += 'Title : ' + (this.title || '')  + '\n';
-    text += 'Sub-Title : ' + (this.subtitle || '')  + '\n';
+    text += 'Inspector : ' + (this.inspector.firstName + ' ' + this.inspector.lastName || '')  + '\n';
     text += 'Start Date : ' + (this.startDate || '')  + '\n';
     text += 'End Date : ' + (this.endDate || '')  + '\n';
     text += 'Updated Date : ' + (this.updatedAt || '')  + '\n';
-    text += 'Requirements : ' + (this.requirement || '')  + '\n';
+    text += 'Linked Projects : ' + (this.project || '')  + '\n';
 
     return text;
   }
