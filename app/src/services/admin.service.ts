@@ -721,8 +721,8 @@ export class AdminService {
         query.equalTo('adminId', this.user.id);
         queryCount.equalTo('adminId', this.user.id);
       }
-      queryCount.equalTo('isActive',false);
-      query.equalTo('isActive', false);
+      queryCount.notEqualTo('isActive',true);
+      query.notEqualTo('isActive', true);
       query.skip(page * this.displayLimit);
       query.limit(this.displayLimit);
       query.descending('createdAt');
