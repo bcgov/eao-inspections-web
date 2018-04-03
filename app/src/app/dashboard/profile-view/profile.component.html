@@ -1,7 +1,7 @@
 <div class="dashboard">
   <h1 class="dashboard__title">{{title}}</h1>
   <profile-card [profile]="profile"></profile-card>
-  <h3 class="dashboard__title">{{subTitle}}</h3>
+  <h3 class="dashboard__title" *ngIf="admin.length>0">{{subTitle}}</h3>
   <div *ngFor="let profile of admin">
     <profile-card [profile]="profile"></profile-card>
   </div>

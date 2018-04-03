@@ -1,11 +1,13 @@
+import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
+import { Location } from '@angular/common';
+
 import { Inspection } from '../../../../../models/inspection.model';
 import { Team } from '../../../../../models/team.model';
 import { ReportService } from '../../../../../services/report.service';
 import { TeamService } from '../../../../../services/team.service';
-import { ActivatedRoute } from '@angular/router';
 import * as String from '../../../../../constants/strings';
-import { Location } from '@angular/common';
+
 
 @Component({
   selector: 'report-view-list',
@@ -24,13 +26,11 @@ export class ReportViewListComponent implements OnInit {
   isDesc: Boolean = false;
   direction: number;
   column: string;
-
   teamId: string;
   team: Team;
   data: Array<Inspection> = undefined;
   fields: Array<any>;
   actions: Array<any>;
-
   page = 0;
   totalPages = 0;
 
@@ -40,7 +40,7 @@ export class ReportViewListComponent implements OnInit {
     this.teamId = this.route.snapshot.params['id'];
   }
 
-  ngOnInit() {
+  refresh() {
     this.sort('updatedAt');
     this.teamService.getTeam(this.teamId).then((team) => {
       this.team = team;
@@ -52,12 +52,12 @@ export class ReportViewListComponent implements OnInit {
     });
   }
 
-  onLocationChange() {
-    this.location.back();
+  ngOnInit() {
+   this.refresh();
   }
 
-  setDefaultPic() {
-    this.team.badge = '../../../assets/team-lg.png';
+  onLocationChange() {
+    this.location.back();
   }
 
   sort(property: string) {

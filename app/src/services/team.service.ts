@@ -1,6 +1,6 @@
 import { Injectable} from '@angular/core';
 
-import { parseTeamToModel } from './parse.service';
+import { parseTeamToModel, parseUserToModel } from './parse.service';
 import { LoadingService } from './loading.service';
 import { Team } from '../models/team.model';
 import { randomKey } from './testing.service';
@@ -25,7 +25,14 @@ export class TeamService {
             success: function(obj) {
                 const team = parseTeamToModel(obj);
                 self.loadingService.showLoading(false, key);
-                resolve(team);
+                const adminId = obj.get('teamAdmin').id;
+                const userQuery = new Parse.Query(Parse.User);
+                userQuery.get(adminId).then((admin) => {
+                    team.admin = parseUserToModel(admin);
+                    resolve(team);
+                }).catch(() => {
+                    resolve(team);
+                });
             },
             error: function(error) {
                 self.loadingService.showLoading(false, key);

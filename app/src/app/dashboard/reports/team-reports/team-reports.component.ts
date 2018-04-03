@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import {ProfileService} from '../../../../services/profile.service';
 import { Team } from '../../../../models/team.model';
+import * as String from '../../../../constants/strings';
 
 @Component({
   selector: 'team-reports',
@@ -10,9 +11,15 @@ import { Team } from '../../../../models/team.model';
   providers: [ProfileService]
 })
 export class TeamReportsComponent implements OnInit {
-  title = 'Team Inspections';
-  teams: Array<Team>;
+  emptyContent = {
+    image: '../../assets/team-lg.png',
+    message: String.NOT_TEAM_MEMBER,
+  };
 
+  title = 'Team Inspections';
+  teams: Array<Team> = undefined;
+  page = 0;
+  totalPages = 0;
 
   constructor(private profileService: ProfileService) { }
 
@@ -20,7 +27,15 @@ export class TeamReportsComponent implements OnInit {
     this.profileService.getTeams()
       .then((results) => {
         this.teams = (results instanceof Array) ? results : [results];
+        this.totalPages = this.profileService.totalPages;
       });
   }
 
+  onChangePage(value) {
+    this.page = value;
+    this.profileService.getTeams(value)
+      .then((results) => {
+        this.teams = (results instanceof Array) ? results : [results];
+      });
+  }
 }

@@ -1,5 +1,5 @@
 <div class="table-row">
-    <div class="table-row-item" data-header="Title" *ngIf="fields.indexOf('title') >= 0">
+    <div class="table-row-item name" data-header="Title" *ngIf="fields.indexOf('title') >= 0">
         <a [routerLink]="['inspection-details', data.id]">{{data.title}}</a>
     </div>
     <div class="table-row-item" data-header="Linked Project" *ngIf="fields.indexOf('project') >= 0">
@@ -8,7 +8,7 @@
     <div class="table-row-item" data-header="Team" *ngIf="fields.indexOf('team') >= 0">
         {{ data.team?.name || '-' }}
     </div>
-    <div class="table-row-item" data-header="Inspector" *ngIf="fields.indexOf('inspector') >= 0">
+    <div class="table-row-item name" data-header="Inspector" *ngIf="fields.indexOf('inspector') >= 0">
         <img width="40px" [src]="data.inspector?.image || '../../assets/team-member.png'" /> {{data.inspector?.name || '-'}}
     </div>
     <div class="table-row-item" data-header="Submitted" *ngIf="fields.indexOf('submitted') >= 0">

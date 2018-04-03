@@ -125,7 +125,7 @@
                     required 
                     ngModel 
                     #first="ngModel"
-                    pattern="^[a-zA-Z]+$"
+                    pattern="^[a-zA-Z\s]*$"
                     maxlength="25" 
                     minlength="2"
                 >
@@ -147,7 +147,7 @@
                     required 
                     ngModel 
                     #last="ngModel"
-                    pattern="/^[a-zA-Z\s]*$/" 
+                    pattern="^[a-zA-Z\s]*$" 
                     maxlength="25" 
                     minlength="2"
                 >
@@ -180,7 +180,22 @@
                 <span>*</span>
             </label>
             <div class="col-sm-10">
-                <input type="password" class="form-control" id="password" name="password" required ngModel #password="ngModel">
+                <input 
+                    type="password" 
+                    class="form-control" 
+                    id="password" 
+                    name="password" 
+                    required 
+                    ngModel 
+                    #password="ngModel"
+                    pattern="^[a-zA-Z]*$"
+                    maxlength="" 
+                    minlength="6" 
+                >
+                <div class="error" *ngIf="password.touched && !password.valid">
+                    <div *ngIf="password.errors.pattern">*Numbers and special characters are not valid inputs.</div>
+                    <div *ngIf="password.errors.minlength">*Password must be 6 characters long.</div>
+                </div>
             </div>
         </div>
         <div class="form-group row">

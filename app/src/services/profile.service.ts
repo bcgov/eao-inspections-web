@@ -1,6 +1,6 @@
 import { Injectable} from '@angular/core';
 
-import { parseTeamToModel } from './parse.service';
+import { parseTeamToModel, parseUserToModel } from './parse.service';
 import { LoadingService } from './loading.service';
 import { randomKey } from './testing.service';
 
@@ -10,27 +10,34 @@ let self;
 @Injectable()
 export class ProfileService {
   user = new Parse.User();
-
+  page = 0;
+  totalPages = 0;
+  displayLimit = 25;
   constructor(private loadingService: LoadingService) {
      self = this;
      this.user = Parse.User.current();
   }
 
-  getUser(): Promise<any> {
-    return new Promise((resolve) => {
-      resolve(this.user);
-    });
-  }
-
-  getTeams(): Promise<any[]> {
+  getTeams(page=0): Promise<any[]> {
     const key = randomKey();
     self.loadingService.showLoading(true, key);
     return new Promise((resolve, reject) => {
       const promises1 = [];
       const promises2 = [];
       const teams = [];
+      const queryCount = new Parse.Query('Team');
+      queryCount.equalTo('users', this.user);
+      if (this.page === 0) {
+        queryCount.count().then((count) => {
+          this.totalPages = Math.ceil(count / this.displayLimit);
+        });
+      }
+      this.page = page;
       const query = new Parse.Query('Team');
       query.equalTo('users', this.user);
+      query.skip(page * this.displayLimit);
+      query.limit(this.displayLimit);
+      query.descending('createdAt');
       query.find().then((results) => {
         if (!Array.isArray(results)) {
           results = [results];
@@ -81,13 +88,13 @@ export class ProfileService {
         }
         results.forEach((object) => {
           promises.push(object.get('teamAdmin').fetch());
-          admins.push({'team' : parseTeamToModel(object)});
+          admins.push(parseTeamToModel(object));
         });
       })
       .then(() => Promise.all(promises))
       .then((results) => {
         results.map((admin, index) => {
-          admin[index]['admin'] = admin;
+          admins[index]['admin'] = parseUserToModel(admin);
         });
         self.loadingService.showLoading(false, key);
         resolve(admins);
@@ -98,6 +105,7 @@ export class ProfileService {
       });
     });
   }
+
   updateProfileImage(image): Promise<any> {
     const key = randomKey();
     self.loadingService.showLoading(true, key);

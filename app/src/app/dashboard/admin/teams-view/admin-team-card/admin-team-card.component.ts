@@ -1,8 +1,10 @@
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+
+import { ToastrService } from 'ngx-toastr';
+
 import { AdminService } from './../../../../../services/admin.service';
 import { ModalService } from './../../../../../services/modal.service';
-import { Component, OnInit, Input } from '@angular/core';
 import * as String from '../../../../../constants/strings';
-import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'admin-team-card',
@@ -11,6 +13,8 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class AdminTeamCardComponent implements OnInit {
   @Input('team') team: any;
+  @Output() refresh: EventEmitter<any> = new EventEmitter();
+
   modal = {
     edit: true,
     message: String.ARCHIVE_TEAM,
@@ -28,11 +32,10 @@ export class AdminTeamCardComponent implements OnInit {
     confirmationNo: String.CANCEL_BUTTON,
   };
 
-  constructor(
-    private modalService: ModalService,
-    private adminService: AdminService,
-    private toast: ToastrService
-  ) { }
+  constructor(private modalService: ModalService,
+              private adminService: AdminService,
+              private toast: ToastrService) {
+  }
 
   open(modal) {
     this.modalService.open(modal, { backdrop: 'static', keyboard: false });
@@ -41,6 +44,7 @@ export class AdminTeamCardComponent implements OnInit {
   onEdit(value) {
     this.adminService.updateTeam(value.id, value.teamName, value.color, value.teamAdmin, value.photo).then((object) => {
       this.toast.success('Successfully updated ' + object.get('name'));
+      this.refresh.emit();
     }, (error) => {
       this.toast.error(error.message || String.GENERAL_ERROR);
     });
@@ -49,7 +53,8 @@ export class AdminTeamCardComponent implements OnInit {
   onUnarchive(value) {
     this.adminService.unArchiveTeam(value).then((object) => {
       this.toast.success('Successfully unarchived ' + object.get('name'));
-    }, (error) => {
+      this.refresh.emit();
+     }, (error) => {
       this.toast.error(error.message || String.GENERAL_ERROR);
     });
   }
@@ -57,6 +62,7 @@ export class AdminTeamCardComponent implements OnInit {
   onArchive(value) {
     this.adminService.archiveTeam(value).then((object) => {
       this.toast.success('Successfully archived ' + object.get('name'));
+      this.refresh.emit();
     }, (error) => {
       this.toast.error(error.message || String.GENERAL_ERROR);
     });

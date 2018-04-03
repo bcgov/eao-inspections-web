@@ -19,7 +19,7 @@ export class ReportService {
   user = new Parse.User();
   page = 0;
   totalPages = 0;
-  displayLimit = 5;
+  displayLimit = 25;
   constructor(private loadingService: LoadingService) {
     self = this;
     this.user = Parse.User.current();
@@ -29,11 +29,10 @@ export class ReportService {
     const key = randomKey();
     self.loadingService.showLoading(true, key);
     return new Promise((resolve, reject) => {
-      const userQuery = new Parse.Query('User');
+      const userQuery = new Parse.Query(Parse.User);
       userQuery.equalTo('objectId', inspectorId);
       userQuery.first({
         success: function(result) {
-          console.log(result);
           const inspector = parseUserToModel(result);
            self.loadingService.showLoading(false, key);
            resolve (inspector);
@@ -46,16 +45,25 @@ export class ReportService {
     });
   }
 
-  getMyReports(): Promise<any[]> {
+  getMyReports(page=0): Promise<any[]> {
     const key = randomKey();
     self.loadingService.showLoading(true, key);
     return new Promise((resolve, reject) => {
       const reports = [];
       const promises = [];
+      const queryCount = new Parse.Query('Inspection');
+      queryCount.equalTo('userId', this.user.id);
+      if (this.page === 0) {
+        queryCount.count().then((count) => {
+          this.totalPages = Math.ceil(count / this.displayLimit);
+        });
+      }
+      this.page = page;
       const query = new Parse.Query('Inspection');
-
       query.equalTo('userId', this.user.id);
-      query.ascending('createdAt');
+      query.skip(page * this.displayLimit);
+      query.limit(this.displayLimit);
+      query.descending('createdAt');
       query.find()
       .then((results) => {
         if (!Array.isArray(results)) {
@@ -82,14 +90,25 @@ export class ReportService {
     });
   }
 
-  getTeamReports(teamId: string): Promise<any[]> {
+  getTeamReports(teamId: string, page=0): Promise<any[]> {
     const key = randomKey();
     self.loadingService.showLoading(true, key);
     return new Promise((resolve, reject) => {
       const promises = [];
       const reports = [];
+      const queryCount = new Parse.Query('Inspection');
+      queryCount.equalTo('team', {'__type': 'Pointer', 'className': 'Team', 'objectId': teamId });
+      if (this.page === 0) {
+        queryCount.count().then((count) => {
+          this.totalPages = Math.ceil(count / this.displayLimit);
+        });
+      }
+      this.page = page;
       const q = new Parse.Query('Inspection');
       q.equalTo('team', {'__type': 'Pointer', 'className': 'Team', 'objectId': teamId });
+      q.skip(page * this.displayLimit);
+      q.limit(this.displayLimit);
+      q.descending('createdAt');
       q.find()
         .then((results) => {
           if (!Array.isArray(results)) {
@@ -128,7 +147,6 @@ export class ReportService {
       if (this.page === 0) {
         queryCount.count().then((count) => {
           this.totalPages = Math.ceil(count / this.displayLimit);
-          console.log(count);
         });
       }
       this.page = page;
@@ -146,7 +164,6 @@ export class ReportService {
 
           results.forEach((object) => {
             reports.push(parseInspectionToModel(object));
-            console.log(object.get('userId'));
             promises.push(this.getInspector(object.get('userId')));
           });
         })
@@ -205,7 +222,6 @@ export class ReportService {
       if (this.page === 0) {
         queryCount.count().then((count) => {
           this.totalPages = Math.ceil(count / this.displayLimit);
-          console.log(count);
         });
       }
       this.page = page;
@@ -240,14 +256,23 @@ export class ReportService {
     self.loadingService.showLoading(true, key);
     return new Promise((resolve, reject) => {
       const query = new Parse.Query('Observation');
+      let observationModelObj: Observation;
       query.equalTo('objectId', observationId);
       query.first().then((object) => {
-        self.loadingService.showLoading(false, key);
-        resolve(parseObservationToModel(object));
+        observationModelObj = parseObservationToModel(object);
+        object.get('inspection').fetch().then((inspObj) => {
+          observationModelObj.viewOnly = inspObj.get('viewOnly');
+        }, (error) => {
+          self.loadingService.showLoading(false, key);
+          reject(error);
+        }).then(() => {
+          self.loadingService.showLoading(false, key);
+          resolve(observationModelObj);
+        });
       }, (error) => {
         self.loadingService.showLoading(false, key);
         reject(error);
-      });
+      })
     });
   }
 
@@ -256,8 +281,8 @@ export class ReportService {
     self.loadingService.showLoading(true, key);
     const photos = [];
     let photoList;
-    const observatinoQuery = new Parse.Object.extend('Observation');
-    const tempObservation = new observatinoQuery();
+    const observationQuery = new Parse.Object.extend('Observation');
+    const tempObservation = new observationQuery();
     tempObservation.id = observationId;
 
     return new Promise((resolve, reject) => {
@@ -327,12 +352,12 @@ export class ReportService {
           medias.forEach((media) => {
             console.log(media);
             const folder = observationFolders[media.observationId];
-            const mediaFoler = folder.folder(media.id);
+            const mediaFolder = folder.folder(media.id);
 
-            mediaFoler.file('info.txt', media.toText());
+            mediaFolder.file('info.txt', media.toText());
 
             JSZipUtils.getBinaryContent(media.fileURL, function (err, data) {
-              mediaFoler.file(media.fileName, data, {binary: true});
+              mediaFolder.file(media.fileName, data, {binary: true});
 
               if(err) {
                 reject(err);

@@ -5,8 +5,10 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { AuthService } from './auth.service';
 import { LoginComponent } from '../app/login/login.component';
 import { ProfileService } from './profile.service';
+import {parseInit} from './testing.service';
 
 const Parse: any = require('parse');
+parseInit();
 
 describe('Authentication and Authorization Testing', () => {
   let component: LoginComponent;
@@ -28,7 +30,7 @@ describe('Authentication and Authorization Testing', () => {
   beforeAll((done) => {
     originalTimeout = jasmine.DEFAULT_TIMEOUT_INTERVAL;
     jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
-    Parse.User.logIn('superadmin', 'superadmin').then((user) => {
+    Parse.User.logIn('superadmin@superadmin.com', 'password').then((user) => {
       done();
     });
   });

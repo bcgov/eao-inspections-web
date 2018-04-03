@@ -2,9 +2,6 @@
     <button (click)="onLocationChange()">
         <img src="../../../assets/back.png" />
     </button>
-    <p class="dashboard__title" *ngIf="team">
-      <img width="30px" [src]="team.badge || '../../../assets/team-lg.png'" /> {{team.name}}
-    </p>
     <div *ngIf="data !== undefined && data?.length<=0; then noContent else content"></div>
     <ng-template #noContent>
         <no-content [emptyContent]="emptyContent"></no-content>
@@ -23,5 +20,8 @@
             </span>
         </div>
       <br>
+      <div class="d-flex justify-content-center">
+        <app-pagination [page]="page" [totalPages]="totalPages" (changePage)="onChangePage($event)"></app-pagination>
+      </div>
     </ng-template>
 </div>

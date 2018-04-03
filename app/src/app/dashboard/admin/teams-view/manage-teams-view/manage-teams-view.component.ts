@@ -1,15 +1,16 @@
-import { ADD_MEMBER } from './../../../../../constants/strings';
-import { Component, OnInit } from '@angular/core';
-import * as String from '../../../../../constants/strings';
-import * as Route from '../../../../../constants/routes';
-import { ModalService } from './../../../../../services/modal.service';
-import { TeamService } from '../../../../../services/team.service';
 import { ActivatedRoute } from '@angular/router';
-import { Team } from '../../../../../models/team.model';
+import { Component, OnInit } from '@angular/core';
+import { Location } from '@angular/common';
+
+import { ToastrService } from 'ngx-toastr';
+
 import { AdminService } from '../../../../../services/admin.service';
 import { BasicUser } from '../../../../../models/user.model';
-import { ToastrService } from 'ngx-toastr';
-import { Location } from '@angular/common';
+import { ModalService } from './../../../../../services/modal.service';
+import { TeamService } from '../../../../../services/team.service';
+import { Team } from '../../../../../models/team.model';
+import * as Route from '../../../../../constants/routes';
+import * as String from '../../../../../constants/strings';
 
 @Component({
   selector: 'manage-teams-view',
@@ -18,31 +19,29 @@ import { Location } from '@angular/common';
   providers: [TeamService, AdminService]
 })
 export class ManageTeamsViewComponent implements OnInit {
-  title = 'Users';
-  link = '/' + Route.DASHBOARD + '/' + Route.ADMIN_TEAMS;
   emptyContent = {
     image: '../../assets/team-lg.png',
     message: String.EMPTY_TEAM_MEMBER,
   };
-
-  team: Team;
-
-  members: Array<BasicUser> = undefined;
-
   modal = {
     header: String.ADD_MEMBER,
     userButton: String.ADD_MEMBER_BUTTON,
     users: []
   };
+  title = 'Users';
+  link = '/' + Route.DASHBOARD + '/' + Route.ADMIN_TEAMS;
+  team: Team;
+  members: Array<BasicUser> = undefined;
+  page = 0;
+  totalPages = 0;
 
-  constructor(
-    private modalService: ModalService,
-    private teamService: TeamService,
-    private adminService: AdminService,
-    private route: ActivatedRoute,
-    private toast: ToastrService,
-    private location: Location
-  ) { }
+  constructor(private modalService: ModalService,
+              private teamService: TeamService,
+              private adminService: AdminService,
+              private route: ActivatedRoute,
+              private toast: ToastrService,
+              private location: Location) {
+  }
 
   open(modal) {
     this.modalService.open(modal, { backdrop: 'static', keyboard: false });
@@ -52,14 +51,18 @@ export class ManageTeamsViewComponent implements OnInit {
     this.location.back();
   }
 
-  onAddMember(selectedUsers) {
-    this.adminService.addUsersToTeam(this.team.id, selectedUsers).then((team) => {
-      this.adminService.getTeamMembers(this.team.id).then((members) => {
-        this.members = members;
-        this.adminService.getUsersByRole('inspector').then((users) => {
-          this.modal.users = users.filter(o1 => !this.members.some(o2 => o1.id === o2.id));
-        });
+  refresh() {
+    this.adminService.getTeamMembers(this.team.id).then((members) => {
+      this.members = members;
+      this.adminService.getUsersByRole('inspector').then((users) => {
+        this.modal.users = users.filter(o1 => !this.members.some(o2 => o1.id === o2.id));
       });
+    });
+  }
+
+  onAddMember(selectedUsers) {
+    this.adminService.addUsersToTeam(this.team.id, selectedUsers).then(() => {
+      this.refresh();
     });
   }
 
@@ -73,6 +76,7 @@ export class ManageTeamsViewComponent implements OnInit {
       value.photo)
       .then((object) => {
         this.toast.success('Successfully updated ' + object.get('firstName') + ' ' + object.get('lastName'));
+        this.refresh();
       }, (error) => {
         this.toast.error(error.message || String.GENERAL_ERROR);
       });
@@ -80,12 +84,7 @@ export class ManageTeamsViewComponent implements OnInit {
 
   onRemoveMember(user) {
     this.adminService.removeMemberFromTeam(this.team.id, user.id).then(() => {
-      this.adminService.getTeamMembers(this.team.id).then((members) => {
-        this.members = members;
-        this.adminService.getUsersByRole('inspector').then((users) => {
-          this.modal.users = users.filter(o1 => !this.members.some(o2 => o1.id === o2.id));
-        });
-      });
+      this.refresh();
     });
   }
 
@@ -94,14 +93,24 @@ export class ManageTeamsViewComponent implements OnInit {
     this.teamService.getTeam(teamId).then((team) => {
       this.team = team;
       this.adminService.getTeamMembers(teamId).then((members) => {
+        this.totalPages = this.adminService.totalPages;
         this.members = members;
         this.adminService.getUsersByRole('inspector').then((users) => {
-          this.modal.users = users.filter(o1 => !this.members.some(o2 => o1.id === o2.id));
+          const activeUsers = users.filter(o1 => !this.members.some(o2 => o1.id === o2.id));
+          this.modal.users = activeUsers.filter(o1 => o1.isActive);
         });
       });
     });
+  }
 
-
+  onChangePage(value) {
+    this.page = value;
+    this.adminService.getTeamMembers(this.team.id, value).then((members) => {
+      this.members = members;
+      this.adminService.getUsersByRole('inspector').then((users) => {
+        this.modal.users = users.filter(o1 => !this.members.some(o2 => o1.id === o2.id));
+      });
+    });
   }
 
 }

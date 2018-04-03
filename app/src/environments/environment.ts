@@ -5,9 +5,9 @@
 
 export const environment = {
   production: true,
-  parseId: 'abc123',
-  parseKey: 'mciE0uOj6JifeEsTc1Fl28bhwuG1XWij9gW5Det2',
-  parseURL: 'https://parse-server-esm-test.pathfinder.gov.bc.ca/parse',
-  parseMasterKey: 'abc123',
-  googleStaticMapApiKey: 'AIzaSyDb3sR83vQe1O62p3noJ9l4QBKW6PPaLQ8'
+  parseId: '<parseId>',
+  parseKey: '<parseKey>',
+  parseURL: '<parseURL>',
+  parseMasterKey: '<parseMasterkKey>',
+  googleStaticMapApiKey: '<googleStaticMapApiKey>'
 };

@@ -1,24 +1,50 @@
+import { LoadingService } from './../../../services/loading.service';
 import { fakeAsync, tick, async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 import { InspectionViewComponent } from './inspection-view.component';
 import { Inspection } from '../../../models/inspection.model';
 import { BasicUser } from '../../../models/user.model';
 import { ReportService } from '../../../services/report.service';
 import { OrderByPipe } from '../../directives/orderby.pipe';
-import { Params, ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs/Observable';
+import { ActivatedRoute } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Observation } from '../../../models/observation.model';
+import { Observable } from 'rxjs/Observable';
+import { ToastrService } from 'ngx-toastr';
 
 describe('InspectionViewComponent', () => {
   let component: InspectionViewComponent;
   let fixture: ComponentFixture<InspectionViewComponent>;
   let compiled;
+  let loadingServiceStub;
+  let toastServiceStub;
 
   beforeEach(async(() => {
+    loadingServiceStub = {
+      loading(): Observable<any> {
+        return Observable.of(true);
+      },
+      showLoading(): Observable<any> {
+        return Observable.of(true);
+      }
+    };
+    toastServiceStub = {
+      success(): Observable<any> {
+        return Observable.of(true);
+      },
+      error(): Observable<any> {
+        return Observable.of(true);
+      }
+    };
      TestBed.configureTestingModule({
       declarations: [ InspectionViewComponent, OrderByPipe],
-      providers: [{provide : ActivatedRoute, useValue: {snapshot: {params: {'id': 'inspection-id-1'}}}}],
+       schemas: [NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA],
+      providers: [
+        {provide : ActivatedRoute, useValue: {snapshot: {params: {'id': 'inspection-id-1'}}}},
+        { provide: LoadingService, useValue: loadingServiceStub },
+        { provide: ToastrService, useValue: toastServiceStub },
+      ],
       imports: [ RouterTestingModule ],
     })
     .compileComponents();
@@ -37,7 +63,7 @@ describe('InspectionViewComponent', () => {
 
   it('should render the correct inspection data', fakeAsync(() => {
     const reportService = fixture.debugElement.injector.get(ReportService);
-    const inspector = new BasicUser('testId', 'testFirstName', 'testLastName', 'testInspectorName', [], 'testEmail', 'testImage', "testPermission", {});
+    const inspector = new BasicUser('testId', 'testFirstName', 'testLastName', 'testInspectorName', [], 'testEmail', 'testImage', "testPermission", {}, null, null);
     const startDate = new Date();
     const endDate = new Date();
     const inspection =

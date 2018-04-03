@@ -4,10 +4,11 @@ import { RouterTestingModule } from '@angular/router/testing';
 
 import { AuthService } from './auth.service';
 import { AdminService } from './admin.service';
-import {createInspection, deleteInspections, deleteTeam, deleteUser, randomKey} from './testing.service';
+import {createInspection, deleteInspections, deleteTeam, deleteUser, parseInit, randomKey} from './testing.service';
 import { LoginComponent } from '../app/login/login.component';
 
 const Parse: any = require('parse');
+parseInit();
 
 describe('Admin Testing', () => {
   let component: LoginComponent;
@@ -35,7 +36,7 @@ describe('Admin Testing', () => {
     originalTimeout = jasmine.DEFAULT_TIMEOUT_INTERVAL;
     jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
     const promises = [];
-    Parse.User.logIn('superadmin', 'superadmin').then((user) => {
+    Parse.User.logIn('superadmin@superadmin.com', 'password').then((user) => {
       console.log('Logged In as SuperAdmin');
       admin_user = user;
       promises.push(createInspection('insp1', user.id).then((object) => {

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {ProfileService} from '../../../services/profile.service';
-import {parseTeamToModel, parseToJSON, parseUserToModel} from '../../../services/parse.service';
+
 import {BasicUser} from '../../../models/user.model';
-import {Team} from '../../../models/team.model';
+import {ProfileService} from '../../../services/profile.service';
+import {parseUserToModel} from '../../../services/parse.service';
 
 @Component({
   selector: 'profile',
@@ -31,14 +31,22 @@ export class ProfileComponent implements OnInit {
     this.profileService.getTeamAdminInfo()
       .then((teamAdminInfo) => {
         if (teamAdminInfo instanceof Array) {
-          teamAdminInfo.forEach((object) => {
-            const admin = parseUserToModel(object.admin);
-            admin.teams = object.team;
-            this.admin.push(
-              admin
-            );
-          });
-        }
+          teamAdminInfo.forEach(teamObject => {
+            let duplicate = false;
+            const admin = teamObject.admin;
+            admin.teams.push(teamObject);
+            this.admin.forEach((adminObject) => {
+              if (adminObject.id === admin.id) {
+                adminObject.teams.push(teamObject);
+                duplicate = true;
+              }
+            });
+            if(!duplicate) {
+              this.admin.push(admin);
+            }
+        });
+
+      }
     });
   }
 

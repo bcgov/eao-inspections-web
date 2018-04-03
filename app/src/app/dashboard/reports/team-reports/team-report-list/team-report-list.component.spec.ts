@@ -1,19 +1,23 @@
+import { Team } from './../../../../../models/team.model';
+import { LoadingService } from './../../../../../services/loading.service';
 import { fakeAsync, tick, async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 
 import { TeamReportListComponent } from './team-report-list.component';
-import { Team } from '../../../../../models/team.model';
 import { TeamService } from '../../../../../services/team.service';
 import { OrderByPipe } from '../../../../directives/orderby.pipe';
 import { ActivatedRoute } from '@angular/router';
 import { ReportService } from '../../../../../services/report.service';
 import { Inspection } from '../../../../../models/inspection.model';
 import { RouterTestingModule } from '@angular/router/testing';
+import { Observable } from 'rxjs/Observable';
 
 describe('TeamReportListComponent', () => {
   let component: TeamReportListComponent;
   let fixture: ComponentFixture<TeamReportListComponent>;
   let compiled;
+  let loadingServiceStub: any;
+
   const reports = [
     new Inspection('test', 'test', 'test', 'test', null, 'test', null, null, null, 'test', true, null),
     new Inspection('test', 'test', 'test', 'test', null, 'test', null, null, null, 'test', true, null),
@@ -21,10 +25,22 @@ describe('TeamReportListComponent', () => {
   ];
 
   beforeEach(async(() => {
+    loadingServiceStub = {
+      loading(): Observable<any> {
+        return Observable.of(true);
+      },
+      showLoading(): Observable<any> {
+        return Observable.of(true);
+      }
+    };
+
     TestBed.configureTestingModule({
       declarations: [ TeamReportListComponent, OrderByPipe ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
-      providers: [{provide : ActivatedRoute, useValue: {snapshot: {params: {'id': 'team-id-1'}}}}],
+      providers: [
+        {provide : ActivatedRoute, useValue: {snapshot: {params: {'id': 'team-id-1'}}}},
+        { provide: LoadingService, useValue: loadingServiceStub }
+      ],
       imports: [RouterTestingModule]
     })
     .compileComponents();
@@ -49,7 +65,7 @@ describe('TeamReportListComponent', () => {
     component.ngOnInit();
     tick();
     fixture.detectChanges();
-    expect(compiled.querySelector('.dashboard__title').textContent).toContain(team.name);
+    expect(compiled.querySelector('.dashboard__title')).toContain(team.name);
   }));
 
   it('should render correct table headers', () => {

@@ -4,8 +4,10 @@ import { FormsModule } from '@angular/forms';
 
 import { LoginComponent } from '../app/login/login.component';
 import { AuthService } from './auth.service';
+import {parseInit} from './testing.service';
 
 const Parse: any = require('parse');
+parseInit();
 
 describe('Authentication and Authorization Testing', () => {
   let component: LoginComponent;

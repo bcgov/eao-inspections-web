@@ -7,7 +7,6 @@ import { Location } from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
 import * as String from '../../../constants/strings';
 
-
 @Component({
   selector: 'inspection-view',
   templateUrl: './inspection-view.component.html',

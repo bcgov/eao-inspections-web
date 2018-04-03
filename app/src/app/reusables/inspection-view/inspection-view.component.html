@@ -25,10 +25,6 @@
                     <p>{{ data.title || '-' }}</p>
                 </div>
                 <div>
-                    <h4>subtitle</h4>
-                    <p>{{ data.subtitle || '-' }}</p>
-                </div>
-                <div>
                     <h4>inspection number</h4>
                     <p>{{ data.inspectionNumber || '-' }}</p>
                 </div>
@@ -45,11 +41,11 @@
                 </div>
                 <div>
                     <h4>inspection start date</h4>
-                    <p>{{ data.startDate || '-' }}</p>
+                    <p>{{ data.startDate | date : "MMM d y" || '-' }}</p>
                 </div>
                 <div>
                     <h4>inspection end date</h4>
-                    <p>{{ data.endDate || '-' }}</p>
+                    <p>{{ data.endDate | date : "MMM d y" || '-' }}</p>
                 </div>
             </div>
         </div>
@@ -60,7 +56,7 @@
                     <h4>Name</h4>
                     <h4 class="pointer" (click)="sort('createdAt')">Submitted</h4>
                 </div>
-                <div class="inspection-details-content" *ngFor="let element of elements | orderBy : {property: column, direction: direction}">
+                <div class="inspection-details-content-elements" *ngFor="let element of elements | orderBy : {property: column, direction: direction}">
                     <a [routerLink]="['element', element.id]">{{ element.title || '-'  }}</a>
                     <p>{{ element.createdAt | date : "MMM d y" || '-' }}</p>
                 </div>

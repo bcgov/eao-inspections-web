@@ -1,16 +1,37 @@
+import { LoadingService } from './../../../../../services/loading.service';
 import { AdminService } from './../../../../../services/admin.service';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { RouterTestingModule } from '@angular/router/testing';
 
 import { ArchivedTeamsComponent } from './archived-teams.component';
+import { Observable } from 'rxjs/Observable';
+import { ToastrService } from 'ngx-toastr';
 
 describe('ArchivedTeamsComponent', () => {
   let component: ArchivedTeamsComponent;
   let fixture: ComponentFixture<ArchivedTeamsComponent>;
   let adminServiceStub: any;
+  let toastServiceStub: any;
+  let loadingServiceStub: any;
 
   beforeEach(async(() => {
+    toastServiceStub = {
+      success(): Observable<any> {
+        return Observable.of(true);
+      },
+      error(): Observable<any> {
+        return Observable.of(true);
+      }
+    };
+    loadingServiceStub = {
+      loading(): Observable<any> {
+        return Observable.of(true);
+      },
+      showLoading(): Observable<any> {
+        return Observable.of(true);
+      }
+    };
     adminServiceStub = {
       getArchivedTeams: jasmine.createSpy('getArchivedTeams').and.callFake(() => {
         return {
@@ -25,7 +46,11 @@ describe('ArchivedTeamsComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ ArchivedTeamsComponent ],
       schemas: [ NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA ],
-      providers: [{ provide: AdminService, useValue: adminServiceStub }],
+      providers: [
+        { provide: AdminService, useValue: adminServiceStub },
+        { provide: ToastrService, useValue: toastServiceStub },
+        { provide: LoadingService, useValue: loadingServiceStub },
+      ],
       imports: [RouterTestingModule]
     })
     .compileComponents();

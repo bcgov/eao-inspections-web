@@ -7,6 +7,7 @@ import { parseInspectionToModel, parseUserToModel, parseTeamToModel } from './pa
 import { LoadingService } from './loading.service';
 import { Team } from '../models/team.model';
 import { randomKey } from './testing.service';
+import { ToastrService } from 'ngx-toastr';
 
 const Parse: any = require('parse');
 let self;
@@ -16,8 +17,9 @@ export class AdminService {
   user = new Parse.User();
   page = 0;
   totalPages = 0;
-  displayLimit = 5;
-  constructor(private loadingService: LoadingService) {
+  displayLimit = 25;
+  constructor(private loadingService: LoadingService, private toast: ToastrService) {
+
     self = this;
     this.user = Parse.User.current();
   }
@@ -29,7 +31,7 @@ export class AdminService {
       const teamQuery = new Parse.Query('Team');
       teamQuery.equalTo('userId', this.user.userId);
 
-      const q = new Parse.Query('User');
+      const q = new Parse.Query(Parse.User);
       q.matchesKeyInQuery('teamId', 'teamId', teamQuery, {
         success: function (results) {
           self.loadingService.showLoading(false, key);
@@ -51,7 +53,7 @@ export class AdminService {
       const users = [];
 
       roleQuery.equalTo('name', _role).first().then((role) => {
-        const userQuery = new Parse.Query('User');
+        const userQuery = new Parse.Query(Parse.User);
         userQuery.matchesKeyInQuery('objectId', 'objectId', role.get('users').query())
           .find({
             success: (results) => {
@@ -76,8 +78,8 @@ export class AdminService {
     const key = randomKey();
     self.loadingService.showLoading(true, key);
     return new Promise((resolve, reject) => {
-      const query = new Parse.Query('User');
       const users = [];
+      const query = new Parse.Query(Parse.User);
       const queryCount = new Parse.Query(Parse.User);
       queryCount.equalTo('isActive',false);
       if (this.page === 0) {
@@ -142,7 +144,6 @@ export class AdminService {
         if (this.page === 0) {
           queryCount.count().then((count) => {
             this.totalPages = Math.ceil(count / this.displayLimit);
-            console.log(this.totalPages);
             resolve(users);
           });
         } else {
@@ -203,7 +204,6 @@ export class AdminService {
       const role = this.getCorrectRole(permission);
       const access = this.getAppAccess(permission);
       const query = new Parse.Query(Parse.Role);
-      const queryTeam = new Parse.Query('Team');
       const user = new Parse.User();
 
       user.set('isActive', true);
@@ -336,36 +336,61 @@ export class AdminService {
     });
   }
 
-  archiveUser(userId: string): Promise<any> {
+// remove members from teams when they are archived
+  removeFromTeam(user){
+    const teamId = [];
+    user.teams.map(team => {
+      teamId.push(team.id);
+    });
+    teamId.map(id => {
+      this.removeMemberFromTeam(id, user.id);
+    })
+  }
+
+  archiveUser(user): Promise<any> {
+    if(!user.access.isAdmin || !user.access.isSuperAdmin) {
+      this.removeFromTeam(user);
+    }
     const key = randomKey();
     self.loadingService.showLoading(true, key);
     return new Promise((resolve, reject) => {
       const query = new Parse.Query(Parse.User);
-      query.get(userId, {
-        success: function (user) {
-          user.set('isActive', false);
-          user.save(null, {useMasterKey: true}).then(object => {
-            self.loadingService.showLoading(false, key);
-            resolve(object);
-          }, error => {
-            self.loadingService.showLoading(false, key);
-            reject(error);
+      const teamQuery = new Parse.Query('Team');
+      const tempUser = new Parse.User();
+      tempUser.id = user.id;
+      teamQuery.equalTo('teamAdmin', tempUser);
+      teamQuery.find().then((adminObject) => {
+        if(adminObject.length == 0){
+          query.get(user.id, {
+            success: function (user) {
+              user.set('isActive', false);
+              user.save(null, {useMasterKey: true}).then(object => {
+                self.loadingService.showLoading(false, key);
+                resolve(object);
+              }, error => {
+                self.loadingService.showLoading(false, key);
+                reject(error);
+              });
+            },
+            error: function (object, error) {
+              self.loadingService.showLoading(false, key);
+              reject(error);
+            }
           });
-        },
-        error: function (object, error) {
+        } else {
           self.loadingService.showLoading(false, key);
-          reject(error);
+          this.toast.error("Cannot Archive " + user.name + ". Please remove them as a team Administrator")
         }
       });
     });
   }
 
-  unArchiveUser(userId: string): Promise<any> {
+  unArchiveUser(user): Promise<any> {
     const key = randomKey();
     self.loadingService.showLoading(true, key);
     return new Promise((resolve, reject) => {
       const query = new Parse.Query('User');
-      query.get(userId, {
+      query.get(user.id, {
         success: function (user) {
           user.set('isActive', true);
           user.save(null, {useMasterKey: true}).then(object => {
@@ -481,7 +506,6 @@ export class AdminService {
     const key = randomKey();
     self.loadingService.showLoading(true, key);
     return new Promise((resolve, reject) => {
-      const query = new Parse.Query('Team');
       const promises1 = [];
       const promises2 = [];
       const teams = [];
@@ -490,15 +514,14 @@ export class AdminService {
       if (this.page === 0) {
         queryCount.count().then((count) => {
           this.totalPages = Math.ceil(count / this.displayLimit);
-          console.log(count);
         });
       }
       this.page = page;
+      const query = new Parse.Query('Team');
       query.equalTo('isActive', false);
       query.skip(page * this.displayLimit);
       query.limit(this.displayLimit);
       query.descending('createdAt');
-      query.equalTo('isActive', false);
       query.find().then((results) => {
         if (!Array.isArray(results)) {
           results = [results];
@@ -548,7 +571,6 @@ export class AdminService {
       if (this.page === 0) {
         queryCount.count().then((count) => {
           this.totalPages = Math.ceil(count / this.displayLimit);
-          console.log(count);
         });
       }
       this.page = page;
@@ -592,12 +614,12 @@ export class AdminService {
     });
   }
 
-  archiveTeam(teamId: string): Promise<any> {
+  archiveTeam(team): Promise<any> {
     const key = randomKey();
     self.loadingService.showLoading(true, key);
     return new Promise((resolve, reject) => {
       const query = new Parse.Query('Team');
-      query.get(teamId, {
+      query.get(team.id, {
         success: function (team) {
           team.set('isActive', false);
           team.save(null, { useMasterKey: true }).then(object => {
@@ -617,12 +639,12 @@ export class AdminService {
     });
   }
 
-  unArchiveTeam(teamId: string): Promise<any> {
+  unArchiveTeam(team): Promise<any> {
     const key = randomKey();
     self.loadingService.showLoading(true, key);
     return new Promise((resolve, reject) => {
       const query = new Parse.Query('Team');
-      query.get(teamId, {
+      query.get(team.id, {
         success: function (team) {
           team.set('isActive', true);
           team.save(null, { useMasterKey: true }).then(object => {
@@ -692,7 +714,6 @@ export class AdminService {
       const query = new Parse.Query('Inspection');
       const queryCount = new Parse.Query('Inspection');
 
-      const reports = [];
       const promises = [];
       const inspections = [];
       const access = this.user.get('access');
@@ -700,8 +721,8 @@ export class AdminService {
         query.equalTo('adminId', this.user.id);
         queryCount.equalTo('adminId', this.user.id);
       }
-      queryCount.equalTo('isActive',false);
-      query.equalTo('isActive', false);
+      queryCount.notEqualTo('isActive',true);
+      query.notEqualTo('isActive', true);
       query.skip(page * this.displayLimit);
       query.limit(this.displayLimit);
       query.descending('createdAt');
@@ -723,7 +744,7 @@ export class AdminService {
             inspections[index].inspector = inspector;
           });
           self.loadingService.showLoading(false, key);
-          resolve(reports);
+          resolve(inspections);
         })
         .catch((error) => {
           self.loadingService.showLoading(false, key);
@@ -732,12 +753,12 @@ export class AdminService {
     });
   }
 
-  archiveReport(reportId) {
+  archiveReport(report) {
     const key = randomKey();
     self.loadingService.showLoading(true, key);
     return new Promise((resolve, reject) => {
       const query = new Parse.Query('Inspection');
-      query.get(reportId, {
+      query.get(report.id, {
         success: function (report) {
           report.set('isActive', false);
           report.save();
@@ -752,12 +773,12 @@ export class AdminService {
     });
   }
 
-  unArchiveReport(reportId) {
+  unArchiveReport(report) {
     const key = randomKey();
     self.loadingService.showLoading(true, key);
     return new Promise((resolve, reject) => {
       const query = new Parse.Query('Inspection');
-      query.get(reportId, {
+      query.get(report.id, {
         success: function (report) {
           report.set('isActive', true);
           report.save();
@@ -773,17 +794,29 @@ export class AdminService {
   }
 
 
-  getTeamMembers(teamId: string): Promise<any> {
+  getTeamMembers(teamId: string, page=0): Promise<any> {
     const key = randomKey();
     self.loadingService.showLoading(true, key);
     return new Promise((resolve, reject) => {
         const query = new Parse.Query('Team');
         const users: Array<BasicUser> = [];
         const promises = [];
+
         query.equalTo('objectId', teamId);
         query.first()
         .then((team) => {
-          team.get('users').query().find().then((results) => {
+
+          if (this.page === 0) {
+            team.get('users').query().count().then((count) => {
+              this.totalPages = Math.ceil(count / this.displayLimit);
+            });
+          }
+          this.page = page;
+          const teamQuery = team.get('users').query();
+          teamQuery.skip(page * this.displayLimit);
+          teamQuery.limit(this.displayLimit);
+          teamQuery.descending('createdAt');
+          teamQuery.find().then((results) => {
              results.forEach((user) => {
                 users.push(
                   parseUserToModel(user)

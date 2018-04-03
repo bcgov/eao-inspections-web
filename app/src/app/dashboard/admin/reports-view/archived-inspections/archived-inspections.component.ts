@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { Location } from '@angular/common';
+
 import { Inspection } from '../../../../../models/inspection.model';
-import { ActivatedRoute } from '@angular/router';
 import * as String from '../../../../../constants/strings';
 import { AdminService } from '../../../../../services/admin.service';
-import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-archived-inspections',
@@ -22,15 +22,11 @@ export class ArchivedInspectionsComponent implements OnInit {
   isDesc: Boolean = false;
   direction: number;
   column: string;
-
-  data: Array<Inspection> = [];
-
+  data: Array<Inspection> = undefined;
   fields: Array<any>;
   actions: Array<any>;
-
   page = 0;
   totalPages = 0;
-
 
   constructor(private adminService: AdminService, private location: Location) {
     this.fields = ['title', 'project', 'submitted', 'team', 'inspector', 'actions'];

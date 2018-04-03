@@ -1,15 +1,18 @@
+import { LoadingService } from './../../../services/loading.service';
 import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 
 import { ProfileComponent } from './profile.component';
 import { ProfileService } from '../../../services/profile.service';
 import { RouterTestingModule } from '@angular/router/testing';
+import { Observable } from 'rxjs/Observable';
 
 describe('ProfileComponent', () => {
   let component: ProfileComponent;
   let fixture: ComponentFixture<ProfileComponent>;
   let profileServiceStub: any;
   let profileData: any;
+  let loadingServiceStub: any;
 
   beforeEach(async(() => {
     profileServiceStub = {
@@ -47,11 +50,20 @@ describe('ProfileComponent', () => {
         };
       }),
     };
+    loadingServiceStub = {
+      loading(): Observable<any> {
+        return Observable.of(true);
+      },
+      showLoading(): Observable<any> {
+        return Observable.of(true);
+      }
+    };
 
     TestBed.configureTestingModule({
       declarations: [ ProfileComponent ],
       providers: [
-        { provide: ProfileService, useValue: profileServiceStub }
+        { provide: ProfileService, useValue: profileServiceStub },
+        { provide: LoadingService, useValue: loadingServiceStub },
       ],
       schemas: [ CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA ],
       imports: [ RouterTestingModule ],

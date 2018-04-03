@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {NgForm} from '@angular/forms';
-import * as Route from '../../../constants/routes';
+
 import {AuthService} from '../../../services/auth.service';
 import {Router} from '@angular/router';
+import * as Route from '../../../constants/routes';
 
 @Component({
   selector: 'app-password-change',
@@ -23,7 +24,7 @@ export class PasswordChangeComponent implements OnInit {
 
   onPasswordChange(form: NgForm) {
     const password = form.value.password;
-    this.authService.firstTimePassword(password).then((results) => {
+    this.authService.firstTimePassword(password).then(() => {
       this.router.navigate([Route.HOME(this.isAdmin())]);
     });
   }

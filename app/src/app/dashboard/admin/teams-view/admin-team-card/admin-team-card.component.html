@@ -3,9 +3,10 @@
         <img class="team__card--photo__img" [src]="team.badge || '../../assets/team-lg.png'" />
     </div>
     <div class="team__card--details">
-        <a routerLink="manage-team/{{team.id}}">
+        <a *ngIf="team.isActive" routerLink="manage-team/{{team.id}}">
             <h4>{{team.name}}</h4>
         </a>
+        <h4 *ngIf="!team.isActive">{{team.name}}</h4>
         <div *ngIf="team.numUsers<=0; then noMembers else members"></div>
         <ng-template #noMembers><p>0 Members</p></ng-template>
         <ng-template #members>

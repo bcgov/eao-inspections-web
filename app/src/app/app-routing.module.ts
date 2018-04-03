@@ -1,33 +1,31 @@
+import { NgModule } from '@angular/core';
+import {Routes, RouterModule} from '@angular/router';
+
 import { ArchivedInspectionsComponent } from './dashboard/admin/reports-view/archived-inspections/archived-inspections.component';
 import { ArchivedTeamsComponent } from './dashboard/admin/teams-view/archived-teams/archived-teams.component';
-import { NgModule } from '@angular/core';
-import {Routes, RouterModule, CanActivate} from '@angular/router';
-import * as ParseVar from '../constants/parse';
-import * as Route from '../constants/routes';
-
-import { LoginComponent } from './login/login.component';
-import { AppComponent } from './app.component';
-import { MyReportsComponent } from './dashboard/reports/my-reports/my-reports.component';
-import { TeamReportsComponent } from './dashboard/reports/team-reports/team-reports.component';
-import { ProfileComponent } from './dashboard/profile-view/profile.component';
-import { SettingsComponent } from './dashboard/settings-view/settings.component';
-import { InspectionViewComponent } from './reusables/inspection-view/inspection-view.component';
-import { ElementViewComponent } from './reusables/element-view/element-view.component';
-import { UsersViewComponent } from './dashboard/admin/users-view/users-view.component';
-import { ReportsViewComponent } from './dashboard/admin/reports-view/reports-view.component';
-import { SearchViewComponent } from './dashboard/search-view/search-view.component';
-import { TeamsViewComponent } from './dashboard/admin/teams-view/teams-view.component';
-import { ManageTeamsViewComponent } from './dashboard/admin/teams-view/manage-teams-view/manage-teams-view.component';
-import { TeamReportListComponent } from './dashboard/reports/team-reports/team-report-list/team-report-list.component';
-import {AuthGuardService} from '../services/auth-guard.service';
-import {RoleGuardService} from '../services/role-guard-service';
-import { NoRouteComponent } from './no-route/no-route.component';
 import { ArchivedUsersComponent } from './dashboard/admin/users-view/archived-users/archived-users.component';
-import { ReportViewListComponent } from './dashboard/admin/reports-view/report-view-list/report-view-list.component';
+import { AuthGuardService } from '../services/auth-guard.service';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import {PasswordChangeComponent} from './login/password-change/password-change.component';
-import {FirstTimePasswordGuardService} from '../services/first-time-password-guard.service';
+import { ElementViewComponent } from './reusables/element-view/element-view.component';
+import { FirstTimePasswordGuardService } from '../services/first-time-password-guard.service';
+import { InspectionViewComponent } from './reusables/inspection-view/inspection-view.component';
+import { LoginComponent } from './login/login.component';
 import { LoggedInGuardService } from '../services/logged-in-guard.service';
+import { ManageTeamsViewComponent } from './dashboard/admin/teams-view/manage-teams-view/manage-teams-view.component';
+import { MyReportsComponent } from './dashboard/reports/my-reports/my-reports.component';
+import { NoRouteComponent } from './no-route/no-route.component';
+import { PasswordChangeComponent } from './login/password-change/password-change.component';
+import { ProfileComponent } from './dashboard/profile-view/profile.component';
+import { ReportsViewComponent } from './dashboard/admin/reports-view/reports-view.component';
+import { ReportViewListComponent } from './dashboard/admin/reports-view/report-view-list/report-view-list.component';
+import { RoleGuardService } from '../services/role-guard-service';
+import { SearchViewComponent } from './dashboard/search-view/search-view.component';
+import { SettingsComponent } from './dashboard/settings-view/settings.component';
+import { TeamReportsComponent } from './dashboard/reports/team-reports/team-reports.component';
+import { TeamReportListComponent } from './dashboard/reports/team-reports/team-report-list/team-report-list.component';
+import { TeamsViewComponent } from './dashboard/admin/teams-view/teams-view.component';
+import { UsersViewComponent } from './dashboard/admin/users-view/users-view.component';
+import * as Route from '../constants/routes';
 
 const routes: Routes = [
   // unauthenticated routes

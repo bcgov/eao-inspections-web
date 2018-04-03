@@ -48,11 +48,10 @@
                 <div class="container-fluid">
                     <div class="row">
                         <ng-container *ngFor="let item of mediaSelected">
-                            <app-element-media [item]="item"></app-element-media>
+                            <app-element-media [item]="item" [viewOnly]="viewOnly"></app-element-media>
                         </ng-container>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>

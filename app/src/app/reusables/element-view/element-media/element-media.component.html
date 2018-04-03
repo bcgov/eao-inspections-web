@@ -1,20 +1,34 @@
 <div class="elements-details-media-block" *ngIf="item.fileURL">
   <div class="element-details-media">
     <div class="thumbnail">
-      <a class="thumbnail-link" href="{{ item.fileURL }}">
-      <span *ngIf="item.type === 'Audio'">
-        <img class="thumbnail-link-image" [src]="this.audioImage">
-      </span>
-      <span *ngIf="item.type === 'Photo'">
-        <img class="thumbnail-link-image" [src]="this.thumbnailImage" (error)="setDefaultPic()">
-      </span>
-      <span *ngIf="item.type === 'Video'">
-        <img class="thumbnail-link-image" [src]="this.defaultPic">
-      </span>
-      <span *ngIf="item.type === 'undefined'">
-        <img class="thumbnail-link-image" [src]="this.thumbnailImage" (error)="setDefaultPic()">
-      </span>
+      <a class="thumbnail-link" href="{{ url }}" *ngIf="!_viewOnly">
+        <span *ngIf="item.type === 'Audio'">
+          <img class="thumbnail-link-image" [src]="this.audioImage" (error)="setDefaultPic('audio')">
+        </span>
+        <span *ngIf="item.type === 'Photo'">
+          <img class="thumbnail-link-image" [src]="this.thumbnailImage" (error)="setDefaultPic()">
+        </span>
+        <span *ngIf="item.type === 'Video'">
+          <img [src]="this.videoImage" (error)="setDefaultPic('video')">
+        </span>
+        <span *ngIf="item.type === 'undefined'">
+          <img class="thumbnail-link-image" [src]="this.thumbnailImage" (error)="setDefaultPic()">
+        </span>
       </a>
+      <div class="thumbnail-link" *ngIf="_viewOnly">
+        <span *ngIf="item.type === 'Audio'">
+          <img [src]="this.audioImage" (error)="setDefaultPic('audio')">
+        </span>
+        <span *ngIf="item.type === 'Photo'">
+          <img class="thumbnail-link-image" [src]="this.thumbnailImage" (error)="setDefaultPic()">
+        </span>
+        <span *ngIf="item.type === 'Video'">
+          <img [src]="this.videoImage" (error)="setDefaultPic('video')">
+        </span>
+        <span *ngIf="item.type === 'undefined'">
+          <img class="thumbnail-link-image" [src]="this.thumbnailImage" (error)="setDefaultPic()">
+        </span>
+      </div>
     </div>
   </div>
 </div>

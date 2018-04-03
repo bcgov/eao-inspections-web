@@ -5,7 +5,7 @@
   margin: $dashboard-team-margin;
   display: inline;
   height: 110px;
-  width: 270px;
+  width: 250px;
   border-radius: 2px;
   background-color: $background-white;
   box-shadow: 0 0 8px 0 rgba(0,0,0,0.2);
@@ -19,12 +19,10 @@
       position: relative;
       top: 20%;
       left: 10px;
-      height: 64px;
-      width: 64px;
       overflow:hidden;
-      border-radius: 50%;
       img {
-        position: relative;
+        border-radius: 50%;
+        width: 64px;
         height: 64px;
       }
     }

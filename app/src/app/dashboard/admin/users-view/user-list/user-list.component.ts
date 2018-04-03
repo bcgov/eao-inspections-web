@@ -1,11 +1,12 @@
 import {Component, OnInit} from '@angular/core';
+
 import { ToastrService } from 'ngx-toastr';
 
 import { AdminService } from './../../../../../services/admin.service';
+import { BasicUser } from '../../../../../models/user.model';
 import { ModalService } from './../../../../../services/modal.service';
 import * as String from '../../../../../constants/strings';
 import * as Route from '../../../../../constants/routes';
-import { BasicUser } from '../../../../../models/user.model';
 
 @Component({
   selector: 'user-list',
@@ -68,6 +69,10 @@ export class UserListComponent implements OnInit {
       value.photo)
       .then((object) => {
         this.toast.success('Successfully updated ' + object.get('firstName') + ' ' + object.get('lastName'));
+        this.adminService.getActiveUsers()
+          .then((result) => {
+            this.users = result;
+          });
       }, (error) => {
         this.toast.error(error.message || String.GENERAL_ERROR);
       });
@@ -76,6 +81,10 @@ export class UserListComponent implements OnInit {
   onArchive(value) {
     this.adminService.archiveUser(value).then((object) => {
       this.toast.success('Successfully archived ' + object.get('firstName') + ' ' + object.get('lastName'));
+      this.adminService.getActiveUsers()
+        .then((result) => {
+          this.users = result;
+        });
     }, (error) => {
       this.toast.error(error.message || String.GENERAL_ERROR);
     });
@@ -92,6 +101,10 @@ export class UserListComponent implements OnInit {
       .then((results) => {
         if (results) {
           this.toast.success('Successfully added ' + value.firstName + ' ' + value.lastName);
+          this.adminService.getActiveUsers()
+            .then((result) => {
+              this.users = result;
+            });
         }
       }, (error) => {
         this.toast.error(error.message || String.GENERAL_ERROR);

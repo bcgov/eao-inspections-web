@@ -6,16 +6,6 @@ import { Team } from '../models/team.model';
 
 const Parse: any = require('parse');
 
-export function parseToJSON(objectList) {
-  const listJSON = [];
-  if (objectList.length) {
-    objectList.forEach((object) => {
-      listJSON.push(object.toJSON());
-    });
-  }
-  return listJSON;
-}
-
 export function parseUserToModel(object): BasicUser {
   if (object) {
     let profileImage = object.get('profileImage');
@@ -78,11 +68,11 @@ export function parseInspectionToModel(object) {
     id,
     object.get('title'),
     object.get('subtitle'),
-    object.get('inspectionNumber'),
+    object.get('number'),
     null,
     object.get('project'),
-    object.get('startDate'),
-    object.get('endDate'),
+    object.get('start'),
+    object.get('end'),
     object.get('updatedAt'),
     object.get('requirement'),
     object.get('isSubmitted'),
@@ -94,7 +84,7 @@ export function parseInspectionToModel(object) {
 
 export function parseObservationToModel(object) {
   const id = (object.get('id')) ? object.get('id') : object.id;
-
+  const inspection = object.get('inspection');
   return new Observation(
     id,
     object.get('title'),
@@ -102,7 +92,8 @@ export function parseObservationToModel(object) {
     object.get('requirement'),
     object.get('coordinate'),
     object.get('media'),
-    object.get('createdAt')
+    object.get('createdAt'),
+    inspection ? inspection.get('viewOnly') : false
   );
 }
 
