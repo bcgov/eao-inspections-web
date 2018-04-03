@@ -23,6 +23,7 @@ export class TeamReportListComponent implements OnInit {
   direction: number;
   column: string;
 
+  team: Team;
   data: Array<Inspection> = undefined;
   fields: Array<any>;
   actions: Array<any>;
@@ -43,6 +44,9 @@ export class TeamReportListComponent implements OnInit {
   ngOnInit() {
     this.sort('updatedAt');
     this.teamId = this.route.snapshot.params['id'];
+    this.teamService.getTeam(this.teamId).then((team) => {
+      this.team = team;
+    });
     this.reportService.getActiveTeamReports(this.teamId)
     .then((results) => {
         this.data = results;

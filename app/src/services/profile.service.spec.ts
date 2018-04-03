@@ -60,12 +60,12 @@ describe('Authentication and Authorization Testing', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should get user', () => {
-    console.log('Testing get user in functionality');
-    service.getUser().then((object) => {
-      expect(object.id === Parse.User.current().id).toBeTruthy();
-    });
-  });
+  // it('should get user', () => {
+  //   console.log('Testing get user in functionality');
+  //   service.getUser().then((object) => {
+  //     expect(object.id === Parse.User.current().id).toBeTruthy();
+  //   });
+  // });
 
   it('should get team', () => {
     console.log('Testing get team functionality');

@@ -51,10 +51,9 @@ describe('ProfileCardComponent', () => {
       name: "Clara Logan",
       team: "Team 2",
       email: "clara12@email.com",
-      image: "users.png",
+      image: "users",
       access: {
         isAdmin: false,
-        
       }
     };
     component.profile = profileInfo;
@@ -68,7 +67,7 @@ describe('ProfileCardComponent', () => {
   it("should contain profile image, name, team, email ", () => {
     expect(component.profile.name).toBe("Clara Logan");
     expect(component.profile.team).toBe("Team 2");
-    expect(component.profile.image).toBe("users.png");
+    expect(component.profile.image).toBe("users");
     expect(component.profile.email).toBe("clara12@email.com");
   });
   

@@ -22,6 +22,6 @@
 </div>
 
 <!-- edit user modal -->
-<ng-template #forgotPassword let-c="close" class="modal">
+<ng-template #forgotPassword let-c="close">
     <app-forgot-password-modal (submitValue)="onSendEmail($event)" [closeValue]="this.c" [modal]="forgotPasswordModal"></app-forgot-password-modal>
 </ng-template>

@@ -11,12 +11,16 @@ import { ReportService } from '../../../../../services/report.service';
 import { Inspection } from '../../../../../models/inspection.model';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Observable } from 'rxjs/Observable';
+import { BasicUser } from '../../../../../models/user.model';
 
 describe('TeamReportListComponent', () => {
   let component: TeamReportListComponent;
   let fixture: ComponentFixture<TeamReportListComponent>;
   let compiled;
+  let mockPipe: OrderByPipe;
   let loadingServiceStub: any;
+  let team;
+  let teamAdmin;
 
   const reports = [
     new Inspection('test', 'test', 'test', 'test', null, 'test', null, null, null, 'test', true, null),
@@ -25,6 +29,7 @@ describe('TeamReportListComponent', () => {
   ];
 
   beforeEach(async(() => {
+    mockPipe = new OrderByPipe();
     loadingServiceStub = {
       loading(): Observable<any> {
         return Observable.of(true);
@@ -50,6 +55,10 @@ describe('TeamReportListComponent', () => {
     fixture = TestBed.createComponent(TeamReportListComponent);
     component = fixture.componentInstance;
     compiled = fixture.debugElement.nativeElement;
+    component.data = reports;
+    teamAdmin = new BasicUser('1', 'mockName', "mockLastName", "mockFullName", [], "mockEmail", "mockImage", null, {}, true, true);
+    team = new Team('team-1-id', 'team1', teamAdmin, 'testColor1', true, 'testBadge');
+    component.team = team;
     fixture.detectChanges();
   });
 
@@ -57,16 +66,11 @@ describe('TeamReportListComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should render correct team name', fakeAsync(() => {
-    component.data = reports;
-    const teamService = fixture.debugElement.injector.get(TeamService);
-    const team = new Team('team-1-id', 'team1', null, 'testColor1', true, 'testBadge');
-    spyOn(teamService, 'getTeam').and.returnValue(Promise.resolve(team));
-    component.ngOnInit();
-    tick();
-    fixture.detectChanges();
-    expect(compiled.querySelector('.dashboard__title')).toContain(team.name);
-  }));
+  it('should render correct team data', () => {
+    expect(component.team.name).toBe("team1");
+    expect(component.team.badge).toBe("testBadge");
+    expect(component.team.admin.name).toBe("mockFullName");
+  });
 
   it('should render correct table headers', () => {
     const headers = [
