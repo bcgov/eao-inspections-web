@@ -40,4 +40,13 @@ describe('ArchiveModalComponent', () => {
     fixture.detectChanges();
     expect(component.confirmation).toHaveBeenCalledWith(mockData);
     }));
+
+  it('should close when close() is called', fakeAsync(() => {
+    spyOn(component, "close");
+    buttonEl = fixture.debugElement.nativeElement.querySelector('.dashboard__btn').click();
+    tick();
+    expect(component.close).toHaveBeenCalled();
+    fixture.detectChanges();
+    expect(component.closeValue).not.toBeNull();
+  }));
 });
