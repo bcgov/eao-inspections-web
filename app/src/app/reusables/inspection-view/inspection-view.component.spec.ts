@@ -19,6 +19,7 @@ describe('InspectionViewComponent', () => {
   let compiled;
   let loadingServiceStub;
   let toastServiceStub;
+  let mockUser;
 
   beforeEach(async(() => {
     loadingServiceStub = {
@@ -53,6 +54,8 @@ describe('InspectionViewComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(InspectionViewComponent);
     component = fixture.componentInstance;
+    mockUser = { access: {isSuperAdmin: false, isAdmin: false, isViewOnly: false}};
+    component.user = mockUser;
     compiled = fixture.debugElement.nativeElement;
     fixture.detectChanges();
   });

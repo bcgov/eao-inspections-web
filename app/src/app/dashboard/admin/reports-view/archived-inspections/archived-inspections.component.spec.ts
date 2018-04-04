@@ -1,4 +1,4 @@
-import { OrderByPipe } from './../../../../directives/orderby.pipe';
+import { OrderByPipe } from '../../../../directives/orderby.pipe';
 import { AdminService } from './../../../../../services/admin.service';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
@@ -14,12 +14,10 @@ describe('ArchivedInspectionsComponent', () => {
   let fixture: ComponentFixture<ArchivedInspectionsComponent>;
   let adminServiceStub: any;
   let toastServiceStub: any;
-  let mockPipe: OrderByPipe;
   let loadingServiceStub: any;
   let mockData: any;
 
   beforeEach(async(() => {
-    mockPipe = new OrderByPipe();
     adminServiceStub = {
       getArchivedReports: jasmine.createSpy('getArchivedReports').and.callFake(() => {
         return {

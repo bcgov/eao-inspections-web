@@ -53,7 +53,7 @@ describe('ReportViewListComponent', () => {
     mockData = [];
     component.data = mockData;
     expect(compiled.querySelectorAll('report-list-item').length).toBe(0)
-    // expect(compiled.querySelector('no-content')).toBeTruthy();
+    expect(compiled.querySelectorAll('no-content')).toBeTruthy();
   });
 
   it('should render table for data', () => {
