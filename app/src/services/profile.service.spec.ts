@@ -1,83 +1,70 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormsModule } from '@angular/forms';
-import { RouterTestingModule } from '@angular/router/testing';
+import { async, TestBed } from '@angular/core/testing';
 
-import { AuthService } from './auth.service';
-import { LoginComponent } from '../app/login/login.component';
+import {Observable} from 'rxjs/Observable'
+
+import {LoadingService} from './loading.service';
 import { ProfileService } from './profile.service';
-import {parseInit} from './testing.service';
+import {createUser, deleteUser, parseInit} from './testing.service';
 
 const Parse: any = require('parse');
 parseInit();
 
 describe('Authentication and Authorization Testing', () => {
-  let component: LoginComponent;
-  let fixture: ComponentFixture<LoginComponent>;
   let service: ProfileService;
   let originalTimeout;
+  let loadingServiceStub: any;
+  let testSuperAdminObject;
 
   beforeEach(async(() => {
+    loadingServiceStub = {
+      loading(): Observable<any> {
+        return Observable.of(true);
+      },
+      showLoading():Observable<any> {
+        return Observable.of(true);
+      },
+    };
     TestBed.configureTestingModule({
-      imports: [FormsModule,
-        RouterTestingModule,
-      ],
-      providers: [AuthService, ProfileService],
-      declarations: [ LoginComponent ]
+      providers: [
+        { provide: LoadingService, useValue: loadingServiceStub },
+        ProfileService]
     })
       .compileComponents();
   }));
 
   beforeAll((done) => {
     originalTimeout = jasmine.DEFAULT_TIMEOUT_INTERVAL;
-    jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
-    Parse.User.logIn('superadmin@superadmin.com', 'password').then((user) => {
-      done();
+    jasmine.DEFAULT_TIMEOUT_INTERVAL = 15000;
+    createUser('superadmin').then((user) => {
+      testSuperAdminObject = user;
+      Parse.User.logIn(testSuperAdminObject.username, testSuperAdminObject.key).then(() => {
+        done();
+      });
     });
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(LoginComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
     service = TestBed.get(ProfileService);
   });
 
   afterAll((done) => {
-    Parse.User.logOut().then(() => {
+    deleteUser(testSuperAdminObject.user.id).then(() => {
       jasmine.DEFAULT_TIMEOUT_INTERVAL = originalTimeout;
       done();
     });
   });
 
-  afterEach((done) => {
-    setTimeout(function() {
-      done();
-    }, 500);
-  });
-
-  it('should create', () => {
-    console.log('Start Testing');
-    expect(component).toBeTruthy();
-  });
-
-  // it('should get user', () => {
-  //   console.log('Testing get user in functionality');
-  //   service.getUser().then((object) => {
-  //     expect(object.id === Parse.User.current().id).toBeTruthy();
-  //   });
-  // });
-
-  it('should get team', () => {
-    console.log('Testing get team functionality');
+  it('should get team', (done) => {
     service.getTeams().then((object) => {
       expect(object).toBeTruthy();
+      done();
     });
   });
 
-  it('should get teamAdmin', () => {
-    console.log('Testing get team functionality');
+  it('should get teamAdmin', (done) => {
     service.getTeamAdminInfo().then((object) => {
       expect(object).toBeTruthy();
+      done();
     });
   });
 

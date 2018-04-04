@@ -1,4 +1,5 @@
 import {environment} from '../environments/environment';
+import * as Access from '../constants/accessRights';
 
 const Parse = require('parse');
 
@@ -8,35 +9,61 @@ export function parseInit() {
   Parse.masterKey = environment.parseMasterKey;
 }
 
+export function createUser(permission = 'inspector') {
+  const randKey = randomKey();
+  return new Promise ((resolve, reject) => {
+    const userTemp = new Parse.User();
+    userTemp.set('isActive', true);
+    userTemp.set('firstName', randKey);
+    userTemp.set('username', randKey);
+    userTemp.set('lastName', randKey);
+    userTemp.set('password', randKey);
+    userTemp.set('email', randKey + '@fake.com');
+    userTemp.set('publicEmail', randKey + '@fake.com');
+    userTemp.set('permission', permission);
+    if (permission === 'inspector') {
+      userTemp.set('access', Access.INSPECTOR);
+    } else if (permission === 'admin') {
+      userTemp.set('access', Access.ADMIN);
+    } else if (permission === 'superadmin') {
+      userTemp.set('access', Access.SUPERADMIN);
+    } else if (permission === 'manager') {
+      userTemp.set('access', Access.MANAGER);
+    } else if (permission === 'viewInspector') {
+      userTemp.set('access', Access.VIEW_INSPECTOR)
+    }
+    userTemp.save(null, {useMasterKey: true}).then((user) => {
+      resolve({
+        'user': user,
+        'username': user.get('username'),
+        'key': randKey,
+      })
+      }, error => {
+      reject(error);
+    });
+  })
+}
+
 export function createTeam(name) {
   return new Promise(function(resolve, reject) {
     const teamTemp = new Parse.Object('Team');
     teamTemp.set('name', name);
-    console.log('creating team: ' + name);
-    teamTemp.save(null, {
-      success: function (team) {
-        resolve(team);
-      },
-      error: function () {
-        return(resolve());
-      }
+    teamTemp.save().then((teamObj) => {
+      resolve(teamObj);
+    },(error) => {
+      reject(error);
     });
   });
 }
 
-export function createInspection(title, adminId) {
+export function createInspection(title) {
   return new Promise(function(resolve, reject) {
     const temp = new Parse.Object('Inspection');
     temp.set('title', title);
-    temp.set('adminId', adminId);
-    console.log('creating Inpsection: ' + title);
-    temp.save(null, {
-      success: function (obj) {
-        resolve(obj);
-      },
-      error: function () {
-        return(resolve());
-      }
+    temp.save().then((obj) => {
+      resolve(obj);
+    }, (error) => {
+      reject(error);
     });
   });
 }
@@ -45,25 +72,20 @@ export function createObservation(title) {
   return new Promise(function(resolve, reject) {
     const temp = new Parse.Object('Observation');
     temp.set('title', title);
-    console.log('creating Observation: ' + title);
-    temp.save(null, {
-      success: function (obj) {
-        resolve(obj);
-      },
-      error: function () {
-        return(resolve());
-      }
+    temp.save().then((object) => {
+      resolve(object);
+    }, error => {
+      reject(error);
     });
   });
 }
 
 export function deleteInspections(inspName) {
-  return new Promise(function(resolve, reject) {
+  return new Promise(function(resolve) {
     const q = new Parse.Query('Inspection');
     q.equalTo('title', inspName);
     q.find().then(function (obj) {
-      Parse.Object.destroyAll(obj).then(function () {
-        console.log('Inspections deleted... ');
+      Parse.Object.destroyAll(obj).then(() => {
         resolve();
       });
     });
@@ -71,12 +93,11 @@ export function deleteInspections(inspName) {
 }
 
 export function deleteObservations(obsName) {
-  return new Promise(function(resolve, reject) {
+  return new Promise(function(resolve) {
     const q = new Parse.Query('Observation');
     q.equalTo('title', obsName);
     q.find().then(function (obj) {
-      Parse.Object.destroyAll(obj).then(function () {
-        console.log('Observations deleted... ');
+      Parse.Object.destroyAll(obj).then(() => {
         resolve();
       });
     });
@@ -84,12 +105,11 @@ export function deleteObservations(obsName) {
 }
 
 export function deleteTeam(teamName) {
-  return new Promise(function(resolve, reject) {
+  return new Promise(function(resolve) {
     const q = new Parse.Query('Team');
     q.equalTo('name', teamName);
     q.find().then(function (teams) {
-      Parse.Object.destroyAll(teams).then(function () {
-        console.log('Teams deleted... ');
+      Parse.Object.destroyAll(teams).then(() => {
         resolve();
       });
     });
@@ -101,7 +121,6 @@ export function deleteUser(userId) {
     const q = new Parse.Query(Parse.User);
     q.get(userId).then(function (userObject) {
       userObject.destroy({useMasterKey: true}).then(() => {
-        console.log('User deleted...');
         resolve();
       }, error => {
         reject(error);
