@@ -1,5 +1,9 @@
+import { ReportService } from './../../../services/report.service';
+import { AdminService } from './../../../services/admin.service';
+import { By } from '@angular/platform-browser';
+import { Inspection } from './../../../models/inspection.model';
 import { LoadingService } from './../../../services/loading.service';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { ToastrService } from 'ngx-toastr';
@@ -8,7 +12,7 @@ import { ReportListItemComponent } from './report-list-item.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ModalService } from '../../../services/modal.service';
 
-fdescribe('ReportListItemComponent', () => {
+describe('ReportListItemComponent', () => {
   let component: ReportListItemComponent;
   let fixture: ComponentFixture<ReportListItemComponent>;
   let reportInfo: any;
@@ -17,8 +21,26 @@ fdescribe('ReportListItemComponent', () => {
   let modalServiceStub;
   let toastServiceStub;
   let loadingServiceStub;
+  let adminServiceStub;
+  let reportServiceStub;
 
   beforeEach(async(() => {
+    adminServiceStub = {
+      updateReportPermission: jasmine.createSpy('updateReportPermission').and.callFake(() => {
+        Promise.resolve(true);
+      }),
+      archiveReport: jasmine.createSpy('archiveReport').and.callFake(() => {
+        Promise.resolve(true);
+      }),
+      unArchiveReport: jasmine.createSpy('unArchiveReport').and.callFake(() => {
+        Promise.resolve(true);
+      }),
+    };
+    reportServiceStub = {
+      download: jasmine.createSpy('download').and.callFake(() => {
+        Promise.resolve(true);
+      }),
+    }
     modalServiceStub = {
       open(): Observable<any> {
         return Observable.of(true);
@@ -32,7 +54,6 @@ fdescribe('ReportListItemComponent', () => {
         return Observable.of(true);
       }
     };
-
     toastServiceStub = {
       open(): Observable<any> {
         return Observable.of(true);
@@ -46,7 +67,9 @@ fdescribe('ReportListItemComponent', () => {
       providers: [
         { provide: ModalService, useValue: modalServiceStub },
         { provide: ToastrService, useValue: toastServiceStub },
-        { provide: LoadingService, useValue: loadingServiceStub }
+        { provide: LoadingService, useValue: loadingServiceStub },
+        { provide: AdminService, useValue: adminServiceStub },
+        { provide: ReportService, useValue: reportServiceStub }
       ]
     })
     .compileComponents();
@@ -55,14 +78,11 @@ fdescribe('ReportListItemComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(ReportListItemComponent);
     component = fixture.componentInstance;
-    reportInfo = { 
-      title: 'mockTitle', 
-      image: 'mock-image.png', 
-      project: 'mockProjectName', 
-      team: 'mockTeam', 
-      updatedAt: date, 
-      viewOnly: false 
-    };
+    reportInfo = [
+      new Inspection('1', 'test', 'test', 'test', null, 'test', null, null, null, 'test', true, false),
+      new Inspection('2', 'test', 'test', 'test', null, 'test', null, null, null, 'test', true, false),
+      new Inspection('3', 'test', 'test', 'test', null, 'test', null, null, null, 'test', true, true),
+    ];
     mockUser = {
       access: {
         isSuperAdmin: false,
@@ -72,7 +92,7 @@ fdescribe('ReportListItemComponent', () => {
     };
     component.user = mockUser;
     component.data = reportInfo;
-    component.fields = ['title', 'project', 'submitted', 'team', 'actions'];
+    component.fields = ['title', 'project', 'submitted', 'team', 'actions', 'view'];
     component.actions = ['download'];
     spyOn(component, "ngOnInit");
     component.ngOnInit();
@@ -84,10 +104,50 @@ fdescribe('ReportListItemComponent', () => {
   });
 
   it('should display appropriate report data', () => {
-    expect(component.data.title).toBe('mockTitle');
-    expect(component.data.team).toBe('mockTeam');
-    expect(component.data.image).toBe('mock-image.png');
-    expect(component.data.project).toBe('mockProjectName');
-    expect(component.data.updatedAt).toBe(date);
+    expect((component.data).length).toBe(3);
+  });
+
+  it('should open appropiate modal when archive/unArchive buttons are clicked', () => {
+    spyOn(component, 'open');
+    component.open('archive');
+    expect(modalServiceStub).toBeTruthy();
+  });
+
+  it('should change inspection permission', fakeAsync(() => {
+    spyOn(component, 'onSetPermission')
+    let toggleEl = fixture.debugElement.nativeElement.querySelector('input');
+    toggleEl.click(component.data[0]);
+    tick();
+    fixture.detectChanges();
+    expect(component.onSetPermission).toHaveBeenCalledTimes(1);
+    adminServiceStub.updateReportPermission(component.data[0].id, component.data[0].viewOnly);
+    expect(adminServiceStub.updateReportPermission).toHaveBeenCalledWith("1", false)
+  }));
+
+  it('should archive inspection', () => {
+    spyOn(component, 'onArchive');
+    component.onArchive(component.data[1].id);
+    expect(component.onArchive).toHaveBeenCalledWith('2');
+    adminServiceStub.archiveReport(component.data[1].id);
+    expect(adminServiceStub.archiveReport).toHaveBeenCalledWith('2');
+  });
+
+  it('should unArchive inspection', () => {
+    component.data[1].isActive = false;
+    expect(component).toBeTruthy();
+    spyOn(component, 'onUnArchive');
+    component.onUnArchive(component.data[1].id);
+    expect(component.onUnArchive).toHaveBeenCalledWith('2');
+    adminServiceStub.unArchiveReport(component.data[1].id);
+    expect(adminServiceStub.unArchiveReport).toHaveBeenCalledWith('2');
+  });
+
+  it('should download inspection', () => {
+    spyOn(component, 'onDownload');
+    let buttonEl = fixture.debugElement.nativeElement.querySelector('.dashboard--actions');
+    buttonEl.click(component.data[1]);
+    expect(component.onDownload).toHaveBeenCalledTimes(1);
+    reportServiceStub.download(component.data[1]);
+    expect(reportServiceStub.download).toHaveBeenCalledWith(component.data[1]);
   });
 });

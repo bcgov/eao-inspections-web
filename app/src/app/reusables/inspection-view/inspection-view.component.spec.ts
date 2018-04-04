@@ -13,6 +13,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { Observation } from '../../../models/observation.model';
 import { Observable } from 'rxjs/Observable';
 import { ToastrService } from 'ngx-toastr';
+import { Location } from '@angular/common';
 
 describe('InspectionViewComponent', () => {
   let component: InspectionViewComponent;
@@ -20,6 +21,7 @@ describe('InspectionViewComponent', () => {
   let compiled;
   let loadingServiceStub;
   let toastServiceStub;
+  let locationServiceStub;
   let mockUser;
 
   beforeEach(async(() => {
@@ -39,6 +41,11 @@ describe('InspectionViewComponent', () => {
         return Observable.of(true);
       }
     };
+    locationServiceStub = {
+      back(): Observable<any> {
+        return Observable.of(true);
+      },
+    };
      TestBed.configureTestingModule({
       declarations: [ InspectionViewComponent, OrderByPipe],
        schemas: [NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA],
@@ -46,6 +53,7 @@ describe('InspectionViewComponent', () => {
         {provide : ActivatedRoute, useValue: {snapshot: {params: {'id': 'inspection-id-1'}}}},
         { provide: LoadingService, useValue: loadingServiceStub },
         { provide: ToastrService, useValue: toastServiceStub },
+        { provide: Location, useValue: locationServiceStub }
       ],
       imports: [ RouterTestingModule ],
     })
@@ -150,5 +158,13 @@ describe('InspectionViewComponent', () => {
       expect(date).toBe(observations[index].createdAt.toDateString());
     });
   }));
+
+  it('should change locations when `back arrow` button is clicked', () => {
+    spyOn(component, 'onLocationChange');
+    let buttonEl = fixture.debugElement.query(By.css('.location-change'));
+    buttonEl.nativeElement.click();
+    expect(component.onLocationChange).toHaveBeenCalledTimes(1);
+    expect(locationServiceStub.back).toBeTruthy();
+  });
 
 });
