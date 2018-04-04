@@ -1,11 +1,12 @@
 import { async, TestBed } from '@angular/core/testing'
 
+import {Observable} from 'rxjs/Observable';
+
 import {
-  createInspection, createObservation, createTeam, deleteInspections, deleteObservations, deleteTeam,
+  createInspection, createObservation, createTeam, createUser, deleteInspections, deleteObservations, deleteTeam, deleteUser,
   parseInit
 } from './testing.service';
 import { ReportService } from './report.service';
-import {Observable} from 'rxjs/Observable';
 import {LoadingService} from './loading.service';
 
 const Parse: any = require('parse');
@@ -14,9 +15,11 @@ parseInit();
 describe('Report Testing', () => {
   let service: ReportService;
   let originalTimeout;
-  let team1;
-  let insp1, insp2;
-  let obs1, obs2;
+  let test_inspection_title = 'test_inspection';
+  let test_observation_title = 'test_observation';
+  let test_team_name = 'test_team';
+  let test_team, test_observation, test_inspection;
+  let testSuperAdminObject;
   let loadingServiceStub: any;
 
   beforeEach(async(() => {
@@ -39,38 +42,38 @@ describe('Report Testing', () => {
 
   beforeAll((done) => {
     originalTimeout = jasmine.DEFAULT_TIMEOUT_INTERVAL;
-    jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
+    jasmine.DEFAULT_TIMEOUT_INTERVAL = 15000;
     const promises = [];
-    Parse.User.logIn('superadmin@superadmin.com', 'password').then((user) => {
-      console.log('Logged In as SuperAdmin');
-      promises.push(createInspection('insp1', user.id).then(object => {
-        insp1 = object;
-      }));
-      promises.push(createInspection('insp2', user.id).then( object => {
-        insp2 = object;
-      }));
-      promises.push(createObservation('obs1').then(object => {
-        obs1 = object;
-      }));
-      promises.push(createObservation('obs2').then(object => {
-        obs2 = object;
-      }));
-      promises.push(createTeam('test_team1').then(object => {
-        team1 = object;
-      }));
+    const promises2 = [];
+    createUser('superadmin').then(user => {
+      testSuperAdminObject = user;
     }).then(() => {
-      Promise.all(promises).then(() => {
-        obs1.set('inspectionId', insp1.id);
-        obs1.set('teamId', team1.id);
-        insp1.set('userId', Parse.User.current().id);
-        obs2.set('inspectionId', insp2.id);
-        obs2.set('teamId', team1.id);
-        obs1.save();
-        obs2.save();
-        insp1.save();
+      promises.push(createInspection(test_inspection_title));
+      promises.push(createObservation(test_observation_title));
+      promises.push(createTeam(test_team_name));
+    }).then(() => {
+      Promise.all(promises).then(results => {
+        results.forEach(result => {
+          if(result.get('title') === test_observation_title) {
+            test_observation = result;
+          } else if (result.get('title') === test_inspection_title) {
+            test_inspection = result;
+          } else if (result.get('name') === test_team_name) {
+            test_team = result;
+          }
+        });
+        if (test_inspection) {
+          test_inspection.set('team', test_team);
+          test_observation.set('inspection', test_inspection);
+        }
       }).then(() => {
-        done();
-      });
+        promises2.push(test_inspection.save());
+        promises2.push(test_observation.save());
+      }).then(() => {
+        Promise.all(promises2).then(() => {
+          done();
+        })
+      })
     });
   });
 
@@ -79,49 +82,33 @@ describe('Report Testing', () => {
   });
 
   afterAll((done) => {
-    console.log('Test Complete, logging User out.');
     const promises = [];
-
     Parse.User.logOut().then(() => {
-      console.log('Start Destruction of dummy data...');
-      promises.push(deleteInspections(insp1.get('title')));
-      promises.push(deleteInspections(insp2.get('title')));
-      promises.push(deleteObservations(obs1.get('title')));
-      promises.push(deleteObservations(obs2.get('title')));
-      promises.push(deleteTeam(team1.get('name')));
+      promises.push(deleteInspections(test_inspection_title));
+      promises.push(deleteObservations(test_observation_title));
+      promises.push(deleteTeam(test_team_name));
+      promises.push(deleteUser(testSuperAdminObject.user.id));
     }).then(() => {
       Promise.all(promises).then(() => {
-        console.log('Destruction Complete');
-      }).then(() => {
         jasmine.DEFAULT_TIMEOUT_INTERVAL = originalTimeout;
         done();
       });
     });
   });
 
-  it('should get My Reports', () => {
-    Parse.User.logIn('superadmin', 'superadmin').then((user) => {
-      service.getMyReports().then((object) => {
-        object.forEach((item) => {
-          expect(item.get('userId') === user.id).toBeTruthy();
-        });
+  it('should get Team Reports', (done) => {
+    service.getActiveTeamReports(test_team.get('id')).then((object) => {
+      object.forEach((item) => {
+        expect(item.get('id') === (test_inspection.id)).toBeTruthy();
       });
+      done();
     });
   });
 
-  it('should get Team Reports', () => {
-    service.getActiveTeamReports(team1.get('id')).then((object) => {
-      object.forEach((item) => {
-        expect(item.get('id') === (insp1.id || insp2.id)).toBeTruthy();
-      });
-    });
-  });
-
-  it('should get Element of Report', () => {
-    service.getObservation(insp1.id).then((object) => {
-      object.forEach((item) => {
-        expect(item.id === (obs1.id || obs2.id)).toBeTruthy();
-      });
+  it('should get Element of Report', (done) => {
+    service.getObservation(test_observation.id).then((object) => {
+      expect(object.id === test_observation.id).toBeTruthy();
+      done();
     });
   });
 

@@ -71,7 +71,6 @@ export class ReportService {
         if (!Array.isArray(results)) {
           results = [results];
         }
-
         results.forEach((object) => {
           reports.push(parseInspectionToModel(object));
           promises.push(this.getInspector(object.get('userId')));

@@ -1,84 +1,84 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormsModule } from '@angular/forms';
-import { RouterTestingModule } from '@angular/router/testing';
+import { async, TestBed } from '@angular/core/testing';
 
-import { AuthService } from './auth.service';
-import { AdminService } from './admin.service';
-import {createInspection, deleteInspections, deleteTeam, deleteUser, parseInit, randomKey} from './testing.service';
-import { LoginComponent } from '../app/login/login.component';
+import {ToastrService} from 'ngx-toastr';
+import {Observable} from 'rxjs/Observable';
+
+import {AdminService} from './admin.service';
+import {LoadingService} from './loading.service';
+import {createInspection, createUser, deleteInspections, deleteTeam, deleteUser, parseInit, randomKey} from './testing.service';
+import {parseUserToModel} from './parse.service';
 
 const Parse: any = require('parse');
 parseInit();
 
 describe('Admin Testing', () => {
-  let component: LoginComponent;
-  let fixture: ComponentFixture<LoginComponent>;
   let service: AdminService;
   let originalTimeout;
+  let toastServiceStub: any;
+  let loadingServiceStub: any;
 
+  let testSuperAdminObject;
   let test_user;
   let test_team;
   let admin_user;
-  let insp1, insp2, insp3;
+  let test_inspection;
 
   beforeEach(async(() => {
+    toastServiceStub = {
+      open(): Observable<any> {
+        return Observable.of(true);
+      }
+    };
+    loadingServiceStub = {
+      loading(): Observable<any> {
+        return Observable.of(true);
+      },
+      showLoading():Observable<any> {
+        return Observable.of(true);
+      },
+    };
     TestBed.configureTestingModule({
-      imports: [FormsModule,
-        RouterTestingModule,
-      ],
-      providers: [AuthService, AdminService],
-      declarations: [ LoginComponent ]
+      providers: [
+        { provide: LoadingService, useValue: loadingServiceStub },
+        { provide: ToastrService, useValue: toastServiceStub },
+        AdminService],
     })
       .compileComponents();
   }));
 
   beforeAll((done) => {
     originalTimeout = jasmine.DEFAULT_TIMEOUT_INTERVAL;
-    jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
+    jasmine.DEFAULT_TIMEOUT_INTERVAL = 15000;
     const promises = [];
-    Parse.User.logIn('superadmin@superadmin.com', 'password').then((user) => {
-      console.log('Logged In as SuperAdmin');
-      admin_user = user;
-      promises.push(createInspection('insp1', user.id).then((object) => {
-        insp1 = object;
-      }));
-      promises.push(createInspection('insp2', user.id).then( (object) => {
-        insp2 = object;
-      }));
-      promises.push(createInspection('insp3', user.id).then((object) => {
-        insp3 = object;
-      }));
+    createUser('superadmin').then((user) => {
+      testSuperAdminObject = user;
+      admin_user = testSuperAdminObject.user;
+      promises.push(createInspection('test_inspection'));
     }).then(() => {
-      Promise.all(promises).then(() => {
+      Promise.all(promises).then((results) => {
+        results.forEach(result => {
+          if(result.get('title') === 'test_inspection') {
+            test_inspection = result;
+          }
+        });
         done();
       });
     });
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(LoginComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
     service = TestBed.get(AdminService);
   });
 
-  afterEach((done) => {
-    setTimeout(function() {
-      done();
-    }, 500);
-  });
-
   afterAll((done) => {
-    console.log('Test Complete, logging User out.');
     const promises = [];
 
     Parse.User.logOut().then(() => {
       jasmine.DEFAULT_TIMEOUT_INTERVAL = originalTimeout;
-      promises.push(deleteInspections(insp1.get('title')));
-      promises.push(deleteInspections(insp2.get('title')));
-      promises.push(deleteInspections(insp3.get('title')));
-      promises.push(deleteTeam(test_team.get('name')));
+      promises.push(deleteInspections(test_inspection.get('title')));
       promises.push(deleteUser(test_user.id));
+      promises.push(deleteTeam(test_team.get('name')));
+      promises.push(deleteUser(admin_user.id));
     }).then(() => {
       Promise.all(promises).then(() => {
         done();
@@ -86,175 +86,129 @@ describe('Admin Testing', () => {
     });
   });
 
-  it('should create', () => {
-    console.log('Start Testing');
-    expect(component).toBeTruthy();
-  });
-
-  it('should get Users', () => {
-    console.log('Testing get user in functionality');
-    service.getUsers().then(value => {
-      expect(value).toBeTruthy();
-    });
-  });
-
-  it('should get archived Users', () => {
-    console.log('Testing get archived users in functionality');
+  it('should get archived Users', (done) => {
     service.getArchivedUsers().then(value => {
       expect(value).toBeTruthy();
+      done();
     });
   });
 
-  it('should get active Users', () => {
-    console.log('Testing get active users in functionality');
+  it('should get active Users', (done) => {
     service.getActiveUsers().then(value => {
       expect(value).toBeTruthy();
+      done();
     });
   });
 
-  it('should create user', () => {
-    console.log('Testing create user in functionality');
+  it('should create user', (done) => {
     const randKey = randomKey();
-    service.createUser(randKey, randKey, 'mockEmail@gmail.com' + randKey, randKey, randKey, randKey).then(value => {
+    service.createUser(randKey, randKey, 'mockEmail@gmail.com' + randKey, randKey, 'admin', null).then(value => {
       test_user = value;
       const query = new Parse.Query(Parse.User);
       query.get(value.id).then((result) => {
-        console.log('Matching user ids...');
-        expect(result.id === test_user.id).toBeTruthy();
+        expect(result.id === value.id).toBeTruthy();
+        done();
       });
     });
   });
 
-  it('should update user', () => {
-    const query = new Parse.Query('_User');
-    query.get(test_user.id).then((result) => {
-      console.log(result);
-     test_user.id = result.id;
-     console.log('Testing update user in functionality: ' + test_user.id);
-     const name_change = 'test_user_changed';
-     Parse.User.logIn('superadmin', 'superadmin').then(() => {
+  it('should update user', (done) => {
+     Parse.User.logIn(testSuperAdminObject.username, testSuperAdminObject.key).then(() => {
+       const randKey = randomKey();
        service.updateUser(test_user.id,
          'firstNameChanged',
          'lastNameChanged',
-         'email@gmail.com',
-         'admin',
+         'email@gmail.com' + randKey,
+         'inspector',
          null).then((object) => {
-         console.log('Matching changed names...');
          test_user = object;
          expect(test_user.get('firstName') === 'firstNameChanged').toBeTruthy();
+         done();
        });
      });
+  });
+
+  it('should archive user', (done) => {
+    service.archiveUser(parseUserToModel(test_user)).then((object) => {
+      test_user = object;
+      expect(test_user.get('isActive')).toBeFalsy();
+      done();
     });
   });
 
-  it('should archive user', () => {
-    const query = new Parse.Query('_User');
-    query.get(test_user.id).then((result) => {
-      test_user.id = result.id;
-      console.log('Testing archive user in functionality');
-      service.archiveUser(test_user.id).then((object) => {
-        console.log('Checking status of user...');
-        test_user = object;
-        expect(test_user.get('isActive')).toBeFalsy();
-      });
+  it('should unArchive user', (done) => {
+    service.unArchiveUser(parseUserToModel(test_user)).then((object) => {
+      test_user = object;
+      expect(test_user.get('isActive')).toBeTruthy();
+      done();
     });
   });
 
-  it('should unArchive user', () => {
-    const query = new Parse.Query('_User');
-    query.get(test_user.id).then((result) => {
-      test_user.id = result.id;
-      console.log('Testing unArchive user in functionality');
-      service.unArchiveUser(test_user.id).then((object) => {
-        console.log('Checking status of user...');
-        test_user = object;
-        expect(test_user.get('isActive')).toBeTruthy();
-      });
-    });
-  });
-
-  it('should create team', () => {
-    console.log('Testing create team in functionality');
-    service.createTeam('test_team', 'team_color', test_user, null).then((object) => {
+  it('should create team', (done) => {
+    service.createTeam('test_team', 'team_color', test_user.id, null).then((object) => {
       test_team = object;
       const query = new Parse.Query('Team');
       query.get(test_team.id).then((result) => {
-        console.log('Matching ids...');
         expect(result.id === test_team.id).toBeTruthy();
+        done();
       });
     });
   });
 
-  it('should update team', () => {
-    const query = new Parse.Query('Team');
-    query.get(test_team.id).then((result) => {
-      test_team.id = result.id;
-      console.log('Testing updating team in functionality: ' + test_team.id);
-      service.updateTeam(test_team.id, 'mockName', '#00000', test_user, null).then((object) => {
-        test_team = object;
-        expect(test_team.get('name') === 'mockName').toBeTruthy();
-      });
+  it('should update team', (done) => {
+   service.updateTeam(test_team.id, 'mockName', '#00000', test_user.id, null).then((object) => {
+      test_team = object;
+      expect(test_team.get('name') === 'mockName').toBeTruthy();
+      done();
     });
   });
 
-  it('should archive team', () => {
-    console.log('Testing archive team in functionality');
-    const query = new Parse.Query('Team');
-    query.get(test_team.id).then((result) => {
-      test_team = result;
-      service.archiveTeam(test_team.id).then(() => {
-        console.log('Checking status...');
-        expect(test_team.get('isActive')).toBeFalsy();
-      });
+  it('should archive team', (done) => {
+    service.archiveTeam(test_team).then(() => {
+      expect(test_team.get('isActive')).toBeFalsy();
+      done();
     });
   });
 
-  it('should unArchive team', () => {
-    console.log('Testing unArchive team in functionality');
-    const query = new Parse.Query('Team');
-    query.get(test_team.id).then((result) => {
-      test_team = result;
-      service.unArchiveTeam(test_team.id).then(() => {
-        console.log('Checking status...');
-        expect(test_team.get('isActive')).toBeTruthy();
-      });
+  it('should unArchive team', (done) => {
+    service.unArchiveTeam(test_team).then(() => {
+      expect(test_team.get('isActive')).toBeTruthy();
+      done();
     });
   });
 
-  it('should get archived Teams', () => {
-    console.log('Testing get archived teams in functionality');
+  it('should get archived Teams', (done) => {
     service.getArchivedTeams().then(value => {
       expect(value).toBeTruthy();
+      done();
     });
   });
 
-  it('should get active Teams', () => {
-    console.log('Testing get active teams in functionality');
+  it('should get active Teams', (done) => {
     service.getActiveTeams().then(value => {
       expect(value).toBeTruthy();
+      done();
     });
   });
 
-  it('should get Reports', () => {
-    console.log('Testing get reports in functionality');
-    service.getReports().then((object) => {
-      console.log('Checking retrieved report...');
-      expect(object[0].get('adminId') === Parse.User.current().id).toBeTruthy();
+  it('should get Reports', (done) => {
+    service.getReports().then((value) => {
+      expect(value).toBeTruthy();
+      done();
     });
   });
 
-  it('should get archived reports', () => {
-    console.log('Testing get archive reports in functionality');
+  it('should get archived reports', (done) => {
     service.getArchivedReport().then(value => {
       expect(value).toBeTruthy();
+      done();
     });
   });
 
-  it('should archive Reports', () => {
-    console.log('Testing archive Reports in functionality: ' + insp1.id);
-    service.archiveReport(insp1.id).then((object) => {
-      insp1 = object;
-      expect(insp1.get('active')).toBeFalsy();
+  it('should archive Reports', (done) => {
+    service.archiveReport(test_inspection).then((object) => {
+      expect(object.get('isActive')).toBeFalsy();
+      done();
     });
   });
 

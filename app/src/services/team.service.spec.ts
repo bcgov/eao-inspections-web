@@ -1,9 +1,10 @@
 import { async, TestBed } from '@angular/core/testing';
 
-import {createTeam, deleteTeam, parseInit} from './testing.service';
-import { TeamService } from './team.service';
 import {Observable} from 'rxjs/Observable';
+
 import {LoadingService} from './loading.service';
+import { TeamService } from './team.service';
+import {createTeam, deleteTeam, parseInit} from './testing.service';
 
 const Parse: any = require('parse');
 parseInit();
@@ -11,7 +12,7 @@ parseInit();
 describe('Team Service Testing', () => {
   let service: TeamService;
   let originalTimeout;
-  let team1;
+  let test_team;
   let loadingServiceStub: any;
 
   beforeEach(async(() => {
@@ -35,17 +36,15 @@ describe('Team Service Testing', () => {
 
   beforeAll((done) => {
     originalTimeout = jasmine.DEFAULT_TIMEOUT_INTERVAL;
-    jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
-    const promises = [];
-    Parse.User.logIn('superadmin@superadmin.com', 'password').then((user) => {
-      promises.push(createTeam('test_team1').then(object => {
-        team1 = object;
-      }));
-    }).then(() => {
-      Promise.all(promises).then(() => {
-        done();
+    jasmine.DEFAULT_TIMEOUT_INTERVAL = 15000;
+    Parse.User.logIn('superadmin@superadmin.com', 'password')
+      .then(() => {
+        createTeam('test_team')
+          .then(object => {
+            test_team = object;
+            done();
+          });
       });
-    });
   });
 
   beforeEach(() => {
@@ -53,23 +52,19 @@ describe('Team Service Testing', () => {
   });
 
   afterAll((done) => {
-    const promises = [];
     Parse.User.logOut().then(() => {
-      jasmine.DEFAULT_TIMEOUT_INTERVAL = originalTimeout;
-      promises.push(deleteTeam(team1.get('name')));
-    }).then(() => {
-      Promise.all(promises)
+      deleteTeam(test_team.get('name'))
         .then(() => {
-        console.log('Destruction Complete');
-      }).then(() => {
-        done();
-      });
+          jasmine.DEFAULT_TIMEOUT_INTERVAL = originalTimeout;
+          done();
+        });
     });
   });
 
-  it('should get team', () => {
-    service.getTeam(team1.id).then((object) => {
-      expect(object.id === Parse.User.current().id).toBeTruthy();
+  it('should get team', (done) => {
+    service.getTeam(test_team.id).then((object) => {
+      expect(object.id === test_team.id).toBeTruthy();
+      done();
     });
   });
 

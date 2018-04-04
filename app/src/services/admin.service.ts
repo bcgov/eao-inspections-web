@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 
-import * as Access from '../constants/accessRights';
+import { ToastrService } from 'ngx-toastr';
+
 import { BasicUser } from '../models/user.model';
 import { Inspection } from '../models/inspection.model';
-import { parseInspectionToModel, parseUserToModel, parseTeamToModel } from './parse.service';
 import { LoadingService } from './loading.service';
 import { Team } from '../models/team.model';
+import * as Access from '../constants/accessRights';
 import { randomKey } from './testing.service';
-import { ToastrService } from 'ngx-toastr';
+import { parseInspectionToModel, parseUserToModel, parseTeamToModel } from './parse.service';
 
 const Parse: any = require('parse');
 let self;
@@ -756,7 +757,7 @@ export class AdminService {
     });
   }
 
-  archiveReport(report) {
+  archiveReport(report): Promise<any> {
     const key = randomKey();
     self.loadingService.showLoading(true, key);
     return new Promise((resolve, reject) => {
@@ -776,7 +777,7 @@ export class AdminService {
     });
   }
 
-  unArchiveReport(report) {
+  unArchiveReport(report): Promise<any> {
     const key = randomKey();
     self.loadingService.showLoading(true, key);
     return new Promise((resolve, reject) => {
