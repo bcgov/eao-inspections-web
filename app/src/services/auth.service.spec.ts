@@ -1,41 +1,44 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
-import { FormsModule } from '@angular/forms';
+import { async, TestBed } from '@angular/core/testing';
 
-import { LoginComponent } from '../app/login/login.component';
+import {Observable} from 'rxjs/Observable';
+import {ToastrService} from 'ngx-toastr';
+
 import { AuthService } from './auth.service';
-import {parseInit} from './testing.service';
+import {createUser, deleteUser, parseInit} from './testing.service';
 
 const Parse: any = require('parse');
 parseInit();
 
 describe('Authentication and Authorization Testing', () => {
-  let component: LoginComponent;
-  let fixture: ComponentFixture<LoginComponent>;
   let service: AuthService;
+  let toastServiceStub: any;
   let originalTimeout;
-
+  let testUserObject;
   beforeEach(async(() => {
+    toastServiceStub = {
+      open(): Observable<any> {
+        return Observable.of(true);
+      }
+    };
     TestBed.configureTestingModule({
-      imports: [FormsModule,
-        RouterTestingModule,
-      ],
-      providers: [AuthService, ],
-      declarations: [ LoginComponent ]
+      providers: [
+        { provide: ToastrService, useValue: toastServiceStub },
+        AuthService],
     })
       .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(LoginComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
     service = TestBed.get(AuthService);
   });
 
-  beforeAll(() => {
+  beforeAll((done) => {
     originalTimeout = jasmine.DEFAULT_TIMEOUT_INTERVAL;
-    jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
+    jasmine.DEFAULT_TIMEOUT_INTERVAL = 15000;
+    createUser().then(object => {
+      testUserObject = object;
+      done();
+    });
   });
 
   afterEach((done) => {
@@ -47,60 +50,33 @@ describe('Authentication and Authorization Testing', () => {
       done();
     }
   });
-  afterEach((done) => {
-    setTimeout(function() {
+
+  afterAll((done) => {
+    if (testUserObject.user) {
+      deleteUser(testUserObject.user.id)
+        .then(() => {
+          jasmine.DEFAULT_TIMEOUT_INTERVAL = originalTimeout;
+          done();
+        });
+    } else {
+      jasmine.DEFAULT_TIMEOUT_INTERVAL = originalTimeout;
       done();
-    }, 500);
-  });
-  afterAll(() => {
-    jasmine.DEFAULT_TIMEOUT_INTERVAL = originalTimeout;
+    }
   });
 
-  it('should create', () => {
-    console.log('Start Testing');
-    expect(component).toBeTruthy();
-  });
-
-  it('should login', () => {
-    console.log('Testing log in functionality');
-    service.logIn('inspector', 'inspector').then(() => {
-      console.log('logged in');
+  it('should login', (done) => {
+    service.logIn(testUserObject.username, testUserObject.key).then(() => {
       expect(service.isAuthenticated()).toBeTruthy();
+      done();
     });
   });
 
-  it('should logout', () => {
-    console.log('Testing log out functionality');
-    service.logIn('inspector', 'inspector').then(() => {
-      console.log('logged in');
+  it('should logout', (done) => {
+    service.logIn(testUserObject.username, testUserObject.key).then(() => {
       service.logOut().then(() => {
-        console.log('logged out');
         expect(service.isAuthenticated()).toBeFalsy();
+        done();
       });
-    });
-  });
-
-  it('should be inspector', () => {
-    console.log('Testing authorization level of inspector role');
-    service.logIn('inspector', 'inspector').then(() => {
-      expect(service.isSuperAdmin()).toBeFalsy();
-      expect(service.isAdmin()).toBeFalsy();
-    });
-  });
-
-  it('should be admin', () => {
-    console.log('Testing authorization level of admin role');
-    service.logIn('admin', 'admin').then(() => {
-      expect(service.isSuperAdmin()).toBeFalsy();
-      expect(service.isAdmin()).toBeTruthy();
-    });
-  });
-
-  it('should be superadmin', () => {
-    console.log('Testing authorization level of admin role');
-    service.logIn('superadmin', 'superadmin').then(() => {
-      expect(service.isSuperAdmin()).toBeTruthy();
-      expect(service.isAdmin()).toBeFalsy();
     });
   });
 
