@@ -8,7 +8,7 @@ import { ReportListItemComponent } from './report-list-item.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ModalService } from '../../../services/modal.service';
 
-describe('ReportListItemComponent', () => {
+fdescribe('ReportListItemComponent', () => {
   let component: ReportListItemComponent;
   let fixture: ComponentFixture<ReportListItemComponent>;
   let reportInfo: any;
@@ -74,6 +74,8 @@ describe('ReportListItemComponent', () => {
     component.data = reportInfo;
     component.fields = ['title', 'project', 'submitted', 'team', 'actions'];
     component.actions = ['download'];
+    spyOn(component, "ngOnInit");
+    component.ngOnInit();
     fixture.detectChanges();
   });
   
