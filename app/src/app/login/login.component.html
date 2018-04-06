@@ -1,0 +1,27 @@
+<div class="login">
+    <div class="login__header">
+        <img class="login__header__img" src="../../assets/bc-logo.png" />
+    </div>
+    <div class="login__body">
+        <form (ngSubmit)="onLogin(f)" #f="ngForm">
+            <div class="login__body__form">
+                <label class="login__body__form__label">Email</label>
+                <input #email="ngModel" type="email" class="login__body__form__input" id="email" name="email" required ngModel>
+            </div>
+            <div class="login__body__form">
+                <label class="login__body__form__label">Password</label>
+                <input #password="ngModel" type="password" class="login__body__form__input" id="password" name="password" required ngModel>
+            </div>
+            <button type="submit" class="login__body__btn btn" [disabled]="!f.valid">Login</button>
+            <div class="error error__content" *ngIf="((email.touched && !email.valid) || (password.touched && !password.valid))  && !f.valid">
+                *Required fields cannot be blank
+            </div>
+        </form>
+        <p class="login__body__link" (click)="open(forgotPassword)">Forgot Password?</p>
+    </div>
+</div>
+
+<!-- edit user modal -->
+<ng-template #forgotPassword let-c="close">
+    <app-forgot-password-modal (submitValue)="onSendEmail($event)" [closeValue]="this.c" [modal]="forgotPasswordModal"></app-forgot-password-modal>
+</ng-template>

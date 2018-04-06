@@ -1,0 +1,45 @@
+<div class="table-row">
+    <div class="table-row-item name" data-header="Title" *ngIf="fields.indexOf('title') >= 0">
+        <a [routerLink]="['inspection-details', data.id]">{{data.title}}</a>
+    </div>
+    <div class="table-row-item" data-header="Linked Project" *ngIf="fields.indexOf('project') >= 0">
+        {{ data.project || '-' }}
+    </div>
+    <div class="table-row-item" data-header="Team" *ngIf="fields.indexOf('team') >= 0">
+        {{ data.team?.name || '-' }}
+    </div>
+    <div class="table-row-item name" data-header="Inspector" *ngIf="fields.indexOf('inspector') >= 0">
+        <img width="40px" [src]="data.inspector?.image || '../../assets/team-member.png'" /> {{data.inspector?.name || '-'}}
+    </div>
+    <div class="table-row-item" data-header="Submitted" *ngIf="fields.indexOf('submitted') >= 0">
+        {{data.updatedAt | date : "MMM d y" }}
+    </div>
+    <div class="table-row-item view-only" data-header="View Only" *ngIf="fields.indexOf('view') >= 0">
+        <label class="admin-switch">
+            <input class="form-check-input" type="checkbox" name="viewOnly" id="viewOnly" value="viewOnly" [(ngModel)]='data.viewOnly' (change)="onSetPermission(data)">
+            <span class="admin-slider round"></span>
+        </label>
+    </div>
+
+    <div class="table-row-item" data-header="Action" *ngIf="fields.indexOf('actions') >= 0">
+        <button *ngIf="actions.indexOf('download') >= 0 && ((!data.viewOnly && !user.access.isViewOnly) || user.access.isAdmin || user.access.isSuperAdmin)" class="dashboard--actions dashboard--actions--sm" (click)="onDownload(data)">
+            <img class="dashboard--actions--sm__img" src="../../assets/download.png" /> Download
+        </button>
+        <button *ngIf="actions.indexOf('archive') >= 0" class="dashboard--actions dashboard--actions--sm" (click)="open(archive)">
+            <img class="dashboard--actions--sm__img" src="../../assets/archive.png" /> Archive
+        </button>
+        <button *ngIf="actions.indexOf('unarchive') >= 0" class="dashboard--actions dashboard--actions--sm" (click)="open(unArchive)">
+            <img class="dashboard--actions--sm__img" src="../../assets/unarchive.png" /> Unarchive
+        </button>
+    </div>
+</div>
+
+<ng-template #archive let-c="close" class="modal">
+    <archive-modal [data]="data" (submitValue)="onArchive($event)" [closeValue]="this.c" [modal]="modal">
+    </archive-modal>
+</ng-template>
+
+<ng-template #unArchive let-c="close" class="modal">
+    <archive-modal [data]="data" (submitValue)="onUnArchive($event)" [closeValue]="this.c" [modal]="modal">
+    </archive-modal>
+</ng-template>

@@ -1,0 +1,29 @@
+<div class="dashboard">
+    <div class="dashboard__header">
+        <p class="dashboard__title">{{title}}</p>
+        <div class="dashboard__buttons">
+            <button type="button" class="dashboard__btn" (click)="open(addTeam)">
+        <img class="dashboard__header__btn__img" src="../../assets/add-active.png" />
+        Create New
+      </button>
+            <a routerLink={{archivedLink}}><button class="dashboard__btn">Archived Teams</button></a>
+        </div>
+    </div>
+    <div *ngIf="teams !== undefined && teams?.length <= 0; then noContent else content"></div>
+    <ng-template #noContent>
+        <no-content [emptyContent]="emptyContent"></no-content>
+    </ng-template>
+    <ng-template #content>
+        <div class="dashboard-card__container" *ngFor="let team of teams">
+            <admin-team-card (refresh)="refresh($event)" [team]="team"></admin-team-card>
+        </div>
+        <div class="d-flex justify-content-center">
+            <app-pagination [page]="page" [totalPages]="totalPages" (changePage)="onChangePage($event)"></app-pagination>
+        </div>
+    </ng-template>
+</div>
+
+<!-- modal to add new user -->
+<ng-template #addTeam let-c="close" class="modal">
+    <team-modal (submitValue)="onSubmit($event)" [closeValue]="this.c" [modal]="modal"></team-modal>
+</ng-template>

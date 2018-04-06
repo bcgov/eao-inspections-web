@@ -1,0 +1,60 @@
+@import '../../../../../scss/_mixins';
+@import '../../../../../scss/_variables';
+
+.team__card {
+  margin: $dashboard-team-margin;
+  display: inline;
+  height: 110px;
+  width: 250px;
+  border-radius: 2px;
+  background-color: $background-white;
+  box-shadow: 0 0 8px 0 rgba(0,0,0,0.2);
+  border-left: 12px solid $border-yellow;
+  @include flex;
+
+  
+  &--photo {
+    flex: 1;
+    
+    &__img {
+      top: 15%;
+      position: relative;
+      left: 10px;
+      height: 64px;
+      width: 64px;
+      margin-right: 10px;
+      overflow: hidden;
+      border-radius: 50%;
+      img { 
+        height: 64px;
+      }
+    }
+  }
+  
+  &--details {
+    position: relative;
+    top: 18%;
+    left: 10px;
+    flex: 3;
+    
+    &--actions {
+      position: absolute;
+      bottom: 28px;
+    }
+
+    p {
+      color: $font-dark-gray;
+      font-size: 14px;
+      margin-bottom: 0;
+    }
+
+    a h4, h4 {
+      width: 90%;
+      text-transform: capitalize;
+      overflow-wrap: break-word;
+      font-size: 16px;
+      color: $default-secondary-color;
+      margin: 0;
+    }
+  }
+}

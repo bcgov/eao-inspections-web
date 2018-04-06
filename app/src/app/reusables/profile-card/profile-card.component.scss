@@ -1,0 +1,94 @@
+@import '../../../scss/_variables';
+@import '../../../scss/_mixins';
+
+.profile__card {
+  background-color: $background-white;
+  height: fit-content;
+  width: $dashboard-content-width;
+  @include flex;
+  box-shadow: 0 0 8px 0 rgba(0,0,0,0.2);
+  overflow-wrap: inherit;
+  margin: $dashboard-content-margin;
+  padding: $dashboard-content-padding;
+
+  @include large {
+    height: fit-content;
+    display: block;
+    text-align: center;
+  }
+
+  &--photo {
+    overflow:hidden;
+    
+    &__img {
+      width:120px;
+      height:120px;
+      position: relative;
+      border-radius: 50%;
+      border-style: none;
+    }
+
+    &__container {
+      text-align: center;
+      &__upload {
+        display: block;
+        color: $default-link-color;
+        margin-top: 5px;
+        margin-left: 30%;
+        margin-bottom: 10px;
+  
+        @include large {
+          margin-left: 44%;
+        }
+
+        @include mobile {
+          margin-left: 41%;
+        }
+    }
+
+      &:hover {
+        cursor: pointer;
+        color: $default-primary-color;
+      }
+    }
+  }
+
+  &__details {
+    flex: 2;
+    margin-left: 80px;
+
+    @include large {
+      margin: 0;
+    }
+  }
+
+  &__contact {
+    flex: 2;
+
+    a {
+      color: $default-link-color;
+    }
+
+    &--disclaimer {
+      display: block;
+      margin-top: 20px;
+      color: #8A8A8A;
+      font-size: 16px;
+      font-weight: 300;
+    }
+  }
+
+  h4 {
+    color: $font-dark-gray;
+    font-size: 18px;
+    font-weight: 600;
+    text-transform: uppercase;
+  }
+
+  p {
+    color: $font-black;
+    font-size: 20px;
+    font-weight: 300;
+    line-height: 24px;
+  }
+}

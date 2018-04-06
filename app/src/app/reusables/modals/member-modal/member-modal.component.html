@@ -1,0 +1,18 @@
+<div class="modal__header">
+    <h1>{{modal.header}}</h1>
+</div>
+
+<div class="member-modal__content">
+    <div class="member-modal__content__body" *ngFor="let user of modal.users">
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" id="{{user.id}}" (change)="onChangeCheckbox(user.id, $event.target.checked)">
+        </div>
+        <img class=" member-modal__content__body__img "[src]="user.profileImage || '../../assets/team-lg.png'" />
+        <span>{{ user.name }}</span>
+    </div>
+</div>
+
+<div class="dashboard__buttons ">
+    <button type="button " class="dashboard__btn--dark " (click)="onSubmit(); close(); ">{{modal.userButton}}</button>
+    <button type="button " class="dashboard__btn " (click)="close() ">Cancel</button>
+</div>

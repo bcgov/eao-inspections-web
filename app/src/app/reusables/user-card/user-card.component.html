@@ -1,0 +1,28 @@
+<div class="user__card">
+    <div class="user__card__content">
+        <div class="user__card__content--photo">
+            <img class="user__card__content--photo__img" [src]="user.profileImage || '../../assets/team-member.png'" />
+        </div>
+        <div class="user__card__content--details">
+            <h4>{{user.name}}</h4>
+            <div class="user__card__content--actions">
+                <button type="button" class="dashboard--actions" (click)="openEdit(editUser)">
+                    Edit
+                </button>
+                <button type="button" class="dashboard--actions" (click)="openRemove(deleteUser)">
+                    Remove
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- edit user modal -->
+<ng-template #editUser let-c="close" class="modal">
+    <user-modal (submitValue)="onEditMember($event)" [closeValue]="this.c" [modal]="editModal" [user]="user"></user-modal>
+</ng-template>
+
+<!-- delete confirmation modal -->
+<ng-template #deleteUser let-c="close" class="modal">
+    <confirmation-modal (submitValue)="onRemoveMember($event)" [closeValue]="this.c" [modal]="removeModal"></confirmation-modal>
+</ng-template>

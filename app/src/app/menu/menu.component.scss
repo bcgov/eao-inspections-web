@@ -1,0 +1,271 @@
+@import '../../scss/_variables';
+@import '../../scss/_mixins';
+
+// styling for mobile dropdown button
+.hamburger-menu {
+  position: fixed;
+  top: 3px;
+  left: 3px;
+  visibility: hidden;
+  z-index: 1;
+
+  &__btn {
+    padding-left: 5px;
+    background-color: $default-primary-color;
+    height: 40px;
+    width: 40px;
+    box-shadow: 0 0 2px 0 rgba(255,255,255,0.5);
+    border-radius: 4px;
+
+    &__divider{
+      &--lg {
+        margin: 3px;
+        z-index: 2;
+        height: 4px;
+        width: 20px;
+        background-color: $background-white;
+      }
+
+      &--sm {
+        margin: 3px;
+        z-index: 2;
+        height: 4px;
+        width: 15px;
+        background-color: $background-white;
+      }
+    }
+  }
+  @include mobile {
+    position: fixed;
+    visibility: visible;
+  }
+}
+
+// remove built in down arrow on dropdown button.
+.dropdown-toggle:after {
+  content: none !important;
+}
+
+// styling for mobile menu
+.mobile-menu {
+  position: fixed;
+  top: -5px !important;
+  left: 0 !important;
+  color: white;
+  background-color: $default-primary-color;
+  width: 100vw;
+  max-height: 100%;
+
+  li {
+    margin-left: 30px;
+
+    img {
+      margin-right: 20px;
+    }
+  }
+
+  &__divider {
+    height: 2px;
+    width: 170px;
+    border: 1px solid rgba(84,117,167,0.25);
+    margin: 25px 35px;
+    width: 80%;
+  }
+
+  &__header {
+    margin: 10px;
+    @include flex;
+
+    &__img {
+      position: absolute;
+      right: 10px;
+      width: 90px;
+    }
+  }
+
+  &__footer {
+    margin: 2% 15%;
+    @include flex;
+  }
+}
+
+// web and tablet styling for menu
+.menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  min-height: 1000px;
+  max-height: 100%;
+  width: 268px;
+  background-color: $default-primary-color;
+
+    @include tablet {
+      position: fixed;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      min-height: 100%;
+      width: 70px;
+      background-color: $default-primary-color;
+    }
+
+    @include mobile {
+      visibility: hidden;
+    }
+
+  &__header {
+    margin: 30px;
+
+
+    &__img {
+      text-align: center;
+      width: 180px;
+
+      @include tablet {
+        display: none;
+      }
+    }
+  }
+
+    &__divider {
+    margin: 40px;
+    height: 2px;
+    width: 170px;
+    border: 1px solid rgba(84,117,167,0.25);
+
+      @include tablet {
+        margin: 10px;
+        width: 50px;
+      }
+
+      &--last {
+        position: fixed;
+        bottom: 15%;
+
+        @include tablet {
+          bottom: 18%;
+          margin: 10px;
+          width: 50px;
+        }
+      }
+  }
+
+  &__list {
+    padding: 0;
+    margin: 0;
+
+
+    &__item {
+      color: $font-gray;
+      text-transform: uppercase;
+      padding: 15px;
+      width: inherit;
+      height: 56px;
+      list-style-type: none;
+      border-left: 10px solid $default-primary-color;
+
+        span {
+          @include tablet {
+            visibility: hidden;
+          }
+
+        }
+        a {
+          color: $font-gray;
+          text-decoration: none;
+        }
+
+         &--active {
+           text-decoration: none;
+           background-color: $default-secondary-color;
+           cursor: pointer;
+           border-left: 10px solid $default-link-color;
+
+            a {
+              color: $font-white;
+            }
+        }
+
+        &:hover {
+          text-decoration: none;
+          color: $font-white;
+          background-color: $default-secondary-color;
+          cursor: pointer;
+          border-left: 10px solid $default-link-color;
+        }
+
+      &__img {
+        padding: 0 10px;
+
+        @include tablet {
+          padding: 0;
+        }
+      }
+    }
+  }
+
+  &__profile {
+    @include flex;
+    position: fixed;
+    bottom: 5%;
+    margin: 30px;
+    justify-content: space-evenly;
+
+    @include tablet {
+        display: block;
+        margin: 0;
+      }
+
+
+    &__img {
+      height: 64px;
+      width: 64px;
+      margin-right: 10px;
+      overflow:hidden;
+      border-radius: 50%;
+      img {
+        position: relative;
+        height: 64px;
+        width: 64px;
+      }
+      @include tablet {
+        padding-left: 5px;
+      }
+    }
+
+    &__content {
+      &__name {
+        text-transform: capitalize;
+        color: $font-white;
+        font-size: 18px;
+        line-height: 23px;
+
+        @include tablet {
+         display: none;
+        }
+      }
+
+      &__link {
+        text-transform: uppercase;
+        height: 16px;
+        width: 65px;
+        color: $font-gray;
+        font-size: 16px;
+        font-weight: bold;
+        line-height: 19px;
+
+        @include tablet {
+          padding-left: 10px;
+          font-size: 12px;
+        }
+
+        &:hover {
+          text-decoration: none;
+          cursor: pointer;
+          color: $font-white;
+        }
+      }
+    }
+  }
+}

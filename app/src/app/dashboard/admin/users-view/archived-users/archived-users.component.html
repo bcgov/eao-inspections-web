@@ -1,0 +1,50 @@
+<div class="dashboard">
+    <div>
+        <a routerLink={{link}}><img src="../../assets/back.png" /></a>
+        <p class="dashboard__title">{{title}}</p>
+    </div>
+
+    <div *ngIf="users !== undefined && users?.length<=0; then noContent else content"></div>
+    <ng-template #content>
+        <div class="table">
+            <div class="table-row table-header">
+                <div class="table-row-item">Full Name</div>
+                <div class="table-row-item">Email</div>
+                <div class="table-row-item">Permission</div>
+                <div class="table-row-item">Action</div>
+            </div>
+            <span *ngFor="let user of users">
+        <div class="table-row">
+          <div class="table-row-item name" data-header="Full Name">
+            <img *ngIf="user.image" class="table__img" src={{user.image}} />
+            <img *ngIf="!user.image" class="table__img" src="../../../assets/team-member.png" /> {{user.firstName + " " + user.lastName}}
+          </div>
+          <div class="table-row-item" data-header="Email">
+            {{user.email}}
+          </div>
+          <div class="table-row-item permission" data-header="Permission">
+            {{user.permission}}
+          </div>
+          <div class="table-row-item" data-header="Action">
+          <button (click)="open(unArchive)" class="dashboard--actions dashboard--actions--sm">
+            <img class="dashboard--actions--sm__img" src="../../assets/unarchive.png" /> Unarchive
+          </button>
+          </div>
+        </div>
+        <!-- unArchive confirmation modal -->
+        <ng-template #unArchive let-c="close" class="modal">
+          <archive-modal [data]="user" [closeValue]="this.c" [modal]="editModal" (submitValue)="onUnarchive($event)">
+          </archive-modal>
+        </ng-template>
+      </span>
+        </div>
+        <br>
+        <div class="d-flex justify-content-center">
+            <app-pagination [page]="page" [totalPages]="totalPages" (changePage)="onChangePage($event)"></app-pagination>
+        </div>
+    </ng-template>
+</div>
+
+<ng-template #noContent>
+    <no-content [emptyContent]="emptyContent"></no-content>
+</ng-template>

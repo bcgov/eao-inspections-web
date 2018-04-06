@@ -1,0 +1,5 @@
+<h4>{{data.isActive ? modal.message : modal.secondaryMessage}}</h4>
+<div class="dashboard__buttons">
+  <button type="button" class="dashboard__btn--dark" (click)="confirmation(data); close();">{{data.isActive? modal.confirmationYes : modal.secondaryYes}}</button>
+  <button type="button" class="dashboard__btn" (click)="close()">{{modal.confirmationNo}}</button>
+</div>

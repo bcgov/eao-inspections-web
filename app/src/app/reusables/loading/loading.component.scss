@@ -1,0 +1,29 @@
+@import '../../../scss/variables';
+@import '../../../scss/mixins';
+
+.loader {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    text-align: center;
+    border: 10px solid $font-gray;
+    border-top: 10px solid $default-primary-color;
+    border-radius: 50%;
+    width: 80px;
+    height: 80px;
+    animation: spin 2s linear infinite;
+    z-index: 99999;
+    @include mobile {
+        left: 50%;
+        top: 50%;
+    }
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}

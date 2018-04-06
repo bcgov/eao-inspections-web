@@ -1,0 +1,84 @@
+<div class="dashboard__header">
+    <p class="dashboard__title">{{title}}</p>
+    <div class="dashboard__buttons">
+        <button type="button" class="dashboard__btn" (click)="openLg(addUser)">
+      <img class="dashboard__header__btn__img" src="../../assets/add-active.png" /> Create New
+    </button>
+        <a routerLink={{archivedLink}}><button type="button" class="dashboard__btn"> Archived Users</button></a>
+    </div>
+</div>
+
+<div *ngIf="users !== undefined && users?.length<=0; then noContent else content"></div>
+<ng-template #content>
+    <div class="table">
+        <div class="table-row table-header">
+            <div class="table-row-item">Full Name</div>
+            <div class="table-row-item">Email</div>
+            <div class="table-row-item">Team</div>
+            <div class="table-row-item">Permission</div>
+            <div class="table-row-item">Action</div>
+        </div>
+        <span *ngFor="let user of users">
+      <div class="table-row">
+        <div class="table-row-item name" data-header="Full Name">
+          <span class="table__img-wrapper">
+            <img *ngIf="user.profileImage" class="table__img" src={{user.profileImage}} />
+          </span>
+        <img *ngIf="!user.profileImage" class="table__img" src="../../../assets/team-member.png" /> {{user.firstName + " " + user.lastName}}
+    </div>
+    <div class="table-row-item" data-header="Email">
+        {{user.email}}
+    </div>
+    <div class="table-row-item teams" data-header="Team">
+        <div *ngFor="let team of user.teams">
+            {{ team.name }}
+        </div>
+    </div>
+    <div class="table-row-item permission" data-header="Permission">
+        {{user.permission}}
+    </div>
+    <div class="table-row-item" data-header="Action">
+        <button (click)="openLg(editUser)" class="dashboard--actions dashboard--actions--sm">
+            <img class="dashboard--actions--sm__img" src="../../assets/edit.png" /> Edit
+          </button>
+        <button (click)="open(updatePassword)" class="dashboard--actions dashboard--actions--sm">
+            <img class="dashboard--actions--sm__img" src="../../assets/reset-password.png" /> Password
+          </button>
+        <button (click)="open(archiveUser)" class="dashboard--actions dashboard--actions--sm">
+            <img class="dashboard--actions--sm__img" src="../../assets/archive.png" /> Archive
+          </button>
+    </div>
+    </div>
+    <!-- following (3) modals must be inside map to access user data -->
+    <!-- edit user modal -->
+    <ng-template #editUser let-c="close" class="modal">
+        <user-modal (submitValue)="onEdit($event)" [closeValue]="this.c" [modal]="editModal" [user]="user">
+        </user-modal>
+    </ng-template>
+    <!-- archive confirmation modal -->
+    <ng-template #archiveUser let-c="close" class="modal">
+        <archive-modal [data]="user" (submitValue)="onArchive($event)" [closeValue]="this.c" [modal]="editModal">
+        </archive-modal>
+    </ng-template>
+    <ng-template #updatePassword let-c="close" class="modal">
+        <password-modal [data]="user" (submitValue)="onPasswordChange($event)" [closeValue]="this.c" [modal]="modal">
+        </password-modal>
+    </ng-template>
+    </span>
+    </div>
+    <br>
+    <div class="d-flex justify-content-center">
+        <app-pagination [page]="page" [totalPages]="totalPages" (changePage)="onChangePage($event)"></app-pagination>
+    </div>
+</ng-template>
+
+
+<ng-template #noContent>
+    <no-content [emptyContent]="emptyContent"></no-content>
+</ng-template>
+
+<!-- modal to add new user -->
+<ng-template #addUser let-c="close" class="modal">
+    <user-modal (submitValue)="onSubmit($event)" [closeValue]="this.c" [modal]="modal">
+    </user-modal>
+</ng-template>

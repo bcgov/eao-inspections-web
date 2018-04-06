@@ -1,0 +1,18 @@
+@import '../../../../scss/variables';
+// validation erros
+.form-control.ng-touched.ng-invalid {
+  border: 2px solid $error-red;
+}
+
+.error {
+  color: $error-red;
+  font-size: 12px;
+
+  &__content {
+    text-align: center;
+  }
+}
+
+select#permission {
+  text-transform: capitalize;
+}
