@@ -1,3 +1,4 @@
+import { By } from '@angular/platform-browser';
 import { LoadingService } from './../../../../../services/loading.service';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
@@ -8,6 +9,7 @@ import {AdminService} from '../../../../../services/admin.service';
 import {ToastrService} from 'ngx-toastr';
 import {ModalService} from '../../../../../services/modal.service';
 import {RouterTestingModule} from '@angular/router/testing';
+import { Location } from '@angular/common';
 
 describe('ManageTeamsViewComponent', () => {
   let component: ManageTeamsViewComponent;
@@ -16,6 +18,7 @@ describe('ManageTeamsViewComponent', () => {
   let adminServiceStub: any;
   let toastServiceStub: any;
   let loadingServiceStub: any;
+  let locationServiceStub: any;
   let mockTeam: any;
 
   beforeEach(async(() => {
@@ -36,7 +39,11 @@ describe('ManageTeamsViewComponent', () => {
         return Observable.of(true);
       }
     };
-
+    locationServiceStub = {
+      back(): Observable<any> {
+        return Observable.of(true);
+      },
+    };
     toastServiceStub = {
       success(): Observable<any> {
         return Observable.of(true);
@@ -63,6 +70,7 @@ describe('ManageTeamsViewComponent', () => {
         { provide: AdminService, useValue: adminServiceStub },
         { provide: ToastrService, useValue: toastServiceStub },
         { provide: LoadingService, useValue: loadingServiceStub },
+        { provide: Location, useValue: locationServiceStub }
       ]
     })
     .compileComponents();
@@ -84,5 +92,13 @@ describe('ManageTeamsViewComponent', () => {
     expect(component.team.badge).toBe("mockBadge");
     expect(component.team.name).toBe("mockName");
     expect(component.team.admin.name).toBe("mockAdmin");
+  });
+
+  it('should change locations when `back arrow` button is clicked', () => {
+    spyOn(component, 'onLocationChange');
+    let buttonEl = fixture.debugElement.query(By.css('.location-change'));
+    buttonEl.nativeElement.click();
+    expect(component.onLocationChange).toHaveBeenCalledTimes(1);
+    expect(locationServiceStub.back).toBeTruthy();
   });
 });

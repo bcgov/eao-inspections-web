@@ -1,3 +1,4 @@
+import { By } from '@angular/platform-browser';
 import { LoadingService } from './../../../services/loading.service';
 import { fakeAsync, tick, async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
@@ -12,6 +13,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { Observation } from '../../../models/observation.model';
 import { Observable } from 'rxjs/Observable';
 import { ToastrService } from 'ngx-toastr';
+import { Location } from '@angular/common';
 
 describe('InspectionViewComponent', () => {
   let component: InspectionViewComponent;
@@ -19,6 +21,8 @@ describe('InspectionViewComponent', () => {
   let compiled;
   let loadingServiceStub;
   let toastServiceStub;
+  let locationServiceStub;
+  let mockUser;
 
   beforeEach(async(() => {
     loadingServiceStub = {
@@ -37,6 +41,11 @@ describe('InspectionViewComponent', () => {
         return Observable.of(true);
       }
     };
+    locationServiceStub = {
+      back(): Observable<any> {
+        return Observable.of(true);
+      },
+    };
      TestBed.configureTestingModule({
       declarations: [ InspectionViewComponent, OrderByPipe],
        schemas: [NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA],
@@ -44,6 +53,7 @@ describe('InspectionViewComponent', () => {
         {provide : ActivatedRoute, useValue: {snapshot: {params: {'id': 'inspection-id-1'}}}},
         { provide: LoadingService, useValue: loadingServiceStub },
         { provide: ToastrService, useValue: toastServiceStub },
+        { provide: Location, useValue: locationServiceStub }
       ],
       imports: [ RouterTestingModule ],
     })
@@ -54,11 +64,33 @@ describe('InspectionViewComponent', () => {
     fixture = TestBed.createComponent(InspectionViewComponent);
     component = fixture.componentInstance;
     compiled = fixture.debugElement.nativeElement;
+    mockUser = new BasicUser("1", "mockName", "mockLastName", "mockFullName", [], "mockEmail@email.com", "mockImage", "inspector", {isSuperAdmin: false, isAdmin: false, isViewOnly: false}, true, true);
+    component.user = mockUser;
+    spyOn(component, "ngOnInit");
+    component.ngOnInit();
     fixture.detectChanges();
   });
-
+  
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should create with an enabled download button if user === !ViewOnly || isAdmin || isSuperAdmin', () => {
+    fixture.detectChanges();
+    let button = fixture.debugElement.query(By.css('.dashboard__btn'));
+    let buttonEl = button.nativeElement;
+    expect(buttonEl.disabled).toBeFalsy();
+  });
+
+  it('should create with a disabled download button and `View Only` badge if user === ViewOnly', () => {
+    component.user.access.isViewOnly = true;
+    fixture.detectChanges();
+    let label = fixture.debugElement.query(By.css('.view-only-btn'));
+    let button = fixture.debugElement.query(By.css('.dashboard__btn'));
+    let labelEl = label.nativeElement;
+    let buttonEl = button.nativeElement;
+    expect(labelEl).toBeTruthy();
+    expect(buttonEl.disabled).toBeTruthy();
   });
 
   it('should render the correct inspection data', fakeAsync(() => {
@@ -75,7 +107,6 @@ describe('InspectionViewComponent', () => {
     fixture.detectChanges();
     const headers = [
       'title',
-      'subtitle',
       'inspection number',
       'inspector',
       'linked project',
@@ -88,12 +119,11 @@ describe('InspectionViewComponent', () => {
 
     const details = [
       inspection.title,
-      inspection.subtitle,
       inspection.inspectionNumber,
       inspection.inspector.name,
       inspection.project,
-      inspection.startDate.toString(),
-      inspection.endDate.toString()
+      inspection.startDate.toDateString(),
+      inspection.endDate.toDateString()
     ];
 
     (compiled.querySelectorAll('p')) .forEach((detail, index) => {
@@ -104,7 +134,7 @@ describe('InspectionViewComponent', () => {
 
   it('should render the correct observation data', fakeAsync(() => {
     const reportService = fixture.debugElement.injector.get(ReportService);
-    const createdDate = new Date();
+    const createdDate = new Date("MMM d y");
     const observations = [
       new Observation('testId1', 'testTitle1', 'testDescription1', 'testRequirement1', null, 'testMedia1', createdDate),
       new Observation('testId2', 'testTitle2', 'testDescription2', 'testRequirement2', null, 'testMedia2', createdDate)
@@ -128,5 +158,13 @@ describe('InspectionViewComponent', () => {
       expect(date).toBe(observations[index].createdAt.toDateString());
     });
   }));
+
+  it('should change locations when `back arrow` button is clicked', () => {
+    spyOn(component, 'onLocationChange');
+    let buttonEl = fixture.debugElement.query(By.css('.location-change'));
+    buttonEl.nativeElement.click();
+    expect(component.onLocationChange).toHaveBeenCalledTimes(1);
+    expect(locationServiceStub.back).toBeTruthy();
+  });
 
 });

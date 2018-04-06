@@ -1,9 +1,9 @@
 <div class="dashboard">
-    <button (click)="onLocationChange()">
+    <button class="location-change" (click)="onLocationChange()">
     <img src="../../../assets/back.png" />
   </button>
     <div class="element">
-        <h1 class="dashboard__title">{{title}}</h1>
+        <h1 class="dashboard__title">{{data.title}}</h1>
         <div class="element-details">
             <div class="element-details-content" *ngIf="data">
                 <div class="row">
@@ -40,10 +40,10 @@
 
             <div class="element-details">
                 <nav class="nav nav-pills flex-column flex-sm-row">
-                    <a class="flex-sm-fill text-sm-center nav-link" (click)="getMediaAll()" [ngClass]="{'active': isAll}">All</a>
-                    <a class="flex-sm-fill text-sm-center nav-link" (click)="getPhotos()" [ngClass]="{'active': isPhotos}">Photos</a>
-                    <a class="flex-sm-fill text-sm-center nav-link" (click)="getVideo()" [ngClass]="{'active': isVideo}">Video</a>
-                    <a class="flex-sm-fill text-sm-center nav-link" (click)="getVoice()" [ngClass]="{'active': isVoice}">Voice</a>
+                    <a id="isAll" class="flex-sm-fill text-sm-center nav-link" (click)="getMediaAll()" [ngClass]="{'active': isAll}">All</a>
+                    <a id="isPhotos" class="flex-sm-fill text-sm-center nav-link" (click)="getPhotos()" [ngClass]="{'active': isPhotos}">Photos</a>
+                    <a id="isVideo" class="flex-sm-fill text-sm-center nav-link" (click)="getVideo()" [ngClass]="{'active': isVideo}">Video</a>
+                    <a id="isVoice" class="flex-sm-fill text-sm-center nav-link" (click)="getVoice()" [ngClass]="{'active': isVoice}">Voice</a>
                 </nav>
                 <div class="container-fluid">
                     <div class="row">

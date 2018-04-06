@@ -82,4 +82,20 @@ describe('ReportsViewComponent', () => {
     });
     expect(compiled.querySelectorAll('team-card').length).toBe(2);
   }));
+
+  it('should fetch more data on page change', fakeAsync(() => {
+    const adminService = fixture.debugElement.injector.get(AdminService);
+    const teams = [
+      new Team('team-1-id', 'team1', null, 'blue', true),
+      new Team('team-2-id', 'team2', null, 'red', true),
+      new Team('team-2-id', 'team2', null, 'red', true),
+      new Team('team-2-id', 'team2', null, 'red', true),
+    ];
+    spyOn(component, 'onChangePage').and.returnValue(Promise.resolve(true));
+    spyOn(adminService, 'getActiveTeams').and.returnValue(Promise.resolve(teams));
+    component.onChangePage(2);
+    adminService.getActiveTeams();
+    expect(component.onChangePage).toHaveBeenCalledWith(2);
+    expect(adminService.getActiveTeams).toHaveBeenCalled();
+  }));
 });

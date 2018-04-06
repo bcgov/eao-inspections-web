@@ -1,3 +1,4 @@
+import { By } from '@angular/platform-browser';
 import { Team } from './../../../../../models/team.model';
 import { LoadingService } from './../../../../../services/loading.service';
 import { fakeAsync, tick, async, ComponentFixture, TestBed } from '@angular/core/testing';
@@ -12,6 +13,7 @@ import { Inspection } from '../../../../../models/inspection.model';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Observable } from 'rxjs/Observable';
 import { BasicUser } from '../../../../../models/user.model';
+import { Location } from '@angular/common';
 
 describe('TeamReportListComponent', () => {
   let component: TeamReportListComponent;
@@ -19,6 +21,7 @@ describe('TeamReportListComponent', () => {
   let compiled;
   let mockPipe: OrderByPipe;
   let loadingServiceStub: any;
+  let locationServiceStub: any;
   let team;
   let teamAdmin;
 
@@ -38,13 +41,18 @@ describe('TeamReportListComponent', () => {
         return Observable.of(true);
       }
     };
-
+    locationServiceStub = {
+      back(): Observable<any> {
+        return Observable.of(true);
+      },
+    };
     TestBed.configureTestingModule({
       declarations: [ TeamReportListComponent, OrderByPipe ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
       providers: [
         {provide : ActivatedRoute, useValue: {snapshot: {params: {'id': 'team-id-1'}}}},
-        { provide: LoadingService, useValue: loadingServiceStub }
+        { provide: LoadingService, useValue: loadingServiceStub },
+        { provide: Location, useValue: locationServiceStub }
       ],
       imports: [RouterTestingModule]
     })
@@ -87,12 +95,19 @@ describe('TeamReportListComponent', () => {
 
   it('should render the correct number of report items', fakeAsync(() => {
     const reportService = fixture.debugElement.injector.get(ReportService);
-
     spyOn(reportService, 'getActiveTeamReports').and.returnValue(Promise.resolve(reports));
     component.ngOnInit();
     tick();
     fixture.detectChanges();
     expect(compiled.querySelectorAll('report-list-item').length).toBe(3);
   }));
+
+  it('should change locations when `back arrow` button is clicked', () => {
+    spyOn(component, 'onLocationChange');
+    let buttonEl = fixture.debugElement.query(By.css('.location-change'));
+    buttonEl.nativeElement.click();
+    expect(component.onLocationChange).toHaveBeenCalledTimes(1);
+    expect(locationServiceStub.back).toBeTruthy();
+  });
 
 });
