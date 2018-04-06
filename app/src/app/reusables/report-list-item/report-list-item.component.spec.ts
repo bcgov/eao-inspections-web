@@ -55,7 +55,7 @@ describe('ReportListItemComponent', () => {
       }
     };
     toastServiceStub = {
-      open(): Observable<any> {
+      success(): Observable<any> {
         return Observable.of(true);
       }
     };
@@ -110,7 +110,7 @@ describe('ReportListItemComponent', () => {
   it('should open appropiate modal when archive/unArchive buttons are clicked', () => {
     spyOn(component, 'open');
     component.open('archive');
-    expect(modalServiceStub).toBeTruthy();
+    expect(modalServiceStub.open).toBeTruthy();
   });
 
   it('should change inspection permission', fakeAsync(() => {
@@ -122,24 +122,33 @@ describe('ReportListItemComponent', () => {
     expect(component.onSetPermission).toHaveBeenCalledTimes(1);
     adminServiceStub.updateReportPermission(component.data[0].id, component.data[0].viewOnly);
     expect(adminServiceStub.updateReportPermission).toHaveBeenCalledWith("1", false)
+    expect(toastServiceStub.success).toBeTruthy();
   }));
 
   it('should archive inspection', () => {
     spyOn(component, 'onArchive');
+    spyOn(component.refresh, 'emit');
     component.onArchive(component.data[1].id);
     expect(component.onArchive).toHaveBeenCalledWith('2');
     adminServiceStub.archiveReport(component.data[1].id);
     expect(adminServiceStub.archiveReport).toHaveBeenCalledWith('2');
+    expect(toastServiceStub.success).toBeTruthy();
+    component.refresh.emit();
+    expect(component.refresh.emit).toHaveBeenCalled();
   });
 
   it('should unArchive inspection', () => {
     component.data[1].isActive = false;
     expect(component).toBeTruthy();
     spyOn(component, 'onUnArchive');
+    spyOn(component.refresh, 'emit');
     component.onUnArchive(component.data[1].id);
     expect(component.onUnArchive).toHaveBeenCalledWith('2');
     adminServiceStub.unArchiveReport(component.data[1].id);
     expect(adminServiceStub.unArchiveReport).toHaveBeenCalledWith('2');
+    expect(toastServiceStub.success).toBeTruthy();
+    component.refresh.emit();
+    expect(component.refresh.emit).toHaveBeenCalled();
   });
 
   it('should download inspection', () => {
@@ -149,5 +158,6 @@ describe('ReportListItemComponent', () => {
     expect(component.onDownload).toHaveBeenCalledTimes(1);
     reportServiceStub.download(component.data[1]);
     expect(reportServiceStub.download).toHaveBeenCalledWith(component.data[1]);
+    expect(toastServiceStub.success).toBeTruthy();
   });
 });

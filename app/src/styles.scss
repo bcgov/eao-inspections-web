@@ -121,6 +121,7 @@ body {
             }
         }
         &__title {
+            text-transform: capitalize;
             margin: 0 20px;
             height: 40px;
             color: $font-black;

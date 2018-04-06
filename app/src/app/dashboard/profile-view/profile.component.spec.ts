@@ -32,7 +32,7 @@ describe('ProfileComponent', () => {
         };
       }),
       getTeams: jasmine.createSpy('getTeams').and.callFake(() => {
-        return [];
+        Promise.resolve(true);
       }),
       getTeamAdminInfo: jasmine.createSpy('getTeamAdminInfo').and.callFake(() => {
         return {

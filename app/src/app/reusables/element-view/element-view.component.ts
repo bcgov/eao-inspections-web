@@ -12,9 +12,7 @@ import {ReportService} from '../../../services/report.service';
   providers: [ReportService]
 })
 export class ElementViewComponent implements OnInit {
-  title = 'Element 1';
   subTitle = 'Attached Media';
-  link = '/inspection-details';
   routeParam;
   data;
   media = [];
@@ -30,7 +28,7 @@ export class ElementViewComponent implements OnInit {
   coordination: string;
   viewOnly;
   constructor(private route: ActivatedRoute, private reportService: ReportService, private location: Location) {
-    this.route.params.subscribe(params => this.routeParam = params);
+    this.routeParam = this.route.snapshot.params;
     this.googleStaticMapApiKey = environment.googleStaticMapApiKey;
   }
 
@@ -59,6 +57,7 @@ export class ElementViewComponent implements OnInit {
       });
     });
     this.getMediaAll();
+    console.log(this.mediaSelected);
   }
 
   onLocationChange() {

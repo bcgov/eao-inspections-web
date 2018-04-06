@@ -18,7 +18,7 @@ export class ArchivedTeamsComponent implements OnInit {
   };
   title = "Archived Teams";
   teamsLink = '/' + Route.DASHBOARD + '/' + Route.ADMIN_TEAMS;
-  teams: Array<Team> = [];
+  teams: Array<Team> = undefined;
   page = 0;
   totalPages = 0;
 
