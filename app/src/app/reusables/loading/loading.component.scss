@@ -14,7 +14,7 @@
     animation: spin 2s linear infinite;
     z-index: 99999;
     @include mobile {
-        left: 50%;
+        left: 30%;
         top: 50%;
     }
 }

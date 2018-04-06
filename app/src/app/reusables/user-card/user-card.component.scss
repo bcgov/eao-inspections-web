@@ -5,12 +5,16 @@
   margin: $dashboard-team-margin;
   margin-top: $dashboard-content-margin;
   display: inline;
-  height: 100px;	
+  height: 120px;	
   width: 260px;	
   border-radius: 2px;	
   background-color: $background-white;	
   box-shadow: 0 0 8px 0 rgba(0,0,0,0.2);
   @include flex;
+
+  @include mobile {
+    margin: $mobile-card-margin;
+  }
   
   &__content {
     position: relative;

@@ -1,3 +1,4 @@
+$xs-mobile-width: 400px;
 $mobile-width: 500px;
 $tablet-width: 768px;
 $large-width: 1024px;
@@ -5,6 +6,13 @@ $xxl-width: 1400px;
 $xl-width: 1150px;
 $desktop-width: 75em;
 $x-large-width: 90em;
+
+
+@mixin xs-mobile {
+  @media (max-width: #{$xs-mobile-width}) {
+    @content;
+  }
+} 
 
 @mixin mobile {
   @media (max-width: #{$mobile-width}) {

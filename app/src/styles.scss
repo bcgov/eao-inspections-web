@@ -35,8 +35,11 @@ body {
         top: 40%;
         left: 35%;
         text-align: center;
-        @include mobile {
-            left: 10%;
+        @include large {
+            position: inherit;
+            text-align: center;
+            margin-top: 30%;
+            left: 0;
         }
         &__img {
             color: $font-dark-gray !important;
@@ -48,14 +51,6 @@ body {
             font-weight: 300;
             font-size: 20px;
             line-height: 24px;
-            @include tablet {
-                top: 40%;
-                left: 40%;
-            }
-            @include mobile {
-                top: 25%;
-                left: 10%;
-            }
         }
     }
     .no-route {
@@ -92,6 +87,15 @@ body {
         background-color: $font-white !important;
         opacity: 0.9 !important;
     }
+
+    .location-change {
+        @include mobile {
+            margin-top: 40px;
+            position: relative;
+            left: -7px;
+        }
+    }
+    //all reusable dashboard styling
     .dashboard {
         background-color: $default-background;
         min-height: 100vh;
@@ -123,14 +127,14 @@ body {
         &__title {
             text-transform: capitalize;
             margin: 0 20px;
-            height: 40px;
+            height: 100%;
             color: $font-black;
             font-size: 36px;
             font-weight: bold;
             line-height: 34px;
 
             @include large {
-                    font-size: 20px;
+                    font-size: 26px;
                 }
 
             &--img {
@@ -144,13 +148,9 @@ body {
                 font-weight: 300;
                 font-size: 14px;
                 color: $font-gray;
-
-                @include xl {
-                    margin-bottom: 30px;
-                }
             }
             @include mobile {
-                margin: 50px 10px;
+                text-align: center;
             }
         }
         &__subtitle {
@@ -160,6 +160,11 @@ body {
             font-size: 20px;
             font-weight: bold;
             line-height: 34px;
+
+            @include mobile {
+                margin-left: 0;
+                text-align: center;
+            }
         }
         &--actions {
             font-size: 15px;
@@ -169,6 +174,10 @@ body {
             border: none;
             margin-right: 10px;
             text-transform: uppercase;
+
+            @include xs-mobile {
+                font-size: 12px;
+            }
 
             &--sm {
                 width: auto;
@@ -183,6 +192,8 @@ body {
                 color: $default-primary-color;
             }
         }
+
+        // dashboard/modal buttons
         &-upload__btn {
             color: $default-link-color;
         }
@@ -190,6 +201,10 @@ body {
             @include flex;
             margin: 20px;
             justify-content: space-around;
+
+            @include xs-mobile {
+                display: grid;
+            }
         }
         &__btn {
             color: $default-secondary-color;
@@ -205,13 +220,14 @@ body {
                 margin-bottom: 15px;
             }
             @include mobile {
-                margin-bottom: 15px;
+                margin: 0 2px 15px 2px;
             }
             &--lg {
                 width: 200px;
             }
             &--dark {
                 color: $font-white;
+                margin-bottom: 5px;
                 height: 40px;
                 width: 160px;
                 border: 1px solid $default-primary-color;
@@ -298,8 +314,65 @@ body {
             }
     }
     // Responsive Reports Table
+
+    .table.inspection {
+        font-size: 20px;
+        width: inherit;
+        box-shadow: none;
+        .table-row {
+            border-bottom: 1px solid $font-gray;
+
+            &-item.description {
+                margin: 20px;
+                @include flex;
+
+                @include xl {
+                    margin: 0;
+                }
+                @include mobile {
+                    margin: 0;
+                    display: inline-block;
+
+                    a img {
+                        margin: 0;
+                        padding: 10px;
+                        width: 100%
+                    }
+                }
+                textarea {
+                    font-size: 16px;
+                    margin-right: 40px;
+                    height: 250px;
+                    width: 100%;
+    
+                    @include xl {
+                        margin-right: 5px;
+                    }
+                }
+            }
+        }
+        #last {
+            border-bottom: none;
+        }
+        .table-row-item {
+            font-size: 18px;
+            flex: 3;
+
+            @include xl {
+                font-size: 14px;
+            }
+
+            &:last-child {
+                flex: 3;
+                @include xxl {
+                    flex: 3;
+                }
+            }
+        }
+    }
+
     .table {
-        width: calc(100% - 20px);;
+        width: calc(100% - 20px);
         background-color: #FFFFFF;
         box-shadow: $default-box-shadow;
         margin: 10px;
@@ -312,6 +385,8 @@ body {
             padding: 5px;
             border-bottom: 1px solid $font-gray;
         }
+
+
         .table-row-item {
             align-items: center;
             display: flex;
@@ -322,6 +397,11 @@ body {
             padding: 5px;
             font-weight: 300;
             text-align: left;
+
+             @include mobile {
+                min-height: 40px;
+                max-height: 100%;
+            }
         }
 
         .table-row-item:last-child {
@@ -338,7 +418,7 @@ body {
                 flex: 2;
             }
 
-        .table-row-item.permission, .table-row-item.name {
+        .table-row-item.permission, .table-row-item.name, .tabl-row-item.teams {
             text-transform: capitalize;
         }
 
@@ -348,6 +428,14 @@ body {
             @include xl {
                 display: inline;
             }
+        }
+
+        // inspection view table
+        .table-row.table-header.inspection {
+            background-color: $font-white;
+            border-bottom: none;
+            color: $font-dark-gray;
+            text-transform: uppercase;
         }
 
         .table-row.table-header {
@@ -371,11 +459,19 @@ body {
   .table__image-wrapper {
     height: 40px;
   }
+
     @include xl {
         .table {
             display: block;
             background-color: $default-background;
             box-shadow: none;
+
+            .table-row.inspection {
+                width: inherit;
+                padding: 0;
+                margin: 0;
+                box-shadow: none;
+            }
             .table-row {
                 display: block;
                 margin-bottom: 20px;
@@ -391,7 +487,7 @@ body {
             }
             .table-row-item {
                 width: none;
-                height: 40px;
+                height: 100%;
                 font-size: 13px;
                 overflow: unset;
                 text-align: right !important;
@@ -399,6 +495,7 @@ body {
                 list-style: none;
                 border: none;
             }
+
 
             .table-row-item:last-child {
                 display: inherit;

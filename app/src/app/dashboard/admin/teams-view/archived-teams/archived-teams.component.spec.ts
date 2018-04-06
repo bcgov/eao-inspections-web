@@ -8,7 +8,7 @@ import { ArchivedTeamsComponent } from './archived-teams.component';
 import { Observable } from 'rxjs/Observable';
 import { ToastrService } from 'ngx-toastr';
 
-fdescribe('ArchivedTeamsComponent', () => {
+describe('ArchivedTeamsComponent', () => {
   let component: ArchivedTeamsComponent;
   let fixture: ComponentFixture<ArchivedTeamsComponent>;
   let adminServiceStub: any;
