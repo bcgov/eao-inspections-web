@@ -50,8 +50,13 @@
         }
     }
 }
-
+.view-only-container {
+    @include flex;
+}
 .view-only-btn {
+    // position: relative;
+    // left: 5%;
+    margin: 0;
     height: 28px;
     width: 110px;
     border-radius: 4px;
@@ -61,9 +66,13 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 0;
     img {
         margin-right: 5px;
+    }
+    @include mobile {
+        position: relative;
+        left: 0;
+        margin: auto;
     }
 }
 

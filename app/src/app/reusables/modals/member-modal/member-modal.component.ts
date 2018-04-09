@@ -1,4 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
+import * as String from '../../../../constants/strings';
 
 @Component({
   selector: 'member-modal',
@@ -11,6 +12,10 @@ export class MemberModalComponent {
   @Input() closeValue: any;
   @Output() submitValue: EventEmitter<any> = new EventEmitter();
   selectedUserIds: Array<any> = [];
+  emptyContent = {
+    image: '../../assets/team-member.png',
+    message: String.EMPTY_MEMBERS,
+  };
 
   constructor() { }
 

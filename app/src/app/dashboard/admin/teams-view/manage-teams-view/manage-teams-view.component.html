@@ -20,15 +20,16 @@
         <no-content [emptyContent]="emptyContent"></no-content>
     </ng-template>
     <ng-template #content>
-        <div class="dashboard-card__container" *ngFor="let member of members">
-            <user-card [user]="member" [team]="team" (removeMember)="onRemoveMember($event)" (editMember)="onEditMember($event)"></user-card>
+        <div class="dashboard-card__container">
+            <div  *ngFor="let member of members">
+                <user-card [user]="member" [team]="team" (removeMember)="onRemoveMember($event)" (editMember)="onEditMember($event)"></user-card>
+            </div>
         </div>
         <br>
         <div class="d-flex justify-content-center">
           <app-pagination [page]="page" [totalPages]="totalPages" (changePage)="onChangePage($event)"></app-pagination>
         </div>
     </ng-template>
-
 </div>
 
 <ng-template #addMember let-c="close" class="modal">

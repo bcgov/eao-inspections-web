@@ -43,8 +43,7 @@
             <app-pagination [page]="page" [totalPages]="totalPages" (changePage)="onChangePage($event)"></app-pagination>
         </div>
     </ng-template>
+    <ng-template #noContent>
+        <no-content [emptyContent]="emptyContent"></no-content>
+    </ng-template>
 </div>
-
-<ng-template #noContent>
-    <no-content [emptyContent]="emptyContent"></no-content>
-</ng-template>

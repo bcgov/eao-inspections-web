@@ -4,8 +4,8 @@
     </button>
     <div class="inspection">
         <div class="dashboard__header">
-            <div class="inspection__title">
-                <h1 class="dashboard__title" id="title">{{title}}</h1>
+            <div>
+            <h1 class="dashboard__title" id="title">Inspection #{{data?.inspectionNumber}}</h1>
                 <label for="title" class="view-only-btn" *ngIf="((data?.viewOnly || user.access.isViewOnly) && !user?.access.isAdmin && !user?.access.isSuperAdmin)">
                         <img class="dashboard__header__btn__img" src="../../assets/view-only.png"/>
                         VIEW-ONLY

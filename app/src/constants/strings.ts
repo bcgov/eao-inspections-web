@@ -44,6 +44,7 @@ export const EMPTY_TEAM_MEMBER = "This team does not have any members yet.";
 export const EMPTY_ARCHIVED_TEAMS = "There are no archived teams yet.";
 export const EMPTY_INSPECTIONS = "There are no inspections yet.";
 export const NOT_TEAM_MEMBER = "You are currently not on a team.";
+export const EMPTY_MEMBERS = "There are no users available at this time."
 
 
 // error messages

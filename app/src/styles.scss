@@ -41,6 +41,10 @@ body {
             margin-top: 30%;
             left: 0;
         }
+
+        @include mobile-landscape {
+            margin-top: 10px;
+        }
         &__img {
             color: $font-dark-gray !important;
         }
@@ -114,8 +118,14 @@ body {
             left: 0px;
         }
         &-card__container {
-            max-width: 100%;
-            display: inline-block;
+            @include flex;
+            flex-wrap: wrap;
+            flex-direction: row;
+            justify-content: start;
+
+            @include xxl {
+                justify-content: space-around;
+            }
         }
         &__header {
             @include flex;
@@ -126,7 +136,7 @@ body {
         }
         &__title {
             text-transform: capitalize;
-            margin: 0 20px;
+            margin: 20px;
             height: 100%;
             color: $font-black;
             font-size: 36px;
@@ -183,6 +193,7 @@ body {
                 width: auto;
                 display: inline-flex;
                 text-transform: capitalize;
+                margin-bottom: 10px;
                 &__img {
                     width: 19px;
                 }
@@ -409,7 +420,7 @@ body {
 
             @include xxl {
                 overflow: inherit;
-                flex: 2;
+                flex: 3;
                 display: grid;
             }
         }
