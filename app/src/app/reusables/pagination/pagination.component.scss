@@ -1,12 +1,6 @@
 @import '../../../scss/_variables';
 @import '../../../scss/_mixins';
 
-.pager {
-  position: absolute;
-  bottom: 0;
-  left: 40%;
-}
-
 .btn-pagination {
   background-color: #fff;
   color: $default-secondary-color;

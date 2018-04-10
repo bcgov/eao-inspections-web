@@ -4,9 +4,9 @@
     </button>
     <div class="dashboard__header">
         <p class="dashboard__title">
-            <img class="dashboard__title--img" [src]="team.badge || '../../../assets/team-lg.png'" />
+            <img class="dashboard__title--img" [src]="team?.badge || '../../../assets/team-lg.png'" />
             {{ team?.name || '-'}}
-            <span class="dashboard__title--admin">Team Administrator: {{team.admin.name}}</span>
+            <span class="dashboard__title--admin">Team Administrator: {{team?.admin.name}}</span>
         </p>
         <div class="dashboard__buttons">
             <button type="button" class="dashboard__btn" (click)="open(addMember)">
@@ -20,15 +20,16 @@
         <no-content [emptyContent]="emptyContent"></no-content>
     </ng-template>
     <ng-template #content>
-        <div class="dashboard-card__container" *ngFor="let member of members">
-            <user-card [user]="member" [team]="team" (removeMember)="onRemoveMember($event)" (editMember)="onEditMember($event)"></user-card>
+        <div class="dashboard-card__container">
+            <div  *ngFor="let member of members">
+                <user-card [user]="member" [team]="team" (removeMember)="onRemoveMember($event)" (editMember)="onEditMember($event)"></user-card>
+            </div>
         </div>
         <br>
         <div class="d-flex justify-content-center">
           <app-pagination [page]="page" [totalPages]="totalPages" (changePage)="onChangePage($event)"></app-pagination>
         </div>
     </ng-template>
-
 </div>
 
 <ng-template #addMember let-c="close" class="modal">

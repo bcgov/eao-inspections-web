@@ -1,11 +1,24 @@
 @import '../../../../scss/_variables';
 @import '../../../../scss/_mixins';
+
+.modal-no-content {
+    position: absolute;
+    right: 20%;
+    top: 25%;
+    width: 100%;
+
+    @include large {
+        position: absolute;
+        top: 10%;
+        right: 0;
+    }
+}
 .member-modal__content {
     box-shadow: $default-box-shadow;
     height: 400px;
     overflow-y: scroll;
-    margin: 30px 30px 0;
-    padding: 20px;
+    margin: 20px 20px 0;
+    padding: 10px;
     border-radius: 2px;
     
     &__body:last-child {

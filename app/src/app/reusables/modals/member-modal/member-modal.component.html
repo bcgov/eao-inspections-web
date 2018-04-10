@@ -3,16 +3,24 @@
 </div>
 
 <div class="member-modal__content">
-    <div class="member-modal__content__body" *ngFor="let user of modal.users">
-        <div class="form-check form-check-inline">
-            <input class="form-check-input" type="checkbox" id="{{user.id}}" (change)="onChangeCheckbox(user.id, $event.target.checked)">
+    <div *ngIf="modal.users?.length <=0; then noContent else content"></div>
+    <ng-template #noContent>
+        <div class="modal-no-content">
+            <no-content [emptyContent]="emptyContent"></no-content>
         </div>
-        <img class=" member-modal__content__body__img "[src]="user.profileImage || '../../assets/team-lg.png'" />
-        <span>{{ user.name }}</span>
-    </div>
+    </ng-template>
+    <ng-template #content>
+        <div class="member-modal__content__body" *ngFor="let user of modal.users">
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" id="{{user.id}}" (change)="onChangeCheckbox(user.id, $event.target.checked)">
+            </div>
+            <img class=" member-modal__content__body__img "[src]="user.profileImage || '../../assets/team-lg.png'" />
+            <span>{{ user.name }}</span>
+        </div>
+    </ng-template>
 </div>
 
 <div class="dashboard__buttons ">
-    <button type="button " class="dashboard__btn--dark " (click)="onSubmit(); close(); ">{{modal.userButton}}</button>
+    <button type="button " class="dashboard__btn--dark " (click)="onSubmit(); close();" [disabled]="selectedUserIds.length === 0">{{modal.userButton}}</button>
     <button type="button " class="dashboard__btn " (click)="close() ">Cancel</button>
 </div>
