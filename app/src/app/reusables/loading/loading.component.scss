@@ -1,23 +1,35 @@
 @import '../../../scss/variables';
 @import '../../../scss/mixins';
 
-.loader {
+.loading-container {
+    @include flex;
     position: absolute;
+    width: 100vw;
+    justify-content: center;
+    margin: auto;
     top: 50%;
-    left: 50%;
     text-align: center;
-    border: 10px solid $font-gray;
-    border-top: 10px solid $default-primary-color;
-    border-radius: 50%;
-    width: 80px;
-    height: 80px;
-    animation: spin 2s linear infinite;
     z-index: 99999;
-    @include mobile {
-        left: 50%;
-        top: 50%;
     }
-}
+    
+    .loader {
+        margin-left: 268px;
+        position: relative;
+        border: 10px solid $font-gray;
+        border-top: 10px solid $default-primary-color;
+        border-radius: 50%;
+        width: 80px;
+        height: 80px;
+        animation: spin 2s linear infinite;
+
+        @include tablet {
+            margin-left: 70px;
+        }
+
+        @include mobile {
+            margin-left: 0;
+        }
+    }
 
 @keyframes spin {
     0% {

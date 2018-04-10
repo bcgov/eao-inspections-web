@@ -4,8 +4,44 @@
   </button>
     <div class="element">
         <h1 class="dashboard__title">{{data.title}}</h1>
-        <div class="element-details">
-            <div class="element-details-content" *ngIf="data">
+            <div class="element-details" *ngIf="data">
+                <div class="table inspection">
+                    <div class="table-row table-header inspection">
+                        <div class="table-row-item">Title</div>
+                        <div class="table-row-item">Requirements</div>
+                        <div class="table-row-item">Coordinates</div>
+                    </div>
+                    <div class="table-row inspection">
+                        <div class="table-row-item name" data-header="Title">
+                            {{ data.title || '-' }}
+                        </div>
+                        <div class="table-row-item" data-header="Requirement">
+                             {{ data.requirement || '-' }}
+                        </div>
+                        <div class="table-row-item" data-header="Coordinates" *ngIf="data.coordinate">
+                            Lat: {{ data.coordinate.latitude || '-' }} <br /> Lon: {{ data.coordinate.longitude || '-' }}
+                        </div>
+                    </div>
+                </div>
+                <div class="table inspection">
+                    <div class="table-row table-header inspection">
+                        <div class="table-row-item">Description</div>
+                        <div class="table-row-item"></div>
+                    </div>
+                    <div id="last" class="table-row inspection">
+                        <div class="table-row-item description">
+                            <textarea>{{ data.description || '-' }}</textarea>
+                            <a href="https://www.google.com/maps/place/{{coordination}}/">
+                                <img src="https://maps.googleapis.com/maps/api/staticmap?autoscale=1&size=265x176&maptype=roadmap&format=png&visual_refresh=true&markers=size:mid%7Ccolor:0x5475a7%7Clabel:%7C{{coordination}}&key={{googleStaticMapApiKey}}"
+                                    alt="Google Map of {{coordination}}"
+                                >
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+            <!-- <div class="element-details-content" *ngIf="data">
                 <div class="row">
                     <div class="col">
                         <h4>title</h4>
@@ -20,8 +56,8 @@
                         <p *ngIf="data.coordinate">Lat: {{ data.coordinate.latitude || '-' }} Lon: {{ data.coordinate.longitude || '-' }}</p>
                     </div>
                 </div>
-            </div>
-            <div class="element-details-content" *ngIf="data">
+            </div> -->
+            <!-- <div class="element-details-content" *ngIf="data">
                 <div class="row">
                     <div class="col">
                         <h4>description</h4>
@@ -34,12 +70,12 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
         <div *ngIf="mediaSelected?.length > 0">
             <h1 class="dashboard__subtitle">{{subTitle}}</h1>
 
             <div class="element-details">
-                <nav class="nav nav-pills flex-column flex-sm-row">
+                <nav class="nav nav-pills flex-sm-row">
                     <a id="isAll" class="flex-sm-fill text-sm-center nav-link" (click)="getMediaAll()" [ngClass]="{'active': isAll}">All</a>
                     <a id="isPhotos" class="flex-sm-fill text-sm-center nav-link" (click)="getPhotos()" [ngClass]="{'active': isPhotos}">Photos</a>
                     <a id="isVideo" class="flex-sm-fill text-sm-center nav-link" (click)="getVideo()" [ngClass]="{'active': isVideo}">Video</a>
@@ -54,5 +90,3 @@
                 </div>
             </div>
         </div>
-    </div>
-</div>
