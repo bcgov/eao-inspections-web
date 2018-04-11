@@ -230,7 +230,7 @@
                     }
                 ],
                 "selector": {
-                    "name": "iuc-web${NAME_SUFFIX}"
+                    "deploymentconfig": "iuc-web${NAME_SUFFIX}"
                 },
                 "type": "ClusterIP",
                 "sessionAffinity": "None"
