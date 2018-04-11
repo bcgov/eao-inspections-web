@@ -112,7 +112,7 @@
                             ],
                             "from": {
                                 "kind": "ImageStreamTag",
-                                "name": "iuc-web${NAME_SUFFIX}:latest"
+                                "name": "iuc-web${NAME_SUFFIX}:${ENV_NAME}"
                             }
                         }
                     }
