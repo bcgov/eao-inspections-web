@@ -1,0 +1,262 @@
+{
+    "kind": "Template",
+    "apiVersion": "v1",
+    "metadata": {
+        "name": "iuc-web-dc",
+        "creationTimestamp": null
+    },
+    "parameters": [
+        {
+            "name": "NAME_SUFFIX",
+            "displayName": "Name",
+            "description": "The suffix for all created objects",
+            "required": false,
+            "value": ""
+        },
+        {
+            "name": "ENV_NAME",
+            "displayName": "Name",
+            "description": "Environment name",
+            "required": false,
+            "value": "dev"
+        },
+        {
+            "name": "HOST",
+            "displayName": "HOST",
+            "description": "Main host name",
+            "required": false,
+            "value": ""
+        }
+    ],
+    "objects": [
+        {
+            "kind": "ImageStream",
+            "apiVersion": "v1",
+            "metadata": {
+                "name": "iuc-web${NAME_SUFFIX}",
+                "labels": {
+                    "base-name":"iuc-web"
+                },
+                "annotations": null
+            },
+            "spec": {
+                "lookupPolicy": {
+                    "local": false
+                }
+            }
+        },
+        {
+            "kind": "Secret",
+            "apiVersion": "v1",
+            "metadata": {
+                "name": "iuc-web-parse${NAME_SUFFIX}",
+                "annotations": {
+                    "as-copy-of": "iuc-web-parse"
+                }
+            },
+            "data": {
+                "master_key": null,
+                "parse_id": null,
+                "parse_key": null,
+                "parse_url": null,
+                "password": null
+            },
+            "type": "kubernetes.io/basic-auth"
+        },
+        {
+            "kind": "Secret",
+            "apiVersion": "v1",
+            "metadata": {
+                "name": "iuc-web-google${NAME_SUFFIX}",
+                "annotations": {
+                    "as-copy-of": "iuc-web-google"
+                }
+            },
+            "data": {
+                "password": null,
+                "static_map_api_key": null
+            },
+            "type": "kubernetes.io/basic-auth"
+        },
+        {
+            "kind": "DeploymentConfig",
+            "apiVersion": "v1",
+            "metadata": {
+                "name": "iuc-web${NAME_SUFFIX}",
+                "labels": null,
+                "annotations": null
+            },
+            "spec": {
+                "strategy": {
+                    "type": "Rolling",
+                    "rollingParams": {
+                        "updatePeriodSeconds": 1,
+                        "intervalSeconds": 1,
+                        "timeoutSeconds": 600,
+                        "maxUnavailable": "25%",
+                        "maxSurge": "25%"
+                    },
+                    "resources": {},
+                    "activeDeadlineSeconds": 21600
+                },
+                "triggers": [
+                    {
+                        "type": "ConfigChange"
+                    },
+                    {
+                        "type": "ImageChange",
+                        "imageChangeParams": {
+                            "automatic": true,
+                            "containerNames": [
+                                "iuc-web${NAME_SUFFIX}"
+                            ],
+                            "from": {
+                                "kind": "ImageStreamTag",
+                                "name": "iuc-web${NAME_SUFFIX}:${ENV_NAME}"
+                            }
+                        }
+                    }
+                ],
+                "replicas": 1,
+                "revisionHistoryLimit": 10,
+                "test": false,
+                "selector": {
+                    "deploymentconfig": "iuc-web${NAME_SUFFIX}"
+                },
+                "template": {
+                    "metadata": {
+                        "creationTimestamp": null,
+                        "labels": {
+                            "deploymentconfig": "iuc-web${NAME_SUFFIX}"
+                        }
+                    },
+                    "spec": {
+                        "containers": [
+                            {
+                                "name": "iuc-web${NAME_SUFFIX}",
+                                "image": " ",
+                                "ports": [
+                                    {
+                                        "containerPort": 8080,
+                                        "protocol": "TCP"
+                                    }
+                                ],
+                                "env": [
+                                    {
+                                        "name": "APP_ENV",
+                                        "value": "true"
+                                    },
+                                    {
+                                        "name": "PARSE_ID",
+                                        "valueFrom": {
+                                            "secretKeyRef": {
+                                                "name": "iuc-web-parse${NAME_SUFFIX}",
+                                                "key": "parse_id"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "name": "PARSE_MASTER_KEY",
+                                        "valueFrom": {
+                                            "secretKeyRef": {
+                                                "name": "iuc-web-parse${NAME_SUFFIX}",
+                                                "key": "master_key"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "name": "PARSE_KEY",
+                                        "valueFrom": {
+                                            "secretKeyRef": {
+                                                "name": "iuc-web-parse${NAME_SUFFIX}",
+                                                "key": "parse_key"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "name": "PARSE_URL",
+                                        "valueFrom": {
+                                            "secretKeyRef": {
+                                                "name": "iuc-web-parse${NAME_SUFFIX}",
+                                                "key": "parse_url"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "name": "GOOGLE_STATIC_MAP_API_KEY",
+                                        "valueFrom": {
+                                            "secretKeyRef": {
+                                                "name": "iuc-web-google${NAME_SUFFIX}",
+                                                "key": "static_map_api_key"
+                                            }
+                                        }
+                                    }
+                                ],
+                                "resources": {
+                                    "limits": {
+                                        "memory": "2Gi"
+                                    }
+                                },
+                                "terminationMessagePath": "/dev/termination-log",
+                                "terminationMessagePolicy": "File",
+                                "imagePullPolicy": "Always"
+                            }
+                        ],
+                        "restartPolicy": "Always",
+                        "terminationGracePeriodSeconds": 30,
+                        "dnsPolicy": "ClusterFirst",
+                        "securityContext": {},
+                        "schedulerName": "default-scheduler"
+                    }
+                }
+            }
+        },
+        {
+            "kind": "Service",
+            "apiVersion": "v1",
+            "metadata": {
+                "name": "iuc-web${NAME_SUFFIX}",
+                "creationTimestamp": null,
+                "labels": null,
+                "annotations": null
+            },
+            "spec": {
+                "ports": [
+                    {
+                        "name": "8080-tcp",
+                        "protocol": "TCP",
+                        "port": 8080,
+                        "targetPort": 8080
+                    }
+                ],
+                "selector": {
+                    "deploymentconfig": "iuc-web${NAME_SUFFIX}"
+                },
+                "type": "ClusterIP",
+                "sessionAffinity": "None"
+            }
+        },
+        {
+            "kind": "Route",
+            "apiVersion": "v1",
+            "metadata": {
+                "name": "iuc-web${NAME_SUFFIX}",
+                "creationTimestamp": null,
+                "labels": null,
+                "annotations": null
+            },
+            "spec": {
+                "host": "${HOST}",
+                "to": {
+                    "kind": "Service",
+                    "name": "iuc-web${NAME_SUFFIX}",
+                    "weight": 100
+                },
+                "port": {
+                    "targetPort": "8080-tcp"
+                },
+                "wildcardPolicy": "None"
+            }
+        }
+    ]
+}
