@@ -186,7 +186,7 @@
                                         "name": "GOOGLE_STATIC_MAP_API_KEY",
                                         "valueFrom": {
                                             "secretKeyRef": {
-                                                "name": "iuc-web-google{NAME_SUFFIX}",
+                                                "name": "iuc-web-google${NAME_SUFFIX}",
                                                 "key": "static_map_api_key"
                                             }
                                         }
