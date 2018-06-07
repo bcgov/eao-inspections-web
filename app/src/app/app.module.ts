@@ -45,6 +45,7 @@ import { ArchiveModalComponent } from './reusables/modals/archive-modal/archive-
 import { ArchivedTeamsComponent } from './dashboard/admin/teams-view/archived-teams/archived-teams.component';
 import { ArchivedInspectionsComponent } from './dashboard/admin/reports-view/archived-inspections/archived-inspections.component';
 import { OrderByPipe } from './directives/orderby.pipe';
+import { CapitalizeEmailPipe } from './directives/capitialize-email.pipe';
 import { AdminTeamCardComponent } from './dashboard/admin/teams-view/admin-team-card/admin-team-card.component';
 import { MemberModalComponent } from './reusables/modals/member-modal/member-modal.component';
 import { ReportViewListComponent } from './dashboard/admin/reports-view/report-view-list/report-view-list.component';
@@ -94,6 +95,7 @@ import { PaginationComponent } from './reusables/pagination/pagination.component
     ArchivedTeamsComponent,
     ArchivedInspectionsComponent,
     OrderByPipe,
+    CapitalizeEmailPipe,
     AdminTeamCardComponent,
     MemberModalComponent,
     ReportViewListComponent,
