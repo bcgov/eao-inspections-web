@@ -2,7 +2,7 @@ export const SUPERADMIN = {
   isSuperAdmin: true,
   isAdmin: false,
   isViewOnly: false,
-  mobileAccess: false
+  mobileAccess: true
 };
 
 export const ADMIN = {
