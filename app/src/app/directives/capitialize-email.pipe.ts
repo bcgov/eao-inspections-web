@@ -13,7 +13,7 @@ export class CapitalizeEmailPipe implements PipeTransform {
         return emailName[0].charAt(0).toUpperCase() +
           emailName[0].substr(1).toLowerCase() + '.' +
           emailName[1].charAt(0).toUpperCase() +
-          emailName[0].substr(1).toLowerCase() + '@' + emailParsed[1];
+          emailName[1].substr(1).toLowerCase() + '@' + emailParsed[1];
       }
     });
   }
