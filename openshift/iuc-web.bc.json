@@ -54,7 +54,7 @@
                     "sourceStrategy": {
                         "from": {
                             "kind": "ImageStreamTag",
-                            "name": "nodejs-8-rhel7${NAME_SUFFIX}:1"
+                            "name": "nodejs-8-rhel7${NAME_SUFFIX}:1-11"
                         }
                     }
                 },
