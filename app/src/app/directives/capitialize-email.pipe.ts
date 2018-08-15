@@ -10,10 +10,11 @@ export class CapitalizeEmailPipe implements PipeTransform {
       if (emailName.length < 2) {
         return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
       } else {
-        return emailName[0].charAt(0).toUpperCase() +
-          emailName[0].substr(1).toLowerCase() + '.' +
-          emailName[1].charAt(0).toUpperCase() +
-          emailName[1].substr(1).toLowerCase() + '@' + emailParsed[1];
+        let nameBuilder = "";
+        emailName.forEach(namePart => {
+          nameBuilder += namePart.charAt(0).toUpperCase() + namePart.substr(1).toLowerCase() + '.';
+        });
+        return nameBuilder.substr(0, nameBuilder.length-1) + '@' + emailParsed[1];
       }
     });
   }
