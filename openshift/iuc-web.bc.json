@@ -54,7 +54,7 @@
                     "sourceStrategy": {
                         "from": {
                             "kind": "ImageStreamTag",
-                            "name": "nodejs-8-rhel7${NAME_SUFFIX}:1"
+                            "name": "nodejs-8-rhel7${NAME_SUFFIX}:1.11"
                         }
                     }
                 },
@@ -122,7 +122,7 @@
                         "annotations": null,
                         "from": {
                             "kind": "DockerImage",
-                            "name": "registry.access.redhat.com/rhscl/nodejs-8-rhel7:1-11"
+                            "name": "registry.access.redhat.com/rhscl/nodejs-8-rhel7:1.11"
                         },
                         "importPolicy": {},
                         "referencePolicy": {
