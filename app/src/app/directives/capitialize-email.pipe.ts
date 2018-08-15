@@ -19,5 +19,3 @@ export class CapitalizeEmailPipe implements PipeTransform {
     });
   }
 }
-
-
