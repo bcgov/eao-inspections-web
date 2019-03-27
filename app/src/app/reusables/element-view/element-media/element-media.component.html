@@ -1,7 +1,7 @@
 <div class="elements-details-media-block" *ngIf="item.fileURL">
   <div class="element-details-media">
     <div class="thumbnail">
-      <a class="thumbnail-link" href="{{ url }}" *ngIf="!_viewOnly">
+      <a class="thumbnail-link" style="cursor: pointer;" (click)="downloadFile()" *ngIf="!_viewOnly">
         <span *ngIf="item.type === 'Audio'">
           <img class="thumbnail-link-image" [src]="this.audioImage" (error)="setDefaultPic('audio')">
         </span>
