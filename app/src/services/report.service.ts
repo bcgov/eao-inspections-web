@@ -273,13 +273,13 @@ export class ReportService {
       const medias = [];
 
       const zip = new JSZip();
-      const reportFolder = zip.folder(report.title);
-      reportFolder.file('report.txt', report.toText());
+      const reportFolder = zip.folder('inspection\_' + report.title);
+      reportFolder.file('inspection\_info.txt', report.toText());
       this.getObservations(report.id).then((observations) => {
         observations.forEach(observation => {
-          const observationFolder = reportFolder.folder(observation.title);
-          observationFolders[observation.id] = observationFolder;
-          observationFolder.file('info.txt', observation.toText());
+          const observationFolder = reportFolder.folder('observation\_' + observation.title);
+          observationFolders['observation\_' + observation.id] = observationFolder;
+          observationFolder.file('observation\_info.txt', observation.toText());
 
           promises.push(this.getMedia(observation.id, 'Photo'));
           promises.push(this.getMedia(observation.id, 'Video'));
@@ -307,13 +307,11 @@ export class ReportService {
           let count = 0;
           medias.forEach((media) => {
             console.log(media);
-            const folder = observationFolders[media.observationId];
-            const mediaFolder = folder.folder(media.id);
-
-            mediaFolder.file('info.txt', media.toText());
-
+            const observationFolder = observationFolders['observation\_' + media.observationId];
             JSZipUtils.getBinaryContent(media.fileURL, function (err, data) {
-              mediaFolder.file(media.fileName, data, {binary: true});
+              let nonBinaryFilename = media.getNonBinaryFilename();
+              observationFolder.file(media.rawName + '\_info.txt', media.toText());
+              observationFolder.file(nonBinaryFilename, data);
 
               if(err) {
                 reject(err);
