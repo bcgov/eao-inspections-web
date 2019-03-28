@@ -1,4 +1,5 @@
-import {Component, Input, OnInit} from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { ReportService } from '../../../../services/report.service';
 
 @Component({
   selector: 'app-element-media',
@@ -16,11 +17,11 @@ export class ElementMediaComponent implements OnInit {
   thumbnailImage = '../../assets/placeholder-image.jpg';
   audioImage = '../../assets/placeholder-voice.jpg';
   videoImage = '../../assets/placeholder-video.png';
-  _viewOnly = true;
+  _viewOnly = false;
   type;
   url;
 
-  constructor() { }
+  constructor(private reportService: ReportService) { }
 
   ngOnInit() {
     this.thumbnailImage = this.item.fileURL;
@@ -29,11 +30,32 @@ export class ElementMediaComponent implements OnInit {
 
   setDefaultPic(type?) {
     if (type === 'video') {
-      this.thumbnailImage = this.audioImage;
-    }else if (type === 'audio') {
       this.thumbnailImage = this.videoImage;
-    }else {
+    } else if (type === 'audio') {
+      this.thumbnailImage = this.audioImage;
+    } else {
       this.thumbnailImage = this.defaultPic;
     }
+  }
+
+  downloadFile() {
+    let fileExtension;
+    switch (this.item.type) {
+      case 'Video':
+        fileExtension = 'mkv';
+        break;
+      case 'Audio':
+        fileExtension = 'm4a';
+        break;
+      case 'Photo':
+        fileExtension = 'jpg';
+        break;
+      default:
+        fileExtension = 'bin';
+    }
+
+    this.reportService.downloadFile(this.item.fileURL, this.item.fileName, fileExtension).catch((error) => {
+      console.log(error);
+    });
   }
 }

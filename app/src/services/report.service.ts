@@ -1,4 +1,4 @@
-import { Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 
 import * as JSZip from 'jszip';
 import * as JSZipUtils from 'jszip-utils';
@@ -32,20 +32,20 @@ export class ReportService {
       const userQuery = new Parse.Query(Parse.User);
       userQuery.equalTo('objectId', inspectorId);
       userQuery.first({
-        success: function(result) {
+        success: function (result) {
           const inspector = parseUserToModel(result);
-           self.loadingService.showLoading(false, key);
-           resolve (inspector);
-        },
-        error: function(error) {
           self.loadingService.showLoading(false, key);
-          reject (error);
+          resolve(inspector);
+        },
+        error: function (error) {
+          self.loadingService.showLoading(false, key);
+          reject(error);
         }
       });
     });
   }
 
-  getMyReports(page=0): Promise<any[]> {
+  getMyReports(page = 0): Promise<any[]> {
     const key = randomKey();
     self.loadingService.showLoading(true, key);
     return new Promise((resolve, reject) => {
@@ -67,39 +67,39 @@ export class ReportService {
       query.limit(this.displayLimit);
       query.descending('createdAt');
       query.find()
-      .then((results) => {
-        if (!Array.isArray(results)) {
-          results = [results];
-        }
-        results.forEach((object) => {
-          reports.push(parseInspectionToModel(object));
-          promises.push(this.getInspector(object.get('userId')));
+        .then((results) => {
+          if (!Array.isArray(results)) {
+            results = [results];
+          }
+          results.forEach((object) => {
+            reports.push(parseInspectionToModel(object));
+            promises.push(this.getInspector(object.get('userId')));
+          });
+        })
+        .then(() => Promise.all(promises))
+        .then((results) => {
+          results.map((inspector, index) => {
+            reports[index].inspector = inspector;
+          });
+          self.loadingService.showLoading(false, key);
+          resolve(reports);
+        })
+        .catch((error) => {
+          self.loadingService.showLoading(false, key);
+          reject(error);
         });
-      })
-      .then(() => Promise.all(promises))
-      .then((results) => {
-        results.map((inspector, index) => {
-          reports[index].inspector = inspector;
-        });
-        self.loadingService.showLoading(false, key);
-        resolve(reports);
-      })
-      .catch((error) => {
-        self.loadingService.showLoading(false, key);
-        reject(error);
-      });
     });
   }
 
-  getActiveTeamReports(teamId: string, page=0): Promise<any[]> {
+  getActiveTeamReports(teamId: string, page = 0): Promise<any[]> {
     const key = randomKey();
     self.loadingService.showLoading(true, key);
     return new Promise((resolve, reject) => {
       const reports = [];
       const promises = [];
       const queryCount = new Parse.Query('Inspection');
-      queryCount.equalTo('isActive',true);
-      queryCount.equalTo('team', { '__type': 'Pointer', 'className': 'Team', 'objectId': teamId },);
+      queryCount.equalTo('isActive', true);
+      queryCount.equalTo('team', { '__type': 'Pointer', 'className': 'Team', 'objectId': teamId });
       if (this.page === 0) {
         queryCount.count().then((count) => {
           this.totalPages = Math.ceil(count / this.displayLimit);
@@ -107,7 +107,7 @@ export class ReportService {
       }
       this.page = page;
       const q = new Parse.Query('Inspection');
-      q.equalTo('team', { '__type': 'Pointer', 'className': 'Team', 'objectId': teamId },);
+      q.equalTo('team', { '__type': 'Pointer', 'className': 'Team', 'objectId': teamId });
       q.equalTo('isActive', true);
       q.skip(page * this.displayLimit);
       q.limit(this.displayLimit);
@@ -150,17 +150,17 @@ export class ReportService {
 
       orQuery.first().then((object) => {
         this.getInspector(object.get('userId'))
-        .then((inspector) => {
+          .then((inspector) => {
             const inspection = parseInspectionToModel(object);
             inspection.inspector = inspector;
             self.loadingService.showLoading(false, key);
             resolve(inspection);
-        });
+          });
       })
-      .catch((error) => {
-        self.loadingService.showLoading(false, key);
-        reject(error);
-      });
+        .catch((error) => {
+          self.loadingService.showLoading(false, key);
+          reject(error);
+        });
     });
   }
 
@@ -188,7 +188,7 @@ export class ReportService {
       query.limit(this.displayLimit);
       query.descending('createdAt');
       query.find({
-        success: function(results) {
+        success: function (results) {
           if (!Array.isArray(results)) {
             results = [results];
           }
@@ -199,9 +199,9 @@ export class ReportService {
           self.loadingService.showLoading(false, key);
           resolve(elements);
         },
-        error: function(error) {
+        error: function (error) {
           self.loadingService.showLoading(false, key);
-          reject (error);
+          reject(error);
         }
       });
     });
@@ -232,7 +232,7 @@ export class ReportService {
     });
   }
 
-  getMedia(observationId: string, type='Photo'): Promise<any[]> {
+  getMedia(observationId: string, type = 'Photo'): Promise<any[]> {
     const key = randomKey();
     self.loadingService.showLoading(true, key);
     const photos = [];
@@ -245,7 +245,7 @@ export class ReportService {
       const query = new Parse.Query(type);
       query.equalTo('observation', tempObservation);
       query.find({
-        success: function(results) {
+        success: function (results) {
           if (!Array.isArray(results)) {
             results = [results];
           }
@@ -256,9 +256,9 @@ export class ReportService {
           self.loadingService.showLoading(false, key);
           resolve(photos);
         },
-        error: function(error) {
+        error: function (error) {
           self.loadingService.showLoading(false, key);
-          reject (error);
+          reject(error);
         }
       });
     });
@@ -286,24 +286,24 @@ export class ReportService {
           promises.push(this.getMedia(observation.id, 'Audio'));
         });
       })
-      .then(() => Promise.all(promises))
-      .then((results) => {
-        promises = [];
-        results.forEach((res) => {
-          res.forEach(media => {
-            medias.push(media);
+        .then(() => Promise.all(promises))
+        .then((results) => {
+          promises = [];
+          results.forEach((res) => {
+            res.forEach(media => {
+              medias.push(media);
+            });
           });
-        });
-      })
-      .then(() => {
-        if (medias.length == 0) {
-          zip.generateAsync({type:'blob'})
-          .then(function(content) {
-              FileSaver.saveAs(content, report.title + '.zip');
-              self.loadingService.showLoading(false, key);
-              resolve(true);
-          });
-        } else {
+        })
+        .then(() => {
+          if (medias.length == 0) {
+            zip.generateAsync({ type: 'blob' })
+              .then(function (content) {
+                FileSaver.saveAs(content, report.title + '.zip');
+                self.loadingService.showLoading(false, key);
+                resolve(true);
+              });
+          } else {
           let count = 0;
           medias.forEach((media) => {
             console.log(media);
@@ -313,26 +313,53 @@ export class ReportService {
               observationFolder.file(media.rawName + '\_info.txt', media.toText());
               observationFolder.file(nonBinaryFilename, data);
 
-              if(err) {
-                reject(err);
-              }
+                if (err) {
+                  reject(err);
+                }
 
-              count++;
-              if (count === medias.length) {
-                zip.generateAsync({type: 'blob'})
-                .then(function(content) {
-                    FileSaver.saveAs(content, report.title + '.zip');
-                    self.loadingService.showLoading(false, key);
-                    resolve(true);
-                });
-              }
+                count++;
+                if (count === medias.length) {
+                  zip.generateAsync({ type: 'blob' })
+                    .then(function (content) {
+                      FileSaver.saveAs(content, report.title + '.zip');
+                      self.loadingService.showLoading(false, key);
+                      resolve(true);
+                    });
+                }
+              });
             });
-          });
+          }
+        })
+        .catch((error) => {
+          self.loadingService.showLoading(false, key);
+          reject(error);
+        });
+    });
+  }
+
+  downloadFile(url, fileName, fileExtension) {
+    return new Promise(function (resolve, reject) {
+      JSZipUtils.getBinaryContent(url, function (err, data) {
+        if (err) {
+          reject(err);
+        } else {
+          let blobData;
+          switch (fileExtension) {
+            case 'm4a':
+              blobData = new Blob([data], { type: 'audio/m4a' });
+              break;
+            case 'mkv':
+              blobData = new Blob([data], { type: 'video/jpg' });
+              break;
+            case 'jpg':
+              blobData = new Blob([data], { type: 'image/jpg' });
+              break;
+            default:
+              blobData = new Blob([data], { type: 'application/octet-stream' });
+          }
+          FileSaver.saveAs(blobData, fileName + '.' + fileExtension);
+          resolve(true);
         }
-      })
-      .catch((error) => {
-        self.loadingService.showLoading(false, key);
-        reject(error);
       });
     });
   }
