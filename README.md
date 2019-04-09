@@ -8,7 +8,7 @@ Please use the following steps for working on this project:
 2. Clone this repo directly
 3. Go into branch master
 4. Create a branch for your work
-5. Checkin, commit, push to upstream (Remember you didn't fork right?  If you did you WILL break things, stop now and go back to step 1)
+5. Checkin, commit, push to origin (Remember you didn't fork right?  If you did you WILL break things, stop now and go back to step 1)
 6. Create a PR
 
 Reviewers and maintainers - DO NOT MERGE the PR via GitHub, let the pipeline do this.  DO NOT manually clean up branches, let the pipeline do this.  Doing either of these manually will break the pipeline and cause all kinds of problems.
