@@ -1,5 +1,18 @@
 # EAO
 
+## Welcome
+
+Welcome to the EAO Inspections Web application.  This is an OpenShift hosted website that serves as a user and data management centre for Inspections iOS App users and the inspections data that they save.  
+
+The site provides administrators the ability to manage users, assign them to teams (each user must have a team in order to be able to conduct inspections), and the uploaded inspections data.
+
+The site data is backed by MongoDB via the Parse Server product.
+
+[Inspections App related GitHub Project](https://github.com/bcgov/field-inspection-app-ios)
+
+[Inspections Parse Server related GitHub Project](https://github.com/bcgov/eao-parse-server)
+
+
 ## Important: Branch & Pull Request Workflow
 
 Please use the following steps for working on this project:
@@ -56,14 +69,13 @@ Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protrac
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
 
 
-# ------------------------------------------------------------------------------
-# Freshworks Deployment Process
-# ------------------------------------------------------------------------------
+# Provisioning Process
 
-[Project Creation---- ----------------------------------------------------------]
+
+[OpenShift Project Creation]
 
 - oc login ::REPOSITORY:: [--token=::TOKEN::]
-- oc new-project ::POJRECT_NAME::
+- oc new-project ::PROJECT_NAME::
 - ensure .env, Dockerfile and src/environments are setup
 - make ::dev|prod:: new-app
 
@@ -74,11 +86,10 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 - (or) make local (if you need to run on Docker image. Can shell into the container by ::make workspace::) 
 
 
-[ Deployments ]
+[Initial Rollout]
 
 - ensure that the app has been created and all configuration is setup
 - oc status ( confirm before deploy ! )
 - oc get routes ( confirm before deploy ! )
 
 - make ::dev|prod:: deploy
-
